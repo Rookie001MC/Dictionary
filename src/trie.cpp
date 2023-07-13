@@ -15,7 +15,7 @@ bool Trie::isEmpty(TrieNode* node) {
     return false;
 }
 
-void Trie::remove(TrieNode* root, std::string key, int index = 0) {
+void Trie::remove(TrieNode* root, std::string key, int index) {
     if (index == key.size()) {
         root->endOfWord = false;
         if (Trie::isEmpty(root)) {
