@@ -44,6 +44,9 @@ file(GLOB_RECURSE HEADERS "header/*.h")
 # Set the built executable directory
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
 
+# Set the build directory
+set(CMAKE_BINARY_DIR ${PROJECT_SOURCE_DIR}/build)
+
 # Adding the source files to the executable
 add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})
 
