@@ -1,0 +1,35 @@
+# Loosely based on OpenTelemetry's .clang-format
+# https://github.com/open-telemetry/opentelemetry-cpp/blob/main/.clang-format
+
+Language: Cpp
+BasedOnStyle: Microsoft
+Standard: c++20
+
+# 4 spaces
+IndentWidth: 4
+UseTab: Never
+
+# Indent case labels.
+IndentCaseLabels: true
+
+# Right-align pointers and references
+PointerAlignment: Left
+
+# ANGLE likes to align things as much as possible.
+AlignOperands: true
+AlignConsecutiveAssignments: true
+
+# Use 2 space negative offset for access modifiers
+AccessModifierOffset: -2
+
+# TODO(jmadill): Decide if we want this on. Doesn't have an "all or none" mode.
+AllowShortCaseLabelsOnASingleLine: false
+
+# Useful for spacing out functions in classes
+KeepEmptyLinesAtTheStartOfBlocks: true
+
+# Indent nested PP directives.
+IndentPPDirectives: AfterHash
+
+# Include blocks style
+IncludeBlocks: Preserve
