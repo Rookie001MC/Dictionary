@@ -11,7 +11,7 @@ class Trie {
         TrieNode* root = nullptr;
         TrieNode* createNode();
         bool isEmpty(TrieNode* node);
-        void remove(TrieNode* root, std::string key, int index = 0);
+        TrieNode* remove(TrieNode* root, std::string key, int index = 0);
         void clear(TrieNode* root);
     public:
         Trie();
@@ -20,5 +20,4 @@ class Trie {
         bool prefixSearch(std::string key);
         bool wholeWordSearch(std::string key);
         void remove(std::string key);
-        void clear();
 };

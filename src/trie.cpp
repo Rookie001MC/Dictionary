@@ -1,21 +1,44 @@
 #include "../header/trie.h"
 
-TrieNode* Trie::createNode() {
-    TrieNode* newNode = new TrieNode;
-    newNode->endOfWord = false;
+Trie::Trie() {
+    this->root = new TrieNode;
+    root->endOfWord = false;
     for (int i = 0; i < ALPHABET; ++i)
-        newNode->children[i] = nullptr; 
-    return newNode;
+        root->children[i] = nullptr; 
+}
+
+Trie::~Trie() {
+    clear(this->root);
+}
+
+TrieNode* Trie::createNode() {
+    TrieNode* node = new TrieNode;
+    node->endOfWord = false;
+    for (int i = 0; i < ALPHABET; ++i)
+        node->children[i] = nullptr; 
+    return node;
+}
+
+void Trie::insert(std::string key) {
+    TrieNode* cur = root;
+    for (int i = 0; i < key.length(); ++i) {
+        int index = key[i] - 'a';
+        if (!cur->children[index])
+            cur->children[index] = createNode();
+        cur = cur->children[index];
+    }
+    cur->endOfWord = true;
 }
 
 bool Trie::isEmpty(TrieNode* node) {
     for (int i = 0; i < ALPHABET; ++i)
         if (node->children[i])
-            return true;
-    return false;
+            return false;
+    return true;
 }
 
-void Trie::remove(TrieNode* root, std::string key, int index) {
+TrieNode* Trie::remove(TrieNode* root, std::string key, int index = 0) {
+    if (!root) return;
     if (index == key.size()) {
         root->endOfWord = false;
         if (Trie::isEmpty(root)) {
@@ -24,13 +47,13 @@ void Trie::remove(TrieNode* root, std::string key, int index) {
         }
     }
     int idx = key.at(index) - 'a';
-    if (!root->children[idx])
-        return;
+     root->children[index] = remove(root->children[index], key, index + 1);
     Trie::remove(root->children[idx], key, index + 1);
     if (isEmpty(root) && root->endOfWord == false) {
         delete root;
         root = nullptr;
     }
+    return root;
 }
 
 void Trie::clear(TrieNode* root) {
@@ -47,33 +70,10 @@ void Trie::clear(TrieNode* root) {
     }
 }
 
-Trie::Trie() {
-    this->root = new TrieNode;
-    root->endOfWord = false;
-    for (int i = 0; i < ALPHABET; ++i)
-        root->children[i] = nullptr; 
-}
-
-Trie::~Trie() {
-    clear(this->root);
-}
-
-void Trie::insert(std::string key) {
-    TrieNode* cur = root;
-    for (int i = 0; i < key.length(); ++i) {
-        int index = key[i] - 97;
-        if (cur->children[index] == nullptr) {
-            cur->children[index] = createNode();
-            cur = cur->children[index];
-        }
-    }
-    cur->endOfWord = true;
-}
-
 bool Trie::prefixSearch(std::string key) {
     TrieNode* cur = root;
     for (int i = 0; i < key.length(); ++i) {
-        int index = key[i] - 97;
+        int index = key[i] - 'a';
         if (cur->children[index] == nullptr)
             return false;
         else cur = cur->children[index];
@@ -84,7 +84,7 @@ bool Trie::prefixSearch(std::string key) {
 bool Trie::wholeWordSearch(std::string key) {
     TrieNode* cur = root;
     for (int i = 0; i < key.length(); ++i) {
-        int index = key[i] - 97;
+        int index = key[i] - 'a';
         if (cur->children[index] == nullptr)
             return false;
         else cur = cur->children[index];
@@ -94,8 +94,4 @@ bool Trie::wholeWordSearch(std::string key) {
 
 void Trie::remove(std::string key) {
     remove(root, key, 0);
-}
-
-void Trie::clear() {
-    clear(root);
 }

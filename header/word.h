@@ -6,29 +6,16 @@
 #include <utility>
 #include <fstream>
 
-class Definition {
-    private:
-        std::string def;
-        std::vector<std::string> usage;
-    public:
-        void setDef(std::string key);
-        void setUsage(std::string key);
-};
-
-
 class Word {
     private:
         std::string key;
         std::string type;
-        std::vector<Definition> defs;
-    public:
-        Word(std::string key);
-        ~Word();
-        void setKey(int k);
+        std::string definition;
+    public:        
+        Word(std::string key, std::string type = "", std::string definition);
+        void setKey(std::string key);
         void setType(std::string type);
-        void editDef(int index, std::string newDef);
-        void removeDef(int index);
-        void addDef(std::string newDef);
+        void setDefinition(std::string definition);
 };
 
 class Dictionary {
