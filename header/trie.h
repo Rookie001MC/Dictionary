@@ -11,7 +11,7 @@ class Trie {
         TrieNode* root = nullptr;
         TrieNode* createNode();
         bool isEmpty(TrieNode* node);
-        TrieNode* remove(TrieNode* root, std::string key, int index = 0);
+        TrieNode* remove(TrieNode* root, std::string key, int index);
         void clear(TrieNode* root);
     public:
         Trie();
