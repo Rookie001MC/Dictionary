@@ -1,10 +1,10 @@
 #include "dictionary/word.h"
 
 // define Word
-Word::Word(std::string key, std::string definition , std::string type = "") {
+Word::Word(std::string key, std::vector<std::string> definitions, std::string type = "") {
     this->key = key;
     this->type = type;
-    this->definition = definition;
+    this->definitions = definitions;
 }
 
 void Word::setKey(std::string key) {
@@ -15,8 +15,8 @@ void Word::setType(std::string type) {
     this->type = type;
 }
 
-void Word::setDefinition(std::string definition) {
-    this->definition = definition;
+void Word::setDefinition(std::string newDefinition, int definitionIndex = 0) {
+    this->definitions[definitionIndex] = newDefinition;
 }
 
 // define Dictionary
@@ -38,8 +38,10 @@ Word Dictionary::getWord() {
         case 2:
             return getWordVieEng();
         case 3:
-            return getWordEmoji();
+            return getWordKaomoji(fin);
         case 4:
             return getWordSlang();
-    }
+        case 5:
+            return getWordEmoji();
+    }   
 }

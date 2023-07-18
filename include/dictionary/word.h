@@ -10,12 +10,12 @@ class Word {
     private:
         std::string key;
         std::string type;
-        std::string definition;
+        std::vector<std::string> definitions;
     public:        
-        Word(std::string key , std::string definition, std::string type);
+        Word(std::string key, std::vector<std::string> definition, std::string type);
         void setKey(std::string key);
         void setType(std::string type);
-        void setDefinition(std::string definition);
+        void setDefinition(std::string newDefinition,int definitionIndex);
 };
 
 class Dictionary {
@@ -25,8 +25,9 @@ class Dictionary {
         Word getWordEngEng();
         Word getWordEngVie();
         Word getWordVieEng();
-        Word getWordEmoji(std::ifstream &fin);
+        Word getWordKaomoji(std::ifstream &fin);
         Word getWordSlang();
+        Word getWordEmoji();
     public:
         Dictionary(std::string path, int dictType);
         ~Dictionary();
