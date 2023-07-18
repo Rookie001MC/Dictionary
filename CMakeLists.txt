@@ -50,6 +50,7 @@ if (NOT nlohmann_json_FOUND)
         GIT_TAG v${nlohmann_json_VERSION}
     )
     FetchContent_MakeAvailable(nlohmann_json)
+
 endif()
 
 
