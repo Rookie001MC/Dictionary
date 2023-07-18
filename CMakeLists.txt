@@ -1,5 +1,9 @@
+# CMake file based on:
+# https://github.com/SasLuca/raylib-cmake-template
+# https://github.com/raysan5/raylib/blob/master/projects/CMake/CMakeLists.txt
+
 cmake_minimum_required(VERSION 3.15)
-project(cs163_project)
+project(dictionary_cs163_project)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
 set(FETCHCONTENT_QUIET FALSE)
@@ -8,6 +12,7 @@ set(CMAKE_CXX_STANDARD 20)
 
 set(RAYLIB_VERSION 4.5.0)
 set(RAYLIB-CPP_VERSION 4.5.1)
+set(JSON_NLOHMANN_VERSION 3.11.2)
 
 # Setting libraries
 
@@ -33,6 +38,18 @@ if (NOT raylib_cpp_FOUND)
         GIT_TAG v${RAYLIB-CPP_VERSION}
     )
     FetchContent_MakeAvailable(raylib_cpp)
+endif()
+
+# JSON by Nlohmann (https://github.com/nlohmann/json)
+find_package(json_nlohmann QUIET)
+if (NOT json_nlohmann_FOUND)
+    include(FetchContent)
+    FetchContent_Declare(
+        json_nlohmann
+        GIT_REPOSITORY https://github.com/nlohmann/json.git
+        GIT_TAG v${JSON_NLOHMANN_VERSION}
+    )
+    FetchContent_MakeAvailable(json_nlohmann)
 endif()
 
 
