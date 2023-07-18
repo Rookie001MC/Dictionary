@@ -1,4 +1,4 @@
-#include "../header/trie.h"
+#include "dictionary/trie.h"
 
 Trie::Trie() {
     this->root = new TrieNode;

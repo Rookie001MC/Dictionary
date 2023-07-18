@@ -12,7 +12,7 @@ class Word {
         std::string type;
         std::string definition;
     public:        
-        Word(std::string key, std::string type = "", std::string definition);
+        Word(std::string key , std::string definition, std::string type);
         void setKey(std::string key);
         void setType(std::string type);
         void setDefinition(std::string definition);
@@ -25,7 +25,7 @@ class Dictionary {
         Word getWordEngEng();
         Word getWordEngVie();
         Word getWordVieEng();
-        Word getWordEmoji();
+        Word getWordEmoji(std::ifstream &fin);
         Word getWordSlang();
     public:
         Dictionary(std::string path, int dictType);

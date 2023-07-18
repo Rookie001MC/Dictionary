@@ -66,14 +66,15 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
 set(CMAKE_BINARY_DIR ${PROJECT_SOURCE_DIR}/build)
 
 # Adding the source files to the executable
-add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})
+add_executable(${PROJECT_NAME} ${SOURCES})
 
 # Adding the include directory
-target_include_directories(${PROJECT_NAME} PUBLIC header)
+target_include_directories(${PROJECT_NAME} PUBLIC include)
 
 # Adding the libraries
 target_link_libraries(${PROJECT_NAME} PUBLIC raylib raylib_cpp)
 target_link_libraries(${PROJECT_NAME} PUBLIC nlohmann_json::nlohmann_json)
+
 # MacOS jibbirish
 if (APPLE)
     target_link_libraries(${PROJECT_NAME} "-framework IOKit")
