@@ -1,5 +1,9 @@
+# CMake file based on:
+# https://github.com/SasLuca/raylib-cmake-template
+# https://github.com/raysan5/raylib/blob/master/projects/CMake/CMakeLists.txt
+
 cmake_minimum_required(VERSION 3.15)
-project(cs163_project)
+project(dictionary_cs163_project)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
 set(FETCHCONTENT_QUIET FALSE)
@@ -8,6 +12,7 @@ set(CMAKE_CXX_STANDARD 20)
 
 set(RAYLIB_VERSION 4.5.0)
 set(RAYLIB-CPP_VERSION 4.5.1)
+set(nlohmann_json_VERSION 3.11.2)
 
 # Setting libraries
 
@@ -35,6 +40,18 @@ if (NOT raylib_cpp_FOUND)
     FetchContent_MakeAvailable(raylib_cpp)
 endif()
 
+# JSON by Nlohmann (https://github.com/nlohmann/json)
+find_package(nlohmann_json QUIET)
+if (NOT nlohmann_json_FOUND)
+    include(FetchContent)
+    FetchContent_Declare(
+        nlohmann_json
+        GIT_REPOSITORY https://github.com/nlohmann/json.git
+        GIT_TAG v${nlohmann_json_VERSION}
+    )
+    FetchContent_MakeAvailable(nlohmann_json)
+endif()
+
 
 # Defining the source files and includes
 file(GLOB_RECURSE SOURCES "src/*.cpp")
@@ -55,7 +72,7 @@ target_include_directories(${PROJECT_NAME} PUBLIC header)
 
 # Adding the libraries
 target_link_libraries(${PROJECT_NAME} PUBLIC raylib raylib_cpp)
-
+target_link_libraries(${PROJECT_NAME} PUBLIC nlohmann_json::nlohmann_json)
 # MacOS jibbirish
 if (APPLE)
     target_link_libraries(${PROJECT_NAME} "-framework IOKit")
