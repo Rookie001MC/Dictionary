@@ -1,7 +1,7 @@
-#include "../header/word.h"
+#include "dictionary/word.h"
 
 // define Word
-Word::Word(std::string key, std::string type = "", std::string definition) {
+Word::Word(std::string key, std::string definition , std::string type = "") {
     this->key = key;
     this->type = type;
     this->definition = definition;
