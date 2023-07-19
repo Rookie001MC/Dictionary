@@ -42,6 +42,7 @@ Word Dictionary::getWord() {
         case 4:
             return getWordSlang();
         case 5:
-            return getWordEmoji();
+            // TODO: Fix the code so that it supports the JSON array in the emoji.dict file. 
+            return getWordEmoji(fin, 0);
     }   
 }

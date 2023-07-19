@@ -27,7 +27,7 @@ class Dictionary {
         Word getWordVieEng();
         Word getWordKaomoji(std::ifstream &fin);
         Word getWordSlang();
-        Word getWordEmoji(std::ifstream &fin);
+        Word getWordEmoji(std::ifstream &fin, int index);
     public:
         Dictionary(std::string path, int dictType);
         ~Dictionary();
