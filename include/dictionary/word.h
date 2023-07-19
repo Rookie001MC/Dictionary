@@ -16,6 +16,9 @@ class Word {
         void setKey(std::string key);
         void setType(std::string type);
         void setDefinition(std::string definition);
+        std::string getKey();
+        std::string getType();
+        std::string getDefinition();
 };
 
 class Dictionary {
