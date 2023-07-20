@@ -8,24 +8,28 @@
 
 class Word {
     private:
-        std::string key;
-        std::string type;
-        std::string definition;
+        std::wstring key;
+        std::wstring type;
+        std::vector<std::wstring> definitions;
     public:        
-        Word(std::string key , std::string definition, std::string type);
-        void setKey(std::string key);
-        void setType(std::string type);
-        void setDefinition(std::string definition);
+        Word(std::wstring key , std::wstring definition, std::wstring type);
+        std::wstring getKey();
+        std::wstring getType();
+        std::wstring getDefinition(int index);
+        int getDefinitionCount();
+        void setKey(std::wstring key);
+        void setType(std::wstring type);
+        void setDefinition(std::wstring definition, int index);
 };
 
 class Dictionary {
     private:
-        std::ifstream fin;
+        std::wifstream fin;
         int dictType; // 0: eng-eng, 1: eng-vie, 2: vie-eng, 3: emoji, 4: slang
         Word getWordEngEng();
         Word getWordEngVie();
         Word getWordVieEng();
-        Word getWordEmoji(std::ifstream &fin);
+        Word getWordEmoji();
         Word getWordSlang();
     public:
         Dictionary(std::string path, int dictType);
