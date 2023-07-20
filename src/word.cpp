@@ -78,11 +78,12 @@ Word Dictionary::getWordVieEng() {
     Word word(key, definition, type);
     return word;
 }
-std::string extractDefinition(const std::string& line, bool &isEndOfDefinition)
+
+std::wstring extractDefinition(const std::wstring& line, bool &isEndOfDefinition)
 {
     // get the whole line except when meet the '[' - meaning that the definition is over
-    std::string definition;
-    if (line.find('[') == std::string::npos)    // this character doesn't exist
+    std::wstring definition;
+    if (line.find('[') == std::wstring::npos)    // this character doesn't exist
     {
         int start = line.find_first_not_of(' ');
         definition = line.substr(start);
@@ -97,39 +98,39 @@ std::string extractDefinition(const std::string& line, bool &isEndOfDefinition)
         isEndOfDefinition = true;
         definition = line.substr(firstPos, lastPos - firstPos);
     }
-    definition.append("\n");
+    definition.append(L"\n");
     return definition;
 }
 
-std::string extractWordType(const std::string& line)
+std::wstring extractWordType(const std::wstring& line)
 {
-    std::string wordType;
-    std::istringstream iss(line);
+    std::wstring wordType;
+    std::wistringstream iss(line);
     iss >> std::skipws >> wordType;
     return wordType;
 }
 
 Word Dictionary::getWordEngEng()
 {
-    std::ifstream fin;
+    std::wifstream fin;
     fin.open("engeng.dict");
     bool isEndOfDefinition = false;
-    Word word("", "", "");
-    std::string line;
-    while (getline(fin, line))
+    Word word(L"", L"", L"");
+    std::wstring line;
+    while (std::getline(fin, line))
     {
         if (line[0] == ' ') // if the line starts with a space, it is a definition
         {
             if (line[5] >= 'a' && line[5] <= 'z')   // the sign of wordType
             {
-                std::string wordType = extractWordType(line);
+                std::wstring wordType = extractWordType(line);
                 if (word.getType().length() == 0)    // not have a wordType yet
                     word.setType(wordType);
                 
                 else    
                 {
-                    std::string tmp = word.getType();
-                    tmp.append("/" + wordType);
+                    std::wstring tmp = word.getType();
+                    tmp.append(L"/" + wordType);
                     word.setType(tmp);
                 }
                 isEndOfDefinition = false;
@@ -138,14 +139,14 @@ Word Dictionary::getWordEngEng()
                 isEndOfDefinition = false;
             if (!isEndOfDefinition)
             {
-                std::string tmpDef = word.getDefinition();
+                std::wstring tmpDef = word.getDefinition();
                 tmpDef.append(extractDefinition(line, isEndOfDefinition));
                 word.setDefinition(tmpDef);
             }
         }
         else // if the line starts with a letter, it is a word
         {
-            if (word.getKey() == "")   // doesn't have anything
+            if (word.getKey() == L"")   // doesn't have anything
                 word.setKey(line);
             else
                 break;
