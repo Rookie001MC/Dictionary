@@ -7,6 +7,7 @@ Word::Word(std::wstring key = L"", std::wstring definition = L"" , std::wstring 
     this->key = key;
     this->type = type;
     definitions.push_back(definition);
+
 }
 
 std::wstring Word::getKey() {
@@ -31,6 +32,7 @@ void Word::setType(std::wstring type) {
     this->type = type;
 }
 
+
 void Word::setDefinition(std::wstring definition, int index) {
     definitions.at(index) = definition;
 }
@@ -54,10 +56,13 @@ Word Dictionary::getWord() {
         case 2:
             return getWordVieEng();
         case 3:
-            return getWordEmoji();
+            return getWordKaomoji(fin);
         case 4:
             return getWordSlang();
-    }
+        case 5:
+            // TODO: Fix the code so that it supports the JSON array in the emoji.dict file. 
+            return getWordEmoji(fin, 0);
+    }   
 }
 
 Word Dictionary::getWordVieEng() {
