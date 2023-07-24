@@ -10,6 +10,9 @@ Word::Word(std::wstring key = L"", std::wstring definition = L"" , std::wstring 
 
 }
 
+std::vector<std::wstring> Word::getDefinitions() {
+    return definitions;
+}
 std::wstring Word::getKey() {
     return key;
 }
@@ -120,8 +123,10 @@ Word Dictionary::getWordEngEng()
     std::wifstream fin;
     fin.open("engeng.dict");
     bool isEndOfDefinition = false;
+    bool flag = true;
     Word word(L"", L"", L"");
     std::wstring line;
+    int curDef = 0;
     while (std::getline(fin, line))
     {
         if (line[0] == ' ') // if the line starts with a space, it is a definition
@@ -138,15 +143,29 @@ Word Dictionary::getWordEngEng()
                     tmp.append(L"/" + wordType);
                     word.setType(tmp);
                 }
+                if (isEndOfDefinition)
+                    word.getDefinitions().push_back(L"");   // if this sign is true, it means we are in a new definition
                 isEndOfDefinition = false;
             }
             else if (line[5] >= '0' && line[5] <= '9')  // start of a new definition
+            {
+                word.getDefinitions().push_back(L"");   // create a new slot for the new definition
                 isEndOfDefinition = false;
+                flag = true;                            // reset the flag
+            }    
             if (!isEndOfDefinition)
             {
-                std::wstring tmpDef = word.getDefinition();
+                std::wstring tmpDef = word.getDefinition(curDef); 
                 tmpDef.append(extractDefinition(line, isEndOfDefinition));
-                word.setDefinition(tmpDef);
+                word.setDefinition(tmpDef, curDef);
+            }
+            else
+            {
+                if (flag)
+                {
+                    curDef++;
+                    flag = false;
+                }    
             }
         }
         else // if the line starts with a letter, it is a word
