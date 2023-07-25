@@ -15,7 +15,7 @@ Word::Word(std::string key, std::string definition = "" , std::string type = "")
         definitions.push_back(definition);
 }
 
-std::vector<std::string> Word::getDefinitions() {
+std::vector<std::string>& Word::accessDefinitions() {
     return definitions;
 }
 std::string Word::getKey() {
@@ -120,7 +120,7 @@ std::string extractDefinition(const std::string& line, bool &isEndOfDefinition)
         isEndOfDefinition = true;
         definition = line.substr(firstPos, lastPos - firstPos);
     }
-    definition.append("\n");
+    definition.append(" ");
     return definition;
 }
 
@@ -137,7 +137,7 @@ Word Dictionary::getWordEngEng()
     std::ifstream fin;
     fin.open("engeng.dict");
     bool isEndOfDefinition = false;
-    bool flag = true;
+    bool start = false;
     Word word("", "", "");
     std::string line;
     int curDef = 0;
@@ -147,6 +147,8 @@ Word Dictionary::getWordEngEng()
         {
             if (line[5] >= 'a' && line[5] <= 'z')   // the sign of wordType
             {
+                if (!start)
+                    isEndOfDefinition = true;
                 std::string wordType = extractWordType(line);
                 if (word.getType().length() == 0)    // not have a wordType yet
                     word.setType(wordType);
@@ -158,14 +160,18 @@ Word Dictionary::getWordEngEng()
                     word.setType(tmp);
                 }
                 if (isEndOfDefinition)
-                    word.getDefinitions().push_back("");   // if this sign is true, it means we are in a new definition
+                    word.accessDefinitions().push_back("");   // if this sign is true, it means we are in a new definition
                 isEndOfDefinition = false;
+                if (!start)
+                    curDef++;
+                else
+                    start = false;
             }
             else if (line[5] >= '0' && line[5] <= '9')  // start of a new definition
             {
-                word.getDefinitions().push_back("");   // create a new slot for the new definition
+                word.accessDefinitions().push_back("");   // create a new slot for the new definition
                 isEndOfDefinition = false;
-                flag = true;                            // reset the flag
+                curDef++;                        // reset the flag
             }    
             if (!isEndOfDefinition)
             {
@@ -173,19 +179,14 @@ Word Dictionary::getWordEngEng()
                 tmpDef.append(extractDefinition(line, isEndOfDefinition));
                 word.setDefinition(tmpDef, curDef);
             }
-            else
-            {
-                if (flag)
-                {
-                    curDef++;
-                    flag = false;
-                }    
-            }
         }
         else // if the line starts with a letter, it is a word
         {
             if (word.getKey() == "")   // doesn't have anything
+            {
                 word.setKey(line);
+                start = true;
+            }
             else
                 break;
         }
