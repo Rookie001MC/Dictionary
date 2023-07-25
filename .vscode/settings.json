@@ -1,8 +1,4 @@
 {
-    "cSpell.words": [
-        "LIGHTGRAY",
-        "raylib",
-        "raysan",
-        "RAYWHITE"
-    ]
+  "cSpell.words": ["LIGHTGRAY", "raylib", "raysan", "RAYWHITE"],
+  "cmake.configureOnOpen": true
 }

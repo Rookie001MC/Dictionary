@@ -3,7 +3,8 @@
 # https://github.com/raysan5/raylib/blob/master/projects/CMake/CMakeLists.txt
 
 cmake_minimum_required(VERSION 3.15)
-project(dictionary_cs163_project)
+SET(MSVC_INCREMENTAL_DEFAULT ON)
+project(cs163_project)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
 set(FETCHCONTENT_QUIET FALSE)
