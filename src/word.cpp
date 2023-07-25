@@ -3,23 +3,23 @@
 #include <string>
 
 // define Word
-Word::Word(std::wstring key = L"", std::wstring definition = L"" , std::wstring type = L"") {
+Word::Word(std::string key = "", std::string definition = "" , std::string type = "") {
     this->key = key;
     this->type = type;
-    definitions.push_back(definition);
-
+    if (!definition.empty())
+        definitions.push_back(definition);
 }
 
-std::vector<std::wstring> Word::getDefinitions() {
+std::vector<std::string> Word::getDefinitions() {
     return definitions;
 }
-std::wstring Word::getKey() {
+std::string Word::getKey() {
     return key;
 }
-std::wstring Word::getType() {
+std::string Word::getType() {
     return type;
 }
-std::wstring Word::getDefinition(int index) {
+std::string Word::getDefinition(int index) {
     return definitions.at(index);
 }
 
@@ -27,17 +27,21 @@ int Word::getDefinitionCount() {
     return definitions.size();
 }
 
-void Word::setKey(std::wstring key) {
+void Word::setKey(std::string key) {
     this->key = key;
 }
 
-void Word::setType(std::wstring type) {
+void Word::setType(std::string type) {
     this->type = type;
 }
 
 
-void Word::setDefinition(std::wstring definition, int index) {
+void Word::setDefinition(std::string definition, int index) {
     definitions.at(index) = definition;
+}
+
+void Word::addDefinition(std::string definition) {
+    this->definitions.push_back(definition);
 }
 
 // define Dictionary
@@ -54,44 +58,49 @@ Word Dictionary::getWord() {
     switch(dictType) {
         case 0:
             return getWordEngEng();
-        case 1:
-            return getWordEngVie();
+        // case 1:
+        //     return getWordEngVie();
         case 2:
             return getWordVieEng();
-        case 3:
-            return getWordKaomoji(fin);
-        case 4:
-            return getWordSlang();
-        case 5:
-            // TODO: Fix the code so that it supports the JSON array in the emoji.dict file. 
-            return getWordEmoji(fin, 0);
-    }   
+        // case 3:
+        //     return getWordKaomoji(fin);
+        // case 4:
+        //     return getWordSlang();
+        // case 5:
+        //     // TODO: Fix the code so that it supports the JSON array in the emoji.dict file. 
+        //     return getWordEmoji(fin, 0);
+    }
+    return Word();
 }
 
 Word Dictionary::getWordVieEng() {
-    std::wstring key, definition, type, tmp;
-    std::getline(fin, key, L'\n');
+    std::string key, type, tmp;
+    std::getline(fin, key, '\n');
     key = key.substr(1);
-    std::getline(fin, tmp, L'\n');
+    Word word(key);
+    std::getline(fin, tmp, '\n');
     while (!tmp.empty()) {
-        if (tmp.at(0) == L'*')
-            type += (tmp.substr(1) + L'/');
-        if (tmp.at(0) == L'=') {
-            int pos = tmp.find(L'+');
-            definition += (L"Example: " + tmp.substr(1, pos - 1) + L": " + tmp.substr(pos + 1) + L'\n');
+        if (tmp.at(0) == '*')
+            type += (tmp.substr(1) + '/');
+        else if (tmp.at(0) == '=') {
+            int pos = tmp.find('+');
+            word.addDefinition("Example: " + tmp.substr(1, pos - 1) + ": " + tmp.substr(pos + 1) + '\n');
         }
-        definition += (tmp + L'\n');
+        else
+            word.addDefinition(tmp.substr(1) + '\n');
+        
+        std::getline(fin, tmp, '\n');
     }
     type = type.substr(0, type.size() - 1);
-    Word word(key, definition, type);
+    word.setType(type.substr(0, type.size() - 1));
     return word;
 }
 
-std::wstring extractDefinition(const std::wstring& line, bool &isEndOfDefinition)
+std::string extractDefinition(const std::string& line, bool &isEndOfDefinition)
 {
     // get the whole line except when meet the '[' - meaning that the definition is over
-    std::wstring definition;
-    if (line.find('[') == std::wstring::npos)    // this character doesn't exist
+    std::string definition;
+    if (line.find('[') == std::string::npos)    // this character doesn't exist
     {
         int start = line.find_first_not_of(' ');
         definition = line.substr(start);
@@ -106,26 +115,26 @@ std::wstring extractDefinition(const std::wstring& line, bool &isEndOfDefinition
         isEndOfDefinition = true;
         definition = line.substr(firstPos, lastPos - firstPos);
     }
-    definition.append(L"\n");
+    definition.append("\n");
     return definition;
 }
 
-std::wstring extractWordType(const std::wstring& line)
+std::string extractWordType(const std::string& line)
 {
-    std::wstring wordType;
-    std::wistringstream iss(line);
+    std::string wordType;
+    std::istringstream iss(line);
     iss >> std::skipws >> wordType;
     return wordType;
 }
 
 Word Dictionary::getWordEngEng()
 {
-    std::wifstream fin;
+    std::ifstream fin;
     fin.open("engeng.dict");
     bool isEndOfDefinition = false;
     bool flag = true;
-    Word word(L"", L"", L"");
-    std::wstring line;
+    Word word("", "", "");
+    std::string line;
     int curDef = 0;
     while (std::getline(fin, line))
     {
@@ -133,29 +142,29 @@ Word Dictionary::getWordEngEng()
         {
             if (line[5] >= 'a' && line[5] <= 'z')   // the sign of wordType
             {
-                std::wstring wordType = extractWordType(line);
+                std::string wordType = extractWordType(line);
                 if (word.getType().length() == 0)    // not have a wordType yet
                     word.setType(wordType);
                 
                 else    
                 {
-                    std::wstring tmp = word.getType();
-                    tmp.append(L"/" + wordType);
+                    std::string tmp = word.getType();
+                    tmp.append("/" + wordType);
                     word.setType(tmp);
                 }
                 if (isEndOfDefinition)
-                    word.getDefinitions().push_back(L"");   // if this sign is true, it means we are in a new definition
+                    word.getDefinitions().push_back("");   // if this sign is true, it means we are in a new definition
                 isEndOfDefinition = false;
             }
             else if (line[5] >= '0' && line[5] <= '9')  // start of a new definition
             {
-                word.getDefinitions().push_back(L"");   // create a new slot for the new definition
+                word.getDefinitions().push_back("");   // create a new slot for the new definition
                 isEndOfDefinition = false;
                 flag = true;                            // reset the flag
             }    
             if (!isEndOfDefinition)
             {
-                std::wstring tmpDef = word.getDefinition(curDef); 
+                std::string tmpDef = word.getDefinition(curDef); 
                 tmpDef.append(extractDefinition(line, isEndOfDefinition));
                 word.setDefinition(tmpDef, curDef);
             }
@@ -170,7 +179,7 @@ Word Dictionary::getWordEngEng()
         }
         else // if the line starts with a letter, it is a word
         {
-            if (word.getKey() == L"")   // doesn't have anything
+            if (word.getKey() == "")   // doesn't have anything
                 word.setKey(line);
             else
                 break;
