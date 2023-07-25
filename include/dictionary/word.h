@@ -12,7 +12,7 @@ class Word {
         std::string type;
         std::vector<std::string> definitions;
     public:        
-        Word(std::string key , std::string definition, std::string type);
+        Word(std::string key, std::string definition, std::string type);
         std::string getKey();
         std::string getType();
         std::string getDefinition(int index);
