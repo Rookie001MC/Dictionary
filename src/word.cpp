@@ -10,7 +10,7 @@ Word::Word(std::wstring key = L"", std::wstring definition = L"" , std::wstring 
 
 }
 
-std::vector<std::wstring> Word::getDefinitions() {
+std::vector<std::wstring>& Word::getDefinitions() {
     return definitions;
 }
 std::wstring Word::getKey() {
@@ -106,7 +106,7 @@ std::wstring extractDefinition(const std::wstring& line, bool &isEndOfDefinition
         isEndOfDefinition = true;
         definition = line.substr(firstPos, lastPos - firstPos);
     }
-    definition.append(L"\n");
+    definition.append(L" ");
     return definition;
 }
 

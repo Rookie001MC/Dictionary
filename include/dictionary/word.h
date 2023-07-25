@@ -16,7 +16,7 @@ class Word {
         std::wstring getKey();
         std::wstring getType();
         std::wstring getDefinition(int index);
-        std::vector<std::wstring> getDefinitions();
+        std::vector<std::wstring>& getDefinitions();
         int getDefinitionCount();
         void setKey(std::wstring key);
         void setType(std::wstring type);
