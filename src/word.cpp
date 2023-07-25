@@ -3,7 +3,12 @@
 #include <string>
 
 // define Word
-Word::Word(std::string key = "", std::string definition = "" , std::string type = "") {
+Word::Word() {
+    key = "";
+    type = "";
+}
+
+Word::Word(std::string key, std::string definition = "" , std::string type = "") {
     this->key = key;
     this->type = type;
     if (!definition.empty())

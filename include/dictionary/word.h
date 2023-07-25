@@ -11,7 +11,8 @@ class Word {
         std::string key;
         std::string type;
         std::vector<std::string> definitions;
-    public:        
+    public:
+        Word();
         Word(std::string key, std::string definition, std::string type);
         std::string getKey();
         std::string getType();

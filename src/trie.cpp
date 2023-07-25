@@ -19,15 +19,16 @@ TrieNode* Trie::createNode() {
     return node;
 }
 
-void Trie::insert(std::string key) {
+void Trie::insert(Word word) {
     TrieNode* cur = root;
-    for (int i = 0; i < key.length(); ++i) {
-        int index = key[i] - 'a';
+    for (int i = 0; i < word.getKey().length(); ++i) {
+        int index = word.getKey().at(i) - 'a';
         if (!cur->children[index])
             cur->children[index] = createNode();
         cur = cur->children[index];
     }
     cur->endOfWord = true;
+    cur->word = word;
 }
 
 bool Trie::isEmpty(TrieNode* node) {
@@ -47,7 +48,7 @@ TrieNode* Trie::remove(TrieNode* root, std::string key, int index = 0) {
         }
     }
     int idx = key.at(index) - 'a';
-     root->children[index] = remove(root->children[index], key, index + 1);
+    root->children[index] = remove(root->children[index], key, index + 1);
     Trie::remove(root->children[idx], key, index + 1);
     if (isEmpty(root) && root->endOfWord == false) {
         delete root;
@@ -70,18 +71,18 @@ void Trie::clear(TrieNode* root) {
     }
 }
 
-bool Trie::prefixSearch(std::string key) {
-    TrieNode* cur = root;
-    for (int i = 0; i < key.length(); ++i) {
-        int index = key[i] - 'a';
-        if (cur->children[index] == nullptr)
-            return false;
-        else cur = cur->children[index];
-    }
-    return true;
-}
+// bool Trie::prefixSearch(std::string key) {
+//     TrieNode* cur = root;
+//     for (int i = 0; i < key.length(); ++i) {
+//         int index = key[i] - 'a';
+//         if (cur->children[index] == nullptr)
+//             return false;
+//         else cur = cur->children[index];
+//     }
+//     return true;
+// }
 
-bool Trie::wholeWordSearch(std::string key) {
+bool Trie::search(std::string key, Word &word) {
     TrieNode* cur = root;
     for (int i = 0; i < key.length(); ++i) {
         int index = key[i] - 'a';
@@ -89,7 +90,12 @@ bool Trie::wholeWordSearch(std::string key) {
             return false;
         else cur = cur->children[index];
     }
-    return (cur->endOfWord) ? true : false;
+    
+    if (cur->endOfWord) {
+        word = cur->word;
+        return true;
+    }
+    return false;
 }
 
 void Trie::remove(std::string key) {

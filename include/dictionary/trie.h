@@ -1,9 +1,11 @@
 #include <string>
+#include "dictionary/word.h"
 
 const int ALPHABET = 26;
 struct TrieNode {
     TrieNode* children[ALPHABET];
     bool endOfWord;
+    Word word;
 };
 
 class Trie {
@@ -16,8 +18,8 @@ class Trie {
     public:
         Trie();
         ~Trie();
-        void insert(std::string key);
-        bool prefixSearch(std::string key);
-        bool wholeWordSearch(std::string key);
+        void insert(Word word);
+        // bool prefixSearch(std::string key);
+        bool search(std::string key);
         void remove(std::string key);
 };
