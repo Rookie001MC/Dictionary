@@ -3,9 +3,11 @@
 
 std::string nextKey;
 
-void build(Dictionary &dict, Trie &trie) {
+void build(Dictionary &dict, Trie &trie)
+{
     std::string path;
-    switch(dict.getDictionaryType()) {
+    switch (dict.getDictionaryType())
+    {
         case 0:
             path = ENGENG;
             break;
@@ -24,11 +26,13 @@ void build(Dictionary &dict, Trie &trie) {
     }
     if (!std::filesystem::exists(path))
         std::filesystem::create_directories(path);
-    if (!std::filesystem::exists(path + "history.txt")) {
+    if (!std::filesystem::exists(path + "history.txt"))
+    {
         std::ofstream fout(path + "history.txt");
         fout.close();
     }
-    if (!std::filesystem::exists(path + "favourite.txt")) {
+    if (!std::filesystem::exists(path + "favourite.txt"))
+    {
         std::ofstream fout(path + "favourite.txt");
         fout.close();
     }
@@ -37,9 +41,10 @@ void build(Dictionary &dict, Trie &trie) {
     else
     {
         bool sign = false;
-        while (!dict.eof()) {
+        while (!dict.eof())
+        {
             Word word = dict.getWord();
-            if (nextKey == "" && !sign)     
+            if (nextKey == "" && !sign)
                 sign = true;
             else if (nextKey == "" && sign) // end of file
                 break;

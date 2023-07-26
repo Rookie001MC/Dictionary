@@ -4,111 +4,132 @@ using json = nlohmann::json;
 extern std::string nextKey;
 
 // define Word
-Word::Word() {
-    key = "";
+Word::Word()
+{
+    key  = "";
     type = "";
 }
 
-Word::Word(std::string key, std::string definition = "" , std::string type = "") {
-    this->key = key;
+Word::Word(std::string key, std::string definition = "", std::string type = "")
+{
+    this->key  = key;
     this->type = type;
     if (!definition.empty())
         definitions.push_back(definition);
 }
 
-std::vector<std::string> Word::getDefinitions() {
+std::vector<std::string> Word::getDefinitions()
+{
     return definitions;
 }
 
-std::vector<std::string>& Word::accessDefinitions() {
+std::vector<std::string> &Word::accessDefinitions()
+{
     return definitions;
 }
 
-std::string Word::getKey() {
+std::string Word::getKey()
+{
     return key;
 }
-std::string Word::getType() {
+std::string Word::getType()
+{
     return type;
 }
-std::string Word::getDefinition(int index) {
+std::string Word::getDefinition(int index)
+{
     if (definitions.size() <= index)
         return "";
     return definitions.at(index);
 }
 
-int Word::getDefinitionCount() {
+int Word::getDefinitionCount()
+{
     return definitions.size();
 }
 
-void Word::setKey(std::string key) {
+void Word::setKey(std::string key)
+{
     this->key = key;
 }
 
-void Word::setType(std::string type) {
+void Word::setType(std::string type)
+{
     this->type = type;
 }
 
-void Word::setDefinition(std::string definition, int index) {
+void Word::setDefinition(std::string definition, int index)
+{
     definitions.at(index) = definition;
 }
 
-void Word::addDefinition(std::string definition) {
+void Word::addDefinition(std::string definition)
+{
     this->definitions.push_back(definition);
 }
 
 // define Dictionary
-Dictionary::Dictionary(std::string path, int dictType) {
+Dictionary::Dictionary(std::string path, int dictType)
+{
     fin.open(path);
     this->dictType = dictType;
 }
 
-Dictionary::~Dictionary() {
+Dictionary::~Dictionary()
+{
     fin.close();
 }
 
-int Dictionary::getDictionaryType() {
+int Dictionary::getDictionaryType()
+{
     return dictType;
 }
 
-bool Dictionary::eof() {
+bool Dictionary::eof()
+{
     return fin.eof();
 }
 
-Word Dictionary::getWord() {
-    switch(dictType) {
+Word Dictionary::getWord()
+{
+    switch (dictType)
+    {
         case 0:
             return getWordEngEng();
         // case 1:
         //     return getWordEngVie();
         case 2:
             return getWordVieEng();
-        // case 3:
-        //     return getWordKaomoji(fin);
-        // case 4:
-        //     return getWordSlang();
-        // case 5:
-        //     // TODO: Fix the code so that it supports the JSON array in the emoji.dict file. 
-        //     return getWordEmoji(fin, 0);
+            // case 3:
+            //     return getWordKaomoji(fin);
+            // case 4:
+            //     return getWordSlang();
+            // case 5:
+            //     // TODO: Fix the code so that it supports the JSON array in the emoji.dict file.
+            //     return getWordEmoji(fin, 0);
     }
     return Word();
 }
 
-Word Dictionary::getWordVieEng() {
+Word Dictionary::getWordVieEng()
+{
     std::string key, type, tmp;
     std::getline(fin, key, '\n');
     key = key.substr(1);
     Word word(key);
     std::getline(fin, tmp, '\n');
-    while (!tmp.empty()) {
+    while (!tmp.empty())
+    {
         if (tmp.at(0) == '*')
             type += (tmp.substr(1) + '/');
-        else if (tmp.at(0) == '=') {
+        else if (tmp.at(0) == '=')
+        {
             int pos = tmp.find('+');
             word.addDefinition("Example: " + tmp.substr(1, pos - 1) + ": " + tmp.substr(pos + 1) + '\n');
         }
         else
             word.addDefinition(tmp.substr(1) + '\n');
-        
+
         std::getline(fin, tmp, '\n');
     }
     type = type.substr(0, type.size() - 1);
@@ -116,30 +137,30 @@ Word Dictionary::getWordVieEng() {
     return word;
 }
 
-std::string extractDefinition(const std::string& line, bool &isEndOfDefinition)
+std::string extractDefinition(const std::string &line, bool &isEndOfDefinition)
 {
     // get the whole line except when meet the '[' - meaning that the definition is over
     std::string definition;
-    if (line.find('[') == std::string::npos)    // this character doesn't exist
+    if (line.find('[') == std::string::npos) // this character doesn't exist
     {
-        int start = line.find_first_not_of(' ');
+        int start  = line.find_first_not_of(' ');
         definition = line.substr(start);
     }
     else
     {
-        // find the position that is not a space 
+        // find the position that is not a space
         // then find the last position (the position appearing '[')
         // then get the substring from the first position to the last position
-        int firstPos = line.find_first_not_of(' ');
-        int lastPos = line.find('[');
+        int firstPos      = line.find_first_not_of(' ');
+        int lastPos       = line.find('[');
         isEndOfDefinition = true;
-        definition = line.substr(firstPos, lastPos - firstPos);
+        definition        = line.substr(firstPos, lastPos - firstPos);
     }
     definition.append(" ");
     return definition;
 }
 
-std::string extractWordType(const std::string& line)
+std::string extractWordType(const std::string &line)
 {
     std::string wordType;
     std::istringstream iss(line);
@@ -150,7 +171,7 @@ std::string extractWordType(const std::string& line)
 Word Dictionary::getWordEngEng()
 {
     bool isEndOfDefinition = false;
-    bool start = false;
+    bool start             = false;
     Word word(nextKey, "", "");
     std::string line;
     int curDef = 0;
@@ -158,48 +179,48 @@ Word Dictionary::getWordEngEng()
     {
         if (line[0] == ' ') // if the line starts with a space, it is a definition
         {
-            if (line[5] >= 'a' && line[5] <= 'z')   // the sign of wordType
+            if (line[5] >= 'a' && line[5] <= 'z') // the sign of wordType
             {
                 if (nextKey != "")
                     start = true;
                 if (!start)
                     isEndOfDefinition = true;
                 std::string wordType = extractWordType(line);
-                if (word.getType().length() == 0)    // not have a wordType yet
+                if (word.getType().length() == 0) // not have a wordType yet
                     word.setType(wordType);
-                
-                else    
+
+                else
                 {
                     std::string tmp = word.getType();
                     tmp.append("/" + wordType);
                     word.setType(tmp);
                 }
                 if (isEndOfDefinition)
-                    word.getDefinitions().push_back("");   // if this sign is true, it means we are in a new definition
+                    word.getDefinitions().push_back(""); // if this sign is true, it means we are in a new definition
                 isEndOfDefinition = false;
                 if (!start)
                     curDef++;
                 else
                     start = false;
             }
-            else if (line[5] >= '0' && line[5] <= '9')  // start of a new definition
+            else if (line[5] >= '0' && line[5] <= '9') // start of a new definition
             {
-                word.getDefinitions().push_back("");   // create a new slot for the new definition
+                word.getDefinitions().push_back(""); // create a new slot for the new definition
                 isEndOfDefinition = false;
                 curDef++;
-            }    
+            }
             if (!isEndOfDefinition)
-            {   
+            {
                 if (word.getDefinitionCount() <= curDef)
                     word.addDefinition("");
-                std::string tmpDef = word.getDefinition(curDef); 
+                std::string tmpDef = word.getDefinition(curDef);
                 tmpDef.append(extractDefinition(line, isEndOfDefinition));
                 word.setDefinition(tmpDef, curDef);
             }
         }
         else // if the line starts with a letter, it is a word
         {
-            if (word.getKey() == "")   // doesn't have anything
+            if (word.getKey() == "") // doesn't have anything
             {
                 word.setKey(line);
                 start = true;
@@ -214,23 +235,26 @@ Word Dictionary::getWordEngEng()
     return word;
 }
 
-Word Dictionary::getWordEngVie() {
+Word Dictionary::getWordEngVie()
+{
     fin.open("../../data/engvie.dict");
     std::string key, type, tmp;
     std::getline(fin, key, '\n');
     key = key.substr(1);
     Word word(key, "", "");
     std::getline(fin, tmp, '\n');
-    while (!tmp.empty()) {
+    while (!tmp.empty())
+    {
         if (tmp.at(0) == '*')
             type += (tmp.substr(1) + '/');
-        else if (tmp.at(0) == '=') {
+        else if (tmp.at(0) == '=')
+        {
             int pos = tmp.find('+');
             word.addDefinition("Example: " + tmp.substr(1, pos - 1) + ": " + tmp.substr(pos + 1) + '\n');
         }
         else
             word.addDefinition(tmp.substr(1) + '\n');
-        
+
         std::getline(fin, tmp, '\n');
     }
     type = type.substr(0, type.size() - 1);
@@ -238,12 +262,11 @@ Word Dictionary::getWordEngVie() {
     return word;
 }
 
-
- /*
-    Note:
-        Khác biệt giữa getWordEmoji và getWordKaomoji là do file emoji.dict là mảng JSON thay vì object JSON như file
-        kaomoji.dict, nên cần truyền thêm index vào hàm getWordEmoji để lấy được từng phần tử trong mảng.
- */
+/*
+   Note:
+       Khác biệt giữa getWordEmoji và getWordKaomoji là do file emoji.dict là mảng JSON thay vì object JSON như file
+       kaomoji.dict, nên cần truyền thêm index vào hàm getWordEmoji để lấy được từng phần tử trong mảng.
+*/
 Word Dictionary::getWordEmoji(int index)
 {
 
@@ -252,8 +275,8 @@ Word Dictionary::getWordEmoji(int index)
     fin >> j;
 
     auto currentEmoji = j.begin() + index;
-    std::string key = currentEmoji->at("emoji").get<std::string>();
-    std::string type = currentEmoji->at("category").get<std::string>();
+    std::string key   = currentEmoji->at("emoji").get<std::string>();
+    std::string type  = currentEmoji->at("category").get<std::string>();
     tmpEmoji.setKey(key);
     tmpEmoji.setType(type);
 
@@ -262,20 +285,19 @@ Word Dictionary::getWordEmoji(int index)
     tmpEmoji.addDefinition(definition);
 
     return tmpEmoji;
- 
 }
 
 Word Dictionary::getWordKaomoji()
 {
 
     Word tmpKaomoji;
-   json j;
-   fin >> j;
+    json j;
+    fin >> j;
 
-   std::string key = j.begin().key();
-   std::string type = "kaomoji";
-   std::vector<std::string> definitions = j[key]["original_tags"].get<std::vector<std::string>> ();
-   std::vector<std::string> new_tags = j[key]["new_tags"].get<std::vector<std::string>> ();
+    std::string key                      = j.begin().key();
+    std::string type                     = "kaomoji";
+    std::vector<std::string> definitions = j[key]["original_tags"].get<std::vector<std::string>>();
+    std::vector<std::string> new_tags    = j[key]["new_tags"].get<std::vector<std::string>>();
 
     tmpKaomoji.setKey(key);
     tmpKaomoji.setType(type);
