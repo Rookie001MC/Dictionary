@@ -271,6 +271,7 @@ Word Dictionary::getWordEmoji(int index)
 {
 
     Word tmpEmoji;
+    fin.seekg(0, std::ios::beg);
     json j;
     fin >> j;
 
@@ -287,23 +288,32 @@ Word Dictionary::getWordEmoji(int index)
     return tmpEmoji;
 }
 
-Word Dictionary::getWordKaomoji()
+Word Dictionary::getWordKaomoji(int index)
 {
-
     Word tmpKaomoji;
+    fin.seekg(0, std::ios::beg);
     json j;
     fin >> j;
 
-    std::string key                      = j.begin().key();
-    std::string type                     = "kaomoji";
-    std::vector<std::string> definitions = j[key]["original_tags"].get<std::vector<std::string>>();
-    std::vector<std::string> new_tags    = j[key]["new_tags"].get<std::vector<std::string>>();
+    auto currentKaomoji = j.begin() + index;
+    auto currentKaomojiMeta = currentKaomoji->at("meta");
+
+    std::string key  = currentKaomoji->at("kaomoji").get<std::string>();
+
+    std::string type = "kaomoji";
 
     tmpKaomoji.setKey(key);
     tmpKaomoji.setType(type);
 
-    for (auto definition : definitions)
+    for (auto &current_tags : currentKaomojiMeta.at("original_tags"))
     {
+        std::string definition = current_tags.get<std::string>();
+        tmpKaomoji.addDefinition(definition);
+    }
+
+    for (auto &current_tags : currentKaomojiMeta.at("new_tags"))
+    {
+        std::string definition = current_tags.get<std::string>();
         tmpKaomoji.addDefinition(definition);
     }
 
