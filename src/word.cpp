@@ -2,6 +2,8 @@
 #include <sstream>
 #include <string>
 
+extern std::string nextKey;
+
 // define Word
 Word::Word() {
     key = "";
@@ -25,6 +27,8 @@ std::string Word::getType() {
     return type;
 }
 std::string Word::getDefinition(int index) {
+    if (definitions.size() <= index)
+        return "";
     return definitions.at(index);
 }
 
@@ -134,11 +138,9 @@ std::string extractWordType(const std::string& line)
 
 Word Dictionary::getWordEngEng()
 {
-    std::ifstream fin;
-    fin.open("engeng.dict");
     bool isEndOfDefinition = false;
-    bool flag = true;
-    Word word("", "", "");
+    bool start = false;
+    Word word(nextKey, "", "");
     std::string line;
     int curDef = 0;
     while (std::getline(fin, line))
@@ -147,6 +149,10 @@ Word Dictionary::getWordEngEng()
         {
             if (line[5] >= 'a' && line[5] <= 'z')   // the sign of wordType
             {
+                if (nextKey != "")
+                    start = true;
+                if (!start)
+                    isEndOfDefinition = true;
                 std::string wordType = extractWordType(line);
                 if (word.getType().length() == 0)    // not have a wordType yet
                     word.setType(wordType);
@@ -160,36 +166,47 @@ Word Dictionary::getWordEngEng()
                 if (isEndOfDefinition)
                     word.getDefinitions().push_back("");   // if this sign is true, it means we are in a new definition
                 isEndOfDefinition = false;
+                if (!start)
+                    curDef++;
+                else
+                    start = false;
             }
             else if (line[5] >= '0' && line[5] <= '9')  // start of a new definition
             {
                 word.getDefinitions().push_back("");   // create a new slot for the new definition
                 isEndOfDefinition = false;
-                flag = true;                            // reset the flag
+                curDef++;
             }    
             if (!isEndOfDefinition)
-            {
+            {   
+                if (word.getDefinitionCount() <= curDef)
+                    word.addDefinition("");
                 std::string tmpDef = word.getDefinition(curDef); 
                 tmpDef.append(extractDefinition(line, isEndOfDefinition));
                 word.setDefinition(tmpDef, curDef);
-            }
-            else
-            {
-                if (flag)
-                {
-                    curDef++;
-                    flag = false;
-                }    
             }
         }
         else // if the line starts with a letter, it is a word
         {
             if (word.getKey() == "")   // doesn't have anything
+            {
                 word.setKey(line);
+                start = true;
+            }
             else
+            {
+                nextKey = line;
                 break;
+            }
         }
     }
-    fin.close();
     return word;
+}
+
+int Dictionary::getDictionaryType() {
+    return dictType;
+}
+
+bool Dictionary::eof() {
+    return fin.eof();
 }

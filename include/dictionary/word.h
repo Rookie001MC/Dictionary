@@ -39,6 +39,8 @@ class Dictionary {
         Dictionary(std::string path, int dictType);
         ~Dictionary();
         Word getWord();
+        int getDictionaryType();
+        bool eof();
 };
 
 #endif
