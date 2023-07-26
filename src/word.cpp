@@ -20,6 +20,10 @@ Word::Word(std::string key, std::string definition = "" , std::string type = "")
 std::vector<std::string> Word::getDefinitions() {
     return definitions;
 }
+
+std::vector<std::string>& Word::accessDefinitions() {
+    return definitions;
+}
 std::string Word::getKey() {
     return key;
 }
@@ -61,6 +65,14 @@ Dictionary::Dictionary(std::string path, int dictType) {
 
 Dictionary::~Dictionary() {
     fin.close();
+}
+
+int Dictionary::getDictionaryType() {
+    return dictType;
+}
+
+bool Dictionary::eof() {
+    return fin.eof();
 }
 
 Word Dictionary::getWord() {
@@ -124,7 +136,7 @@ std::string extractDefinition(const std::string& line, bool &isEndOfDefinition)
         isEndOfDefinition = true;
         definition = line.substr(firstPos, lastPos - firstPos);
     }
-    definition.append("\n");
+    definition.append(" ");
     return definition;
 }
 
@@ -164,8 +176,12 @@ Word Dictionary::getWordEngEng()
                     word.setType(tmp);
                 }
                 if (isEndOfDefinition)
-                    word.getDefinitions().push_back("");   // if this sign is true, it means we are in a new definition
+                    word.accessDefinitions().push_back("");   // if this sign is true, it means we are in a new definition
                 isEndOfDefinition = false;
+                if (!start)
+                    curDef++;
+                else
+                    start = false;
                 if (!start)
                     curDef++;
                 else
@@ -173,7 +189,7 @@ Word Dictionary::getWordEngEng()
             }
             else if (line[5] >= '0' && line[5] <= '9')  // start of a new definition
             {
-                word.getDefinitions().push_back("");   // create a new slot for the new definition
+                word.accessDefinitions().push_back("");   // create a new slot for the new definition
                 isEndOfDefinition = false;
                 curDef++;
             }    
@@ -190,7 +206,10 @@ Word Dictionary::getWordEngEng()
         {
             if (word.getKey() == "")   // doesn't have anything
             {
+            {
                 word.setKey(line);
+                start = true;
+            }
                 start = true;
             }
             else
@@ -203,10 +222,26 @@ Word Dictionary::getWordEngEng()
     return word;
 }
 
-int Dictionary::getDictionaryType() {
-    return dictType;
-}
-
-bool Dictionary::eof() {
-    return fin.eof();
+Word Dictionary::getWordEngVie() {
+    fin.open("../../data/engvie.dict");
+    std::string key, type, tmp;
+    std::getline(fin, key, '\n');
+    key = key.substr(1);
+    Word word(key, "", "");
+    std::getline(fin, tmp, '\n');
+    while (!tmp.empty()) {
+        if (tmp.at(0) == '*')
+            type += (tmp.substr(1) + '/');
+        else if (tmp.at(0) == '=') {
+            int pos = tmp.find('+');
+            word.addDefinition("Example: " + tmp.substr(1, pos - 1) + ": " + tmp.substr(pos + 1) + '\n');
+        }
+        else
+            word.addDefinition(tmp.substr(1) + '\n');
+        
+        std::getline(fin, tmp, '\n');
+    }
+    type = type.substr(0, type.size() - 1);
+    word.setType(type.substr(0, type.size() - 1));
+    return word;
 }
