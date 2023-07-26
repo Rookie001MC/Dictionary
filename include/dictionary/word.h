@@ -5,7 +5,8 @@
 #include <vector>
 #include <utility>
 #include <fstream>
-
+#include <sstream>
+#include "nlohmann/json.hpp"
 class Word {
     private:
         std::string key;
@@ -33,9 +34,9 @@ class Dictionary {
         Word getWordEngEng();
         Word getWordEngVie();
         Word getWordVieEng();
-        Word getWordKaomoji(std::ifstream &fin);
+        Word getWordKaomoji();
         Word getWordSlang();
-        Word getWordEmoji(std::ifstream &fin, int index);
+        Word getWordEmoji(int index);
     public:
         Dictionary(std::string path, int dictType);
         ~Dictionary();
