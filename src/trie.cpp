@@ -1,5 +1,4 @@
 #include "dictionary/trie.h"
-#include <iostream>
 Trie::Trie() {
     this->root = new TrieNode;
     root->endOfWord = false;
