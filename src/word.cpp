@@ -1,6 +1,5 @@
 #include "dictionary/word.h"
-#include <sstream>
-#include <string>
+using json = nlohmann::json;
 
 extern std::string nextKey;
 
@@ -237,4 +236,54 @@ Word Dictionary::getWordEngVie() {
     type = type.substr(0, type.size() - 1);
     word.setType(type.substr(0, type.size() - 1));
     return word;
+}
+
+
+ /*
+    Note:
+        Khác biệt giữa getWordEmoji và getWordKaomoji là do file emoji.dict là mảng JSON thay vì object JSON như file
+        kaomoji.dict, nên cần truyền thêm index vào hàm getWordEmoji để lấy được từng phần tử trong mảng.
+ */
+Word Dictionary::getWordEmoji(int index)
+{
+
+    Word tmpEmoji;
+    json j;
+    fin >> j;
+
+    auto currentEmoji = j.begin() + index;
+    std::string key = currentEmoji->at("emoji").get<std::string>();
+    std::string type = currentEmoji->at("category").get<std::string>();
+    tmpEmoji.setKey(key);
+    tmpEmoji.setType(type);
+
+    // True definition should be the description of the emoji
+    std::string definition = currentEmoji->at("description").get<std::string>();
+    tmpEmoji.addDefinition(definition);
+
+    return tmpEmoji;
+ 
+}
+
+Word Dictionary::getWordKaomoji()
+{
+
+    Word tmpKaomoji;
+   json j;
+   fin >> j;
+
+   std::string key = j.begin().key();
+   std::string type = "kaomoji";
+   std::vector<std::string> definitions = j[key]["original_tags"].get<std::vector<std::string>> ();
+   std::vector<std::string> new_tags = j[key]["new_tags"].get<std::vector<std::string>> ();
+
+    tmpKaomoji.setKey(key);
+    tmpKaomoji.setType(type);
+
+    for (auto definition : definitions)
+    {
+        tmpKaomoji.addDefinition(definition);
+    }
+
+    return tmpKaomoji;
 }
