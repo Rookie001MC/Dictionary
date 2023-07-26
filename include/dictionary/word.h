@@ -37,7 +37,7 @@ class Dictionary
     Word getWordEngEng();
     Word getWordEngVie();
     Word getWordVieEng();
-    Word getWordKaomoji();
+    Word getWordKaomoji(int index);
     Word getWordSlang();
     Word getWordEmoji(int index);
 
