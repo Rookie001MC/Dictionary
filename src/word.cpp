@@ -1,5 +1,8 @@
 #include "dictionary/word.h"
 
+// Declare namespace thư viện JSON
+using json = nlohmann::json;
+
 // define Word
 Word::Word()
 {
@@ -252,7 +255,6 @@ Word Dictionary::getWordEngVie()
 
 Word Dictionary::getWordEmoji(int index)
 {
-    using json = nlohmann::json;
     json j;
     fin >> j;
 
