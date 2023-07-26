@@ -271,7 +271,6 @@ Word Dictionary::getWordEmoji(int index)
 {
 
     Word tmpEmoji;
-    fin.seekg(0, std::ios::beg);
     json j;
     fin >> j;
 
@@ -291,7 +290,6 @@ Word Dictionary::getWordEmoji(int index)
 Word Dictionary::getWordKaomoji(int index)
 {
     Word tmpKaomoji;
-    fin.seekg(0, std::ios::beg);
     json j;
     fin >> j;
 
