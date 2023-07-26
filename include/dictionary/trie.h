@@ -2,6 +2,7 @@
 #define TRIE_H
 
 #include <string>
+#include <iostream>
 #include "word.h"
 
 const int ALPHABET = 41;
