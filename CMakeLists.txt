@@ -56,9 +56,8 @@ endif()
 
 
 # Defining the source files and includes
-file(GLOB_RECURSE SOURCES "src/*.cpp")
-file(GLOB_RECURSE HEADERS "header/*.hpp")
-file(GLOB_RECURSE HEADERS "header/*.h")
+file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS "src/*.cpp")
+file(GLOB_RECURSE HEADERS CONFIGURE_DEPENDS "include/*.hpp include/*.h")
 
 # Set the built executable directory
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
