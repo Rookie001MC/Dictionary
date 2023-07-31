@@ -13,7 +13,6 @@ set(CMAKE_CXX_STANDARD 20)
 
 set(RAYLIB_VERSION 4.5.0)
 set(RAYLIB-CPP_VERSION 4.5.1)
-set(nlohmann_json_VERSION 3.11.2)
 
 # Setting libraries
 
@@ -41,20 +40,6 @@ if (NOT raylib_cpp_FOUND)
     FetchContent_MakeAvailable(raylib_cpp)
 endif()
 
-# JSON by Nlohmann (https://github.com/nlohmann/json)
-find_package(nlohmann_json QUIET)
-if (NOT nlohmann_json_FOUND)
-    include(FetchContent)
-    FetchContent_Declare(
-        nlohmann_json
-        GIT_REPOSITORY https://github.com/nlohmann/json.git
-        GIT_TAG v${nlohmann_json_VERSION}
-    )
-    FetchContent_MakeAvailable(nlohmann_json)
-
-endif()
-
-
 # Defining the source files and includes
 file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS "src/*.cpp")
 file(GLOB_RECURSE HEADERS CONFIGURE_DEPENDS "include/*.hpp include/*.h")
@@ -73,7 +58,6 @@ target_include_directories(${PROJECT_NAME} PUBLIC include)
 
 # Adding the libraries
 target_link_libraries(${PROJECT_NAME} PUBLIC raylib raylib_cpp)
-target_link_libraries(${PROJECT_NAME} PUBLIC nlohmann_json::nlohmann_json)
 
 # MacOS jibbirish
 if (APPLE)

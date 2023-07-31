@@ -1,7 +1,6 @@
 #ifndef WORD_H
 #define WORD_H
 
-#include "nlohmann/json.hpp"
 #include <fstream>
 #include <sstream>
 #include <string>
@@ -37,9 +36,8 @@ class Dictionary
     Word getWordEngEng();
     Word getWordEngVie();
     Word getWordVieEng();
-    Word getWordKaomoji(int index);
     Word getWordSlang();
-    Word getWordEmoji(int index);
+    Word getWordEmoji();
 
   public:
     Dictionary(std::string path, int dictType);

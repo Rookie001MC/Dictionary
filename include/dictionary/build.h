@@ -10,7 +10,11 @@ const std::string ENGVIE = "../tmp/engvie/";
 const std::string VIEENG = "../tmp/vieeng/";
 const std::string EMOJI  = "../tmp/emoji/";
 const std::string SLANG  = "../tmp/slang/";
-
+const char ENGENGDELIMITER = '#';
+const char ENGVIEDELIMITER = '$';
+const char VIEENGDELIMITER = '$';
+const char EMOJIDELIMITER = '$';
+const char SLANGDELIMITER = '`';
 void build(Dictionary &dict, Trie &trie);
 
 #endif

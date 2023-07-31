@@ -21,32 +21,37 @@ TrieNode *Trie::createNode()
     return node;
 }
 
+int Trie::getIndex(char c) {
+    int index;
+    if (c >= '0' && c <= '9')
+    {
+        index = c - '0' + 26;
+    }
+    else if (c == '\'')
+        index = 36;
+    else if (c == '/')
+        index = 37;
+    else if (c == '-')
+        index = 38;
+    else if (c == ' ')
+        index = 39;
+    else if (c == '.')
+        index = 40;
+    else
+    {
+        c     = tolower(c);
+        index = c - 'a';
+    }
+    return index;
+}
+
 void Trie::insert(Word word)
 {
     TrieNode *cur = root;
     for (int i = 0; i < word.getKey().length(); ++i)
     {
         char c = word.getKey().at(i);
-        int index;
-        if (c >= '0' && c <= '9')
-        {
-            index = c - '0' + 26;
-        }
-        else if (c == '\'')
-            index = 36;
-        else if (c == '/')
-            index = 37;
-        else if (c == '-')
-            index = 38;
-        else if (c == ' ')
-            index = 39;
-        else if (c == '.')
-            index = 40;
-        else
-        {
-            c     = tolower(c);
-            index = c - 'a';
-        }
+        int index = getIndex(c);
         if (!cur->children[index])
             cur->children[index] = createNode();
         cur = cur->children[index];
@@ -76,7 +81,8 @@ TrieNode *Trie::remove(TrieNode *root, std::string key, int index = 0)
             root = nullptr;
         }
     }
-    int idx               = key.at(index) - 'a';
+    char c = key.at(index);
+    int idx               =  getIndex(c);
     root->children[index] = remove(root->children[index], key, index + 1);
     Trie::remove(root->children[idx], key, index + 1);
     if (isEmptyNode(root) && root->endOfWord == false)
@@ -109,12 +115,31 @@ void Trie::clear(TrieNode *root)
 //     return true;
 // }
 
-bool Trie::search(std::string key, Word &word)
+bool Trie::search(std::string key)
 {
     TrieNode *cur = root;
     for (int i = 0; i < key.length(); ++i)
     {
-        int index = key[i] - 'a';
+        char c = key.at(i);
+        int index = getIndex(c);
+        if (cur->children[index] == nullptr)
+            return false;
+        else
+            cur = cur->children[index];
+    }
+
+    if (cur->endOfWord)
+        return true;
+    return false;
+}
+
+bool Trie::search(std::string key, Word word)
+{
+    TrieNode *cur = root;
+    for (int i = 0; i < key.length(); ++i)
+    {
+        char c = key.at(i);
+        int index = getIndex(c);
         if (cur->children[index] == nullptr)
             return false;
         else
@@ -134,78 +159,67 @@ void Trie::remove(std::string key)
     remove(root, key, 0);
 }
 
-void Trie::serialize(TrieNode *root, std::ofstream &fout)
-{
-    if (!root)
-        return;
-    if (root->endOfWord)
-    {
-        std::string key                      = root->word.getKey();
-        std::string type                     = root->word.getType();
-        std::vector<std::string> definitions = root->word.getDefinitions();
-        int size                             = key.size();
-        std::cout << size << '\n';
-        fout.write((char *)&size, sizeof(int));
-        fout.write(key.c_str(), size);
-        size = type.size();
-        std::cout << size << '\n';
-        fout.write((char *)&size, sizeof(int));
-        fout.write(type.c_str(), size);
-        size = definitions.size();
-        std::cout << size << '\n';
-        fout.write((char *)&size, sizeof(int));
-        for (int i = 0; i < definitions.size(); ++i)
-        {
-            std::string definition = definitions.at(i);
-            size                   = definition.size();
-            std::cout << size << '\n';
-            fout.write((char *)&size, sizeof(int));
-            fout.write(definition.c_str(), size);
-        }
-        return;
+void Trie::serialize(TrieNode *root, std::ofstream &fout, char delimiter)
+{   
+    if (root->endOfWord) {
+        fout << root->word.getKey() << delimiter;
+        fout << root->word.getType() << delimiter;
+        int defCount = root->word.getDefinitionCount();
+        fout << defCount << delimiter;
+        for (int i = 0; i < defCount; ++i)
+            fout << root->word.getDefinition(i) << delimiter;
     }
-    for (int i = 0; i < ALPHABET; ++i)
-    {
+
+    for (int i = 0; i < ALPHABET; ++i) {
         if (root->children[i])
-            serialize(root->children[i], fout);
+        serialize(root->children[i], fout, delimiter);
     }
 }
 
-void Trie::deserialize(std::ifstream &fin)
+void Trie::deserialize(std::ifstream &fin, char delimiter)
 {
+    int n;
     while (!fin.eof())
     {
         Word word;
         std::string tmp;
-        int size;
-        fin.read((char *)size, sizeof(int));
-        fin.read((char *)tmp.c_str(), sizeof(size));
+        std::getline(fin, tmp, delimiter);
+        // std::cout << tmp << ' ';
         word.setKey(tmp);
-        fin.read((char *)size, sizeof(int));
-        fin.read((char *)tmp.c_str(), sizeof(size));
+        std::getline(fin, tmp, delimiter);
+        // std::cout << tmp << ' ';
         word.setType(tmp);
-        int n;
-        fin.read((char *)n, sizeof(int));
-        for (int i = 0; i < n; ++i)
-        {
-            fin.read((char *)size, sizeof(int));
-            fin.read((char *)tmp.c_str(), sizeof(size));
+        std::getline(fin, tmp, delimiter);
+        // std::cout << tmp << '\n';
+        if (tmp.empty()) {
+            n = 0;
+            break;
+        }
+            n = std::stoi(tmp);
+        for (int i = 0; i < n; ++i) {
+            std::getline(fin, tmp, delimiter);
             word.addDefinition(tmp);
         }
-        insert(word);
+        if (n != 0)
+            insert(word);
     }
 }
 
-void Trie::serialize(std::string path)
+// different dataset requires different unique character (character that does not exist in the dataset)
+// to be used as delimiter. the caller need to pass that delimiter manually into the function (the function)
+// does not automatically recognize which dataset is used)
+// eng-eng: '#
+// eng-vie & vie-eng: '#'
+void Trie::serialize(std::string path, char delimiter)
 {
     std::ofstream fout(path, std::ios::binary);
-    serialize(root, fout);
+    serialize(root, fout, delimiter);
     fout.close();
 }
 
-void Trie::deserialize(std::string path)
+void Trie::deserialize(std::string path, char delimiter)
 {
     std::ifstream fin(path, std::ios::binary);
-    deserialize(fin);
+    deserialize(fin, delimiter);
     fin.close();
 }

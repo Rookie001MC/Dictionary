@@ -21,18 +21,20 @@ class Trie
     TrieNode *remove(TrieNode *root, std::string key, int index);
     void clear(TrieNode *root);
     bool isEmptyNode(TrieNode *node);
-    void serialize(TrieNode *root, std::ofstream &fout);
-    void deserialize(std::ifstream &fin);
+    void serialize(TrieNode *root, std::ofstream &fout, char delimiter);
+    void deserialize(std::ifstream &fin, char delimiter);
+    int getIndex(char c);
 
   public:
     Trie();
     ~Trie();
     void insert(Word word);
     // bool prefixSearch(std::string key);
-    bool search(std::string key, Word &word);
+    bool search(std::string key);
+    bool search(std::string key, Word word);
     void remove(std::string key);
-    void serialize(std::string path);
-    void deserialize(std::string path);
+    void serialize(std::string path, char delimiter);
+    void deserialize(std::string path, char delimiter);
 };
 
 #endif

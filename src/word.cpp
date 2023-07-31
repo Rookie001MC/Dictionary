@@ -1,5 +1,4 @@
 #include "dictionary/word.h"
-using json = nlohmann::json;
 
 extern std::string nextKey;
 
@@ -109,32 +108,6 @@ Word Dictionary::getWord()
             //     return getWordEmoji(fin, 0);
     }
     return Word();
-}
-
-Word Dictionary::getWordVieEng()
-{
-    std::string key, type, tmp;
-    std::getline(fin, key, '\n');
-    key = key.substr(1);
-    Word word(key);
-    std::getline(fin, tmp, '\n');
-    while (!tmp.empty())
-    {
-        if (tmp.at(0) == '*')
-            type += (tmp.substr(1) + '/');
-        else if (tmp.at(0) == '=')
-        {
-            int pos = tmp.find('+');
-            word.addDefinition("Example: " + tmp.substr(1, pos - 1) + ": " + tmp.substr(pos + 1) + '\n');
-        }
-        else
-            word.addDefinition(tmp.substr(1) + '\n');
-
-        std::getline(fin, tmp, '\n');
-    }
-    type = type.substr(0, type.size() - 1);
-    word.setType(type.substr(0, type.size() - 1));
-    return word;
 }
 
 std::string extractDefinition(const std::string &line, bool &isEndOfDefinition)
@@ -262,58 +235,42 @@ Word Dictionary::getWordEngVie()
     return word;
 }
 
-/*
-   Note:
-       Khác biệt giữa getWordEmoji và getWordKaomoji là do file emoji.dict là mảng JSON thay vì object JSON như file
-       kaomoji.dict, nên cần truyền thêm index vào hàm getWordEmoji để lấy được từng phần tử trong mảng.
-*/
-Word Dictionary::getWordEmoji(int index)
+Word Dictionary::getWordVieEng()
 {
+    std::string key, type, tmp;
+    std::getline(fin, key, '\n');
+    key = key.substr(1);
+    Word word(key);
+    std::getline(fin, tmp, '\n');
+    while (!tmp.empty())
+    {
+        if (tmp.at(0) == '*')
+            type += (tmp.substr(1) + '/');
+        else if (tmp.at(0) == '=')
+        {
+            int pos = tmp.find('+');
+            word.addDefinition("Example: " + tmp.substr(1, pos - 1) + ": " + tmp.substr(pos + 1) + '\n');
+        }
+        else
+            word.addDefinition(tmp.substr(1) + '\n');
 
-    Word tmpEmoji;
-    json j;
-    fin >> j;
-
-    auto currentEmoji = j.begin() + index;
-    std::string key   = currentEmoji->at("emoji").get<std::string>();
-    std::string type  = currentEmoji->at("category").get<std::string>();
-    tmpEmoji.setKey(key);
-    tmpEmoji.setType(type);
-
-    // True definition should be the description of the emoji
-    std::string definition = currentEmoji->at("description").get<std::string>();
-    tmpEmoji.addDefinition(definition);
-
-    return tmpEmoji;
+        std::getline(fin, tmp, '\n');
+    }
+    type = type.substr(0, type.size() - 1);
+    word.setType(type);
+    return word;
 }
 
-Word Dictionary::getWordKaomoji(int index)
+Word Dictionary::getWordEmoji()
 {
-    Word tmpKaomoji;
-    json j;
-    fin >> j;
+    std::string key, type = "Emoji", definition;
+    fin >> key >> definition;
+    Word word(key, definition, type);
+}
 
-    auto currentKaomoji = j.begin() + index;
-    auto currentKaomojiMeta = currentKaomoji->at("meta");
-
-    std::string key  = currentKaomoji->at("kaomoji").get<std::string>();
-
-    std::string type = "kaomoji";
-
-    tmpKaomoji.setKey(key);
-    tmpKaomoji.setType(type);
-
-    for (auto &current_tags : currentKaomojiMeta.at("original_tags"))
-    {
-        std::string definition = current_tags.get<std::string>();
-        tmpKaomoji.addDefinition(definition);
-    }
-
-    for (auto &current_tags : currentKaomojiMeta.at("new_tags"))
-    {
-        std::string definition = current_tags.get<std::string>();
-        tmpKaomoji.addDefinition(definition);
-    }
-
-    return tmpKaomoji;
+Word Dictionary::getWordSlang() 
+{
+    std::string key, type = "Slang", definition;
+    fin >> key >> definition;
+    Word word(key, definition, type);
 }
