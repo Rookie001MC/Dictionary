@@ -54,7 +54,7 @@ add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})
 target_include_directories(${PROJECT_NAME} PUBLIC header)
 
 # Adding the libraries
-target_link_libraries(${PROJECT_NAME} PUBLIC raylib raylib_cpp)
+target_link_libraries(${PROJECT_NAME} raylib raylib_cpp)
 
 # MacOS jibbirish
 if (APPLE)
