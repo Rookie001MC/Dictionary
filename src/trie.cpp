@@ -37,6 +37,8 @@ int Trie::getIndex(char c) {
         index = 39;
     else if (c == '.')
         index = 40;
+    else if (c == ',')
+        index = 41;
     else
     {
         c     = tolower(c);

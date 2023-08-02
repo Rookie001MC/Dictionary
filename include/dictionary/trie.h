@@ -5,7 +5,7 @@
 #include <iostream>
 #include <string>
 
-const int ALPHABET = 41;
+const int ALPHABET = 42;
 struct TrieNode
 {
     TrieNode *children[ALPHABET];

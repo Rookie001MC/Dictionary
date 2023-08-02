@@ -22,11 +22,6 @@ std::vector<std::string> Word::getDefinitions()
     return definitions;
 }
 
-std::vector<std::string> &Word::accessDefinitions()
-{
-    return definitions;
-}
-
 std::string Word::getKey()
 {
     return key;
@@ -237,10 +232,11 @@ Word Dictionary::getWordEngVie()
 
 Word Dictionary::getWordVieEng()
 {
-    std::string key, type, tmp;
+    std::string key = "", type, tmp;
     std::getline(fin, key, '\n');
-    key = key.substr(1);
-    Word word(key);
+    int posStop = key.find('/');
+    key = key.substr(1, posStop - 1);
+    Word word(key, "", "");
     std::getline(fin, tmp, '\n');
     while (!tmp.empty())
     {

@@ -17,6 +17,19 @@ void extractEngEng(Dictionary &dict, Trie &trie) {
     }
 }
 
+void extractEngVie(Dictionary &dict, Trie &trie)
+{
+    bool start = true;
+    while (!dict.eof())
+    {
+        Word word = dict.getWord();
+        if (start)
+            start = false;
+        else
+            trie.insert(word);
+    }
+}
+
 void extractVieEng(Dictionary &dict, Trie &trie) {
     while (!dict.eof()) {
         Word word = dict.getWord();

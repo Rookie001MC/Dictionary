@@ -20,7 +20,6 @@ class Word
     std::string getType();
     std::string getDefinition(int index);
     std::vector<std::string> getDefinitions();
-    std::vector<std::string> &accessDefinitions();
     int getDefinitionCount();
     void setKey(std::string key);
     void setType(std::string type);
