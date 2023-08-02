@@ -17,27 +17,41 @@ set(RAYLIB-CPP_VERSION 4.5.1)
 # Setting libraries
 
 # Raylib
-find_package(raylib ${RAYLIB_VERSION} QUIET)
-if (NOT raylib_FOUND) # If there's none, fetch and build raylib
-   include(FetchContent)
-    FetchContent_Declare(
-        raylib
-        GIT_REPOSITORY https://github.com/raysan5/raylib.git
-        GIT_TAG ${RAYLIB_VERSION}
-    )
-    FetchContent_MakeAvailable(raylib)
+set(RAYLIB_VERSION 4.5.0)
+if (NOT raylib_FOUND)
+  include(FetchContent)
+  FetchContent_Declare(
+    raylib
+    DOWNLOAD_EXTRACT_TIMESTAMP ON
+    URL https://github.com/raysan5/raylib/archive/refs/tags/${RAYLIB_VERSION}.tar.gz
+  )
+  FetchContent_GetProperties(raylib)
+  if (NOT raylib_POPULATED)
+    set(FETCHCONTENT_QUIET NO)
+    FetchContent_Populate(raylib)
+    set(BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+    set(BUILD_GAMES    OFF CACHE BOOL "" FORCE)
+    add_subdirectory(${raylib_SOURCE_DIR} ${raylib_BINARY_DIR})
+  endif()
 endif()
 
-# Raylib-cpp
-find_package(raylib_cpp QUIET)
-if (NOT raylib_cpp_FOUND)
-    include(FetchContent)
-    FetchContent_Declare(
-        raylib_cpp
-        GIT_REPOSITORY https://github.com/RobLoach/raylib-cpp.git
-        GIT_TAG v${RAYLIB-CPP_VERSION}
-    )
-    FetchContent_MakeAvailable(raylib_cpp)
+# RayGUI
+set(RAYGUI_VERSION 3.6)
+find_package(raygui ${RAYGUI_VERSION} QUIET)
+if (NOT raygui_FOUND)
+  include(FetchContent)
+  FetchContent_Declare(
+    raygui
+    DOWNLOAD_EXTRACT_TIMESTAMP ON
+    URL https://github.com/raysan5/raygui/archive/refs/tags/${RAYGUI_VERSION}.tar.gz
+  )
+  FetchContent_GetProperties(raygui)
+  if (NOT raygui_POPULATED)
+    set(FETCHCONTENT_QUIET NO)
+    FetchContent_Populate(raygui)
+    set(BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+    add_subdirectory(${raygui_SOURCE_DIR}/projects/CMake ${raygui_BINARY_DIR})
+  endif()
 endif()
 
 # Defining the source files and includes
@@ -57,7 +71,7 @@ add_executable(${PROJECT_NAME} ${SOURCES})
 target_include_directories(${PROJECT_NAME} PUBLIC include)
 
 # Adding the libraries
-target_link_libraries(${PROJECT_NAME} PUBLIC raylib raylib_cpp)
+target_link_libraries(${PROJECT_NAME} PUBLIC raylib raygui)
 
 # MacOS jibbirish
 if (APPLE)
