@@ -61,7 +61,7 @@ target_link_libraries(${PROJECT_NAME} PUBLIC raylib raylib_cpp)
 
 # MacOS jibbirish
 if (APPLE)
-    target_link_libraries(${PROJECT_NAME} "-framework IOKit")
-    target_link_libraries(${PROJECT_NAME} "-framework Cocoa")
-    target_link_libraries(${PROJECT_NAME} "-framework OpenGL")
+    target_link_libraries(${PROJECT_NAME} PUBLIC "-framework IOKit")
+    target_link_libraries(${PROJECT_NAME} PUBLIC "-framework Cocoa")
+    target_link_libraries(${PROJECT_NAME} PUBLIC "-framework OpenGL")
 endif()
