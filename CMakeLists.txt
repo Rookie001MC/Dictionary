@@ -11,9 +11,6 @@ set(FETCHCONTENT_QUIET FALSE)
 
 set(CMAKE_CXX_STANDARD 20)
 
-set(RAYLIB_VERSION 4.5.0)
-set(RAYLIB-CPP_VERSION 4.5.1)
-
 # Setting libraries
 
 # Raylib
