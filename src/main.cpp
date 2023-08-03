@@ -1,14 +1,17 @@
 // main function currently used for testing. will be changed in the future
-#include <iostream>
+#include "boost/filesystem.hpp"
+#include "boost/filesystem/operations.hpp"
+#include "dictionary/build.h"
 #include "dictionary/history.h"
 #include "dictionary/trie.h"
 #include "dictionary/word.h"
-#include "dictionary/build.h"
 #include <chrono>
-
-int main() {
+#include <iostream>
+int main(int argc, const char *argv[])
+{
     auto start = std::chrono::high_resolution_clock::now();
     Dictionary dict("../data/engeng.dict", 0);
+    std::cout << boost::filesystem::file_size("../data/engeng.dict") << '\n';
     Trie trie;
     build(dict, trie);
     Word word;
@@ -17,8 +20,8 @@ int main() {
     std::vector<std::string> defs = word.getDefinitions();
     for (int i = 0; i < defs.size(); ++i)
         std::cout << defs.at(i) << '\n';
-    auto stop = std::chrono::high_resolution_clock::now();
+    auto stop     = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
-    // std::cout << duration;
+    std::cout << duration;
     return 0;
 }

@@ -20,6 +20,9 @@ if (NOT raylib_FOUND)
   FetchContent_Declare(
     raylib
     DOWNLOAD_EXTRACT_TIMESTAMP ON
+    USES_TERMINAL_DOWNLOAD TRUE
+    GIT_PROGRESS TRUE
+    GIT_SHALLOW TRUE
     URL https://github.com/raysan5/raylib/archive/refs/tags/${RAYLIB_VERSION}.tar.gz
   )
   FetchContent_GetProperties(raylib)
@@ -40,6 +43,9 @@ if (NOT raygui_FOUND)
   FetchContent_Declare(
     raygui
     DOWNLOAD_EXTRACT_TIMESTAMP ON
+    USES_TERMINAL_DOWNLOAD TRUE
+    GIT_PROGRESS TRUE
+    GIT_SHALLOW TRUE
     URL https://github.com/raysan5/raygui/archive/refs/tags/${RAYGUI_VERSION}.tar.gz
   )
   FetchContent_GetProperties(raygui)
@@ -50,6 +56,25 @@ if (NOT raygui_FOUND)
     add_subdirectory(${raygui_SOURCE_DIR}/projects/CMake ${raygui_BINARY_DIR})
   endif()
 endif()
+
+# Boost
+option(BOOST_DISABLE_TESTS "Disable Boost tests" OFF)
+set(BOOST_VERSION 1.82.0)
+
+include(FetchContent)
+FetchContent_Declare(
+  Boost
+  DOWNLOAD_EXTRACT_TIMESTAMP ON
+  USES_TERMINAL_DOWNLOAD TRUE
+  GIT_PROGRESS TRUE
+  GIT_SHALLOW TRUE
+  DOWNLOAD_NO_EXTRACT FALSE
+  URL https://github.com/boostorg/boost/releases/download/boost-${BOOST_VERSION}/boost-${BOOST_VERSION}.tar.gz
+)
+# set(BOOST_INCLUDE_LIBRARIES timer filesystem regex)
+set(BOOST_ENABLE_CMAKE ON)
+FetchContent_MakeAvailable(boost)
+
 
 # Defining the source files and includes
 file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS "src/*.cpp")
@@ -69,6 +94,7 @@ target_include_directories(${PROJECT_NAME} PUBLIC include)
 
 # Adding the libraries
 target_link_libraries(${PROJECT_NAME} PUBLIC raylib raygui)
+target_link_libraries(${PROJECT_NAME} PUBLIC Boost::filesystem)
 
 # MacOS jibbirish
 if (APPLE)
