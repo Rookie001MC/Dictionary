@@ -205,10 +205,10 @@ Word Dictionary::getWordEngEng()
 
 Word Dictionary::getWordEngVie()
 {
-    fin.open("../../data/engvie.dict");
-    std::string key, type, tmp;
+    std::string key = "", type, tmp;
     std::getline(fin, key, '\n');
-    key = key.substr(1);
+    int posStop = key.find('/');
+    key = key.substr(1, posStop - 1);
     Word word(key, "", "");
     std::getline(fin, tmp, '\n');
     while (!tmp.empty())
@@ -232,11 +232,10 @@ Word Dictionary::getWordEngVie()
 
 Word Dictionary::getWordVieEng()
 {
-    std::string key = "", type, tmp;
+    std::string key, type, tmp;
     std::getline(fin, key, '\n');
-    int posStop = key.find('/');
-    key = key.substr(1, posStop - 1);
-    Word word(key, "", "");
+    key = key.substr(1);
+    Word word(key);
     std::getline(fin, tmp, '\n');
     while (!tmp.empty())
     {

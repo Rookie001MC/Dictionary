@@ -102,7 +102,7 @@ void build(Dictionary &dict, Trie &trie)
                 extractEngEng(dict, trie);
                 break;
             case 1:
-                extractEngEng(dict, trie);
+                extractEngVie(dict, trie);
                 break;
             case 2:
                 extractVieEng(dict, trie);
