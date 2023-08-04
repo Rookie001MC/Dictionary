@@ -1,11 +1,14 @@
 #include "frontend/ResourcesLoad.h"
 #include "frontend/styles.h"
 #include "globalVars/globalVars.h"
+#include "dictionary/filePathHandler.h"
 #include "raylib.h"
 
-void loadResources()
+void loadResources(const char* exeDir)
 {
-    std::string staticFolder = "../static/";
+        
+
+    std::string staticFolder = getExeDir(exeDir) + "../static/";
     std::string fontFolder   = staticFolder + "fonts/";
     std::string imageFolder  = staticFolder + "img/";
 

@@ -4,7 +4,7 @@
 #include "styles.h"
 #include <string>
 
-void loadResources();
+void loadResources(const char* exeDir);
 void unloadResources();
 
 #endif
