@@ -5,10 +5,11 @@
 
 enum Page
 {
-    DICT_WORD, 
+    DICT_MAIN_SEARCH = 0, 
     DICT_DEF_SEARCH,
     DICT_FAVORITES,
     DICT_HISTORY,
+    DICT_WORD,
 };
 struct Resources
 {
