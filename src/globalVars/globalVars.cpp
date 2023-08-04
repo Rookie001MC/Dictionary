@@ -1,6 +1,6 @@
 #include "globalVars/globalVars.h"
 
-Page CurrentState::currentPage = Page::DICT_WORD;
+Page CurrentState::currentPage = Page::DICT_DEF_SEARCH;
 int CurrentState::currentDict;
 
 Font Resources::titleFont;

@@ -5,6 +5,7 @@
 #include "frontend/styles.h"
 #include "frontend/pages/History.h"
 #include "frontend/pages/Word.h"
+#include "frontend/pages/Definition.h"
 #include "globalVars/globalVars.h"
 #include "raylib.h"
 #include "raygui.h"
@@ -41,9 +42,17 @@ void FrontendMain::start()
         {
             switch (CurrentState::currentPage)
             {
+                case Page::DICT_HOME: {
+                    
+                }
                 case Page::DICT_WORD:
                 {
                     word.update();
+                    break;
+                }
+                case Page::DICT_DEF_SEARCH:
+                {
+                    def.update();
                     break;
                 }
                 case Page::DICT_HISTORY:
@@ -61,6 +70,11 @@ void FrontendMain::start()
                     case Page::DICT_WORD:
                     {
                         word.draw();
+                        break;
+                    }
+                    case Page::DICT_DEF_SEARCH:
+                    {
+                        def.draw();
                         break;
                     }
                     case Page::DICT_HISTORY:

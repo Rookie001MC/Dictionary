@@ -1,11 +1,11 @@
-#include "frontend/pages/Word.h"
+#include "frontend/pages/Definition.h"
 #include "frontend/styles.h"
 #include "globalVars/globalVars.h"
 #include "dictionary/word.h"
 #include "raygui.h"
 #include "raylib.h"
 
-WordPage::WordPage() {
+DefPage::DefPage() {
     for (int i = 0; i < 4; i++)
     {
         dictPagesRects[i] = {61, float(146 + (151 * i)), 165, 55};
@@ -18,13 +18,13 @@ WordPage::WordPage() {
     }
 }
 
-void WordPage::update() {
+void DefPage::update() {
     if (!words.size()) {
 
     }
 }
 
-void WordPage::draw() {
+void DefPage::draw() {
     if (confirmResetBox)
     {
         resetBox();
@@ -32,7 +32,7 @@ void WordPage::draw() {
     }
     if (addWordButton)
     {
-        addWord();
+        addDef();
     }
 
     Vector2 mousePos = GetMousePosition();
@@ -89,7 +89,7 @@ void WordPage::draw() {
     }
 }
 
-void WordPage::resetBox() {
+void DefPage::resetBox() {
     if (GuiWindowBox({300, 170, 600, 250}, ""))
         confirmResetBox = false;
     text = "Are you sure to reset ?"; 
@@ -102,7 +102,7 @@ void WordPage::resetBox() {
     }
 }
 
-void WordPage::addWord() {
+void DefPage::addDef() {
     if (GuiWindowBox({300, 170, 600, 250}, ""))
         addWordButton = false;
     text = "Are you sure to add this word?";
