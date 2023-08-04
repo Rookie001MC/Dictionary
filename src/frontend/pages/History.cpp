@@ -24,7 +24,7 @@ void HistoryPage::update()
     if (!words.size())
     {
     }
-
+    
 
 }
 

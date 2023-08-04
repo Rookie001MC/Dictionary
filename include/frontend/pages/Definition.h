@@ -1,5 +1,5 @@
-#ifndef FRONTEND_PAGE_WORD
-#define FRONTEND_PAGE_WORD
+#ifndef FRONTEND_PAGE_DEFINITION
+#define FRONTEND_PAGE_DEFINITION
 
 #include <iostream>
 #include <cstring>
@@ -7,9 +7,8 @@
 #include "raylib.h"
 #include "frontend/styles.h"
 #include "dictionary/word.h"
-#include "globalVars/globalVars.h"
 
-class WordPage {
+class DefPage {
     private:
         int* modeChosen = new int{0};
         bool SearchEdit = false;
@@ -29,15 +28,15 @@ class WordPage {
         Rectangle dictPagesRects[4];
         std::vector<std::string> dictPages = {"WORD", "Definition", "Favorites", "History"};
      
-        short int selectedDictPage = 0;
+        short int selectedDictPage = 1;
 
     public:
-        WordPage();
+        DefPage();
         void draw();
-        CurrentState::currentPage update();
+        void update();
         void resetBox();
-        void addWord();
-        ~WordPage() {
+        void addDef();
+        ~DefPage() {
             delete modeChosen;
         }
 

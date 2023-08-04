@@ -1,11 +1,11 @@
-#include "frontend/pages/Word.h"
+#include "frontend/pages/Definition.h"
 #include "frontend/styles.h"
 #include "globalVars/globalVars.h"
 #include "dictionary/word.h"
 #include "raygui.h"
 #include "raylib.h"
 
-WordPage::WordPage() {
+DefPage::DefPage() {
     for (int i = 0; i < 4; i++)
     {
         dictPagesRects[i] = {61, float(146 + (151 * i)), 165, 55};
@@ -18,19 +18,21 @@ WordPage::WordPage() {
     }
 }
 
-CurrrentState::currentPage update() {
-    if (selectedDictPage != 0)
-    {
-        if (SearchInput[0] == '\0')
-            word.clear();
-        short tmp = selectedDictPage;
-        selectedDictPage = 0;
-        // return static_cast<Page>(tmp);
+void update() {
+    if (!words.size()) {
     }
-    return Page::DICT_WORD;
+    // if (selectedDictPage != 0)
+    // {
+    //     if (SearchInput[0] == '\0')
+    //         words.clear();
+    //     short tmp = selectedDictPage;
+    //     selectedDictPage = 0;
+    //     return static_cast<CurrentState::currentPage>(tmp);
+    // }
+    // return DICT_DEF_SEARCH;
 }
 
-void WordPage::draw() {
+void DefPage::draw() {
     if (confirmResetBox)
     {
         resetBox();
@@ -38,7 +40,7 @@ void WordPage::draw() {
     }
     if (addWordButton)
     {
-        addWord();
+        addDef();
     }
 
     Vector2 mousePos = GetMousePosition();
@@ -93,14 +95,9 @@ void WordPage::draw() {
         dropDownBox ^= 1;
         confirmResetBox = false;
     }
-
-    // choose dict box
-    for (int i = 0; i < 5; i++)
-        if (GuiButton(rec_modes[i], modes[i].c_str()))
-            menuChosen = i;
 }
 
-void WordPage::resetBox() {
+void DefPage::resetBox() {
     if (GuiWindowBox({300, 170, 600, 250}, ""))
         confirmResetBox = false;
     text = "Are you sure to reset ?"; 
@@ -113,7 +110,7 @@ void WordPage::resetBox() {
     }
 }
 
-void WordPage::addWord() {
+void DefPage::addDef() {
     if (GuiWindowBox({300, 170, 600, 250}, ""))
         addWordButton = false;
     text = "Are you sure to add this word?";
