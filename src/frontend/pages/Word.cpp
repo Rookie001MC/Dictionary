@@ -18,7 +18,7 @@ WordPage::WordPage() {
     }
 }
 
-void update() {
+void WordPage::update() {
     if (selectedDictPage != 0)
     {
         // if (SearchInput[0] == '\0')
@@ -95,9 +95,9 @@ void WordPage::draw() {
     }
 
     // choose dict box
-    for (int i = 0; i < 5; i++)
-        if (GuiButton(rec_modes[i], modes[i].c_str()))
-            menuChosen = i;
+    // for (int i = 0; i < 5; i++)
+    //     if (GuiButton(rec_modes[i], modes[i].c_str()))
+    //         selectedDictPage = i;
 }
 
 void WordPage::resetBox() {

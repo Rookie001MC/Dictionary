@@ -18,8 +18,9 @@ DefPage::DefPage() {
     }
 }
 
-void update() {
-    if (!words.size()) {
+void DefPage::update() {
+    if (selectedDictPage != 0)
+    {
     }
     // if (selectedDictPage != 0)
     // {
