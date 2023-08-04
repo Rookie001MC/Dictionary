@@ -16,12 +16,12 @@ int main(int argc, const char *argv[])
 {
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "CS163 Project - The Dictionary of Everything?");
     SetTargetFPS(60);
+    loadResources(argv[0]);
     FrontendMain frontend;
     while(!WindowShouldClose())
     {
         frontend.start();
     }
-
     unloadResources();
     CloseWindow();
     return 0;

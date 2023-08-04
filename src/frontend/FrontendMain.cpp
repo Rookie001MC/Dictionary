@@ -33,7 +33,7 @@ void setStyles()
 
 FrontendMain::FrontendMain()
 {
-            loadResources();     
+            
             setStyles();
 }
 
