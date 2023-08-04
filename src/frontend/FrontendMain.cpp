@@ -4,14 +4,13 @@
 #include "frontend/ResourcesLoad.h"
 #include "frontend/styles.h"
 #include "frontend/pages/History.h"
-#include "frontend/pages/Word.h"
 #include "globalVars/globalVars.h"
 #include "raylib.h"
 #include "raygui.h"
 
 void setStyles()
 {
-    GuiSetStyle(DEFAULT, TEXT_SIZE, DISPLAY_FONT_SIZE);
+    GuiSetStyle(DEFAULT, TEXT_SIZE, TEXT_FONT_SIZE);
 
     GuiSetStyle(TEXTBOX, TEXT_COLOR_NORMAL, 0x082100);
 
@@ -33,7 +32,7 @@ void setStyles()
 
 FrontendMain::FrontendMain()
 {
-            loadResources();     
+            
             setStyles();
 }
 
@@ -41,19 +40,10 @@ void FrontendMain::start()
         {
             switch (CurrentState::currentPage)
             {
-                case Page::DICT_WORD:
+                case Page::DICT_MAIN_SEARCH:
                 {
-                    //wordPage.update();
-                    return;
+                   // return;
                 }
-                // case Page::DICT_DEF_SEARCH:
-                // {
-                //     return; // definition
-                // }
-                // case Page::DICT_FAVORITES:
-                // {
-                //     return; // favorite
-                // }
                 case Page::DICT_HISTORY:
                 {
                     history.update();
@@ -66,9 +56,9 @@ void FrontendMain::start()
                 ClearBackground(BG_COLOR_RGB);
                 switch (CurrentState::currentPage)
                 {
-                    case Page::DICT_WORD:
+                    case Page::DICT_MAIN_SEARCH:
                     {
-                        DrawRectangle(0, 0, 300, 600, RED);
+                        DrawRectangle(0, 0, 300, 700, RED);
                         break;
                     }
                     case Page::DICT_HISTORY:
