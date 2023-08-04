@@ -7,21 +7,22 @@
 #include "dictionary/word.h"
 #include <chrono>
 #include <iostream>
+
+#include "frontend/FrontendMain.h"
+#include "frontend/ResourcesLoad.h"
+#include "frontend/styles.h"
+
 int main(int argc, const char *argv[])
 {
-    auto start = std::chrono::high_resolution_clock::now();
-    Dictionary dict("../data/engeng.dict", 0);
-    std::cout << boost::filesystem::file_size("../data/engeng.dict") << '\n';
-    Trie trie;
-    build(dict, trie);
-    Word word;
-    trie.search("determination", word);
-    std::cout << word.getKey() << ' ' << word.getType() << '\n';
-    std::vector<std::string> defs = word.getDefinitions();
-    for (int i = 0; i < defs.size(); ++i)
-        std::cout << defs.at(i) << '\n';
-    auto stop     = std::chrono::high_resolution_clock::now();
-    auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
-    std::cout << duration;
+    InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "CS163 Project - The Dictionary of Everything?");
+    SetTargetFPS(60);
+    FrontendMain frontend;
+    while(!WindowShouldClose())
+    {
+        frontend.start();
+    }
+
+    unloadResources();
+    CloseWindow();
     return 0;
 }
