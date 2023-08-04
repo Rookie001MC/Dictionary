@@ -34,7 +34,7 @@ class WordPage {
     public:
         WordPage();
         void draw();
-        CurrentState::currentPage update();
+        void update();
         void resetBox();
         void addWord();
         ~WordPage() {

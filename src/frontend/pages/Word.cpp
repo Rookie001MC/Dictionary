@@ -18,16 +18,16 @@ WordPage::WordPage() {
     }
 }
 
-CurrrentState::currentPage update() {
+void update() {
     if (selectedDictPage != 0)
     {
-        if (SearchInput[0] == '\0')
-            word.clear();
-        short tmp = selectedDictPage;
-        selectedDictPage = 0;
+        // if (SearchInput[0] == '\0')
+        //     word.clear();
+        // short tmp = selectedDictPage;
+        // selectedDictPage = 0;
         // return static_cast<Page>(tmp);
     }
-    return Page::DICT_WORD;
+    // return Page::DICT_WORD;
 }
 
 void WordPage::draw() {
