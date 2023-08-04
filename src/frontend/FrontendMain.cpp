@@ -4,7 +4,6 @@
 #include "frontend/ResourcesLoad.h"
 #include "frontend/styles.h"
 #include "frontend/pages/History.h"
-//#include "frontend/pages/Word.h"
 #include "globalVars/globalVars.h"
 #include "raylib.h"
 #include "raygui.h"
