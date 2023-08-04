@@ -42,7 +42,15 @@ void FrontendMain::start()
             {
                 case Page::DICT_MAIN_SEARCH:
                 {
-                    return; // Later.
+                    return; // word
+                }
+                case Page::DICT_DEF_SEARCH:
+                {
+                    return; // definition
+                }
+                case Page::DICT_FAVORITES:
+                {
+                    return; // favorite
                 }
                 case Page::DICT_HISTORY:
                 {

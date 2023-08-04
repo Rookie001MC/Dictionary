@@ -9,7 +9,6 @@ enum Page
     DICT_DEF_SEARCH,
     DICT_FAVORITES,
     DICT_HISTORY,
-    DICT_WORD,
 };
 struct Resources
 {
