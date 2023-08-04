@@ -4,6 +4,7 @@
 #include "frontend/ResourcesLoad.h"
 #include "frontend/styles.h"
 #include "frontend/pages/History.h"
+#include "frontend/pages/Word.h"
 #include "globalVars/globalVars.h"
 #include "raylib.h"
 #include "raygui.h"
@@ -40,9 +41,9 @@ void FrontendMain::start()
         {
             switch (CurrentState::currentPage)
             {
-                case Page::DICT_MAIN_SEARCH:
+                case Page::DICT_WORD:
                 {
-                    return; // Later.
+                    return;
                 }
                 case Page::DICT_HISTORY:
                 {
@@ -56,9 +57,9 @@ void FrontendMain::start()
                 ClearBackground(BG_COLOR_RGB);
                 switch (CurrentState::currentPage)
                 {
-                    case Page::DICT_MAIN_SEARCH:
+                    case Page::DICT_WORD:
                     {
-                        return; // Later.
+                        return;
                     }
                     case Page::DICT_HISTORY:
                     {
