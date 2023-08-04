@@ -7,7 +7,6 @@
 #include "frontend/pages/History.h"
 #include "frontend/pages/Word.h"
 #include "frontend/pages/Definition.h"
-#include "frontend/pages/Home.h"
 #include "globalVars/globalVars.h"
 #include "raylib.h"
 

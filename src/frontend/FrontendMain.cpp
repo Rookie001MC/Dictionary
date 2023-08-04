@@ -5,7 +5,6 @@
 #include "frontend/styles.h"
 #include "frontend/pages/History.h"
 #include "frontend/pages/Word.h"
-#include "frontend/pages/Home.h"
 #include "frontend/pages/Definition.h"
 #include "globalVars/globalVars.h"
 #include "raylib.h"
@@ -43,11 +42,6 @@ void FrontendMain::start()
         {
             switch (CurrentState::currentPage)
             {
-                case Page::DICT_HOME: 
-                {
-                    home.update();
-                    break;
-                }
                 case Page::DICT_WORD:
                 {
                     word.update();
@@ -70,11 +64,6 @@ void FrontendMain::start()
                 ClearBackground(BG_COLOR_RGB);
                 switch (CurrentState::currentPage)
                 {
-                    case Page::DICT_HOME: 
-                    {
-                        home.draw();
-                        break;
-                    }
                     case Page::DICT_WORD:
                     {
                         word.draw();

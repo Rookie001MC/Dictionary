@@ -5,7 +5,6 @@
 
 enum Page
 {
-    DICT_HOME = 0, 
     DICT_DEF_SEARCH,
     DICT_FAVORITES,
     DICT_HISTORY,
