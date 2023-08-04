@@ -69,7 +69,7 @@ void FrontendMain::start()
                     case Page::DICT_WORD:
                     {
                         DrawRectangle(0, 0, 300, 600, RED);
-                        return;
+                        break;
                     }
                     case Page::DICT_HISTORY:
                     {

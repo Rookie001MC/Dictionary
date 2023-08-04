@@ -7,7 +7,6 @@
 
 HistoryPage::HistoryPage()
 {
-    CurrentState::currentPage = Page::DICT_HISTORY;
     for (int i = 0; i < 4; i++)
     {
         dictPagesRects[i] = {61, float(146 + (151 * i)), 165, 55};
