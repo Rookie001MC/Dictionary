@@ -18,10 +18,18 @@ DefPage::DefPage() {
     }
 }
 
-void DefPage::update() {
+void update() {
     if (!words.size()) {
-
     }
+    // if (selectedDictPage != 0)
+    // {
+    //     if (SearchInput[0] == '\0')
+    //         words.clear();
+    //     short tmp = selectedDictPage;
+    //     selectedDictPage = 0;
+    //     return static_cast<CurrentState::currentPage>(tmp);
+    // }
+    // return DICT_DEF_SEARCH;
 }
 
 void DefPage::draw() {

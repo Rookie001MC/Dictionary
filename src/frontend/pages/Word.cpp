@@ -18,10 +18,16 @@ WordPage::WordPage() {
     }
 }
 
-void WordPage::update() {
-    if (!words.size()) {
-
+CurrrentState::currentPage update() {
+    if (selectedDictPage != 0)
+    {
+        if (SearchInput[0] == '\0')
+            word.clear();
+        short tmp = selectedDictPage;
+        selectedDictPage = 0;
+        // return static_cast<Page>(tmp);
     }
+    return Page::DICT_WORD;
 }
 
 void WordPage::draw() {
@@ -87,6 +93,11 @@ void WordPage::draw() {
         dropDownBox ^= 1;
         confirmResetBox = false;
     }
+
+    // choose dict box
+    for (int i = 0; i < 5; i++)
+        if (GuiButton(rec_modes[i], modes[i].c_str()))
+            menuChosen = i;
 }
 
 void WordPage::resetBox() {

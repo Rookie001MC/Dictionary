@@ -16,7 +16,6 @@ class FrontendMain
     private:
         Rectangle Header{0,0, SCREEN_WIDTH, 120};
         HistoryPage history;
-        HomePage home;
         WordPage word;
         DefPage def;
     public:

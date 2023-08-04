@@ -7,6 +7,7 @@
 #include "raylib.h"
 #include "frontend/styles.h"
 #include "dictionary/word.h"
+#include "globalVars/globalVars.h"
 
 class WordPage {
     private:
@@ -33,7 +34,7 @@ class WordPage {
     public:
         WordPage();
         void draw();
-        void update();
+        CurrentState::currentPage update();
         void resetBox();
         void addWord();
         ~WordPage() {
