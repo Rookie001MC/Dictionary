@@ -37,7 +37,11 @@ void WordPage::draw() {
     if (GuiButton(rec_reset, "RESET"))
         confirmResetBox = true;
 
-    
+    if (GuiButton(rec_random, "RANDOM"))
+    {
+
+    }
+
 }
 
 void WordPage::update() {
@@ -49,15 +53,11 @@ void WordPage::update() {
 void WordPage::resetBox() {
     if (GuiWindowBox({300, 170, 600, 250}, ""))
         confirmResetBox = false;
-    text = "Are you sure to reset " // + dictionary[*modeChosen] + "?";
-   // DrawTextEx(fnt, text.c_str(), {600 - MeasureTextEx(fnt, text.c_str(), 27, 1).x / 2, 220}, 27, 1, BLACK);
+    text = "Are you sure to reset "; 
     if (GuiButton({400, 330, 100, 50}, "NO"))
         confirmResetBox = false;
     if (GuiButton({700, 330, 100, 50}, "YES"))
     {
-        // word.clear();
-        // data[*modeChosen].resetData();
-        // confirmResetBox = false;
     }
 }
 

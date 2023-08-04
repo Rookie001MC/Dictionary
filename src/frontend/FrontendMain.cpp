@@ -68,7 +68,7 @@ void FrontendMain::start()
                 {
                     case Page::DICT_WORD:
                     {
-                        //wordPage.draw();
+                        wordPage.draw();
                         return;
                     }
                     case Page::DICT_HISTORY:

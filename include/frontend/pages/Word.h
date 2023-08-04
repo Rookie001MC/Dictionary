@@ -20,6 +20,7 @@ class WordPage {
         short menuChosen = 0;
         bool dropDowmBox = false, confirmResetBox = false, addWordButton = false;
         std::vector<Word *> words;
+        std::string text;
     public:
         WordPage();
         void draw();
