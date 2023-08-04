@@ -1,5 +1,10 @@
 {
-  "cSpell.words": ["LIGHTGRAY", "raylib", "raysan", "RAYWHITE"],
+  "cSpell.words": [
+    "LIGHTGRAY",
+    "raylib",
+    "raysan",
+    "RAYWHITE"
+  ],
   "cmake.configureOnOpen": true,
   "files.associations": {
     "algorithm": "cpp",
@@ -94,6 +99,24 @@
     "numbers": "cpp",
     "semaphore": "cpp",
     "cinttypes": "cpp",
-    "variant": "cpp"
+    "variant": "cpp",
+    "__bit_reference": "cpp",
+    "__bits": "cpp",
+    "__config": "cpp",
+    "__debug": "cpp",
+    "__errc": "cpp",
+    "__hash_table": "cpp",
+    "__locale": "cpp",
+    "__mutex_base": "cpp",
+    "__node_handle": "cpp",
+    "__split_buffer": "cpp",
+    "__threading_support": "cpp",
+    "__tuple": "cpp",
+    "__verbose_abort": "cpp",
+    "complex": "cpp",
+    "stack": "cpp",
+    "__nullptr": "cpp",
+    "__string": "cpp",
+    "*.ipp": "cpp"
   }
 }

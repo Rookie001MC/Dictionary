@@ -5,6 +5,7 @@
 #include "frontend/ResourcesLoad.h"
 #include "frontend/styles.h"
 #include "frontend/pages/History.h"
+#include "frontend/pages/Word.h"
 #include "globalVars/globalVars.h"
 #include "raylib.h"
 
@@ -14,6 +15,7 @@ class FrontendMain
     private:
         Rectangle Header{0,0, SCREEN_WIDTH, 120};
         HistoryPage history;
+        WordPage wordPage;
     public:
         FrontendMain();
         void start();
