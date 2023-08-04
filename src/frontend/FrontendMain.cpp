@@ -11,7 +11,7 @@
 
 void setStyles()
 {
-    GuiSetStyle(DEFAULT, TEXT_SIZE, DISPLAY_FONT_SIZE);
+    GuiSetStyle(DEFAULT, TEXT_SIZE, TEXT_FONT_SIZE);
 
     GuiSetStyle(TEXTBOX, TEXT_COLOR_NORMAL, 0x082100);
 

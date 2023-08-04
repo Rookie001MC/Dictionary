@@ -5,9 +5,7 @@
 #include "raylib.h"
 
 void loadResources(const char* exeDir)
-{
-        
-
+{ 
     std::string staticFolder = getExeDir(exeDir) + "../static/";
     std::string fontFolder   = staticFolder + "fonts/";
     std::string imageFolder  = staticFolder + "img/";
@@ -17,8 +15,8 @@ void loadResources(const char* exeDir)
 
     Resources::titleFont = LoadFontEx((fontFolder + wordFont + "/" + wordFont+ "-Bold.ttf").c_str(), 50, 0, 250);
 
-    Resources::displayFontRegular = LoadFontEx((fontFolder + displayFont + "/" + displayFont + "-Regular.ttf").c_str(),DISPLAY_FONT_SIZE , 0, 250);
-    Resources::displayFontBold    = LoadFontEx((fontFolder + displayFont + "/" + displayFont + "-Bold.ttf").c_str(), DISPLAY_FONT_SIZE, 0, 250);
+    Resources::displayFontRegular = LoadFontEx((fontFolder + displayFont + "/" + displayFont + "-Regular.ttf").c_str(),TEXT_FONT_SIZE, 0, 250);
+    Resources::displayFontBold    = LoadFontEx((fontFolder + displayFont + "/" + displayFont + "-Bold.ttf").c_str(), TEXT_FONT_SIZE, 0, 250);
 
 
 
