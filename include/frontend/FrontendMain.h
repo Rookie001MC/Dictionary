@@ -15,7 +15,7 @@ class FrontendMain
     private:
         Rectangle Header{0,0, SCREEN_WIDTH, 120};
         HistoryPage history;
-        WordPage wordPage;
+        WordPage word;
     public:
         FrontendMain();
         void start();

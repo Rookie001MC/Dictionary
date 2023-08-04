@@ -6,12 +6,22 @@
 #include "raylib.h"
 
 WordPage::WordPage() {
-    CurrentState::currentPage = Page::DICT_WORD;
-    // for (int i = 0; i < 20; i++)
-    //     rec_result[i] = {320, (float)200 + 125 * i, 830, 120};
-    // for (int i = 0; i < 5; i++)
-    //     rec_modes[i] = {30, (float)125 + 90 * i, 245, 60};
-    // rec_modes[menuChosen] = {20, (float)115 + 90 * menuChosen, 265, 80};
+    for (int i = 0; i < 4; i++)
+    {
+        dictPagesRects[i] = {61, float(146 + (151 * i)), 165, 55};
+    }
+    dictPagesRects[selectedDictPage] = {51, float(136 + (150 * selectedDictPage)), 195, 65};
+
+    for (int i = 0; i < words.size(); i++)
+    {
+        wordRects.push_back({300, float(220 + 100 * i), 949, 87});
+    }
+}
+
+void WordPage::update() {
+    if (!words.size()) {
+
+    }
 }
 
 void WordPage::draw() {
@@ -28,10 +38,14 @@ void WordPage::draw() {
     Vector2 mousePos = GetMousePosition();
 
     // draw the Search Box
-    DrawRectangle(302, 146, 442, 55, WHITE);
-    if (SearchInput[0] == '\0') {
-        DrawText("Search...", 325, 135, 30, LIGHTGRAY);
+    DrawRectangle(310, 100, 850, 90, RAYWHITE);
+    DrawRectangleLinesEx(rec_search, 3, BLACK);
+    if (GuiTextBox(rec_search, SearchInput, 101, SearchEdit))
+    {
+        SearchEdit ^= 1;
     }
+    if (SearchInput[0] == '\0')
+        DrawText("Search...", 325, 155, 30, LIGHTGRAY);
     
     //draw the reset button
     if (GuiButton(rec_reset, "RESET"))
@@ -39,24 +53,50 @@ void WordPage::draw() {
 
     if (GuiButton(rec_random, "RANDOM"))
     {
-
     }
 
-}
+    // Draws the function switcher
+    for (int i = 0; i < dictPages.size(); i++)
+    {
+        if (GuiButton(dictPagesRects[i], dictPages[i].c_str()))
+        {
+            CurrentState::currentDict = i;
+        }
+    }
 
-void WordPage::update() {
-    if (!words.size()) {
+    for (int i = 0; i < words.size(); i++)
+    {
+        // Draws each word
+        DrawRectangleV({wordRects[i].x, wordRects[i].y}, {wordRects[i].width, wordRects[i].height},
+                       SECONDARY_COLOR_CONTAINER_RGB);
+        DrawRectangleLinesEx(wordRects[i], 2, OUTLINE_COLOR_RGB);
 
+        if (CheckCollisionPointRec(mousePos, wordRects[i]) && !dropDownBox)
+        {
+            DrawRectangleV({wordRects[i].x, wordRects[i].y}, {wordRects[i].width, wordRects[i].height},
+                           SECONDARY_COLOR_RGB);
+        }
+
+        DrawTextEx(Resources::wordFontRegular, words[i]->getKey().c_str(), {wordRects[i].x + 10, wordRects[i].y + 10},
+                   WORD_FONT_SIZE, 0, TEXT_COLOR_RGB);
+    }
+
+    // Draw the Dict Picker
+        if (GuiDropdownBox(rec_dictionary, (dictLanguages[0] + "\n" + dictLanguages[1] + "\n" + dictLanguages[2] + "\n" + dictLanguages[3]).c_str(), modeChosen, dropDownBox))
+    {
+        dropDownBox ^= 1;
+        confirmResetBox = false;
     }
 }
 
 void WordPage::resetBox() {
     if (GuiWindowBox({300, 170, 600, 250}, ""))
         confirmResetBox = false;
-    text = "Are you sure to reset "; 
-    if (GuiButton({400, 330, 100, 50}, "NO"))
+    text = "Are you sure to reset ?"; 
+    DrawTextEx(Resources::wordFontBold, text.c_str(), {600 - MeasureTextEx(Resources::wordFontBold, text.c_str(), 27, 1).x / 2, 220}, 27, 1, BLACK);
+    if (GuiButton({400, 330, 100, 50}, "YES"))
         confirmResetBox = false;
-    if (GuiButton({700, 330, 100, 50}, "YES"))
+    if (GuiButton({700, 330, 100, 50}, "NO"))
     {
     }
 }

@@ -4,6 +4,7 @@
 #include "frontend/ResourcesLoad.h"
 #include "frontend/styles.h"
 #include "frontend/pages/History.h"
+#include "frontend/pages/Word.h"
 #include "globalVars/globalVars.h"
 #include "raylib.h"
 #include "raygui.h"
@@ -40,9 +41,10 @@ void FrontendMain::start()
         {
             switch (CurrentState::currentPage)
             {
-                case Page::DICT_MAIN_SEARCH:
+                case Page::DICT_WORD:
                 {
-                   // return;
+                    word.update();
+                    break;
                 }
                 case Page::DICT_HISTORY:
                 {
@@ -56,9 +58,9 @@ void FrontendMain::start()
                 ClearBackground(BG_COLOR_RGB);
                 switch (CurrentState::currentPage)
                 {
-                    case Page::DICT_MAIN_SEARCH:
+                    case Page::DICT_WORD:
                     {
-                        DrawRectangle(0, 0, 300, 700, RED);
+                        word.draw();
                         break;
                     }
                     case Page::DICT_HISTORY:
@@ -70,7 +72,7 @@ void FrontendMain::start()
                 } 
             
             DrawTextureV(Resources::headerImage, {Header.x, Header.y}, WHITE);
-            DrawTextEx(Resources::titleFont, "The Dictionary of Everything?", {Header.x + 50, Header.height / 2 - 30 }, 50, 0, WHITE);
+            DrawTextEx(Resources::titleFont, "The Dictionary", {500, Header.height / 2 - 30 }, 50, 0, WHITE);
             }
             EndDrawing();
         }

@@ -10,17 +10,26 @@
 
 class WordPage {
     private:
+        int* modeChosen = new int{0};
         bool SearchEdit = false;
         char SearchInput[101] = "";
-        Rectangle rec_result[20];
-        Rectangle rec_dictionary{1030, 115, 155, 65};
-        Rectangle rec_reset{740, 115, 135, 65};
-        Rectangle rec_random{885, 115, 135, 65};
-        Rectangle rec_search{305, 115, 420, 65};
-        short menuChosen = 0;
-        bool dropDowmBox = false, confirmResetBox = false, addWordButton = false;
-        std::vector<Word *> words;
+        Rectangle rec_dictionary{1075, 140, 155, 55};
+        Rectangle rec_reset{760, 140, 135, 55};
+        Rectangle rec_random{915, 140, 135, 55};
+        Rectangle rec_search{305, 140, 420, 55};
+    
+        bool dropDownBox = false, confirmResetBox = false, addWordButton = false;
         std::string text;
+
+        std::vector<Word *> words;
+        std::vector<Rectangle> wordRects;
+        std::vector <std::string> dictLanguages = {"ENG-ENG", "ENG-VIE", "VIE-ENG", "EMOJI", "SLANG"};
+
+        Rectangle dictPagesRects[4];
+        std::vector<std::string> dictPages = {"WORD", "Definition", "Favorites", "History"};
+     
+        short int selectedDictPage = 0;
+
     public:
         WordPage();
         void draw();
@@ -28,6 +37,7 @@ class WordPage {
         void resetBox();
         void addWord();
         ~WordPage() {
+            delete modeChosen;
         }
 
 };
