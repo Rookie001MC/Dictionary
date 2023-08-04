@@ -43,7 +43,7 @@ void FrontendMain::start()
             {
                 case Page::DICT_WORD:
                 {
-                    wordPage.update();
+                    //wordPage.update();
                     return;
                 }
                 // case Page::DICT_DEF_SEARCH:
@@ -68,7 +68,7 @@ void FrontendMain::start()
                 {
                     case Page::DICT_WORD:
                     {
-                        wordPage.draw();
+                        DrawRectangle(0, 0, 300, 600, RED);
                         return;
                     }
                     case Page::DICT_HISTORY:

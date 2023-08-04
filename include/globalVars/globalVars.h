@@ -5,7 +5,7 @@
 
 enum Page
 {
-    DICT_WORD = 0, 
+    DICT_WORD, 
     DICT_DEF_SEARCH,
     DICT_FAVORITES,
     DICT_HISTORY,
