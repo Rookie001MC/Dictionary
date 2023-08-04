@@ -67,6 +67,12 @@ void DefPage::draw() {
     // Draws the function switcher
     for (int i = 0; i < dictPages.size(); i++)
     {
+        if (i == selectedDictPage) {
+            GuiSetStyle(BUTTON, BASE_COLOR_NORMAL, PRIMARY_COLOR_CONTAINER_HOVER);
+        }
+        else {
+            GuiSetStyle(BUTTON, BASE_COLOR_NORMAL, PRIMARY_COLOR_CONTAINER);
+        }
         if (GuiButton(dictPagesRects[i], dictPages[i].c_str()))
         {
             CurrentState::currentDict = i;

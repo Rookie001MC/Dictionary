@@ -23,31 +23,31 @@
 #define PRIMARY_COLOR_RGB (Color){0x9c, 0x41, 0x44, 0xff}
 
 // Màu của nút, các ô chứa, ...
-#define PRIMARY_COLOR_CONTAINER (0xFFDAD9FF)
-#define PRIMARY_COLOR_CONTAINER_RGB (Color){0xff, 0xda, 0xd9, 0xff}
+#define PRIMARY_COLOR_CONTAINER (0xF1C27BFF)
+#define PRIMARY_COLOR_CONTAINER_RGB (Color){241, 194, 123}
 
 // Same thing nhưng khi di chuột lên
-#define PRIMARY_COLOR_CONTAINER_HOVER (0xdb7173ff)
+#define PRIMARY_COLOR_CONTAINER_HOVER (0xFAEAD4FF)
 #define PRIMARY_COLOR_CONTAINER_HOVER_RGB (Color){0xdb, 0x71, 0x73, 0xff}
 
 // Màu phụ
-#define SECONDARY_COLOR (0x845400FF)
-#define SECONDARY_COLOR_RGB (Color){0x84, 0x54, 0x00, 0xff}
+#define SECONDARY_COLOR (0xB5C99AFF)
+#define SECONDARY_COLOR_RGB (Color){181, 201, 154}
 
 // Màu của nút, các ô chứa, ... nhưng sử dụng tông màu phụ
-#define SECONDARY_COLOR_CONTAINER (0xffddb6ff)
+#define SECONDARY_COLOR_CONTAINER (0x#73490dff)
 #define SECONDARY_COLOR_CONTAINER_RGB (Color){0xff, 0xdd, 0xb6, 0xff}
 
 // Same thing nhưng khi di chuột lên
-#define OUTLINE_COLOR (0x857372ff)
+#define OUTLINE_COLOR (0xB5C99Aff)
 #define OUTLINE_COLOR_RGB (Color){0x85, 0x73, 0x72, 0xff}
 
 // Màu nền
-#define BG_COLOR (0xF7FEECff)
-#define BG_COLOR_RGB (Color){0xf7, 0xfe, 0xec, 0xff}
+#define BG_COLOR (0xFFECAFF)
+#define BG_COLOR_RGB (Color){255, 254, 202}
 
 // Màu của chữ
-#define TEXT_COLOR (0x082100ff)
+#define TEXT_COLOR (0x000000ff)
 #define TEXT_COLOR_RGB (Color){0x08, 0x21, 0x00, 0xff}
 
 // Window resolution
@@ -60,7 +60,7 @@
 #define WORD_FONT_SIZE 30
 
 // Font nội dụng bình thường
-#define TEXT_FONT_SIZE 14
+#define TEXT_FONT_SIZE 25
 
 // 2 cái này chắc dư thừa nhma ai biết có xài hay ko :)))
 #define ITEM_HEIGHT 30

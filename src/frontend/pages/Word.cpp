@@ -43,15 +43,16 @@ void WordPage::draw() {
 
     Vector2 mousePos = GetMousePosition();
 
+    DrawRectangleV(Vector2{0, 0}, Vector2{277, 720}, GetColor(SECONDARY_COLOR));
+
     // draw the Search Box
-    DrawRectangle(310, 100, 850, 90, RAYWHITE);
     DrawRectangleLinesEx(rec_search, 3, BLACK);
     if (GuiTextBox(rec_search, SearchInput, 101, SearchEdit))
     {
         SearchEdit ^= 1;
     }
     if (SearchInput[0] == '\0')
-        DrawText("Search...", 325, 155, 30, LIGHTGRAY);
+        DrawText("Search...", 330, 155, 30, LIGHTGRAY);
     
     //draw the reset button
     if (GuiButton(rec_reset, "RESET"))
@@ -64,6 +65,12 @@ void WordPage::draw() {
     // Draws the function switcher
     for (int i = 0; i < dictPages.size(); i++)
     {
+        if (i == selectedDictPage) {
+            GuiSetStyle(BUTTON, BASE_COLOR_NORMAL, PRIMARY_COLOR_CONTAINER_HOVER);
+        }
+        else {
+            GuiSetStyle(BUTTON, BASE_COLOR_NORMAL, PRIMARY_COLOR_CONTAINER);
+        }
         if (GuiButton(dictPagesRects[i], dictPages[i].c_str()))
         {
             CurrentState::currentDict = i;
@@ -83,8 +90,8 @@ void WordPage::draw() {
                            SECONDARY_COLOR_RGB);
         }
 
-        DrawTextEx(Resources::wordFontRegular, words[i]->getKey().c_str(), {wordRects[i].x + 10, wordRects[i].y + 10},
-                   WORD_FONT_SIZE, 0, TEXT_COLOR_RGB);
+            DrawTextEx(Resources::wordFontBold, words[i]->getKey().c_str(), {wordRects[i].x + 10, wordRects[i].y + 10},
+                WORD_FONT_SIZE, 0, TEXT_COLOR_RGB);
     }
 
     // Draw the Dict Picker
