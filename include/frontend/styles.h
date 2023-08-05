@@ -24,7 +24,7 @@
 
 // Màu của nút, các ô chứa, ...
 #define PRIMARY_COLOR_CONTAINER (0xF1C27BFF)
-#define PRIMARY_COLOR_CONTAINER_RGB (Color){241, 194, 123}
+#define PRIMARY_COLOR_CONTAINER_RGB (Color){241, 194, 123, 255}
 
 // Same thing nhưng khi di chuột lên
 #define PRIMARY_COLOR_CONTAINER_HOVER (0xFAEAD4FF)
@@ -32,7 +32,7 @@
 
 // Màu phụ
 #define SECONDARY_COLOR (0xB5C99AFF)
-#define SECONDARY_COLOR_RGB (Color){181, 201, 154}
+#define SECONDARY_COLOR_RGB (Color){181, 201, 154, 255}
 
 // Màu của nút, các ô chứa, ... nhưng sử dụng tông màu phụ
 #define SECONDARY_COLOR_CONTAINER (0x#73490dff)
@@ -44,7 +44,7 @@
 
 // Màu nền
 #define BG_COLOR (0xFFECAFF)
-#define BG_COLOR_RGB (Color){255, 254, 202}
+#define BG_COLOR_RGB (Color){255, 254, 202, 255}
 
 // Màu của chữ
 #define TEXT_COLOR (0x000000ff)
