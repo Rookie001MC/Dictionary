@@ -108,21 +108,32 @@ Word Dictionary::getWord()
 std::string extractDefinition(const std::string &line, bool &isEndOfDefinition)
 {
     // get the whole line except when meet the '[' - meaning that the definition is over
+    // Cases when the definition is over
+    // 1. the line contains '[' -> the sign of synonym at the end of the definition
+    // 2. the appearance of "; "" -> start of the example -> also at the end of the definition
     std::string definition;
     if (line.find('[') == std::string::npos) // this character doesn't exist
     {
         int start  = line.find_first_not_of(' ');
-        definition = line.substr(start);
+        if (line.find("; \"") != std::string::npos)
+        {
+            int end = line.find("; \"") - 1;
+            isEndOfDefinition = true;
+            definition = line.substr(start, end - start + 1);
+        }
+        else
+            definition = line.substr(start);
     }
     else
     {
-        // find the position that is not a space
-        // then find the last position (the position appearing '[')
-        // then get the substring from the first position to the last position
-        int firstPos      = line.find_first_not_of(' ');
-        int lastPos       = line.find('[');
-        isEndOfDefinition = true;
-        definition        = line.substr(firstPos, lastPos - firstPos);
+        int firstPos = line.find_first_not_of(' ');
+        int lastPos = 0;
+        if (line.find("; \"") != std::string::npos)
+            lastPos = line.find("; \"");
+        else
+            lastPos = line.find('[');
+        isEndOfDefinition = true;   
+        definition = line.substr(firstPos, lastPos - firstPos);
     }
     definition.append(" ");
     return definition;
@@ -135,7 +146,6 @@ std::string extractWordType(const std::string &line)
     iss >> std::skipws >> wordType;
     return wordType;
 }
-
 Word Dictionary::getWordEngEng()
 {
     bool isEndOfDefinition = false;
@@ -164,19 +174,19 @@ Word Dictionary::getWordEngEng()
                     word.setType(tmp);
                 }
                 if (isEndOfDefinition)
-                    word.getDefinitions().push_back(""); // if this sign is true, it means we are in a new definition
-                isEndOfDefinition = false;
-                if (!start)
+                {
+                    word.addDefinition("");
                     curDef++;
-                else
-                    start = false;
+                }   
+                isEndOfDefinition = false;
             }
             else if (line[5] >= '0' && line[5] <= '9') // start of a new definition
             {
-                word.getDefinitions().push_back(""); // create a new slot for the new definition
+                word.addDefinition("");
                 isEndOfDefinition = false;
                 curDef++;
             }
+
             if (!isEndOfDefinition)
             {
                 if (word.getDefinitionCount() <= curDef)
