@@ -31,7 +31,7 @@ class Trie
     void insert(Word word);
     // bool prefixSearch(std::string key);
     bool search(std::string key);
-    bool search(std::string key, Word word);
+    bool search(std::string key, Word &word);
     void remove(std::string key);
     void serialize(std::string path, char delimiter);
     void deserialize(std::string path, char delimiter);
