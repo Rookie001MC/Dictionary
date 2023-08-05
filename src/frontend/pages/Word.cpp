@@ -19,15 +19,26 @@ WordPage::WordPage() {
 }
 
 void WordPage::update() {
+    // if (GetMouseWheelMove() == -1 && rec_result[word.size() - 1].y > 475)
+    // {
+    //     for (int i = 0; i < word.size(); i++)
+    //     {
+    //         rec_result[i].y -= 40;
+    //     }
+    // }
+    // else if (GetMouseWheelMove() == 1 && rec_result[0].y < 200)
+    // {
+    //     for (int i = 0; i < word.size(); i++)
+    //     {
+    //         rec_result[i].y += 40;
+    //     }
+    // }
+
     if (selectedDictPage != 0)
     {
-        // if (SearchInput[0] == '\0')
-        //     word.clear();
-        // short tmp = selectedDictPage;
-        // selectedDictPage = 0;
-        // return static_cast<Page>(tmp);
+      //  return static_cast<Page>(selectedDictPage);
     }
-    // return Page::DICT_WORD;
+ //   return Page::DICT_WORD
 }
 
 void WordPage::draw() {
@@ -73,7 +84,7 @@ void WordPage::draw() {
         }
         if (GuiButton(dictPagesRects[i], dictPages[i].c_str()))
         {
-            CurrentState::currentDict = i;
+            selectedDictPage = i;
         }
     }
 
@@ -101,10 +112,23 @@ void WordPage::draw() {
         confirmResetBox = false;
     }
 
-    // choose dict box
-    // for (int i = 0; i < 5; i++)
-    //     if (GuiButton(rec_modes[i], modes[i].c_str()))
-    //         selectedDictPage = i;
+    // if (!word.size())
+    // {
+    //     if (SearchInput[0] == '\0')
+    //         word = data[*modeChosen].getSearchHistory();
+    //     else
+    //     {
+    //         word = data[*modeChosen].SearchWord(SearchInput);
+    //         if (!word.size())
+    //         {
+    //             DrawTextEx(fnt, "No word match this search !!!", {300, 205}, 25, 1, RED);
+    //             if (GuiLabelButton({320, 250, 80, 40}, "Add this word"))
+    //                 addWordButton = true;
+    //         }
+    //     }
+    // }
+
+    
 }
 
 void WordPage::resetBox() {

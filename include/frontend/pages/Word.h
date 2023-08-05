@@ -1,19 +1,20 @@
 #ifndef FRONTEND_PAGE_WORD
 #define FRONTEND_PAGE_WORD
 
-#include <iostream>
-#include <cstring>
-#include <vector>
 #include "raylib.h"
 #include "frontend/styles.h"
 #include "dictionary/word.h"
 #include "globalVars/globalVars.h"
+#include <iostream>
+#include <cstring>
+#include <vector>
 
 class WordPage {
     private:
         int* modeChosen = new int{0};
         bool SearchEdit = false;
         char SearchInput[101] = "";
+        Rectangle rec_result[20];
         Rectangle rec_dictionary{1075, 140, 155, 55};
         Rectangle rec_reset{760, 140, 135, 55};
         Rectangle rec_random{915, 140, 135, 55};
