@@ -77,7 +77,7 @@ void random4Definitions()
     std::string keyWordQuestion;
     std::string correctAns, incorrectAns1, incorrectAns2, incorrectAns3;
     std::ifstream fin;
-    fin.open("output.txt");
+    fin.open("../data/engengRandom.txt");
     std::string line;
     int lineNum = 0;
     while (std::getline(fin, line))
@@ -141,6 +141,7 @@ void random4Definitions()
         std::cout << "Incorrect!" << std::endl;
         std::cout << "The correct answer is: " << positionOfCorrectAns << ". " << correctAns << std::endl;
     }
+    fin.close();
 }
 void quizWith4Definitions()
 {
@@ -181,7 +182,7 @@ void random4KeyWords()
     std::string question;
     std::string correctAns, incorrectAns1, incorrectAns2, incorrectAns3;
     std::ifstream fin;
-    fin.open("output.txt");
+    fin.open("../data/engengRandom.txt");
     std::string line;
     int lineNum = 0;
     while (std::getline(fin, line))
@@ -245,6 +246,7 @@ void random4KeyWords()
         std::cout << "Incorrect!" << std::endl;
         std::cout << "The correct answer is: " << positionOfCorrectAns << ". " << correctAns << std::endl;
     }
+    fin.close();
 }
 
 void quizWith4KeyWords()
