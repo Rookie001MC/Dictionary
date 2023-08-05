@@ -117,25 +117,7 @@ void Trie::clear(TrieNode *root)
 //     return true;
 // }
 
-bool Trie::search(std::string key)
-{
-    TrieNode *cur = root;
-    for (int i = 0; i < key.length(); ++i)
-    {
-        char c = key.at(i);
-        int index = getIndex(c);
-        if (cur->children[index] == nullptr)
-            return false;
-        else
-            cur = cur->children[index];
-    }
-
-    if (cur->endOfWord)
-        return true;
-    return false;
-}
-
-bool Trie::search(std::string key, Word word)
+bool Trie::search(std::string key, Word &word)
 {
     TrieNode *cur = root;
     for (int i = 0; i < key.length(); ++i)

@@ -47,7 +47,7 @@ void DefPage::draw() {
     Vector2 mousePos = GetMousePosition();
 
     // draw the Search Box
-    DrawRectangle(310, 100, 850, 90, RAYWHITE);
+     DrawRectangleV(Vector2{0, 0}, Vector2{277, 720}, GetColor(SECONDARY_COLOR));
     DrawRectangleLinesEx(rec_search, 3, BLACK);
     if (GuiTextBox(rec_search, SearchInput, 101, SearchEdit))
     {
