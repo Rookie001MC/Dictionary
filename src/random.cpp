@@ -50,7 +50,7 @@ int randomInFour()
     return dis(gen);
 }
 
-std::string getDefinitionFromText(const std::string &line)
+std::string get1stDefinitionFromText(const std::string &line)
 {
     std::string definition;
     int start = line.find_first_of(':') + 2;
@@ -86,14 +86,14 @@ void random4Definitions()
         if (lineNum == randomCorrectAns)
         {
             keyWordQuestion = getKeyWordFromText(line);
-            correctAns = getDefinitionFromText(line);
+            correctAns = get1stDefinitionFromText(line);
         }
         else if (lineNum == wrongAns1)
-            incorrectAns1 = getDefinitionFromText(line);
+            incorrectAns1 = get1stDefinitionFromText(line);
         else if (lineNum == wrongAns2)
-            incorrectAns2 = getDefinitionFromText(line);
+            incorrectAns2 = get1stDefinitionFromText(line);
         else if (lineNum == wrongAns3)
-            incorrectAns3 = getDefinitionFromText(line);
+            incorrectAns3 = get1stDefinitionFromText(line);
     }
     // Random the position of the correct answer -> more entertaining
     int positionOfCorrectAns = randomInFour();
@@ -190,7 +190,7 @@ void random4KeyWords()
         lineNum++;
         if (lineNum == randomCorrectAns)
         {
-            question = getDefinitionFromText(line);
+            question = get1stDefinitionFromText(line);
             correctAns = getKeyWordFromText(line);
         }
         else if (lineNum == wrongAns1)

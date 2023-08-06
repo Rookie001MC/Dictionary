@@ -9,7 +9,7 @@ void viewRandomWord();
 
 // Quiz
 int randomInFour();
-std::string getDefinitionFromText(const std::string &line);
+std::string get1stDefinitionFromText(const std::string &line);
 void random4Definitions();
 void quizWith4Definitions();
 void random4KeyWords();
