@@ -61,20 +61,22 @@ endif()
 option(BOOST_DISABLE_TESTS "Disable Boost tests" OFF)
 set(BOOST_VERSION 1.82.0)
 
-include(FetchContent)
-FetchContent_Declare(
-  Boost
-  DOWNLOAD_EXTRACT_TIMESTAMP ON
-  USES_TERMINAL_DOWNLOAD TRUE
-  GIT_PROGRESS TRUE
-  GIT_SHALLOW TRUE
-  DOWNLOAD_NO_EXTRACT FALSE
-  URL https://github.com/boostorg/boost/releases/download/boost-${BOOST_VERSION}/boost-${BOOST_VERSION}.tar.gz
-)
-# set(BOOST_INCLUDE_LIBRARIES timer filesystem regex)
-set(BOOST_ENABLE_CMAKE ON)
-FetchContent_MakeAvailable(boost)
-
+find_package(Boost ${BOOST_VERSION})
+if (NOT Boost_FOUND)
+  include(FetchContent)
+  FetchContent_Declare(
+    Boost
+    DOWNLOAD_EXTRACT_TIMESTAMP ON
+    USES_TERMINAL_DOWNLOAD TRUE
+    GIT_PROGRESS TRUE
+    GIT_SHALLOW TRUE
+    DOWNLOAD_NO_EXTRACT FALSE
+    URL https://github.com/boostorg/boost/releases/download/boost-${BOOST_VERSION}/boost-${BOOST_VERSION}.tar.gz
+  )
+  # set(BOOST_INCLUDE_LIBRARIES timer filesystem regex)
+  FetchContent_MakeAvailable(boost)
+  set(BOOST_ENABLE_CMAKE ON)
+endif()
 
 # Defining the source files and includes
 file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS "src/*.cpp")
@@ -94,7 +96,7 @@ target_include_directories(${PROJECT_NAME} PUBLIC include)
 
 # Adding the libraries
 target_link_libraries(${PROJECT_NAME} PUBLIC raylib raygui)
-target_link_libraries(${PROJECT_NAME} PUBLIC Boost::filesystem)
+target_link_libraries(${PROJECT_NAME} PUBLIC Boost::filesystem Boost::serialization)
 
 # MacOS jibbirish
 if (APPLE)
