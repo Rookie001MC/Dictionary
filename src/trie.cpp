@@ -1,4 +1,7 @@
 #include "dictionary/trie.h"
+#include <queue>
+#include <vector>
+
 Trie::Trie()
 {
     this->root      = new TrieNode;
@@ -143,8 +146,51 @@ void Trie::remove(std::string key)
     remove(root, key, 0);
 }
 
+std::queue<TrieNode*> q;
+// return vectors of possible words with given prefix
+// return empty vector of words if no word with given prefix found
+std::vector<Word> Trie::wordSuggest(std::string prefix)
+{
+    TrieNode* cur = root;
+    std::vector<Word> wordlist;
+    for (int i = 0; i < prefix.size(); ++i) {
+        TrieNode* next = cur->children[getIndex(prefix.at(i))];
+        if (!next)
+            return wordlist;
+        cur = next;
+    }
+    int limit = 7;
+    if (cur->endOfWord) {
+        wordlist.push_back(cur->word);
+        --limit;
+    }
+    q.push(cur);
+    wordSuggest(wordlist, limit);
+    return wordlist;
+}
+
+void Trie::wordSuggest(std::vector<Word> &wordlist, int limit)
+{
+    while (!q.empty()) {
+        if (limit)
+            break;
+        TrieNode* cur = q.front();
+        q.pop();
+        for (int i = 0; i < ALPHABET; ++i) {
+            if (cur) {
+                if (cur->children[i]->endOfWord) {
+                    wordlist.push_back(cur->children[i]->word);
+                    --limit;
+                }
+                else
+                    q.push(cur);
+            }
+        }
+    }
+}
+
 void Trie::serialize(TrieNode *root, std::ofstream &fout, char delimiter)
-{   
+{
     if (root->endOfWord) {
         fout << root->word.getKey() << delimiter;
         fout << root->word.getType() << delimiter;

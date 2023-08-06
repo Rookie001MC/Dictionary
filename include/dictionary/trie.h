@@ -24,7 +24,7 @@ class Trie
     void serialize(TrieNode *root, std::ofstream &fout, char delimiter);
     void deserialize(std::ifstream &fin, char delimiter);
     int getIndex(char c);
-
+    void wordSuggest(std::vector<Word> &wordlist, int limit);
   public:
     Trie();
     ~Trie();
@@ -33,6 +33,7 @@ class Trie
     bool search(std::string key);
     bool search(std::string key, Word &word);
     void remove(std::string key);
+    std::vector<Word> wordSuggest(std::string prefix);
     void serialize(std::string path, char delimiter);
     void deserialize(std::string path, char delimiter);
 };
