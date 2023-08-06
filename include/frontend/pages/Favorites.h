@@ -1,0 +1,4 @@
+#ifndef FRONTEND_PAGE_FAVORITES
+#define FRONTEND_PAGE_FAVORITES
+
+#endif
