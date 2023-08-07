@@ -5,10 +5,10 @@
 
 enum Page
 {
-    DICT_DEF_SEARCH,
-    DICT_FAVORITES,
-    DICT_HISTORY,
-    DICT_WORD,
+    DICT_WORD = 0,   // Main menu
+    DICT_DEF_SEARCH, // Definition search
+    DICT_FAVORITES,  // Favorites
+    DICT_HISTORY,    // History
 };
 struct Resources
 {
@@ -25,9 +25,8 @@ struct Resources
 };
 struct CurrentState
 {
-    static Page currentPage;
-    static int currentDict;
+    static Page currentPage; // Current page (e.g. what search mode it's currently on, word search, definition search, etc.)
+    static int currentDict;  // Current dict (e.g. what dictionary it's currently on, ENG-ENG, ENG-VIE, etc.)
 };
-
 
 #endif
