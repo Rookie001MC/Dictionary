@@ -17,12 +17,16 @@ HistoryPage::HistoryPage()
     {
         wordRects.push_back({300, float(220 + 100 * i), 949, 87});
     }
+
+
+    printf("Current page: %d\n", CurrentState::currentPage);
 }
 
 void HistoryPage::update()
 {
     if (!words.size())
     {
+        
     }
     
 
@@ -37,8 +41,9 @@ void HistoryPage::draw()
     {
         if (GuiButton(dictPagesRects[i], dictPages[i].c_str()))
         {
-            CurrentState::currentDict = i;
+            CurrentState::currentPage = static_cast<Page>(i);
         }
+
     }
 
     for (int i = 0; i < words.size(); i++)
@@ -57,7 +62,7 @@ void HistoryPage::draw()
         DrawTextEx(Resources::wordFontRegular, words[i]->getKey().c_str(), {wordRects[i].x + 10, wordRects[i].y + 10},
                    WORD_FONT_SIZE, 0, TEXT_COLOR_RGB);
 
-        // Draw the Search Box
+        // Draw the Search Box (disabled)
         DrawRectangle(302, 146, 442, 55, BG_COLOR_RGB);
 
         // Draw the Dict Picker

@@ -16,6 +16,7 @@ DefPage::DefPage() {
     {
         wordRects.push_back({300, float(220 + 100 * i), 949, 87});
     }
+    printf("Current page: %d\n", CurrentState::currentPage);
 }
 
 void DefPage::update() {
@@ -54,7 +55,7 @@ void DefPage::draw() {
         SearchEdit ^= 1;
     }
     if (SearchInput[0] == '\0')
-        DrawText("Search...", 325, 155, 30, LIGHTGRAY);
+        DrawTextEx(Resources::displayFontRegular ,"Search...", {330, 155}, TEXT_FONT_SIZE,0,  GRAY);
     
     //draw the reset button
     if (GuiButton(rec_reset, "RESET"))
@@ -75,7 +76,7 @@ void DefPage::draw() {
         }
         if (GuiButton(dictPagesRects[i], dictPages[i].c_str()))
         {
-            CurrentState::currentDict = i;
+            CurrentState::currentPage = static_cast<Page>(i);
         }
     }
 
