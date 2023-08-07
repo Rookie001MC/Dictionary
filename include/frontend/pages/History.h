@@ -12,7 +12,7 @@ class HistoryPage
         int *currentDict = new int{0};
         std::vector<Word *> words;
         std::vector<Rectangle> wordRects;
-        Rectangle dictChooserRect {1101, 146, 150, 55};
+        Rectangle dictChooserRect{1075, 140, 155, 55};
         std::vector <std::string> dictLanguages = {"ENG-ENG", "ENG-VIE", "VIE-ENG", "EMOJI", "SLANG"};
 
         Rectangle dictPagesRects[4];
