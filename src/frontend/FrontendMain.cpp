@@ -30,6 +30,11 @@ void FrontendMain::start()
                     def.update();
                     break;
                 }
+                case Page::DICT_FAVORITES:
+                {
+                    favorites.update();
+                    break;
+                }
                 case Page::DICT_HISTORY:
                 {
                     history.update();
@@ -50,6 +55,11 @@ void FrontendMain::start()
                     case Page::DICT_DEF_SEARCH:
                     {
                         def.draw();
+                        break;
+                    }
+                    case Page::DICT_FAVORITES:
+                    {
+                        favorites.draw();
                         break;
                     }
                     case Page::DICT_HISTORY:

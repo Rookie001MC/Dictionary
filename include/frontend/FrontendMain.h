@@ -1,6 +1,7 @@
 #ifndef FRONTEND_MAIN_H
 #define FRONTEND_MAIN_H
 
+#include "frontend/pages/Favorites.h"
 #include "raylib.h"
 #include "frontend/ResourcesLoad.h"
 #include "frontend/styles.h"
@@ -18,6 +19,7 @@ class FrontendMain
         HistoryPage history;
         WordPage word;
         DefPage def;
+        FavoritesPage favorites;
     public:
         FrontendMain();
         void start();
