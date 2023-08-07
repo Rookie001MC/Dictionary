@@ -271,6 +271,7 @@ Word Dictionary::getWordEmoji()
     std::string key, type = "Emoji", definition;
     fin >> key >> definition;
     Word word(key, definition, type);
+    return word;
 }
 
 Word Dictionary::getWordSlang() 
@@ -278,4 +279,5 @@ Word Dictionary::getWordSlang()
     std::string key, type = "Slang", definition;
     fin >> key >> definition;
     Word word(key, definition, type);
+    return word;
 }

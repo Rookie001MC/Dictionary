@@ -172,19 +172,21 @@ std::vector<Word> Trie::wordSuggest(std::string prefix)
 void Trie::wordSuggest(std::vector<Word> &wordlist, int limit)
 {
     while (!q.empty()) {
-        if (limit)
+        if (!limit)
             break;
         TrieNode* cur = q.front();
         q.pop();
-        for (int i = 0; i < ALPHABET; ++i) {
-            if (cur) {
-                if (cur->children[i]->endOfWord) {
-                    wordlist.push_back(cur->children[i]->word);
+        for (int i = 0; i < ALPHABET && limit && cur; ++i) {
+            TrieNode* now = cur->children[i];
+            if (now) {
+                if (now->endOfWord) {
+                    wordlist.push_back(now->word);
                     --limit;
                 }
                 else
-                    q.push(cur);
+                    q.push(now);
             }
+
         }
     }
 }

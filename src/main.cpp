@@ -26,3 +26,28 @@ int main(int argc, const char *argv[])
     CloseWindow();
     return 0;
 }
+
+// keep this for debugging
+// int main(int argc, const char *argv[])
+// {
+//     auto start = std::chrono::high_resolution_clock::now();
+//     Dictionary dict("../data/engeng.dict", 0);
+//     std::cout << boost::filesystem::file_size("../data/engeng.dict") << '\n';
+//     Trie trie;
+//     build(dict, trie);
+//     Word word;
+//     std::string key;
+//     std::cin >> key;
+//     std::vector<Word> wordlist = trie.wordSuggest(key);
+//     for (int i = 0; i < wordlist.size(); ++i) {
+//         std::cout << wordlist.at(i).getKey() << ' ' << wordlist.at(i).getType() << '\n';
+//         std::vector<std::string> defs = wordlist.at(i).getDefinitions();
+//         for (int i = 0; i < defs.size(); ++i)
+//             std::cout << defs.at(i) << '\n';
+//         std::cout << std::endl;
+//     }
+//     auto stop     = std::chrono::high_resolution_clock::now();
+//     auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
+//     std::cout << duration;
+//     return 0;
+// }

@@ -4,6 +4,8 @@
 #include "word.h"
 #include <iostream>
 #include <string>
+#include "boost/archive/text_iarchive.hpp"
+#include "boost/archive/text_oarchive.hpp"
 
 const int ALPHABET = 42;
 struct TrieNode
@@ -30,7 +32,7 @@ class Trie
     ~Trie();
     void insert(Word word);
     // bool prefixSearch(std::string key);
-    bool search(std::string key);
+
     bool search(std::string key, Word &word);
     void remove(std::string key);
     std::vector<Word> wordSuggest(std::string prefix);
