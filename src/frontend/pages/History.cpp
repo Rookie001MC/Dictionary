@@ -1,7 +1,7 @@
 #include "frontend/pages/History.h"
+#include "dictionary/word.h"
 #include "frontend/styles.h"
 #include "globalVars/globalVars.h"
-#include "dictionary/word.h"
 #include "raygui.h"
 #include "raylib.h"
 
@@ -17,38 +17,51 @@ HistoryPage::HistoryPage()
     {
         wordRects.push_back({300, float(220 + 100 * i), 949, 87});
     }
-
-
-    printf("Current page: %d\n", CurrentState::currentPage);
 }
 
 void HistoryPage::update()
 {
     if (!words.size())
     {
-        
     }
-    
-
 }
 
 void HistoryPage::draw()
 {
     Vector2 mousePos = GetMousePosition();
 
+    // Function switcher container
+    DrawRectangleV(Vector2{0, 0}, Vector2{277, 720}, GetColor(SECONDARY_COLOR));
+
+    // Draw the Dict Picker
+    if (GuiDropdownBox(
+            dictChooserRect,
+            (dictLanguages[0] + "\n" + dictLanguages[1] + "\n" + dictLanguages[2] + "\n" + dictLanguages[3]).c_str(),
+            currentDict, dictChooserActive))
+    {
+        dictChooserActive ^= 1;
+    }
+
     // Draws the function switcher
     for (int i = 0; i < dictPages.size(); i++)
     {
+        if (i == selectedDictPage)
+        {
+            GuiSetStyle(BUTTON, BASE_COLOR_NORMAL, PRIMARY_COLOR_CONTAINER_HOVER);
+        }
+        else
+        {
+            GuiSetStyle(BUTTON, BASE_COLOR_NORMAL, PRIMARY_COLOR_CONTAINER);
+        }
         if (GuiButton(dictPagesRects[i], dictPages[i].c_str()))
         {
             CurrentState::currentPage = static_cast<Page>(i);
         }
-
     }
 
+    // Draws each word
     for (int i = 0; i < words.size(); i++)
     {
-        // Draws each word
         DrawRectangleV({wordRects[i].x, wordRects[i].y}, {wordRects[i].width, wordRects[i].height},
                        SECONDARY_COLOR_CONTAINER_RGB);
         DrawRectangleLinesEx(wordRects[i], 2, OUTLINE_COLOR_RGB);
@@ -63,17 +76,6 @@ void HistoryPage::draw()
                    WORD_FONT_SIZE, 0, TEXT_COLOR_RGB);
 
         // Draw the Search Box (disabled)
-        DrawRectangle(302, 146, 442, 55, BG_COLOR_RGB);
-
-        // Draw the Dict Picker
-        if (GuiDropdownBox(dictChooserRect,
-                           (dictLanguages[0] + "\n" + dictLanguages[1] + "\n" + dictLanguages[2] + "\n" +
-                            dictLanguages[3] + "\n" + dictLanguages[4])
-                               .c_str(),
-                           &CurrentState::currentDict, dictChooserActive))
-        {
-            dictChooserActive = !dictChooserActive;
-            // TODO: Change current using dict
-        }
+        DrawRectangle(305, 140, 420, 55, BG_COLOR_RGB);
     }
 }

@@ -1,11 +1,12 @@
 #include "frontend/pages/Definition.h"
+#include "dictionary/word.h"
 #include "frontend/styles.h"
 #include "globalVars/globalVars.h"
-#include "dictionary/word.h"
 #include "raygui.h"
 #include "raylib.h"
 
-DefPage::DefPage() {
+DefPage::DefPage()
+{
     for (int i = 0; i < 4; i++)
     {
         dictPagesRects[i] = {61, float(146 + (151 * i)), 165, 55};
@@ -16,10 +17,10 @@ DefPage::DefPage() {
     {
         wordRects.push_back({300, float(220 + 100 * i), 949, 87});
     }
-    printf("Current page: %d\n", CurrentState::currentPage);
 }
 
-void DefPage::update() {
+void DefPage::update()
+{
     if (selectedDictPage != 0)
     {
     }
@@ -34,7 +35,8 @@ void DefPage::update() {
     // return DICT_DEF_SEARCH;
 }
 
-void DefPage::draw() {
+void DefPage::draw()
+{
     if (confirmResetBox)
     {
         resetBox();
@@ -48,16 +50,14 @@ void DefPage::draw() {
     Vector2 mousePos = GetMousePosition();
 
     // draw the Search Box
-     DrawRectangleV(Vector2{0, 0}, Vector2{277, 720}, GetColor(SECONDARY_COLOR));
-    DrawRectangleLinesEx(rec_search, 3, BLACK);
     if (GuiTextBox(rec_search, SearchInput, 101, SearchEdit))
     {
         SearchEdit ^= 1;
     }
     if (SearchInput[0] == '\0')
-        DrawTextEx(Resources::displayFontRegular ,"Search...", {330, 155}, TEXT_FONT_SIZE,0,  GRAY);
-    
-    //draw the reset button
+        DrawTextEx(Resources::displayFontRegular, "Search...", {330, 155}, TEXT_FONT_SIZE, 0, GRAY);
+
+    // draw the reset button
     if (GuiButton(rec_reset, "RESET"))
         confirmResetBox = true;
 
@@ -65,13 +65,17 @@ void DefPage::draw() {
     {
     }
 
+    // Function switcher container
+    DrawRectangleV(Vector2{0, 0}, Vector2{277, 720}, GetColor(SECONDARY_COLOR));
     // Draws the function switcher
     for (int i = 0; i < dictPages.size(); i++)
     {
-        if (i == selectedDictPage) {
+        if (i == selectedDictPage)
+        {
             GuiSetStyle(BUTTON, BASE_COLOR_NORMAL, PRIMARY_COLOR_CONTAINER_HOVER);
         }
-        else {
+        else
+        {
             GuiSetStyle(BUTTON, BASE_COLOR_NORMAL, PRIMARY_COLOR_CONTAINER);
         }
         if (GuiButton(dictPagesRects[i], dictPages[i].c_str()))
@@ -80,9 +84,9 @@ void DefPage::draw() {
         }
     }
 
+        // Draws each word
     for (int i = 0; i < words.size(); i++)
     {
-        // Draws each word
         DrawRectangleV({wordRects[i].x, wordRects[i].y}, {wordRects[i].width, wordRects[i].height},
                        SECONDARY_COLOR_CONTAINER_RGB);
         DrawRectangleLinesEx(wordRects[i], 2, OUTLINE_COLOR_RGB);
@@ -98,18 +102,23 @@ void DefPage::draw() {
     }
 
     // Draw the Dict Picker
-        if (GuiDropdownBox(rec_dictionary, (dictLanguages[0] + "\n" + dictLanguages[1] + "\n" + dictLanguages[2] + "\n" + dictLanguages[3]).c_str(), modeChosen, dropDownBox))
+    if (GuiDropdownBox(
+            rec_dictionary,
+            (dictLanguages[0] + "\n" + dictLanguages[1] + "\n" + dictLanguages[2] + "\n" + dictLanguages[3]).c_str(),
+            modeChosen, dropDownBox))
     {
         dropDownBox ^= 1;
         confirmResetBox = false;
     }
 }
 
-void DefPage::resetBox() {
+void DefPage::resetBox()
+{
     if (GuiWindowBox({300, 170, 600, 250}, ""))
         confirmResetBox = false;
-    text = "Are you sure to reset ?"; 
-    DrawTextEx(Resources::wordFontBold, text.c_str(), {600 - MeasureTextEx(Resources::wordFontBold, text.c_str(), 27, 1).x / 2, 220}, 27, 1, BLACK);
+    text = "Are you sure to reset ?";
+    DrawTextEx(Resources::wordFontBold, text.c_str(),
+               {600 - MeasureTextEx(Resources::wordFontBold, text.c_str(), 27, 1).x / 2, 220}, 27, 1, BLACK);
     if (GuiButton({400, 330, 100, 50}, "YES"))
         confirmResetBox = false;
     if (GuiButton({700, 330, 100, 50}, "NO"))
@@ -118,11 +127,13 @@ void DefPage::resetBox() {
     }
 }
 
-void DefPage::addDef() {
+void DefPage::addDef()
+{
     if (GuiWindowBox({300, 170, 600, 250}, ""))
         addWordButton = false;
     text = "Are you sure to add this word?";
-    DrawTextEx(Resources::wordFontBold, text.c_str(), {600 - MeasureTextEx(Resources::wordFontBold, text.c_str(), 27, 1).x / 2, 220}, 27, 1, BLACK);
+    DrawTextEx(Resources::wordFontBold, text.c_str(),
+               {600 - MeasureTextEx(Resources::wordFontBold, text.c_str(), 27, 1).x / 2, 220}, 27, 1, BLACK);
     if (GuiButton({400, 330, 100, 50}, "YES"))
         addWordButton = false;
     if (GuiButton({700, 330, 100, 50}, "CANCEL"))
