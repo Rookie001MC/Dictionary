@@ -1,7 +1,6 @@
 #include "globalVars/globalVars.h"
 
 Page CurrentState::currentPage = Page::DICT_WORD;
-int CurrentState::currentDict;
 
 Font Resources::titleFont;
 

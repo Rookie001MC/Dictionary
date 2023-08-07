@@ -26,7 +26,6 @@ struct Resources
 struct CurrentState
 {
     static Page currentPage; // Current page (e.g. what search mode it's currently on, word search, definition search, etc.)
-    static int currentDict;  // Current dict (e.g. what dictionary it's currently on, ENG-ENG, ENG-VIE, etc.)
 };
 
 #endif

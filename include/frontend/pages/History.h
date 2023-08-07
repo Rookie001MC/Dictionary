@@ -9,6 +9,7 @@
 class HistoryPage
 {
     private:
+        int *currentDict = new int{0};
         std::vector<Word *> words;
         std::vector<Rectangle> wordRects;
         Rectangle dictChooserRect {1101, 146, 150, 55};
