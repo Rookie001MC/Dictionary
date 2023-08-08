@@ -32,12 +32,12 @@ class Trie
     ~Trie();
     void insert(Word word);
     // bool prefixSearch(std::string key);
-
     bool search(std::string key, Word &word);
     void remove(std::string key);
     std::vector<Word> wordSuggest(std::string prefix);
     void serialize(std::string path, char delimiter);
     void deserialize(std::string path, char delimiter);
+    void clear();
 };
 
 #endif

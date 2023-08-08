@@ -240,6 +240,7 @@ Word Dictionary::getWordEngVie()
     return word;
 }
 
+// words that don't have type will have "na" as type
 Word Dictionary::getWordVieEng()
 {
     std::string key, type, tmp;
@@ -254,13 +255,15 @@ Word Dictionary::getWordVieEng()
         else if (tmp.at(0) == '=')
         {
             int pos = tmp.find('+');
-            word.addDefinition("Example: " + tmp.substr(1, pos - 1) + ": " + tmp.substr(pos + 1) + '\n');
+            word.addDefinition("Example: " + tmp.substr(1, pos - 1) + ": " + tmp.substr(pos + 1));
         }
         else
-            word.addDefinition(tmp.substr(1) + '\n');
+            word.addDefinition(tmp.substr(1));
 
         std::getline(fin, tmp, '\n');
     }
+    if (type.empty())
+        type = "na";
     type = type.substr(0, type.size() - 1);
     word.setType(type);
     return word;

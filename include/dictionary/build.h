@@ -16,5 +16,6 @@ const char VIEENGDELIMITER = '$';
 const char EMOJIDELIMITER = '$';
 const char SLANGDELIMITER = '`';
 void build(Dictionary &dict, Trie &trie);
+void reset(Dictionary &dict, Trie &trie);
 
 #endif

@@ -1,5 +1,4 @@
 #include "dictionary/build.h"
-#include <iostream>
 #include <algorithm>
 
 std::string nextKey;
@@ -36,7 +35,7 @@ void extractVieEng(Dictionary &dict, Trie &trie) {
         std::string key = word.getKey();
         std::transform(key.begin(), key.end(), key.begin(), ::tolower);
         Word pre;
-        if (trie.search(key, pre))
+        if (!trie.search(key, pre))
             trie.insert(word);
         else {
             trie.remove(key);
@@ -47,10 +46,18 @@ void extractVieEng(Dictionary &dict, Trie &trie) {
                 post.addDefinition(pre.getDefinition(i));
             for (int i = 0; i < word.getDefinitionCount(); ++i)
                 post.addDefinition(word.getDefinition(i));
-            word.setKey(pre.getKey());
+            post.setKey(key);
             trie.insert(post);
         }
     }
+}
+
+void extractEmoji(Dictionary &dict, Trie &trie) {
+    
+}
+
+void extractSlang(Dictionary &dict, Trie &trie) {
+    
 }
 
 void build(Dictionary &dict, Trie &trie)
@@ -108,12 +115,37 @@ void build(Dictionary &dict, Trie &trie)
                 extractVieEng(dict, trie);
                 break;
             case 3:
-                
+                extractEmoji(dict, trie);
                 break;
             case 4:
-                
+                extractSlang(dict, trie);
                 break;
         }
         trie.serialize(path + "data.dict", delimiter);
     }
+}
+
+void reset(Dictionary &dict, Trie &trie) {
+    std::string path;
+    switch(dict.getDictionaryType()) {
+        case 0:
+            path = ENGENG;
+            break;
+        case 1:
+            path = ENGVIE;
+            break;
+        case 2:
+            path = VIEENG;
+            break;
+        case 3:
+            path = EMOJI;
+            break;
+        case 4:
+            path = SLANG;
+            break;
+    }
+    trie.clear();
+    std::filesystem::remove_all(path);
+    build(dict, trie);
+    
 }

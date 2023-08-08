@@ -12,7 +12,7 @@ Trie::Trie()
 
 Trie::~Trie()
 {
-    clear(this->root);
+    clear();
 }
 
 TrieNode *Trie::createNode()
@@ -50,6 +50,7 @@ int Trie::getIndex(char c) {
     return index;
 }
 
+// use for both insertion and modification (re-insert the modified Word object)
 void Trie::insert(Word word)
 {
     TrieNode *cur = root;
@@ -85,10 +86,11 @@ TrieNode *Trie::remove(TrieNode *root, std::string key, int index = 0)
             delete root;
             root = nullptr;
         }
+        return root;
     }
     char c = key.at(index);
-    int idx               =  getIndex(c);
-    root->children[index] = remove(root->children[index], key, index + 1);
+    int idx               = getIndex(c);
+    root->children[idx] = remove(root->children[idx], key, index + 1);
     Trie::remove(root->children[idx], key, index + 1);
     if (isEmptyNode(root) && root->endOfWord == false)
     {
@@ -254,4 +256,8 @@ void Trie::deserialize(std::string path, char delimiter)
     std::ifstream fin(path, std::ios::binary);
     deserialize(fin, delimiter);
     fin.close();
+}
+
+void Trie::clear() {
+    clear(this->root);
 }
