@@ -4,8 +4,6 @@
 #include "word.h"
 #include <iostream>
 #include <string>
-#include "boost/archive/text_iarchive.hpp"
-#include "boost/archive/text_oarchive.hpp"
 
 const int ALPHABET = 42;
 struct TrieNode

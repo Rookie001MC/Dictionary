@@ -1,6 +1,4 @@
 // main function currently used for testing. will be changed in the future
-#include "boost/filesystem.hpp"
-#include "boost/filesystem/operations.hpp"
 #include "dictionary/build.h"
 #include "dictionary/history.h"
 #include "dictionary/trie.h"
