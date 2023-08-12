@@ -53,11 +53,19 @@ void extractVieEng(Dictionary &dict, Trie &trie) {
 }
 
 void extractEmoji(Dictionary &dict, Trie &trie) {
-    
+    while (!dict.eof())
+    {
+        Word word = dict.getWord();
+        trie.insert(word);
+    }
 }
 
 void extractSlang(Dictionary &dict, Trie &trie) {
-    
+    while (!dict.eof())
+    {
+        Word word = dict.getWord();
+        trie.insert(word);
+    }
 }
 
 void build(Dictionary &dict, Trie &trie)

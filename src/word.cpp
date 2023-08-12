@@ -94,10 +94,10 @@ Word Dictionary::getWord()
         //     return getWordEngVie();
         case 2:
             return getWordVieEng();
-            // case 3:
-            //     return getWordKaomoji(fin);
-            // case 4:
-            //     return getWordSlang();
+        case 3:
+            return getWordEmoji();
+        case 4:
+            return getWordSlang();
             // case 5:
             //     // TODO: Fix the code so that it supports the JSON array in the emoji.dict file.
             //     return getWordEmoji(fin, 0);
