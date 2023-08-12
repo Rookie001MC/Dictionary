@@ -7,7 +7,7 @@
 #include "boost/archive/text_iarchive.hpp"
 #include "boost/archive/text_oarchive.hpp"
 
-const int ALPHABET = 42;
+const int ALPHABET = 128;
 struct TrieNode
 {
     TrieNode *children[ALPHABET];

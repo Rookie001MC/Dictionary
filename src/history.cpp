@@ -24,9 +24,11 @@ History::History(std::string path)
     {
         std::string tmp;
         std::getline(fin, tmp, '\n');
-        storage.push_back(tmp);
+        if (!tmp.empty())
+            storage.push_back(tmp);
     }
     fin.close();
+    this->path = path;
     std::sort(storage.begin(), storage.end());
 }
 
@@ -42,7 +44,7 @@ std::vector<std::string> History::get()
 
 void History::add(std::string key)
 {
-    if (search(storage, key) != -1)
+    if (search(storage, key) == -1)
         storage.push_back(key);
 }
 

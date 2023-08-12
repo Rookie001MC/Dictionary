@@ -31,13 +31,18 @@ int main(int argc, const char *argv[])
 // int main(int argc, const char *argv[])
 // {
 //     auto start = std::chrono::high_resolution_clock::now();
-//     Dictionary dict("../data/engeng.dict", 0);
-//     std::cout << boost::filesystem::file_size("../data/engeng.dict") << '\n';
+//     Dictionary dict("../data/vieeng.dict", 2);
+//     std::cout << boost::filesystem::file_size("../data/vieeng.dict") << '\n';
 //     Trie trie;
 //     build(dict, trie);
 //     Word word;
-//     // std::string key;
-//     // std::cin >> key;
+//     std::string key;
+//     std::cin >> key;
+//     History history("../tmp/vieeng/history.txt");
+//     if (trie.search(key, word))
+//         history.add(key);
+//     for (int i = 0; i < word.getDefinitionCount(); ++i)
+//         std::cout << word.getDefinition(i) << '\n';
 //     // std::vector<Word> wordlist = trie.wordSuggest(key);
 //     // for (int i = 0; i < wordlist.size(); ++i) {
 //     //     std::cout << wordlist.at(i).getKey() << ' ' << wordlist.at(i).getType() << '\n';
@@ -46,6 +51,7 @@ int main(int argc, const char *argv[])
 //     //         std::cout << defs.at(i) << '\n';
 //     //     std::cout << std::endl;
 //     // }
+//     history.save();
 //     auto stop     = std::chrono::high_resolution_clock::now();
 //     auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
 //     std::cout << "build duration" << duration;

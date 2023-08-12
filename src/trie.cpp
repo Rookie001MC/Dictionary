@@ -24,32 +24,6 @@ TrieNode *Trie::createNode()
     return node;
 }
 
-int Trie::getIndex(char c) {
-    int index;
-    if (c >= '0' && c <= '9')
-    {
-        index = c - '0' + 26;
-    }
-    else if (c == '\'')
-        index = 36;
-    else if (c == '/')
-        index = 37;
-    else if (c == '-')
-        index = 38;
-    else if (c == ' ')
-        index = 39;
-    else if (c == '.')
-        index = 40;
-    else if (c == ',')
-        index = 41;
-    else
-    {
-        c     = tolower(c);
-        index = c - 'a';
-    }
-    return index;
-}
-
 // use for both insertion and modification (re-insert the modified Word object)
 void Trie::insert(Word word)
 {
@@ -57,10 +31,9 @@ void Trie::insert(Word word)
     for (int i = 0; i < word.getKey().length(); ++i)
     {
         char c = word.getKey().at(i);
-        int index = getIndex(c);
-        if (!cur->children[index])
-            cur->children[index] = createNode();
-        cur = cur->children[index];
+        if (!cur->children[c])
+            cur->children[c] = createNode();
+        cur = cur->children[c];
     }
     cur->endOfWord = true;
     cur->word      = word;
@@ -89,9 +62,8 @@ TrieNode *Trie::remove(TrieNode *root, std::string key, int index = 0)
         return root;
     }
     char c = key.at(index);
-    int idx               = getIndex(c);
-    root->children[idx] = remove(root->children[idx], key, index + 1);
-    Trie::remove(root->children[idx], key, index + 1);
+    root->children[c] = remove(root->children[c], key, index + 1);
+    Trie::remove(root->children[c], key, index + 1);
     if (isEmptyNode(root) && root->endOfWord == false)
     {
         delete root;
@@ -128,11 +100,10 @@ bool Trie::search(std::string key, Word &word)
     for (int i = 0; i < key.length(); ++i)
     {
         char c = key.at(i);
-        int index = getIndex(c);
-        if (cur->children[index] == nullptr)
+        if (cur->children[c] == nullptr)
             return false;
         else
-            cur = cur->children[index];
+            cur = cur->children[c];
     }
 
     if (cur->endOfWord)
@@ -156,7 +127,7 @@ std::vector<Word> Trie::wordSuggest(std::string prefix)
     TrieNode* cur = root;
     std::vector<Word> wordlist;
     for (int i = 0; i < prefix.size(); ++i) {
-        TrieNode* next = cur->children[getIndex(prefix.at(i))];
+        TrieNode* next = cur->children[prefix.at(i)];
         if (!next)
             return wordlist;
         cur = next;
