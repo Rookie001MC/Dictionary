@@ -1,7 +1,11 @@
 #ifndef GLOBAL_VARS
 #define GLOBAL_VARS
 
+#include "dictionary/trie.h"
 #include "raylib.h"
+#include "dictionary/word.h"
+
+
 
 enum Page
 {
@@ -12,6 +16,7 @@ enum Page
 };
 struct Resources
 {
+    static std::string currentExeDir;
     static Font titleFont;
 
     static Font displayFontRegular;
@@ -26,6 +31,17 @@ struct Resources
 struct CurrentState
 {
     static Page currentPage; // Current page (e.g. what search mode it's currently on, word search, definition search, etc.)
+    static Word* currentWord;
 };
+
+struct PrebuiltTries
+{
+    static Trie* engEng;
+    static Trie* engVie;
+    static Trie* vieEng;
+    static Trie* emoji;
+    static Trie* slang;
+};
+
 
 #endif
