@@ -1,11 +1,12 @@
 #ifndef FRONTEND_PAGE_SINGLEWORDINFO_H
 #define FRONTEND_PAGE_SINGLEWORDINFO_H
 
-#include "Word.h"
+#include "frontend/pages/Word.h"
+#include "globalVars/globalVars.h"
 
 class SingleWordInfo {
 private:
-
+    bool isInfo = false;
 public:
     SingleWordInfo();
     ~SingleWordInfo() 

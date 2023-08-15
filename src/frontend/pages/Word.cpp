@@ -6,8 +6,6 @@
 #include "raygui.h"
 #include "raylib.h"
 
-Word selectedWord;
-
 WordPage::WordPage()
 {
     for (int i = 0; i < 4; i++)
@@ -31,8 +29,7 @@ void WordPage::update()
             if (GetMousePosition().y > 180 && CheckCollisionPointRec(GetMousePosition(), rec_result[i]))
             {
                 selectedWord = words[i];
-                // words.clear();
-                // return DEFINITION;
+                CurrentState::currentPage = static_cast<Page>(4);
             }
         }
     }
