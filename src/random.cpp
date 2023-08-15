@@ -83,7 +83,7 @@ Word Random::viewRandomWord()
     return randomWord;
 }
 
-int randomInFour()
+int Random::randomInFour()
 {
     std::random_device rd;
     std::mt19937 gen(rd());
@@ -99,10 +99,13 @@ std::string get1stDefinitionFromText(const std::string &line)
     definition = line.substr(start, end - start);
     return definition;
 }
-void random4Definitions()
+
+std::vector<std::string> Random::random4DefinitionsAnd1KeyWord()
 {
+    std::vector<std::string> quiz;
     // Random the line that contains the correct keyword and definition
     int randomCorrectAns = getRandomNumber();
+
     // Only get the definition of the wrong ans 
     // While loop to make sure that 4 numbers are different from each other
     int wrongAns1 = getRandomNumber();
@@ -117,8 +120,8 @@ void random4Definitions()
 
     std::string keyWordQuestion;
     std::string correctAns, incorrectAns1, incorrectAns2, incorrectAns3;
-    std::ifstream fin;
-    fin.open("../data/engengRandom.txt");
+    std::ifstream fin(getPath());
+
     std::string line;
     int lineNum = 0;
     while (std::getline(fin, line))
@@ -136,65 +139,26 @@ void random4Definitions()
         else if (lineNum == wrongAns3)
             incorrectAns3 = get1stDefinitionFromText(line);
     }
-    // Random the position of the correct answer -> more entertaining
-    int positionOfCorrectAns = randomInFour();
-    std::cout << "You are given the keyword: " << keyWordQuestion << std::endl;
-    std::cout << "Which of the following definitions is correct?" << std::endl;
-    
-    // Generate the 4 answers for user to choose 
-    if (positionOfCorrectAns == 1)
-    {
-        std::cout << "1. " << correctAns << std::endl;
-        std::cout << "2. " << incorrectAns1 << std::endl;
-        std::cout << "3. " << incorrectAns2 << std::endl;
-        std::cout << "4. " << incorrectAns3 << std::endl;
-    }
-    else if (positionOfCorrectAns == 2)
-    {
-        std::cout << "1. " << incorrectAns1 << std::endl;
-        std::cout << "2. " << correctAns << std::endl;
-        std::cout << "3. " << incorrectAns2 << std::endl;
-        std::cout << "4. " << incorrectAns3 << std::endl;
-    }
-    else if (positionOfCorrectAns == 3)
-    {
-        std::cout << "1. " << incorrectAns1 << std::endl;
-        std::cout << "2. " << incorrectAns2 << std::endl;
-        std::cout << "3. " << correctAns << std::endl;
-        std::cout << "4. " << incorrectAns3 << std::endl;
-    }
-    else
-    {
-        std::cout << "1. " << incorrectAns1 << std::endl;
-        std::cout << "2. " << incorrectAns2 << std::endl;
-        std::cout << "3. " << incorrectAns3 << std::endl;
-        std::cout << "4. " << correctAns << std::endl;
-    }
-
-    std::cout << "Your answer: ";
-    // User answers the question
-    int userAns;
-    std::cin >> userAns;
-    if (userAns == positionOfCorrectAns)
-        std::cout << "Correct!" << std::endl;
-    else
-    {
-        std::cout << "Incorrect!" << std::endl;
-        std::cout << "The correct answer is: " << positionOfCorrectAns << ". " << correctAns << std::endl;
-    }
     fin.close();
+    quiz.push_back(keyWordQuestion);
+    quiz.push_back(correctAns);
+    quiz.push_back(incorrectAns1);
+    quiz.push_back(incorrectAns2);
+    quiz.push_back(incorrectAns3);
+
+    return quiz;
 }
-void quizWith4Definitions()
-{
-    char userChoice;
-    do
-    {
-        random4Definitions();
-        std::cout << "Do you want to continue? Enter Y (or y) to continue or enter any other key to exit!" << "\n";
-        std::cout << "Your choice: ";
-        std::cin >> userChoice;
-    } while (userChoice == 'Y' || userChoice == 'y');
-} 
+// void quizWith4Definitions()
+// {
+//     char userChoice;
+//     do
+//     {
+//         random4Definitions();
+//         std::cout << "Do you want to continue? Enter Y (or y) to continue or enter any other key to exit!" << "\n";
+//         std::cout << "Your choice: ";
+//         std::cin >> userChoice;
+//     } while (userChoice == 'Y' || userChoice == 'y');
+// } 
 
 std::string getKeyWordFromText(const std::string &line)
 {
@@ -204,7 +168,7 @@ std::string getKeyWordFromText(const std::string &line)
     keyWord = line.substr(start, end - start + 1);
     return keyWord;
 }
-void random4KeyWords()
+std::vector<std::string> Random::random4KeyWordsAnd1Def()
 {
     // Random the line that contains the correct keyword and definition
     int randomCorrectAns = getRandomNumber();
@@ -222,8 +186,8 @@ void random4KeyWords()
 
     std::string question;
     std::string correctAns, incorrectAns1, incorrectAns2, incorrectAns3;
-    std::ifstream fin;
-    fin.open("../data/engengRandom.txt");
+    std::ifstream fin(getPath());
+
     std::string line;
     int lineNum = 0;
     while (std::getline(fin, line))
@@ -241,63 +205,25 @@ void random4KeyWords()
         else if (lineNum == wrongAns3)
             incorrectAns3 = getKeyWordFromText(line);   
     }
-    // Random the position of the correct answer -> more entertaining
-    int positionOfCorrectAns = randomInFour();
-    std::cout << "You are given the definition: " << question << std::endl;
-    std::cout << "Which of the following keywords contains this definition?" << std::endl;
-    
-    // Generate the 4 answers for user to choose 
-    if (positionOfCorrectAns == 1)
-    {
-        std::cout << "1. " << correctAns << std::endl;
-        std::cout << "2. " << incorrectAns1 << std::endl;
-        std::cout << "3. " << incorrectAns2 << std::endl;
-        std::cout << "4. " << incorrectAns3 << std::endl;
-    }
-    else if (positionOfCorrectAns == 2)
-    {
-        std::cout << "1. " << incorrectAns1 << std::endl;
-        std::cout << "2. " << correctAns << std::endl;
-        std::cout << "3. " << incorrectAns2 << std::endl;
-        std::cout << "4. " << incorrectAns3 << std::endl;
-    }
-    else if (positionOfCorrectAns == 3)
-    {
-        std::cout << "1. " << incorrectAns1 << std::endl;
-        std::cout << "2. " << incorrectAns2 << std::endl;
-        std::cout << "3. " << correctAns << std::endl;
-        std::cout << "4. " << incorrectAns3 << std::endl;
-    }
-    else
-    {
-        std::cout << "1. " << incorrectAns1 << std::endl;
-        std::cout << "2. " << incorrectAns2 << std::endl;
-        std::cout << "3. " << incorrectAns3 << std::endl;
-        std::cout << "4. " << correctAns << std::endl;
-    }
-
-    std::cout << "Your answer: ";
-    // User answers the question
-    int userAns;
-    std::cin >> userAns;
-    if (userAns == positionOfCorrectAns)
-        std::cout << "Correct!" << std::endl;
-    else
-    {
-        std::cout << "Incorrect!" << std::endl;
-        std::cout << "The correct answer is: " << positionOfCorrectAns << ". " << correctAns << std::endl;
-    }
     fin.close();
+    std::vector<std::string> quiz;
+    quiz.push_back(question);
+    quiz.push_back(correctAns);
+    quiz.push_back(incorrectAns1);
+    quiz.push_back(incorrectAns2);
+    quiz.push_back(incorrectAns3);
+
+    return quiz;
 }
 
-void quizWith4KeyWords()
-{
-    char userChoice;
-    do
-    {
-        random4KeyWords();
-        std::cout << "Do you want to continue? Enter Y (or y) to continue or enter any other key to exit!" << "\n";
-        std::cout << "Your choice: ";
-        std::cin >> userChoice;
-    } while (userChoice == 'Y' || userChoice == 'y');
-}
+// void quizWith4KeyWords()
+// {
+//     char userChoice;
+//     do
+//     {
+//         random4KeyWords();
+//         std::cout << "Do you want to continue? Enter Y (or y) to continue or enter any other key to exit!" << "\n";
+//         std::cout << "Your choice: ";
+//         std::cin >> userChoice;
+//     } while (userChoice == 'Y' || userChoice == 'y');
+// }
