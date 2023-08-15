@@ -5,8 +5,6 @@
 #include "raylib.h"
 #include "dictionary/word.h"
 
-
-
 enum Page
 {
     DICT_WORD = 0,   // Main menu
@@ -42,6 +40,10 @@ struct PrebuiltTries
     static Trie* vieEng;
     static Trie* emoji;
     static Trie* slang;
+};
+
+struct Var {
+    static Word selectedWord;
 };
 
 

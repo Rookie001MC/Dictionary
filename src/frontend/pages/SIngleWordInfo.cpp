@@ -16,8 +16,13 @@ void SingleWordInfo::update() {
 }
 
 void SingleWordInfo::draw() {
-    if (GuiWindowBox({50, 120, 1100, 460}, "")) {
+    if (GuiWindowBox({73, 160, 1140, 510}, "")) {
         isInfo = true;
     }
-    DrawTextEx(Resources::wordFontBold, selectedWord.getKey().c_str(), {310, 215}, 25, 1, BLUE);
+    std::string selectedTmp = Var::selectedWord.getKey() + ' ' + '(' + Var::selectedWord.getType() + ')';
+    DrawTextEx(Resources::wordFontBold, selectedTmp.c_str(), {105, 200}, 45, 2, BLACK);
+
+    for (int i = 0; i < std::min(4, int(Var::selectedWord.getDefinitionCount())); ++i) {
+        DrawTextEx(Resources::wordFontBold, Var::selectedWord.getDefinition(i).c_str(), {105, (float)(270 + i*65)}, 25, 2, BLACK);
+    }
 }

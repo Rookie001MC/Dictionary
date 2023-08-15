@@ -28,7 +28,7 @@ void WordPage::update()
         for (int i = 0; i < words.size(); ++i) {
             if (GetMousePosition().y > 180 && CheckCollisionPointRec(GetMousePosition(), rec_result[i]))
             {
-                selectedWord = words[i];
+                Var::selectedWord = words[i];
                 CurrentState::currentPage = static_cast<Page>(4);
             }
         }
