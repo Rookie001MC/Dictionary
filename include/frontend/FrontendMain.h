@@ -8,6 +8,7 @@
 #include "frontend/pages/History.h"
 #include "frontend/pages/Word.h"
 #include "frontend/pages/Definition.h"
+#include "frontend/pages/SingleWordInfo.h"
 #include "globalVars/globalVars.h"
 #include "raylib.h"
 
@@ -20,6 +21,7 @@ class FrontendMain
         WordPage word;
         DefPage def;
         FavoritesPage favorites;
+        SingleWordInfo singleWordInfo;
     public:
         FrontendMain();
         void start();

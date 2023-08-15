@@ -28,11 +28,13 @@
 
 // Same thing nhưng khi di chuột lên
 #define PRIMARY_COLOR_CONTAINER_HOVER (0xFAEAD4FF)
-#define PRIMARY_COLOR_CONTAINER_HOVER_RGB (Color){0xdb, 0x71, 0x73, 0xff}
+#define PRIMARY_COLOR_CONTAINER_HOVER_RGB (Color){250, 234, 212, 255}
 
 // Màu phụ
 #define SECONDARY_COLOR (0xB5C99AFF)
 #define SECONDARY_COLOR_RGB (Color){181, 201, 154, 255}
+
+#define BOX_COLOR_RGB (Color){196, 193, 164, 255}
 
 // Màu của nút, các ô chứa, ... nhưng sử dụng tông màu phụ
 #define SECONDARY_COLOR_CONTAINER (0x#73490dff)

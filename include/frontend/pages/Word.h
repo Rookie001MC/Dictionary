@@ -8,6 +8,8 @@
 #include <iostream>
 #include <cstring>
 #include <vector>
+#include "dictionary/trie.h"
+#include "dictionary/build.h"
 
 class WordPage {
     private:
@@ -23,14 +25,18 @@ class WordPage {
         bool dropDownBox = false, confirmResetBox = false, addWordButton = false;
         std::string text;
 
-        std::vector<Word *> words;
-        std::vector<Rectangle> wordRects;
+        std::vector<Word> words;
         std::vector <std::string> dictLanguages = {"ENG-ENG", "ENG-VIE", "VIE-ENG", "EMOJI", "SLANG"};
 
         Rectangle dictPagesRects[4];
         std::vector<std::string> dictPages = {"WORD", "Definition", "Favorites", "History"};
      
         short int selectedDictPage = 0;
+
+        Word tmp;
+        Trie trie;
+        Dictionary dict = Dictionary("data/engeng.dict", 0);
+        bool isBuild = false;
 
     public:
         WordPage();

@@ -22,3 +22,5 @@ Trie* PrebuiltTries::engVie = new Trie;
 Trie* PrebuiltTries::vieEng = new Trie;
 Trie* PrebuiltTries::emoji = new Trie;
 Trie* PrebuiltTries::slang = new Trie;
+
+Word selectedWord;

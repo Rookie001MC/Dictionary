@@ -2,6 +2,7 @@
 #include "dictionary/word.h"
 #include "frontend/styles.h"
 #include "globalVars/globalVars.h"
+#include "dictionary/trie.h"
 #include "raygui.h"
 #include "raylib.h"
 
@@ -13,34 +14,25 @@ WordPage::WordPage()
     }
     dictPagesRects[selectedDictPage] = {51, float(136 + (150 * selectedDictPage)), 195, 65};
 
-    for (int i = 0; i < words.size(); i++)
-    {
-        wordRects.push_back({300, float(220 + 100 * i), 949, 87});
-    }
+    for (int i = 0; i < 20; i++)
+        rec_result[i] = {307, (float)205 + 130 * i, 900, 120};
 }
 
 void WordPage::update()
 {
-    // if (GetMouseWheelMove() == -1 && rec_result[word.size() - 1].y > 475)
-    // {
-    //     for (int i = 0; i < word.size(); i++)
-    //     {
-    //         rec_result[i].y -= 40;
-    //     }
-    // }
-    // else if (GetMouseWheelMove() == 1 && rec_result[0].y < 200)
-    // {
-    //     for (int i = 0; i < word.size(); i++)
-    //     {
-    //         rec_result[i].y += 40;
-    //     }
-    // }
-
-    if (selectedDictPage != 0)
-    {
-        //  return static_cast<Page>(selectedDictPage);
+    if (!isBuild) {
+        build(dict, trie);
+        isBuild = true;
     }
-    //   return Page::DICT_WORD
+    if (IsMouseButtonPressed(0) && !dropDownBox) {
+        for (int i = 0; i < words.size(); ++i) {
+            if (GetMousePosition().y > 180 && CheckCollisionPointRec(GetMousePosition(), rec_result[i]))
+            {
+                selectedWord = words[i];
+                CurrentState::currentPage = static_cast<Page>(4);
+            }
+        }
+    }
 }
 
 void WordPage::draw()
@@ -53,6 +45,7 @@ void WordPage::draw()
     if (addWordButton)
     {
         addWord();
+        return;
     }
 
     Vector2 mousePos = GetMousePosition();
@@ -92,21 +85,21 @@ void WordPage::draw()
         }
     }
 
-        // Draws each word
-    for (int i = 0; i < words.size(); i++)
-    {
-        DrawRectangleV({wordRects[i].x, wordRects[i].y}, {wordRects[i].width, wordRects[i].height},
-                       SECONDARY_COLOR_CONTAINER_RGB);
-        DrawRectangleLinesEx(wordRects[i], 2, OUTLINE_COLOR_RGB);
+    if (SearchInput[0] == '\0') {
+        words.clear();
+    }
 
-        if (CheckCollisionPointRec(mousePos, wordRects[i]) && !dropDownBox)
-        {
-            DrawRectangleV({wordRects[i].x, wordRects[i].y}, {wordRects[i].width, wordRects[i].height},
-                           SECONDARY_COLOR_RGB);
+    // Draws each word
+    for (int i = 0; i < words.size(); ++i) {
+        DrawRectangleGradientV(rec_result[i].x, rec_result[i].y, rec_result[i].width, rec_result[i].height, BOX_COLOR_RGB, BOX_COLOR_RGB);
+
+        if (CheckCollisionPointRec(mousePos, rec_result[i]) && mousePos.y > 180 && !dropDownBox)
+                DrawRectangleGradientV(rec_result[i].x, rec_result[i].y, rec_result[i].width, rec_result[i].height, PRIMARY_COLOR_CONTAINER_HOVER_RGB, PRIMARY_COLOR_CONTAINER_HOVER_RGB);
+        std::string wordsTmp = words[i].getKey() + ' ' + '(' + words[i].getType() + ')';
+        DrawTextEx(Resources::wordFontBold, wordsTmp.c_str(), {rec_result[i].x + 10, rec_result[i].y + 10}, 34, 2, BLACK);
+        for (int j = 0; j < std::min(2, int(words[i].getDefinitionCount())); j++) {
+            DrawTextEx(Resources::wordFontBold, words[i].getDefinition(j).c_str(), {rec_result[i].x + 14, rec_result[i].y + 35 * j + 50}, 25, 2, WHITE);
         }
-
-        DrawTextEx(Resources::wordFontBold, words[i]->getKey().c_str(), {wordRects[i].x + 10, wordRects[i].y + 10},
-                   WORD_FONT_SIZE, 0, TEXT_COLOR_RGB);
     }
 
     // Draw the Dict Picker
@@ -119,21 +112,25 @@ void WordPage::draw()
         confirmResetBox = false;
     }
 
-    // if (!word.size())
-    // {
-    //     if (SearchInput[0] == '\0')
-    //         word = data[*modeChosen].getSearchHistory();
-    //     else
-    //     {
-    //         word = data[*modeChosen].SearchWord(SearchInput);
-    //         if (!word.size())
-    //         {
-    //             DrawTextEx(fnt, "No word match this search !!!", {300, 205}, 25, 1, RED);
-    //             if (GuiLabelButton({320, 250, 80, 40}, "Add this word"))
-    //                 addWordButton = true;
-    //         }
-    //     }
-    // }
+    if (SearchInput[0] != '\0') {
+        if (words.empty()) {
+            DrawTextEx(Resources::wordFontBold, "No word match this search !!!", {310, 215}, 25, 1, RED);
+                    if (GuiLabelButton({320, 250, 80, 40}, "Add this word")) {
+                        addWordButton = true;
+                    }
+                        
+        }
+    }
+
+    if (SearchEdit) {
+        if (GetKeyPressed()) {
+            if (trie.search(SearchInput, tmp)) {
+                words.clear();
+                words = trie.wordSuggest(SearchInput);
+            }
+            else words.clear();
+        }
+    }
 }
 
 void WordPage::resetBox()
@@ -143,8 +140,11 @@ void WordPage::resetBox()
     text = "Are you sure to reset ?";
     DrawTextEx(Resources::wordFontBold, text.c_str(),
                {600 - MeasureTextEx(Resources::wordFontBold, text.c_str(), 27, 1).x / 2, 220}, 27, 1, BLACK);
-    if (GuiButton({400, 330, 100, 50}, "YES"))
+    if (GuiButton({400, 330, 100, 50}, "YES")) {
         confirmResetBox = false;
+        memset(SearchInput, 0, sizeof(SearchInput));
+        words.clear();
+    }
     if (GuiButton({700, 330, 100, 50}, "NO"))
     {
         confirmResetBox = false;
