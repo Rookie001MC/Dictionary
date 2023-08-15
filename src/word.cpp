@@ -98,9 +98,6 @@ Word Dictionary::getWord()
             return getWordEmoji();
         case 4:
             return getWordSlang();
-            // case 5:
-            //     // TODO: Fix the code so that it supports the JSON array in the emoji.dict file.
-            //     return getWordEmoji(fin, 0);
     }
     return Word();
 }

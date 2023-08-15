@@ -11,8 +11,7 @@
 
 
 FrontendMain::FrontendMain()
-{
-            
+{            
             setStyles();
 }
 
