@@ -8,11 +8,11 @@
 
 WordPage::WordPage()
 {
-    for (int i = 0; i < 4; i++)
+    for (int i = 0; i < 5; i++)
     {
-        dictPagesRects[i] = {61, float(146 + (151 * i)), 165, 55};
+        dictPagesRects[i] = {61, float(146 + (122 * i)), 165, 55};
     }
-    dictPagesRects[selectedDictPage] = {51, float(136 + (150 * selectedDictPage)), 195, 65};
+    dictPagesRects[selectedDictPage] = {51, float(140 + (150 * selectedDictPage)), 195, 65};
 
     for (int i = 0; i < 20; i++)
         rec_result[i] = {307, (float)205 + 130 * i, 900, 120};
@@ -29,7 +29,7 @@ void WordPage::update()
             if (GetMousePosition().y > 180 && CheckCollisionPointRec(GetMousePosition(), rec_result[i]))
             {
                 Var::selectedWord = words[i];
-                CurrentState::currentPage = static_cast<Page>(4);
+                CurrentState::currentPage = static_cast<Page>(5);
             }
         }
     }

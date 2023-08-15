@@ -11,6 +11,7 @@
 #include "frontend/pages/SingleWordInfo.h"
 #include "globalVars/globalVars.h"
 #include "raylib.h"
+#include "frontend/pages/Game.h"
 
 void setStyles();
 class FrontendMain
@@ -22,6 +23,7 @@ class FrontendMain
         DefPage def;
         FavoritesPage favorites;
         SingleWordInfo singleWordInfo;
+        GamePage game;
     public:
         FrontendMain();
         void start();

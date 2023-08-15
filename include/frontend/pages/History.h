@@ -15,14 +15,17 @@ class HistoryPage
         Rectangle dictChooserRect{1075, 140, 155, 55};
         std::vector <std::string> dictLanguages = {"ENG-ENG", "ENG-VIE", "VIE-ENG", "EMOJI", "SLANG"};
 
-        Rectangle dictPagesRects[4];
-        std::vector<std::string> dictPages = {"WORD", "Definition", "Favorites", "History"};
+        Rectangle dictPagesRects[5];
+        std::vector<std::string> dictPages = {"WORD", "Definition", "Favorites", "History", "Game"};
      
         short int selectedDictPage = 3;
         bool dictChooserActive = false;
     
     public:
         HistoryPage();
+        ~HistoryPage() {
+            delete currentDict;
+        }
         void update();
         void draw();
 };  

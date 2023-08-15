@@ -39,6 +39,11 @@ void FrontendMain::start()
                     history.update();
                     break;
                 }
+                case Page::DICT_GAME:
+                {
+                    game.update();
+                    break;
+                }
                 case Page::SINGLE_WORD_INFO:
                 {
                     singleWordInfo.update();
@@ -69,6 +74,11 @@ void FrontendMain::start()
                     case Page::DICT_HISTORY:
                     {
                         history.draw();
+                        break;
+                    }
+                    case Page::DICT_GAME:
+                    {
+                        game.draw();
                         break;
                     }
                     case Page::SINGLE_WORD_INFO:
