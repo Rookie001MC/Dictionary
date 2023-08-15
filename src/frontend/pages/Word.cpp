@@ -8,11 +8,11 @@
 
 WordPage::WordPage()
 {
-    for (int i = 0; i < 4; i++)
+    for (int i = 0; i < 5; i++)
     {
-        dictPagesRects[i] = {61, float(146 + (151 * i)), 165, 55};
+        dictPagesRects[i] = {61, float(146 + (122 * i)), 165, 55};
     }
-    dictPagesRects[selectedDictPage] = {51, float(136 + (150 * selectedDictPage)), 195, 65};
+    dictPagesRects[selectedDictPage] = {51, float(140 + (150 * selectedDictPage)), 195, 65};
 
     for (int i = 0; i < 20; i++)
         rec_result[i] = {307, (float)205 + 130 * i, 900, 120};
@@ -28,8 +28,8 @@ void WordPage::update()
         for (int i = 0; i < words.size(); ++i) {
             if (GetMousePosition().y > 180 && CheckCollisionPointRec(GetMousePosition(), rec_result[i]))
             {
-                CurrentState::currentWord = words[i];
-                CurrentState::currentPage = static_cast<Page>(4);
+                Var::selectedWord = words[i];
+                CurrentState::currentPage = static_cast<Page>(5);
             }
         }
     }
@@ -158,8 +158,10 @@ void WordPage::addWord()
     text = "Are you sure to add this word?";
     DrawTextEx(Resources::wordFontBold, text.c_str(),
                {600 - MeasureTextEx(Resources::wordFontBold, text.c_str(), 27, 1).x / 2, 220}, 27, 1, BLACK);
-    if (GuiButton({400, 330, 100, 50}, "YES"))
+    if (GuiButton({400, 330, 100, 50}, "YES")) {
         addWordButton = false;
+        
+    }
     if (GuiButton({700, 330, 100, 50}, "CANCEL"))
     {
         addWordButton = false;

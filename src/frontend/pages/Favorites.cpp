@@ -7,11 +7,11 @@
 
 FavoritesPage::FavoritesPage()
 {
-    for (int i = 0; i < 4; i++)
+    for (int i = 0; i < 5; i++)
     {
-        dictPagesRects[i] = {61, float(146 + (151 * i)), 165, 55};
+        dictPagesRects[i] = {61, float(146 + (122 * i)), 165, 55};
     }
-    dictPagesRects[selectedDictPage] = {51, float(136 + (150 * selectedDictPage)), 195, 65};
+    dictPagesRects[selectedDictPage] = {51, float(140 + (122 * selectedDictPage)), 195, 65};
 
     for (int i = 0; i < words.size(); i++)
     {

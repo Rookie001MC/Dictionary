@@ -5,14 +5,13 @@
 #include "raylib.h"
 #include "dictionary/word.h"
 
-
-
 enum Page
 {
     DICT_WORD = 0,   // Main menu
     DICT_DEF_SEARCH, // Definition search
     DICT_FAVORITES,  // Favorites
     DICT_HISTORY,    // History
+    DICT_GAME,         // Game
     SINGLE_WORD_INFO, // Information of single word
 };
 struct Resources
@@ -32,7 +31,7 @@ struct Resources
 struct CurrentState
 {
     static Page currentPage; // Current page (e.g. what search mode it's currently on, word search, definition search, etc.)
-    static Word currentWord;
+    static Word* currentWord;
 };
 
 struct PrebuiltTries
@@ -42,6 +41,10 @@ struct PrebuiltTries
     static Trie* vieEng;
     static Trie* emoji;
     static Trie* slang;
+};
+
+struct Var {
+    static Word selectedWord;
 };
 
 

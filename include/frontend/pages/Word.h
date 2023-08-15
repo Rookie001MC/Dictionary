@@ -28,8 +28,8 @@ class WordPage {
         std::vector<Word> words;
         std::vector <std::string> dictLanguages = {"ENG-ENG", "ENG-VIE", "VIE-ENG", "EMOJI", "SLANG"};
 
-        Rectangle dictPagesRects[4];
-        std::vector<std::string> dictPages = {"WORD", "Definition", "Favorites", "History"};
+        Rectangle dictPagesRects[5];
+        std::vector<std::string> dictPages = {"WORD", "Definition", "Favorites", "History", "Game"};
      
         short int selectedDictPage = 0;
 

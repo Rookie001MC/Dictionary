@@ -16,8 +16,23 @@ void SingleWordInfo::update() {
 }
 
 void SingleWordInfo::draw() {
-    if (GuiWindowBox({50, 120, 1100, 460}, "")) {
+    if (GuiWindowBox({73, 160, 1140, 510}, "")) {
         isInfo = true;
     }
-    DrawTextEx(Resources::wordFontBold, CurrentState::currentWord.getKey().c_str(), {310, 215}, 25, 1, BLUE);
+    std::string selectedTmp = Var::selectedWord.getKey() + ' ' + '(' + Var::selectedWord.getType() + ')';
+    DrawTextEx(Resources::wordFontBold, selectedTmp.c_str(), {105, 200}, 45, 2, BLACK);
+
+    for (int i = 0; i < std::min(4, int(Var::selectedWord.getDefinitionCount())); ++i) {
+        DrawTextEx(Resources::wordFontBold, Var::selectedWord.getDefinition(i).c_str(), {105, (float)(270 + i*65)}, 25, 2, BLACK);
+    }
+
+    if (GuiButton({700, 590, 135, 55}, "EDIT")) {
+
+    }
+    if (GuiButton({855, 590, 165, 55}, "ADD FAVORITE")) {
+
+    }
+    if (GuiButton({1040, 590, 135, 55}, "DELETE")) {
+
+    }
 }
