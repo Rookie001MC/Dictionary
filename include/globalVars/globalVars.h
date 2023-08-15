@@ -32,7 +32,7 @@ struct Resources
 struct CurrentState
 {
     static Page currentPage; // Current page (e.g. what search mode it's currently on, word search, definition search, etc.)
-    static Word* currentWord;
+    static Word currentWord;
 };
 
 struct PrebuiltTries

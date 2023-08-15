@@ -2,7 +2,7 @@
 #include "dictionary/filePathHandler.h"
 
 Page CurrentState::currentPage = Page::DICT_WORD;
-Word *CurrentState::currentWord;
+Word CurrentState::currentWord;
 
 Font Resources::titleFont;
 
@@ -22,5 +22,3 @@ Trie* PrebuiltTries::engVie = new Trie;
 Trie* PrebuiltTries::vieEng = new Trie;
 Trie* PrebuiltTries::emoji = new Trie;
 Trie* PrebuiltTries::slang = new Trie;
-
-Word selectedWord;

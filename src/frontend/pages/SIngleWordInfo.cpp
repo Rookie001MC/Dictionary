@@ -19,5 +19,5 @@ void SingleWordInfo::draw() {
     if (GuiWindowBox({50, 120, 1100, 460}, "")) {
         isInfo = true;
     }
-    DrawTextEx(Resources::wordFontBold, selectedWord.getKey().c_str(), {310, 215}, 25, 1, BLUE);
+    DrawTextEx(Resources::wordFontBold, CurrentState::currentWord.getKey().c_str(), {310, 215}, 25, 1, BLUE);
 }
