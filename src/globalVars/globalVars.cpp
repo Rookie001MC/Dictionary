@@ -1,8 +1,9 @@
 #include "globalVars/globalVars.h"
 #include "dictionary/filePathHandler.h"
+#include "dictionary/word.h"
 
 Page CurrentState::currentPage = Page::DICT_WORD;
-Word CurrentState::currentWord;
+Word *CurrentState::currentWord;
 
 Font Resources::titleFont;
 
@@ -22,3 +23,5 @@ Trie* PrebuiltTries::engVie = new Trie;
 Trie* PrebuiltTries::vieEng = new Trie;
 Trie* PrebuiltTries::emoji = new Trie;
 Trie* PrebuiltTries::slang = new Trie;
+
+Word Var::selectedWord;
