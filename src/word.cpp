@@ -9,7 +9,7 @@ Word::Word()
     type = "";
 }
 
-Word::Word(std::string key, std::string definition = "", std::string type = "")
+Word::Word(std::string key, std::string type = "", std::string definition = "")
 {
     this->key  = key;
     this->type = type;
@@ -90,8 +90,8 @@ Word Dictionary::getWord()
     {
         case 0:
             return getWordEngEng();
-        // case 1:
-        //     return getWordEngVie();
+        case 1:
+            return getWordEngVie();
         case 2:
             return getWordVieEng();
         case 3:
@@ -210,12 +210,14 @@ Word Dictionary::getWordEngEng()
     return word;
 }
 
+// at the end of each definition has a '\n' character. 
+// it can be erased easily from the code below, but will somehow cause bug !?
 Word Dictionary::getWordEngVie()
 {
     std::string key = "", type, tmp;
     std::getline(fin, key, '\n');
     int posStop = key.find('/');
-    key = key.substr(1, posStop - 1);
+    key = key.substr(1, posStop - 2);
     Word word(key, "", "");
     std::getline(fin, tmp, '\n');
     while (!tmp.empty())
@@ -268,16 +270,19 @@ Word Dictionary::getWordVieEng()
 
 Word Dictionary::getWordEmoji()
 {
-    std::string key, type = "Emoji", definition;
-    fin >> key >> definition;
+    std::string key, type = "emoji", definition;
+    fin >> key;
+    getline(fin, definition,'\n');
     Word word(key, definition, type);
     return word;
 }
 
 Word Dictionary::getWordSlang() 
 {
-    std::string key, type = "Slang", definition;
-    fin >> key >> definition;
+    std::string key, type = "slang", definition;
+    fin >> key;
+    getline(fin, definition, '\n');
     Word word(key, definition, type);
+    fin.ignore();
     return word;
 }

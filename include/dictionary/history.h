@@ -7,11 +7,12 @@ class History
 {
   private:
     std::string path;
+    int mode;
     std::vector<std::string> storage;
-    int search(std::vector<std::string> vct, std::string key);
+    int find(std::string key);
 
   public:
-    History(std::string path);
+    History(std::string path, bool mode);
     ~History();
     std::vector<std::string> get();
     void add(std::string key);    // add to memory but does not modify the file

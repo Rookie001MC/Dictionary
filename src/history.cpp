@@ -1,23 +1,16 @@
 #include "dictionary/history.h"
 #include <algorithm>
 
-// search for an index of a key word in the vector
-int History::search(std::vector<std::string> vct, std::string key)
-{
-    int mid = vct.size() / 2, left = 0, right = vct.size() - 1;
-    while (left < right)
-    {
-        if (vct.at(mid) == key)
-            return mid;
-        else if (key < vct.at(mid))
-            right = mid - 1;
-        else
-            left = mid + 1;
-    }
+// mode 0: history - no alphabet indexing
+// mode 1: favourite - alphabet indexing
+int History::find(std::string key) {
+    for (int i = 0; i < storage.size(); ++i)
+        if (storage.at(i) == key)
+            return i;
     return -1;
 }
 
-History::History(std::string path)
+History::History(std::string path, bool mode = 0)
 {
     std::ifstream fin(path);
     while (!fin.eof())
@@ -29,7 +22,8 @@ History::History(std::string path)
     }
     fin.close();
     this->path = path;
-    std::sort(storage.begin(), storage.end());
+    this->mode = mode;
+    if (mode) std::sort(storage.begin(), storage.end());
 }
 
 History::~History()
@@ -44,20 +38,21 @@ std::vector<std::string> History::get()
 
 void History::add(std::string key)
 {
-    if (search(storage, key) == -1)
+    if (find(key) != -1)
         storage.push_back(key);
 }
 
 void History::remove(std::string key)
 {
-    int index = search(storage, key);
+    int index = find(key);
     if (index != -1)
         storage.erase(storage.begin() + index);
 }
 
 void History::save()
 {
-    std::sort(storage.begin(), storage.end());
+    if (mode)
+        std::sort(storage.begin(), storage.end());
     std::ofstream fout(path);
     for (int i = 0; i < storage.size(); ++i)
         fout << storage.at(i) << std::endl;

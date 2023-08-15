@@ -159,7 +159,6 @@ void Trie::wordSuggest(std::vector<Word> &wordlist, int limit)
                 else
                     q.push(now);
             }
-
         }
     }
 }
