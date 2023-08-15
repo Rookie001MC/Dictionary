@@ -6,6 +6,8 @@
 #include "raygui.h"
 #include "raylib.h"
 
+Word selectedWord;
+
 WordPage::WordPage()
 {
     for (int i = 0; i < 4; i++)
@@ -23,6 +25,16 @@ void WordPage::update()
     if (!isBuild) {
         build(dict, trie);
         isBuild = true;
+    }
+    if (IsMouseButtonPressed(0) && !dropDownBox) {
+        for (int i = 0; i < words.size(); ++i) {
+            if (GetMousePosition().y > 180 && CheckCollisionPointRec(GetMousePosition(), rec_result[i]))
+            {
+                selectedWord = words[i];
+                // words.clear();
+                // return DEFINITION;
+            }
+        }
     }
 }
 
@@ -86,8 +98,8 @@ void WordPage::draw()
 
         if (CheckCollisionPointRec(mousePos, rec_result[i]) && mousePos.y > 180 && !dropDownBox)
                 DrawRectangleGradientV(rec_result[i].x, rec_result[i].y, rec_result[i].width, rec_result[i].height, PRIMARY_COLOR_CONTAINER_HOVER_RGB, PRIMARY_COLOR_CONTAINER_HOVER_RGB);
-
-        DrawTextEx(Resources::wordFontBold, words[i].getKey().c_str(), {rec_result[i].x + 10, rec_result[i].y + 10}, 34, 2, BLACK);
+        std::string wordsTmp = words[i].getKey() + ' ' + '(' + words[i].getType() + ')';
+        DrawTextEx(Resources::wordFontBold, wordsTmp.c_str(), {rec_result[i].x + 10, rec_result[i].y + 10}, 34, 2, BLACK);
         for (int j = 0; j < std::min(2, int(words[i].getDefinitionCount())); j++) {
             DrawTextEx(Resources::wordFontBold, words[i].getDefinition(j).c_str(), {rec_result[i].x + 14, rec_result[i].y + 35 * j + 50}, 25, 2, WHITE);
         }
@@ -131,8 +143,11 @@ void WordPage::resetBox()
     text = "Are you sure to reset ?";
     DrawTextEx(Resources::wordFontBold, text.c_str(),
                {600 - MeasureTextEx(Resources::wordFontBold, text.c_str(), 27, 1).x / 2, 220}, 27, 1, BLACK);
-    if (GuiButton({400, 330, 100, 50}, "YES"))
+    if (GuiButton({400, 330, 100, 50}, "YES")) {
         confirmResetBox = false;
+        memset(SearchInput, 0, sizeof(SearchInput));
+        words.clear();
+    }
     if (GuiButton({700, 330, 100, 50}, "NO"))
     {
         confirmResetBox = false;

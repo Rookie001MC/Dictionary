@@ -13,6 +13,7 @@ enum Page
     DICT_DEF_SEARCH, // Definition search
     DICT_FAVORITES,  // Favorites
     DICT_HISTORY,    // History
+    SINGLE_WORD_INFO, // Information of single word
 };
 struct Resources
 {

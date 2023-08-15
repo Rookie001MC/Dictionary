@@ -40,6 +40,11 @@ void FrontendMain::start()
                     history.update();
                     break;
                 }
+                case Page::SINGLE_WORD_INFO:
+                {
+                    singleWordInfo.update();
+                    break;
+                }
                 default: break;
             }
             BeginDrawing();
@@ -65,6 +70,11 @@ void FrontendMain::start()
                     case Page::DICT_HISTORY:
                     {
                         history.draw();
+                        break;
+                    }
+                    case Page::SINGLE_WORD_INFO:
+                    {
+                        singleWordInfo.draw();
                         break;
                     }
                     default: break;
