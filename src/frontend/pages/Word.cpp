@@ -158,8 +158,10 @@ void WordPage::addWord()
     text = "Are you sure to add this word?";
     DrawTextEx(Resources::wordFontBold, text.c_str(),
                {600 - MeasureTextEx(Resources::wordFontBold, text.c_str(), 27, 1).x / 2, 220}, 27, 1, BLACK);
-    if (GuiButton({400, 330, 100, 50}, "YES"))
+    if (GuiButton({400, 330, 100, 50}, "YES")) {
         addWordButton = false;
+        
+    }
     if (GuiButton({700, 330, 100, 50}, "CANCEL"))
     {
         addWordButton = false;

@@ -7,8 +7,6 @@
 class SingleWordInfo {
 private:
     bool isInfo = false;
-    Rectangle rec_box{50, 120, 1100, 460};
-    Rectangle rec_def{50, 205, 1100, 300};
 public:
     SingleWordInfo();
     ~SingleWordInfo() 

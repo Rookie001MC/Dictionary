@@ -25,4 +25,14 @@ void SingleWordInfo::draw() {
     for (int i = 0; i < std::min(4, int(Var::selectedWord.getDefinitionCount())); ++i) {
         DrawTextEx(Resources::wordFontBold, Var::selectedWord.getDefinition(i).c_str(), {105, (float)(270 + i*65)}, 25, 2, BLACK);
     }
+
+    if (GuiButton({700, 590, 135, 55}, "EDIT")) {
+
+    }
+    if (GuiButton({855, 590, 165, 55}, "ADD FAVORITE")) {
+
+    }
+    if (GuiButton({1040, 590, 135, 55}, "DELETE")) {
+
+    }
 }
