@@ -1,19 +1,57 @@
 #include "dictionary/random.h"
 
-int getRandomNumber()
+
+void Random::setDictionary(Dictionary* dict)
 {
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_int_distribution<> dis(1, 144307); // the latter number can be replaced with the maximum
-                                                    // numbers of words in the dictionary
-    return dis(gen);
+    this->dictionary = dict;
 }
 
-void viewRandomWord()
+void Random::setMode(Dictionary* dict)
 {
-    std::ifstream fin;
-    fin.open("../data/engengRandom.txt");
+    this->mode = dict->getDictionaryType();
+}
+
+void Random::setPath()
+{
+    switch(mode)
+    {
+        case 0:
+            path = "../data/engengRandom.txt";
+            break;
+        // More to come
+    }
+}
+int Random::getMode()
+{
+    this->mode = mode;
+}
+
+std::string Random::getPath()
+{
+    this->path = path;
+}
+int Random::getRandomNumber()
+{
+    int totalWords = 0;
+    int dictType = getMode();
+    switch(dictType)
+    {
+        case 0:                     // engeng
+            totalWords = 144307;
+            break;
+        // More to come
+    }
+
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dis(1, totalWords);
+    return dis(gen);
+}
+Word Random::viewRandomWord()
+{
+    std::ifstream fin(getPath());
     int randomNum = getRandomNumber();
+    Word randomWord;
     std::string line;
     int currentLine = 0;
     while (std::getline(fin, line))
@@ -25,21 +63,24 @@ void viewRandomWord()
             int atPos = line.find_first_of('@');
             std::string keyWord = line.substr(0, sharpPos - 1);
             std::string wordType = line.substr(sharpPos + 1, atPos - sharpPos - 2);
-            std::cout << keyWord << "\n";
-            std::cout << "Type: " << wordType << "\n";
-            std::cout << "Definition: " << "\n";
+            std::vector<std::string> definitions;
+            randomWord.setKey(keyWord);
+            randomWord.setType(wordType);
+
             int index = atPos + 1;
             while (index < line.length())
             {
                 int nextAtPos = line.find('@', index);
                 if (nextAtPos == std::string::npos)
                     break;
-                std::string definition = line.substr(index, nextAtPos - index);
-                std::cout << definition << "\n";
+                std::string def = line.substr(index, nextAtPos - index);
+                randomWord.addDefinition(def);
                 index = nextAtPos + 1;
             }
         }
     }
+    fin.close();
+    return randomWord;
 }
 
 int randomInFour()

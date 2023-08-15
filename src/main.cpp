@@ -82,6 +82,10 @@ int main(int argc, const char *argv[])
 //     Dictionary dict(Resources::currentExeDir +"../data/engvie.dict", 1);
 //     Trie trie;
 //     build(dict, trie);
+//     // For random functions: 
+//     // Random random;
+//     // random.setDictionary(&dict);
+//     // random.setPath();
 //     Word word;
 //     std::string key;
 //     std::cin >> key;
