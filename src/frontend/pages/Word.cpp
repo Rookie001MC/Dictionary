@@ -28,7 +28,7 @@ void WordPage::update()
         for (int i = 0; i < words.size(); ++i) {
             if (GetMousePosition().y > 180 && CheckCollisionPointRec(GetMousePosition(), rec_result[i]))
             {
-                CurrentState::currentWord = words[i];
+                Var::selectedWord = words[i];
                 CurrentState::currentPage = static_cast<Page>(4);
             }
         }
@@ -158,8 +158,10 @@ void WordPage::addWord()
     text = "Are you sure to add this word?";
     DrawTextEx(Resources::wordFontBold, text.c_str(),
                {600 - MeasureTextEx(Resources::wordFontBold, text.c_str(), 27, 1).x / 2, 220}, 27, 1, BLACK);
-    if (GuiButton({400, 330, 100, 50}, "YES"))
+    if (GuiButton({400, 330, 100, 50}, "YES")) {
         addWordButton = false;
+        
+    }
     if (GuiButton({700, 330, 100, 50}, "CANCEL"))
     {
         addWordButton = false;
