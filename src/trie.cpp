@@ -12,7 +12,7 @@ Trie::Trie()
 
 Trie::~Trie()
 {
-    clear();
+/*      clear();*/
 }
 
 TrieNode *Trie::createNode()
