@@ -20,10 +20,6 @@ WordPage::WordPage()
 
 void WordPage::update()
 {
-    if (!isBuild) {
-        build(dict, trie);
-        isBuild = true;
-    }
     if (IsMouseButtonPressed(0) && !dropDownBox) {
         for (int i = 0; i < words.size(); ++i) {
             if (GetMousePosition().y > 180 && CheckCollisionPointRec(GetMousePosition(), rec_result[i]))
@@ -136,9 +132,12 @@ void WordPage::draw()
     if (GuiDropdownBox(
             rec_dictionary,
             (dictLanguages[0] + "\n" + dictLanguages[1] + "\n" + dictLanguages[2] + "\n" + dictLanguages[3]).c_str(),
-            modeChosen, dropDownBox))
+            CurrentState::currentDict, dropDownBox))
     {
         dropDownBox ^= 1;
+        currentTrie = PrebuiltTriesList[*CurrentState::currentDict];
+        words.clear();
+        SearchInput[0] = '\0';
         confirmResetBox = false;
     }
 
@@ -154,9 +153,9 @@ void WordPage::draw()
 
     if (SearchEdit) {
         if (GetKeyPressed() && !IsKeyPressed(KEY_UP) && !IsKeyPressed(KEY_DOWN)) {
-            if (trie.search(SearchInput, tmp)) {
+            if (currentTrie.search(SearchInput, tmp)) {
                 words.clear();
-                words = trie.wordSuggest(SearchInput);
+                words = currentTrie.wordSuggest(SearchInput);
             }
             else words.clear();
         }

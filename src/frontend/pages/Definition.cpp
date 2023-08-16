@@ -105,9 +105,10 @@ void DefPage::draw()
     if (GuiDropdownBox(
             rec_dictionary,
             (dictLanguages[0] + "\n" + dictLanguages[1] + "\n" + dictLanguages[2] + "\n" + dictLanguages[3]).c_str(),
-            modeChosen, dropDownBox))
+            CurrentState::currentDict, dropDownBox))
     {
         dropDownBox ^= 1;
+        currentTrie = PrebuiltTriesList[*CurrentState::currentDict];
         confirmResetBox = false;
     }
 }
