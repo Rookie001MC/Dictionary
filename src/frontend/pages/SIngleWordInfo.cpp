@@ -15,8 +15,8 @@ void SingleWordInfo::update() {
     }
     if (fullDef == "\0") {
         std::string tmp;
-        for (int i = 0; i < Var::selectedWord.getDefinitionCount(); ++i) {
-            tmp = Var::selectedWord.getDefinition(i);
+        for (int i = 0; i < CurrentState::currentWord.getDefinitionCount(); ++i) {
+            tmp = CurrentState::currentWord.getDefinition(i);
             eachDef.push_back(tmp);
             fullDef += tmp + "\n";
         }
@@ -38,11 +38,11 @@ void SingleWordInfo::draw() {
     if (GuiWindowBox({73, 160, 1140, 510}, "")) {
         isInfo = true;
     }
-    std::string selectedTmp = Var::selectedWord.getKey() + ' ' + '(' + Var::selectedWord.getType() + ')';
+    std::string selectedTmp = CurrentState::currentWord.getKey() + ' ' + '(' + CurrentState::currentWord.getType() + ')';
     DrawTextEx(Resources::wordFontBold, selectedTmp.c_str(), {105, 200}, 45, 2, BLACK);
 
-    for (int i = 0; i < std::min(4, int(Var::selectedWord.getDefinitionCount())); ++i) {
-        DrawTextEx(Resources::wordFontBold, Var::selectedWord.getDefinition(i).c_str(), {105, (float)(270 + i*65)}, 25, 2, BLACK);
+    for (int i = 0; i < std::min(4, int(CurrentState::currentWord.getDefinitionCount())); ++i) {
+        DrawTextEx(Resources::wordFontBold, CurrentState::currentWord.getDefinition(i).c_str(), {105, (float)(270 + i*65)}, 25, 2, BLACK);
     }
 
     if (GuiButton({700, 590, 135, 55}, "EDIT")) {
