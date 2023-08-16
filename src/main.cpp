@@ -12,56 +12,64 @@
 #include "globalVars/globalVars.h"
 #include "dictionary/word.h"
 
-// void prebuildDictionaries()
-// {
-//     std::string dataDir = Resources::currentExeDir + "../data/";
-//     std::string dictDirs[] = {
-//         dataDir + "engeng.dict",
-//         dataDir + "engvie.dict",
-//         dataDir + "vieeng.dict",
-//         dataDir + "slang.dict",
-//         dataDir + "emoji.dict",
-//     };
+void prebuildDictionaries()
+{
+    std::string dataDir = Resources::currentExeDir + "../data/";
+    std::string dictDirs[] = {
+        dataDir + "engeng.dict",
+        dataDir + "engvie.dict",
+        dataDir + "vieeng.dict",
+        dataDir + "slang.dict",
+        dataDir + "emoji.dict",
+    };
 
-//     Dictionary engEng(dictDirs[0], 0);
-//     Dictionary engVie(dictDirs[1], 1);
-//     Dictionary vieEng(dictDirs[2], 2);
-//     Dictionary emoji(dictDirs[3], 3);
-//     Dictionary slang(dictDirs[4], 4);
+    Dictionary engEng = Dictionary(dictDirs[0], 0);
+    Dictionary engVie = Dictionary(dictDirs[1], 1);
+    Dictionary vieEng = Dictionary(dictDirs[2], 2);
+    Dictionary emoji = Dictionary(dictDirs[3], 3);
+    // Dictionary slang = Dictionary(dictDirs[4], 4);
 
-//     std::cout << "Building tries...\n";
+    std::cout << "Building tries...\n";
 
-//     auto start = std::chrono::high_resolution_clock::now();
-//     build(engEng, *PrebuiltTries::engEng);
-//     auto end = std::chrono::high_resolution_clock::now();
-//     std::cout << "engEng: " << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count() << "ms\n";
+    auto start = std::chrono::high_resolution_clock::now();
+    build(engEng, PrebuiltTriesList[0]);
+    auto end = std::chrono::high_resolution_clock::now();
+    std::cout << "engEng: " << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count() << "ms\n";
 
-//     start = std::chrono::high_resolution_clock::now();
-//     build(engVie, *PrebuiltTries::engVie);
-//     end = std::chrono::high_resolution_clock::now();
-//     std::cout << "engVie: " << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count() << "ms\n";
+/*     start = std::chrono::high_resolution_clock::now();
+    build(engVie, *PrebuiltTries::engVie);
+    end = std::chrono::high_resolution_clock::now();
+    std::cout << "engVie: " << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count() << "ms\n"; */
 
-//     start = std::chrono::high_resolution_clock::now();
-//     build(vieEng, *PrebuiltTries::vieEng);
-//     end = std::chrono::high_resolution_clock::now();
-//     std::cout << "vieEng: " << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count() << "ms\n";
+    start = std::chrono::high_resolution_clock::now();
+    build(vieEng, PrebuiltTriesList[2]);
+    end = std::chrono::high_resolution_clock::now();
+    std::cout << "vieEng: " << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count() << "ms\n";
 
-//     start = std::chrono::high_resolution_clock::now();
-//     build(emoji, *PrebuiltTries::emoji);
-//     end = std::chrono::high_resolution_clock::now();
-//     std::cout << "emoji: " << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count() << "ms\n";
+/*     start = std::chrono::high_resolution_clock::now();
+    build(emoji, *PrebuiltTries::emoji);
+    end = std::chrono::high_resolution_clock::now();
+    std::cout << "emoji: " << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count() << "ms\n"; */
 
-//     start = std::chrono::high_resolution_clock::now();
-//     build(slang, *PrebuiltTries::slang);
-//     end = std::chrono::high_resolution_clock::now();
-//     std::cout << "slang: " << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count() << "ms\n";
+/*     start = std::chrono::high_resolution_clock::now();
+    build(slang, *PrebuiltTries::slang);
+    end = std::chrono::high_resolution_clock::now();
+    std::cout << "slang: " << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count() << "ms\n"; */
 
-// }
+}
+
+void clearPrebuiltTries()
+{
+    for (auto& trie: PrebuiltTriesList)
+    {
+        trie.clear();
+    }
+}
 
 int main(int argc, const char *argv[])
 {
     Resources::currentExeDir = getExeDir(argv[0]);
-  //  prebuildDictionaries();
+    prebuildDictionaries();
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "CS163 Project - The Dictionary of Everything?");
     SetTargetFPS(60);
     loadResources(argv[0]);
@@ -71,6 +79,7 @@ int main(int argc, const char *argv[])
         frontend.start();
     }
     unloadResources();
+    clearPrebuiltTries();
     CloseWindow();
     return 0;
 }
