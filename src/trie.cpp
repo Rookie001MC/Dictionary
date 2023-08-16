@@ -132,7 +132,7 @@ std::vector<Word> Trie::wordSuggest(std::string prefix)
             return wordlist;
         cur = next;
     }
-    int limit = 7;
+    int limit = 15;
     if (cur->endOfWord) {
         wordlist.push_back(cur->word);
         --limit;

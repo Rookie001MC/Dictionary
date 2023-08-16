@@ -13,6 +13,14 @@ void SingleWordInfo::update() {
         isInfo = false;
         CurrentState::currentPage = static_cast<Page>(0);
     }
+    if (fullDef == "\0") {
+        std::string tmp;
+        for (int i = 0; i < Var::selectedWord.getDefinitionCount(); ++i) {
+            tmp = Var::selectedWord.getDefinition(i);
+            eachDef.push_back(tmp);
+            fullDef += tmp + "\n";
+        }
+    }
 }
 
 void SingleWordInfo::draw() {
@@ -51,5 +59,59 @@ void SingleWordInfo::draw() {
     }
     if (GuiButton({1040, 590, 135, 55}, "DELETE")) {
 
+    }
+}
+
+void SingleWordInfo::editMenu() {
+    if (editEachDefButton)
+    {
+        editEachDef();
+        return;
+    }
+    if (confirmSaveBox)
+    {
+        saveBox();
+        return;
+    }
+    if (addDefButton)
+    {
+        addDef();
+        return;
+    }
+
+    if (IsKeyPressed(KEY_UP) && edit_height[0] < 200)
+    {
+        for (int i = 0; i <= eachDef.size(); i++)
+            edit_height[i] += 40;
+    }
+    if (IsKeyPressed(KEY_DOWN) && edit_height.back() >= 540)
+    {
+        for (int i = 0; i <= eachDef.size(); i++)
+            edit_height[i] -= 40;
+    }
+
+    for (int i = 0; i < eachDef.size(); i++)
+    {
+        DrawTextEx(Resources::wordFontBold, eachDef[i].c_str(), {48, (float)edit_height[i] + 8}, 25, 1, BLACK);
+        DrawRectangleLinesEx({41, (float)edit_height[i], 1110, (float)edit_height[i + 1] - edit_height[i] - 20}, 2, BLACK);
+        if (GuiButton({1158, (float)edit_height[i], 65, 40}, "Edit"))
+        {
+            edit_height.clear();
+           // defChosen = i;
+            editEachDefButton = true;
+           // strcpy(newdata, selectedWord->defs[defChosen]->data.c_str());
+            return;
+        }
+    }
+    DrawRectangleRec({0, 100, 1280, 90}, BG_COLOR_RGB);
+    DrawTextEx(Resources::wordFontBold, "EDIT MENU", {70, 133}, 40, 1, RED);
+    if (GuiButton({750, 130, 100, 50}, "SAVE"))
+        confirmSaveBox = true;
+    if (GuiButton({880, 130, 170, 50}, "ADD MORE"))
+    {
+        addDefButton = true;
+        // newData = "\0";
+        // defChosen = eachDef.size();
+        // newdata[0] = '\0';
     }
 }

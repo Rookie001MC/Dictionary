@@ -44,6 +44,8 @@
 #define OUTLINE_COLOR (0xB5C99Aff)
 #define OUTLINE_COLOR_RGB (Color){0x85, 0x73, 0x72, 0xff}
 
+#define RESULT_COLOR_CONTAINER_HOVER (0xBDD2B6FF)
+
 // Màu nền
 #define BG_COLOR (0xFFECAFF)
 #define BG_COLOR_RGB (Color){255, 254, 202, 255}
@@ -51,6 +53,8 @@
 // Màu của chữ
 #define TEXT_COLOR (0x000000ff)
 #define TEXT_COLOR_RGB (Color){0x08, 0x21, 0x00, 0xff}
+
+#define DEF_COLOR (0xF1F0E8FF)
 
 // Window resolution
 #define SCREEN_WIDTH 1280
