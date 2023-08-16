@@ -61,7 +61,7 @@ void SingleWordInfo::draw()
         editButton = true;
         for (int i = 1; i <= eachDef.size(); i++)
         {
-            edit_height.push_back(MeasureTextEx(Resources::wordFontBold, eachDef[i - 1].c_str(), 25, 1).y +
+            edit_height.push_back(MeasureTextEx(Resources::displayFontRegular, eachDef[i - 1].c_str(), 25, 1).y +
                                   edit_height[i - 1] + 35);
         }
         return;
@@ -105,7 +105,7 @@ void SingleWordInfo::editMenu()
 
     for (int i = 0; i < eachDef.size(); i++)
     {
-        DrawTextEx(Resources::wordFontBold, eachDef[i].c_str(), {48, (float)edit_height[i] + 8}, 25, 1, BLACK);
+        DrawTextEx(Resources::displayFontRegular, eachDef[i].c_str(), {48, (float)edit_height[i] + 8}, 25, 1, BLACK);
         DrawRectangleLinesEx({41, (float)edit_height[i], 1110, (float)edit_height[i + 1] - edit_height[i] - 20}, 2,
                              BLACK);
         if (GuiButton({1158, (float)edit_height[i], 65, 40}, "Edit"))
@@ -117,8 +117,11 @@ void SingleWordInfo::editMenu()
             return;
         }
     }
-    DrawRectangleRec({0, 100, 1280, 90}, BG_COLOR_RGB);
-    DrawTextEx(Resources::wordFontBold, "EDIT MENU", {70, 133}, 40, 1, RED);
+
+    DrawRectangleRec({0, 100, 1280, 90}, GetColor(SECONDARY_COLOR));
+    DrawRectangleLinesEx({-5, 0, 1289, 190}, 2, BLACK);
+
+    DrawTextEx(Resources::displayFontBold, "EDIT MENU", {70, 136}, 40, 1, RED);
     if (GuiButton({750, 130, 100, 50}, "SAVE"))
         confirmSaveBox = true;
     if (GuiButton({880, 130, 170, 50}, "ADD MORE"))

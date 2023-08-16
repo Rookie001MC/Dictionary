@@ -15,7 +15,7 @@ WordPage::WordPage()
     dictPagesRects[selectedDictPage] = {51, float(140 + (150 * selectedDictPage)), 195, 65};
 
     for (int i = 0; i < 20; i++)
-        rec_result[i] = {307, (float)210 + 130 * i, 921, 120};
+        rec_result[i] = {307, (float)225 + 130 * i, 921, 120};
 }
 
 void WordPage::update()
@@ -81,7 +81,7 @@ void WordPage::draw()
 
         std::string wordsTmp = words[i].getKey() + ' ' + '(' + words[i].getType() + ')';
         Vector2 textPosition = {rec_result[i].x + 10, rec_result[i].y + 10};
-        DrawTextEx(Resources::wordFontBold, wordsTmp.c_str(), textPosition, WORD_FONT_SIZE, 2, BLACK);
+        DrawTextEx(Resources::displayFontBold, wordsTmp.c_str(), textPosition, WORD_FONT_SIZE, 2, BLACK);
 
         for (int j = 0; j < std::min(2, int(words[i].getDefinitionCount())); j++)
         {
@@ -160,7 +160,7 @@ void WordPage::draw()
     {
         if (words.empty())
         {
-            DrawTextEx(Resources::wordFontBold, "No word match this search !!!", {310, 215}, 25, 1, RED);
+            DrawTextEx(Resources::displayFontBold, "No word match this search !!!", {310, 245}, 25, 1, RED);
             if (GuiLabelButton({320, 250, 80, 40}, "Add this word"))
             {
                 addWordButton = true;
@@ -188,8 +188,8 @@ void WordPage::resetBox()
     if (GuiWindowBox({300, 170, 600, 250}, ""))
         confirmResetBox = false;
     text = "Are you sure to reset ?";
-    DrawTextEx(Resources::wordFontBold, text.c_str(),
-               {600 - MeasureTextEx(Resources::wordFontBold, text.c_str(), 27, 1).x / 2, 220}, 27, 1, BLACK);
+    DrawTextEx(Resources::displayFontBold, text.c_str(),
+               {600 - MeasureTextEx(Resources::displayFontBold, text.c_str(), 27, 1).x / 2, 220}, 27, 1, BLACK);
     if (GuiButton({400, 330, 100, 50}, "YES"))
     {
         confirmResetBox = false;
@@ -207,8 +207,8 @@ void WordPage::addWord()
     if (GuiWindowBox({300, 170, 600, 250}, ""))
         addWordButton = false;
     text = "Are you sure to add this word?";
-    DrawTextEx(Resources::wordFontBold, text.c_str(),
-               {600 - MeasureTextEx(Resources::wordFontBold, text.c_str(), 27, 1).x / 2, 220}, 27, 1, BLACK);
+    DrawTextEx(Resources::displayFontBold, text.c_str(),
+               {600 - MeasureTextEx(Resources::displayFontBold, text.c_str(), 27, 1).x / 2, 220}, 27, 1, BLACK);
     if (GuiButton({400, 330, 100, 50}, "YES"))
     {
         addWordButton = false;
