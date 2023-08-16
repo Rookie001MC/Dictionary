@@ -100,7 +100,8 @@ void WordPage::draw()
         }
     }
 
-    DrawRectangleRec({277, 100, 1280, 107}, BG_COLOR_RGB);
+    DrawRectangleRec({277, 100, 1280, 115}, BG_COLOR_RGB);
+    DrawRectangleLinesEx({270, 0, 1280, 215}, 2, BLACK);
 
     // draw the Search Box
     if (GuiTextBox(rec_search, SearchInput, 101, SearchEdit))
@@ -123,6 +124,8 @@ void WordPage::draw()
 
     // Function switcher container
     DrawRectangleV(Vector2{0, 0}, Vector2{277, 720}, GetColor(SECONDARY_COLOR));
+    DrawRectangleLinesEx({0, 0, 277, 720}, 2, BLACK);
+
     // Draws the function switcher
     for (int i = 0; i < dictPages.size(); i++)
     {
