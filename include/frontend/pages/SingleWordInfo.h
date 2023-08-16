@@ -6,7 +6,15 @@
 
 class SingleWordInfo {
 private:
+    void deleteBox(short type);
+    void editMenu();
+    void editEachDef();
+    void addDef();
+    void saveBox();
+
+    std::vector<int> edit_height;
     bool isInfo = false;
+    bool confirmDeleteBox = false, confirmSaveBox = false, editButton = false, editEachDefButton = false, addDefButton = false;
 public:
     SingleWordInfo();
     ~SingleWordInfo() 

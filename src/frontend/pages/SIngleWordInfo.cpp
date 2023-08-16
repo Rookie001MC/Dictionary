@@ -16,6 +16,17 @@ void SingleWordInfo::update() {
 }
 
 void SingleWordInfo::draw() {
+    if (editButton)
+    {
+        editMenu();
+        return;
+    }
+    if (confirmDeleteBox)
+    {
+        deleteBox(-1);
+        return;
+    }
+
     if (GuiWindowBox({73, 160, 1140, 510}, "")) {
         isInfo = true;
     }
@@ -27,7 +38,13 @@ void SingleWordInfo::draw() {
     }
 
     if (GuiButton({700, 590, 135, 55}, "EDIT")) {
-
+        edit_height.push_back(200);
+        editButton = true;
+        for (int i = 1; i <= eachDef.size(); i++)
+        {
+            edit_height.push_back(MeasureTextEx(Resources::wordFontBold, eachDef[i - 1].c_str(), 25, 1).y + edit_height[i - 1] + 35);
+        }
+        return;
     }
     if (GuiButton({855, 590, 165, 55}, "ADD FAVORITE")) {
 
