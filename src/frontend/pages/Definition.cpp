@@ -65,8 +65,14 @@ void DefPage::draw()
     {
     }
 
+    // draw the background of textbox
+    DrawRectangleRec({277, 100, 1280, 115}, BG_COLOR_RGB);
+    DrawRectangleLinesEx({270, 0, 1280, 215}, 2, BLACK);
+
     // Function switcher container
     DrawRectangleV(Vector2{0, 0}, Vector2{277, 720}, GetColor(SECONDARY_COLOR));
+    DrawRectangleLinesEx({0, 0, 277, 720}, 2, BLACK);
+    
     // Draws the function switcher
     for (int i = 0; i < dictPages.size(); i++)
     {
