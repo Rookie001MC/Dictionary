@@ -160,8 +160,8 @@ void WordPage::draw()
     {
         if (words.empty())
         {
-            DrawTextEx(Resources::displayFontBold, "No word match this search !!!", {310, 245}, 25, 1, RED);
-            if (GuiLabelButton({320, 250, 80, 40}, "Add this word"))
+            DrawTextEx(Resources::displayFontBold, "No word match this search !!!", {310, 240}, 25, 1, RED);
+            if (GuiLabelButton({310, 270, 80, 40}, "Add this word"))
             {
                 addWordButton = true;
             }
