@@ -1,6 +1,4 @@
 #include "globalVars/globalVars.h"
-#include "dictionary/filePathHandler.h"
-#include "dictionary/word.h"
 
 Page CurrentState::currentPage = Page::DICT_WORD;
 Word CurrentState::currentWord;

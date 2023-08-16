@@ -1,5 +1,5 @@
-#ifndef FILEPATH_HANDLER_H
-#define FILEPATH_HANDLER_H
+#ifndef BACKEND_FILEPATH_HANDLER_H
+#define BACKEND_FILEPATH_HANDLER_H
 
 #include <string>
 #include <filesystem>

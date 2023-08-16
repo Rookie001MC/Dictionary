@@ -1,5 +1,5 @@
-#ifndef BACKEND_PREBUILD_TRIES_H_
-#define BACKEND_PREBUILD_TRIES_H_
+#ifndef BACKEND_PREBUILD_TRIES_H
+#define BACKEND_PREBUILD_TRIES_H
 
 #include <iostream>
 #include <vector>

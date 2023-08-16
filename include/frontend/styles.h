@@ -1,5 +1,5 @@
-#ifndef PALETTE_H
-#define PALETTE_H
+#ifndef FRONTEND_PALETTE_H
+#define FRONTEND_PALETTE_H
 
 /**
 *   Bảng màu đươc lấy từ Material Design Theme Builder, sử dụng 4 màu cơ bản ở đây: 

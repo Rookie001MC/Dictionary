@@ -1,17 +1,17 @@
 #ifndef FRONTEND_MAIN_H
 #define FRONTEND_MAIN_H
 
-#include "frontend/pages/Favorites.h"
-#include "raylib.h"
+#include "globalVars/globalVars.h"
 #include "frontend/ResourcesLoad.h"
 #include "frontend/styles.h"
+#include "frontend/pages/Favorites.h"
 #include "frontend/pages/History.h"
 #include "frontend/pages/Word.h"
 #include "frontend/pages/Definition.h"
 #include "frontend/pages/SingleWordInfo.h"
-#include "globalVars/globalVars.h"
-#include "raylib.h"
 #include "frontend/pages/Game.h"
+#include "raylib.h"
+#include "raygui.h"
 
 void setStyles();
 class FrontendMain

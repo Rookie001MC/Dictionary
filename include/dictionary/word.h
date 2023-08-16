@@ -1,5 +1,5 @@
-#ifndef WORD_H
-#define WORD_H
+#ifndef BACKEND_WORD_H
+#define BACKEND_WORD_H
 
 #include <fstream>
 #include <sstream>

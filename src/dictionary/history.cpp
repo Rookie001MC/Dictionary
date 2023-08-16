@@ -1,5 +1,4 @@
 #include "dictionary/history.h"
-#include <algorithm>
 
 // mode 0: history - no alphabet indexing
 // mode 1: favourite - alphabet indexing

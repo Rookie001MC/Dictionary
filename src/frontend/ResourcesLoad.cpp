@@ -1,8 +1,4 @@
 #include "frontend/ResourcesLoad.h"
-#include "frontend/styles.h"
-#include "globalVars/globalVars.h"
-#include "dictionary/filePathHandler.h"
-#include "raylib.h"
 
 void loadResources()
 { 

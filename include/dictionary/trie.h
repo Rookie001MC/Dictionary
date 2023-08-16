@@ -1,9 +1,11 @@
-#ifndef TRIE_H
-#define TRIE_H
+#ifndef BACKEND_TRIE_H
+#define BACKEND_TRIE_H
 
 #include "word.h"
 #include <iostream>
 #include <string>
+#include <queue>
+#include <vector>
 
 const int ALPHABET = 128;
 struct TrieNode

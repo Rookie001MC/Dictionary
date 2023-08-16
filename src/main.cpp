@@ -2,8 +2,6 @@
 #include "dictionary/build.h"
 #include "dictionary/trie.h"
 #include "dictionary/word.h"
-#include <chrono>
-#include <iostream>
 
 #include "frontend/FrontendMain.h"
 #include "frontend/ResourcesLoad.h"
@@ -12,6 +10,9 @@
 #include "globalVars/globalVars.h"
 #include "dictionary/word.h"
 #include "dictionary/prebuildTries.h"
+
+#include <chrono>
+#include <iostream>
 
 int main(int argc, const char *argv[])
 {

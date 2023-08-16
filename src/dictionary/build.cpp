@@ -1,5 +1,4 @@
 #include "dictionary/build.h"
-#include <algorithm>
 
 std::string nextKey;
 

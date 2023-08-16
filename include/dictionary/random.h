@@ -1,3 +1,6 @@
+#ifndef BACKEND_RANDOM_H
+#define BACKEND_RANDOM_H
+
 #include <random>
 #include <iostream>
 #include <fstream>
@@ -45,3 +48,5 @@ std::string getKeyWordFromText(const std::string &line);
 // Reference function for the flow of the quiz
 // void quizWith4Definitions();
 // void quizWith4KeyWords();
+
+#endif

@@ -4,6 +4,8 @@
 #include "dictionary/trie.h"
 #include "raylib.h"
 #include "dictionary/word.h"
+#include "dictionary/filePathHandler.h"
+#include "dictionary/word.h"
 #include <vector>
 
 enum Page

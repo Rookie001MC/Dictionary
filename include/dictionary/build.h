@@ -1,10 +1,11 @@
-#ifndef BUILD_H
-#define BUILD_H
+#ifndef BACKEND_BUILD_H
+#define BACKEND_BUILD_H
 
 #include "globalVars/globalVars.h"
 #include "trie.h"
 #include "word.h"
 #include <filesystem>
+#include <algorithm>
 
 const std::string ENGENG = Resources::currentExeDir + "../tmp/engeng/";
 const std::string ENGVIE = Resources::currentExeDir + "../tmp/engvie/";

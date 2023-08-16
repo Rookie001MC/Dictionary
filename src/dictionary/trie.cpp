@@ -1,6 +1,4 @@
 #include "dictionary/trie.h"
-#include <queue>
-#include <vector>
 
 Trie::Trie()
 {

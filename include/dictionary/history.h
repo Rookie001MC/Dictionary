@@ -1,6 +1,10 @@
+#ifndef BACKEND_HISTORY_H
+#define BACKEND_HISTORY_H
+
 #include <fstream>
 #include <string>
 #include <vector>
+#include <algorithm>
 
 // class used for history and favorite feature due to their similarities
 class History
@@ -19,3 +23,5 @@ class History
     void remove(std::string key); // remove from memory but does not modify the file
     void save();                  // modify the file
 };
+
+#endif

@@ -1,3 +1,6 @@
+#ifndef BACKEND_SEARCH_DEF_H
+#define BACKEND_SEARCH_DEF_H
+
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -7,3 +10,4 @@
 void searchDefinition(const std::string &definitionFromUser);
 
 
+#endif
