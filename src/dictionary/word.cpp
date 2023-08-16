@@ -111,12 +111,12 @@ std::string extractDefinition(const std::string &line, bool &isEndOfDefinition)
     std::string definition;
     if (line.find('[') == std::string::npos) // this character doesn't exist
     {
-        int start  = line.find_first_not_of(' ');
+        int start = line.find_first_not_of(' ');
         if (line.find("; \"") != std::string::npos)
         {
-            int end = line.find("; \"") - 1;
+            int end           = line.find("; \"") - 1;
             isEndOfDefinition = true;
-            definition = line.substr(start, end - start + 1);
+            definition        = line.substr(start, end - start + 1);
         }
         else
             definition = line.substr(start);
@@ -124,13 +124,13 @@ std::string extractDefinition(const std::string &line, bool &isEndOfDefinition)
     else
     {
         int firstPos = line.find_first_not_of(' ');
-        int lastPos = 0;
+        int lastPos  = 0;
         if (line.find("; \"") != std::string::npos)
             lastPos = line.find("; \"");
         else
             lastPos = line.find('[');
-        isEndOfDefinition = true;   
-        definition = line.substr(firstPos, lastPos - firstPos);
+        isEndOfDefinition = true;
+        definition        = line.substr(firstPos, lastPos - firstPos);
     }
     definition.append(" ");
     return definition;
@@ -174,7 +174,7 @@ Word Dictionary::getWordEngEng()
                 {
                     word.addDefinition("");
                     curDef++;
-                }   
+                }
                 isEndOfDefinition = false;
             }
             else if (line[5] >= '0' && line[5] <= '9') // start of a new definition
@@ -210,14 +210,14 @@ Word Dictionary::getWordEngEng()
     return word;
 }
 
-// at the end of each definition has a '\n' character. 
+// at the end of each definition has a '\n' character.
 // it can be erased easily from the code below, but will somehow cause bug !?
 Word Dictionary::getWordEngVie()
 {
     std::string key = "", type, tmp;
     std::getline(fin, key, '\n');
     int posStop = key.find('/');
-    key = key.substr(1, posStop - 2);
+    key         = key.substr(1, posStop - 2);
     Word word(key, "", "");
     std::getline(fin, tmp, '\n');
     while (!tmp.empty())
@@ -272,12 +272,12 @@ Word Dictionary::getWordEmoji()
 {
     std::string key, type = "emoji", definition;
     fin >> key;
-    getline(fin, definition,'\n');
+    getline(fin, definition, '\n');
     Word word(key, definition, type);
     return word;
 }
 
-Word Dictionary::getWordSlang() 
+Word Dictionary::getWordSlang()
 {
     std::string key, type = "slang", definition;
     fin >> key;

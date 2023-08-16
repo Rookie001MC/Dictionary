@@ -3,13 +3,13 @@
 #include "dictionary/trie.h"
 #include "dictionary/word.h"
 
+#include "dictionary/filePathHandler.h"
+#include "dictionary/prebuildTries.h"
+#include "dictionary/word.h"
 #include "frontend/FrontendMain.h"
 #include "frontend/ResourcesLoad.h"
 #include "frontend/styles.h"
-#include "dictionary/filePathHandler.h"
 #include "globalVars/globalVars.h"
-#include "dictionary/word.h"
-#include "dictionary/prebuildTries.h"
 
 #include <chrono>
 #include <iostream>
@@ -29,7 +29,7 @@ int main(int argc, const char *argv[])
     SetTargetFPS(60);
     loadResources();
     FrontendMain frontend;
-    while(!WindowShouldClose())
+    while (!WindowShouldClose())
     {
         frontend.start();
     }
@@ -50,7 +50,7 @@ int main(int argc, const char *argv[])
 //     Dictionary dict(Resources::currentExeDir +"../data/engvie.dict", 1);
 //     Trie trie;
 //     build(dict, trie);
-//     // For random functions: 
+//     // For random functions:
 //     // Random random;
 //     // random.setDictionary(&dict);
 //     // random.setPath();

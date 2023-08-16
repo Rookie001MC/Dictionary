@@ -3,8 +3,8 @@
 
 #include "word.h"
 #include <iostream>
-#include <string>
 #include <queue>
+#include <string>
 #include <vector>
 
 const int ALPHABET = 128;
@@ -27,6 +27,7 @@ class Trie
     void deserialize(std::ifstream &fin, char delimiter);
     int getIndex(char c);
     void wordSuggest(std::vector<Word> &wordlist, int limit);
+
   public:
     Trie();
     ~Trie();

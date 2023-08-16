@@ -3,11 +3,11 @@
 void searchDefinition(const std::string &definitionFromUser)
 {
     std::ifstream read;
-    read.open("output.txt");    // engengRandom.txt
+    read.open("output.txt"); // engengRandom.txt
     std::string line;
-    std::string def = "";
+    std::string def             = "";
     int numberOfShownDefinition = 0;
-    int defaultShownDefinition = 10;
+    int defaultShownDefinition  = 10;
     while (std::getline(read, line))
     {
         if (line.find(definitionFromUser) != std::string::npos)
@@ -15,11 +15,12 @@ void searchDefinition(const std::string &definitionFromUser)
             // get the word and its content
             std::string keyWord = line.substr(0, line.find('#') - 1); // get the word
 
-            int startType = line.find('#') + 1;
-            int endType = line.find_first_of('@') - 2;
+            int startType    = line.find('#') + 1;
+            int endType      = line.find_first_of('@') - 2;
             std::string type = line.substr(startType, endType - startType + 1);
 
-            std::cout << keyWord << " (" << type << "):" << "\n";
+            std::cout << keyWord << " (" << type << "):"
+                      << "\n";
 
             int index = endType + 2;
             while (index < line.length())
@@ -27,7 +28,7 @@ void searchDefinition(const std::string &definitionFromUser)
                 int nextAtPos = line.find('@', index + 1);
                 if (nextAtPos == std::string::npos)
                     break;
-                def = line.substr(index + 1, nextAtPos - index - 2);
+                def   = line.substr(index + 1, nextAtPos - index - 2);
                 index = nextAtPos;
                 std::cout << def << "\n";
             }
@@ -56,4 +57,3 @@ void searchDefinition(const std::string &definitionFromUser)
         std::cout << "No keyword matches your definition\n";
     read.close();
 }
-

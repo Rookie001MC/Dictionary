@@ -2,7 +2,8 @@
 
 std::string nextKey;
 
-void extractEngEng(Dictionary &dict, Trie &trie) {
+void extractEngEng(Dictionary &dict, Trie &trie)
+{
     bool sign = false;
     while (!dict.eof())
     {
@@ -28,15 +29,18 @@ void extractEngVie(Dictionary &dict, Trie &trie)
     }
 }
 
-void extractVieEng(Dictionary &dict, Trie &trie) {
-    while (!dict.eof()) {
-        Word word = dict.getWord();
+void extractVieEng(Dictionary &dict, Trie &trie)
+{
+    while (!dict.eof())
+    {
+        Word word       = dict.getWord();
         std::string key = word.getKey();
         std::transform(key.begin(), key.end(), key.begin(), ::tolower);
         Word pre;
         if (!trie.search(key, pre))
             trie.insert(word);
-        else {
+        else
+        {
             trie.remove(key);
             Word post;
             std::string type = pre.getType() + '/' + word.getType();
@@ -51,7 +55,8 @@ void extractVieEng(Dictionary &dict, Trie &trie) {
     }
 }
 
-void extractEmoji(Dictionary &dict, Trie &trie) {
+void extractEmoji(Dictionary &dict, Trie &trie)
+{
     while (!dict.eof())
     {
         Word word = dict.getWord();
@@ -59,7 +64,8 @@ void extractEmoji(Dictionary &dict, Trie &trie) {
     }
 }
 
-void extractSlang(Dictionary &dict, Trie &trie) {
+void extractSlang(Dictionary &dict, Trie &trie)
+{
     while (!dict.eof())
     {
         Word word = dict.getWord();
@@ -74,23 +80,23 @@ void build(Dictionary &dict, Trie &trie)
     switch (dict.getDictionaryType())
     {
         case 0:
-            path = ENGENG;
+            path      = ENGENG;
             delimiter = ENGENGDELIMITER;
             break;
         case 1:
-            path = ENGVIE;
+            path      = ENGVIE;
             delimiter = ENGVIEDELIMITER;
             break;
         case 2:
-            path = VIEENG;
+            path      = VIEENG;
             delimiter = VIEENGDELIMITER;
             break;
         case 3:
-            path = EMOJI;
+            path      = EMOJI;
             delimiter = EMOJIDELIMITER;
             break;
         case 4:
-            path = SLANG;
+            path      = SLANG;
             delimiter = SLANGDELIMITER;
             break;
     }
@@ -132,9 +138,11 @@ void build(Dictionary &dict, Trie &trie)
     }
 }
 
-void reset(Dictionary &dict, Trie &trie) {
+void reset(Dictionary &dict, Trie &trie)
+{
     std::string path;
-    switch(dict.getDictionaryType()) {
+    switch (dict.getDictionaryType())
+    {
         case 0:
             path = ENGENG;
             break;
@@ -154,5 +162,4 @@ void reset(Dictionary &dict, Trie &trie) {
     trie.clear();
     std::filesystem::remove_all(path);
     build(dict, trie);
-    
 }

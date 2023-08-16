@@ -1,8 +1,9 @@
-#include "raylib.h"
-#include "raygui.h"
 #include "frontend/pages/Game.h"
+#include "raygui.h"
+#include "raylib.h"
 
-GamePage::GamePage() {
+GamePage::GamePage()
+{
     for (int i = 0; i < 5; i++)
     {
         dictPagesRects[i] = {61, float(146 + (122 * i)), 165, 55};
@@ -10,11 +11,12 @@ GamePage::GamePage() {
     dictPagesRects[selectedDictPage] = {51, float(140 + (122 * selectedDictPage)), 195, 65};
 }
 
-void GamePage::update() {
-
+void GamePage::update()
+{
 }
 
-void GamePage::draw() {
+void GamePage::draw()
+{
     // Function switcher container
     DrawRectangleV(Vector2{0, 0}, Vector2{277, 720}, GetColor(SECONDARY_COLOR));
     // Draws the function switcher

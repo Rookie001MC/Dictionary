@@ -84,7 +84,7 @@ void DefPage::draw()
         }
     }
 
-        // Draws each word
+    // Draws each word
     for (int i = 0; i < words.size(); i++)
     {
         DrawRectangleV({wordRects[i].x, wordRects[i].y}, {wordRects[i].width, wordRects[i].height},
@@ -108,7 +108,7 @@ void DefPage::draw()
             CurrentState::currentDict, dropDownBox))
     {
         dropDownBox ^= 1;
-        currentTrie = PrebuiltTriesList[*CurrentState::currentDict];
+        currentTrie     = PrebuiltTriesList[*CurrentState::currentDict];
         confirmResetBox = false;
     }
 }

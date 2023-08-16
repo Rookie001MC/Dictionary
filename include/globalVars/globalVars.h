@@ -1,20 +1,19 @@
 #ifndef GLOBAL_VARS
 #define GLOBAL_VARS
 
-#include "dictionary/trie.h"
-#include "raylib.h"
-#include "dictionary/word.h"
 #include "dictionary/filePathHandler.h"
+#include "dictionary/trie.h"
 #include "dictionary/word.h"
+#include "raylib.h"
 #include <vector>
 
 enum Page
 {
-    DICT_WORD = 0,   // Main menu
-    DICT_DEF_SEARCH, // Definition search
-    DICT_FAVORITES,  // Favorites
-    DICT_HISTORY,    // History
-    DICT_GAME,         // Game
+    DICT_WORD = 0,    // Main menu
+    DICT_DEF_SEARCH,  // Definition search
+    DICT_FAVORITES,   // Favorites
+    DICT_HISTORY,     // History
+    DICT_GAME,        // Game
     SINGLE_WORD_INFO, // Information of single word
 };
 struct Resources
@@ -33,9 +32,10 @@ struct Resources
 };
 struct CurrentState
 {
-    static Page currentPage; // Current page (e.g. what search mode it's currently on, word search, definition search, etc.)
+    static Page
+        currentPage; // Current page (e.g. what search mode it's currently on, word search, definition search, etc.)
     static Word currentWord;
-    static int* currentDict;
+    static int *currentDict;
 };
 
 struct PrebuiltTries

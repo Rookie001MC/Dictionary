@@ -1,6 +1,6 @@
 #include "frontend/styles.h"
-#include "raygui.h"
 #include "globalVars/globalVars.h"
+#include "raygui.h"
 
 void setStyles()
 {
@@ -46,4 +46,3 @@ void setStyles()
 
     GuiSetFont(Resources::displayFontRegular);
 }
-

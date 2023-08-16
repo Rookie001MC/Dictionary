@@ -1,9 +1,9 @@
 #ifndef BACKEND_FILEPATH_HANDLER_H
 #define BACKEND_FILEPATH_HANDLER_H
 
-#include <string>
 #include <filesystem>
+#include <string>
 
-std::string getExeDir(const char* exeDir);
+std::string getExeDir(const char *exeDir);
 
 #endif

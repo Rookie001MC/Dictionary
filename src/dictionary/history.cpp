@@ -2,7 +2,8 @@
 
 // mode 0: history - no alphabet indexing
 // mode 1: favourite - alphabet indexing
-int History::find(std::string key) {
+int History::find(std::string key)
+{
     for (int i = 0; i < storage.size(); ++i)
         if (storage.at(i) == key)
             return i;
@@ -22,7 +23,8 @@ History::History(std::string path, bool mode = 0)
     fin.close();
     this->path = path;
     this->mode = mode;
-    if (mode) std::sort(storage.begin(), storage.end());
+    if (mode)
+        std::sort(storage.begin(), storage.end());
 }
 
 History::~History()

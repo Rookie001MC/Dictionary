@@ -1,24 +1,23 @@
 #include "dictionary/random.h"
 
-
-void Random::setDictionary(Dictionary* dict)
+void Random::setDictionary(Dictionary *dict)
 {
     this->dictionary = dict;
 }
 
-void Random::setMode(Dictionary* dict)
+void Random::setMode(Dictionary *dict)
 {
     this->mode = dict->getDictionaryType();
 }
 
 void Random::setPath()
 {
-    switch(mode)
+    switch (mode)
     {
         case 0:
             path = "../data/engengRandom.txt";
             break;
-        // More to come
+            // More to come
     }
 }
 int Random::getMode()
@@ -33,13 +32,13 @@ std::string Random::getPath()
 int Random::getRandomNumber()
 {
     int totalWords = 0;
-    int dictType = getMode();
-    switch(dictType)
+    int dictType   = getMode();
+    switch (dictType)
     {
-        case 0:                     // engeng
+        case 0: // engeng
             totalWords = 144307;
             break;
-        // More to come
+            // More to come
     }
 
     std::random_device rd;
@@ -59,9 +58,9 @@ Word Random::viewRandomWord()
         ++currentLine;
         if (currentLine == randomNum)
         {
-            int sharpPos = line.find('#');
-            int atPos = line.find_first_of('@');
-            std::string keyWord = line.substr(0, sharpPos - 1);
+            int sharpPos         = line.find('#');
+            int atPos            = line.find_first_of('@');
+            std::string keyWord  = line.substr(0, sharpPos - 1);
             std::string wordType = line.substr(sharpPos + 1, atPos - sharpPos - 2);
             std::vector<std::string> definitions;
             randomWord.setKey(keyWord);
@@ -94,8 +93,8 @@ int Random::randomInFour()
 std::string get1stDefinitionFromText(const std::string &line)
 {
     std::string definition;
-    int start = line.find_first_of(':') + 2;
-    int end = line.find('@', start + 1);  
+    int start  = line.find_first_of(':') + 2;
+    int end    = line.find('@', start + 1);
     definition = line.substr(start, end - start);
     return definition;
 }
@@ -106,13 +105,13 @@ std::vector<std::string> Random::random4DefinitionsAnd1KeyWord()
     // Random the line that contains the correct keyword and definition
     int randomCorrectAns = getRandomNumber();
 
-    // Only get the definition of the wrong ans 
+    // Only get the definition of the wrong ans
     // While loop to make sure that 4 numbers are different from each other
     int wrongAns1 = getRandomNumber();
     while (wrongAns1 == randomCorrectAns)
         wrongAns1 = getRandomNumber();
     int wrongAns2 = getRandomNumber();
-    while (wrongAns2 == randomCorrectAns || wrongAns2 == wrongAns1) 
+    while (wrongAns2 == randomCorrectAns || wrongAns2 == wrongAns1)
         wrongAns2 = getRandomNumber();
     int wrongAns3 = getRandomNumber();
     while (wrongAns3 == randomCorrectAns || wrongAns3 == wrongAns1 || wrongAns3 == wrongAns2)
@@ -130,7 +129,7 @@ std::vector<std::string> Random::random4DefinitionsAnd1KeyWord()
         if (lineNum == randomCorrectAns)
         {
             keyWordQuestion = getKeyWordFromText(line);
-            correctAns = get1stDefinitionFromText(line);
+            correctAns      = get1stDefinitionFromText(line);
         }
         else if (lineNum == wrongAns1)
             incorrectAns1 = get1stDefinitionFromText(line);
@@ -158,27 +157,27 @@ std::vector<std::string> Random::random4DefinitionsAnd1KeyWord()
 //         std::cout << "Your choice: ";
 //         std::cin >> userChoice;
 //     } while (userChoice == 'Y' || userChoice == 'y');
-// } 
+// }
 
 std::string getKeyWordFromText(const std::string &line)
 {
     std::string keyWord;
     int start = 0;
-    int end = line.find('#') - 1;
-    keyWord = line.substr(start, end - start + 1);
+    int end   = line.find('#') - 1;
+    keyWord   = line.substr(start, end - start + 1);
     return keyWord;
 }
 std::vector<std::string> Random::random4KeyWordsAnd1Def()
 {
     // Random the line that contains the correct keyword and definition
     int randomCorrectAns = getRandomNumber();
-    // Only get the definition of the wrong ans 
+    // Only get the definition of the wrong ans
     // While loop to make sure that 4 numbers are different from each other
     int wrongAns1 = getRandomNumber();
     while (wrongAns1 == randomCorrectAns)
         wrongAns1 = getRandomNumber();
     int wrongAns2 = getRandomNumber();
-    while (wrongAns2 == randomCorrectAns || wrongAns2 == wrongAns1) 
+    while (wrongAns2 == randomCorrectAns || wrongAns2 == wrongAns1)
         wrongAns2 = getRandomNumber();
     int wrongAns3 = getRandomNumber();
     while (wrongAns3 == randomCorrectAns || wrongAns3 == wrongAns1 || wrongAns3 == wrongAns2)
@@ -195,7 +194,7 @@ std::vector<std::string> Random::random4KeyWordsAnd1Def()
         lineNum++;
         if (lineNum == randomCorrectAns)
         {
-            question = get1stDefinitionFromText(line);
+            question   = get1stDefinitionFromText(line);
             correctAns = getKeyWordFromText(line);
         }
         else if (lineNum == wrongAns1)
@@ -203,7 +202,7 @@ std::vector<std::string> Random::random4KeyWordsAnd1Def()
         else if (lineNum == wrongAns2)
             incorrectAns2 = getKeyWordFromText(line);
         else if (lineNum == wrongAns3)
-            incorrectAns3 = getKeyWordFromText(line);   
+            incorrectAns3 = getKeyWordFromText(line);
     }
     fin.close();
     std::vector<std::string> quiz;

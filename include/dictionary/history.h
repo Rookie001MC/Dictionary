@@ -1,10 +1,10 @@
 #ifndef BACKEND_HISTORY_H
 #define BACKEND_HISTORY_H
 
+#include <algorithm>
 #include <fstream>
 #include <string>
 #include <vector>
-#include <algorithm>
 
 // class used for history and favorite feature due to their similarities
 class History

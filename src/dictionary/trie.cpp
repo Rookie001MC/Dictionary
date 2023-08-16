@@ -10,7 +10,7 @@ Trie::Trie()
 
 Trie::~Trie()
 {
-/*      clear();*/
+    /*      clear();*/
 }
 
 TrieNode *Trie::createNode()
@@ -59,7 +59,7 @@ TrieNode *Trie::remove(TrieNode *root, std::string key, int index = 0)
         }
         return root;
     }
-    char c = key.at(index);
+    char c            = key.at(index);
     root->children[c] = remove(root->children[c], key, index + 1);
     Trie::remove(root->children[c], key, index + 1);
     if (isEmptyNode(root) && root->endOfWord == false)
@@ -117,21 +117,23 @@ void Trie::remove(std::string key)
     remove(root, key, 0);
 }
 
-std::queue<TrieNode*> q;
+std::queue<TrieNode *> q;
 // return vectors of possible words with given prefix
 // return empty vector of words if no word with given prefix found
 std::vector<Word> Trie::wordSuggest(std::string prefix)
 {
-    TrieNode* cur = root;
+    TrieNode *cur = root;
     std::vector<Word> wordlist;
-    for (int i = 0; i < prefix.size(); ++i) {
-        TrieNode* next = cur->children[prefix.at(i)];
+    for (int i = 0; i < prefix.size(); ++i)
+    {
+        TrieNode *next = cur->children[prefix.at(i)];
         if (!next)
             return wordlist;
         cur = next;
     }
     int limit = 15;
-    if (cur->endOfWord) {
+    if (cur->endOfWord)
+    {
         wordlist.push_back(cur->word);
         --limit;
     }
@@ -142,15 +144,19 @@ std::vector<Word> Trie::wordSuggest(std::string prefix)
 
 void Trie::wordSuggest(std::vector<Word> &wordlist, int limit)
 {
-    while (!q.empty()) {
+    while (!q.empty())
+    {
         if (!limit)
             break;
-        TrieNode* cur = q.front();
+        TrieNode *cur = q.front();
         q.pop();
-        for (int i = 0; i < ALPHABET && limit && cur; ++i) {
-            TrieNode* now = cur->children[i];
-            if (now) {
-                if (now->endOfWord) {
+        for (int i = 0; i < ALPHABET && limit && cur; ++i)
+        {
+            TrieNode *now = cur->children[i];
+            if (now)
+            {
+                if (now->endOfWord)
+                {
                     wordlist.push_back(now->word);
                     --limit;
                 }
@@ -163,7 +169,8 @@ void Trie::wordSuggest(std::vector<Word> &wordlist, int limit)
 
 void Trie::serialize(TrieNode *root, std::ofstream &fout, char delimiter)
 {
-    if (root->endOfWord) {
+    if (root->endOfWord)
+    {
         fout << root->word.getKey() << delimiter;
         fout << root->word.getType() << delimiter;
         int defCount = root->word.getDefinitionCount();
@@ -172,9 +179,10 @@ void Trie::serialize(TrieNode *root, std::ofstream &fout, char delimiter)
             fout << root->word.getDefinition(i) << delimiter;
     }
 
-    for (int i = 0; i < ALPHABET; ++i) {
+    for (int i = 0; i < ALPHABET; ++i)
+    {
         if (root->children[i])
-        serialize(root->children[i], fout, delimiter);
+            serialize(root->children[i], fout, delimiter);
     }
 }
 
@@ -193,12 +201,14 @@ void Trie::deserialize(std::ifstream &fin, char delimiter)
         word.setType(tmp);
         std::getline(fin, tmp, delimiter);
         // std::cout << tmp << '\n';
-        if (tmp.empty()) {
+        if (tmp.empty())
+        {
             n = 0;
             break;
         }
-            n = std::stoi(tmp);
-        for (int i = 0; i < n; ++i) {
+        n = std::stoi(tmp);
+        for (int i = 0; i < n; ++i)
+        {
             std::getline(fin, tmp, delimiter);
             word.addDefinition(tmp);
         }
@@ -226,6 +236,7 @@ void Trie::deserialize(std::string path, char delimiter)
     fin.close();
 }
 
-void Trie::clear() {
+void Trie::clear()
+{
     clear(this->root);
 }
