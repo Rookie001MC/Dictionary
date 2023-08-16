@@ -6,6 +6,7 @@
 #include "frontend/pages/Word.h"
 #include "frontend/pages/Definition.h"
 #include "globalVars/globalVars.h"
+#include <iostream>
 #include "raylib.h"
 #include "raygui.h"
 

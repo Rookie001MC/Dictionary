@@ -14,6 +14,8 @@
 
 void prebuildDictionaries()
 {
+    std::cout << "\033[1;32mPrebuilding dictionaries...\033[0m\n";
+
     std::string dataDir = Resources::currentExeDir + "../data/";
     std::string dictDirs[] = {
         dataDir + "engeng.dict",
@@ -26,15 +28,13 @@ void prebuildDictionaries()
     Dictionary engEng = Dictionary(dictDirs[0], 0);
     Dictionary engVie = Dictionary(dictDirs[1], 1);
     Dictionary vieEng = Dictionary(dictDirs[2], 2);
-    Dictionary emoji = Dictionary(dictDirs[3], 3);
-    // Dictionary slang = Dictionary(dictDirs[4], 4);
-
-    std::cout << "Building tries...\n";
+    // Dictionary emoji = Dictionary(dictDirs[3], 3);
+     Dictionary slang = Dictionary(dictDirs[4], 3);
 
     auto start = std::chrono::high_resolution_clock::now();
     build(engEng, PrebuiltTriesList[0]);
     auto end = std::chrono::high_resolution_clock::now();
-    std::cout << "engEng: " << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count() << "ms\n";
+    std::cout << "engEng: \033[;32m" << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count() << "ms\033[0m\n";
 
 /*     start = std::chrono::high_resolution_clock::now();
     build(engVie, *PrebuiltTries::engVie);
@@ -44,22 +44,23 @@ void prebuildDictionaries()
     start = std::chrono::high_resolution_clock::now();
     build(vieEng, PrebuiltTriesList[2]);
     end = std::chrono::high_resolution_clock::now();
-    std::cout << "vieEng: " << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count() << "ms\n";
+    std::cout << "vieEng: \033[;32m" << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count() << "ms\033[0m\n";
 
 /*     start = std::chrono::high_resolution_clock::now();
     build(emoji, *PrebuiltTries::emoji);
     end = std::chrono::high_resolution_clock::now();
     std::cout << "emoji: " << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count() << "ms\n"; */
 
-/*     start = std::chrono::high_resolution_clock::now();
-    build(slang, *PrebuiltTries::slang);
+    start = std::chrono::high_resolution_clock::now();
+    build(slang, PrebuiltTriesList[3]);
     end = std::chrono::high_resolution_clock::now();
-    std::cout << "slang: " << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count() << "ms\n"; */
+    std::cout << "slang: \033[;32m" << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count() << "ms\033[0m\n";
 
 }
 
 void clearPrebuiltTries()
 {
+    std::cout << "\033[1;32mClearing prebuilt tries...\033[0m\n";
     for (auto& trie: PrebuiltTriesList)
     {
         trie.clear();
@@ -68,19 +69,30 @@ void clearPrebuiltTries()
 
 int main(int argc, const char *argv[])
 {
+    // Set the current executable directory.
+    // This is used to avoid directory problems when running the executable from different locations.
     Resources::currentExeDir = getExeDir(argv[0]);
+
+    // Prebuild dictionaries
     prebuildDictionaries();
+
+    // Start the frontend
+    std::cout << "\033[1;32mStarting Dictionary...\033[0m\n";
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "CS163 Project - The Dictionary of Everything?");
     SetTargetFPS(60);
-    loadResources(argv[0]);
+    loadResources();
     FrontendMain frontend;
     while(!WindowShouldClose())
     {
         frontend.start();
     }
+
+    // Unload all resources and close the window
     unloadResources();
     clearPrebuiltTries();
     CloseWindow();
+    std::cout << "\033[1;32mBye!\033[0m\n";
+
     return 0;
 }
 

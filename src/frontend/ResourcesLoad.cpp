@@ -4,9 +4,11 @@
 #include "dictionary/filePathHandler.h"
 #include "raylib.h"
 
-void loadResources(const char* exeDir)
+void loadResources()
 { 
-    std::string staticFolder = getExeDir(exeDir) + "../static/";
+    std::cout << "\033[1;32mLoading resources...\033[0m" << std::endl;
+
+    std::string staticFolder = Resources::currentExeDir + "../static/";
     std::string fontFolder   = staticFolder + "fonts/";
     std::string imageFolder  = staticFolder + "img/";
 
@@ -29,6 +31,7 @@ void loadResources(const char* exeDir)
 
 void unloadResources()
 {
+    std::cout << "\033[1;31mUnloading resources...\033[0m" << std::endl;
     UnloadFont(Resources::titleFont);
     UnloadFont(Resources::displayFontRegular);
     UnloadFont(Resources::displayFontBold);
