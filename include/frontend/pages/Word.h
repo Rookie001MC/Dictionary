@@ -13,7 +13,7 @@
 
 class WordPage {
     private:
-        int* modeChosen = new int{0};
+        Trie currentTrie = PrebuiltTriesList[*CurrentState::currentDict];
         bool SearchEdit = false;
         char SearchInput[101] = "";
         Rectangle rec_result[20];
@@ -34,9 +34,6 @@ class WordPage {
         short int selectedDictPage = 0;
 
         Word tmp;
-        Trie trie;
-        Dictionary dict = Dictionary("data/engeng.dict", 0);
-        bool isBuild = false;
 
     public:
         WordPage();
@@ -45,7 +42,6 @@ class WordPage {
         void resetBox();
         void addWord();
         ~WordPage() {
-            delete modeChosen;
         }
 
 };

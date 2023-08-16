@@ -4,13 +4,14 @@
 #include <iostream>
 #include <cstring>
 #include <vector>
+#include "globalVars/globalVars.h"
 #include "raylib.h"
 #include "frontend/styles.h"
 #include "dictionary/word.h"
-
+#include "dictionary/trie.h"
 class DefPage {
     private:
-        int* modeChosen = new int{0};
+        Trie currentTrie = PrebuiltTriesList[*CurrentState::currentDict];
         bool SearchEdit = false;
         char SearchInput[101] = "";
         Rectangle rec_dictionary{1075, 140, 155, 55};
@@ -37,7 +38,6 @@ class DefPage {
         void resetBox();
         void addDef();
         ~DefPage() {
-            delete modeChosen;
         }
 
 };

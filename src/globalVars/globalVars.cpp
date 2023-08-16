@@ -4,6 +4,7 @@
 
 Page CurrentState::currentPage = Page::DICT_WORD;
 Word CurrentState::currentWord;
+int* CurrentState::currentDict = new int{0};
 
 Font Resources::titleFont;
 
@@ -18,8 +19,4 @@ std::string Resources::currentExeDir;
 
 Texture2D Resources::headerImage;
 
-Trie* PrebuiltTries::engEng = new Trie;
-Trie* PrebuiltTries::engVie = new Trie;
-Trie* PrebuiltTries::vieEng = new Trie;
-Trie* PrebuiltTries::emoji = new Trie;
-Trie* PrebuiltTries::slang = new Trie;
+std::vector<Trie> PrebuiltTriesList (5);

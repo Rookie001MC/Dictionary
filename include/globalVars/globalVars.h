@@ -4,6 +4,7 @@
 #include "dictionary/trie.h"
 #include "raylib.h"
 #include "dictionary/word.h"
+#include <vector>
 
 enum Page
 {
@@ -32,17 +33,17 @@ struct CurrentState
 {
     static Page currentPage; // Current page (e.g. what search mode it's currently on, word search, definition search, etc.)
     static Word currentWord;
+    static int* currentDict;
 };
 
 struct PrebuiltTries
 {
-    static Trie* engEng;
-    static Trie* engVie;
-    static Trie* vieEng;
-    static Trie* emoji;
-    static Trie* slang;
+    static Trie engEng;
+    static Trie engVie;
+    static Trie vieEng;
+    static Trie emoji;
+    static Trie slang;
 };
 
-
-
+extern std::vector<Trie> PrebuiltTriesList;
 #endif
