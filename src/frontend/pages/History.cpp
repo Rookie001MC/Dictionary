@@ -32,6 +32,7 @@ void HistoryPage::draw()
 
     // Function switcher container
     DrawRectangleV(Vector2{0, 0}, Vector2{277, 720}, GetColor(SECONDARY_COLOR));
+    DrawRectangleLinesEx({0, 0, 277, 720}, 2, BLACK);
 
     // Draw the Dict Picker
     if (GuiDropdownBox(
