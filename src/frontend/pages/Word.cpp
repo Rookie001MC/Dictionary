@@ -81,20 +81,20 @@ void WordPage::draw()
 
         std::string wordsTmp = words[i].getKey() + ' ' + '(' + words[i].getType() + ')';
         Vector2 textPosition = {rec_result[i].x + 10, rec_result[i].y + 10};
-        DrawTextEx(Resources::wordFontBold, wordsTmp.c_str(), textPosition, 34, 2, BLACK);
+        DrawTextEx(Resources::wordFontBold, wordsTmp.c_str(), textPosition, WORD_FONT_SIZE, 2, BLACK);
 
         for (int j = 0; j < std::min(2, int(words[i].getDefinitionCount())); j++)
         {
             Vector2 definitionPosition = {rec_result[i].x + 14, rec_result[i].y + 35 * j + 50};
 
             // Measure the text to determine if it fits within the rectangle
-            Vector2 textSize = MeasureTextEx(Resources::wordFontBold, words[i].getDefinition(j).c_str(), 25, 1);
+            Vector2 textSize = MeasureTextEx(Resources::displayFontRegular, words[i].getDefinition(j).c_str(), TEXT_FONT_SIZE, 1);
 
             if (definitionPosition.x + textSize.x <= rec_result[i].x + rec_result[i].width &&
                 definitionPosition.y + textSize.y <= rec_result[i].y + rec_result[i].height)
             {
                 // Draw the text only if it fits within the rectangle
-                DrawTextEx(Resources::wordFontBold, words[i].getDefinition(j).c_str(), definitionPosition, 25, 1,
+                DrawTextEx(Resources::displayFontRegular, words[i].getDefinition(j).c_str(), definitionPosition, TEXT_FONT_SIZE, 1,
                            WHITE);
             }
         }

@@ -1,5 +1,6 @@
 #include "frontend/pages/SingleWordInfo.h"
 #include "frontend/pages/Word.h"
+#include "frontend/styles.h"
 #include "globalVars/globalVars.h"
 #include "raygui.h"
 #include "raylib.h"
@@ -46,12 +47,12 @@ void SingleWordInfo::draw()
     }
     std::string selectedTmp =
         CurrentState::currentWord.getKey() + ' ' + '(' + CurrentState::currentWord.getType() + ')';
-    DrawTextEx(Resources::wordFontBold, selectedTmp.c_str(), {105, 200}, 45, 2, BLACK);
+    DrawTextEx(Resources::wordFontBold, selectedTmp.c_str(), {105, 200}, WORD_FONT_SIZE, 2, BLACK);
 
     for (int i = 0; i < std::min(4, int(CurrentState::currentWord.getDefinitionCount())); ++i)
     {
-        DrawTextEx(Resources::wordFontBold, CurrentState::currentWord.getDefinition(i).c_str(),
-                   {105, (float)(270 + i * 65)}, 25, 2, BLACK);
+        DrawTextEx(Resources::displayFontRegular, CurrentState::currentWord.getDefinition(i).c_str(),
+                   {105, (float)(270 + i * 65)}, TEXT_FONT_SIZE, 2, BLACK);
     }
 
     if (GuiButton({700, 590, 135, 55}, "EDIT"))
