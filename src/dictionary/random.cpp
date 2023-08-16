@@ -22,12 +22,12 @@ void Random::setPath()
 }
 int Random::getMode()
 {
-    this->mode = mode;
+    return this->mode;
 }
 
 std::string Random::getPath()
 {
-    this->path = path;
+    return this->path;
 }
 int Random::getRandomNumber()
 {

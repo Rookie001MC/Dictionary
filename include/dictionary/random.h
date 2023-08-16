@@ -25,17 +25,17 @@ class Random
 
     Word viewRandomWord(); // Function for viewing a random word
 
-    // The structure of the vector<string>
-    // index 0: question (either a key word or a definition)
-    // index 1: correct answer (either a key word or a definition)
-    // index 2-3-4: wrong answer (either a key word or a definition)
+        // The structure of the vector<string> 
+        // index 0: question (either a key word or a definition)
+        // index 1: correct answer (either a key word or a definition)
+        // index 2-3-4: wrong answer (either a key word or a definition)
 
-    std::vector<std::string> random4DefinitionsAnd1KeyWord(); // Function returns a vector<string> containing
-                                                              // 4 definitions and 1 key word
-
-    std::vector<std::string> random4KeyWordsAnd1Def(); // Function return a vector<string> containing
-                                                       // 4 key words and 1 definition
-
+    std::vector<std::string> random4DefinitionsAnd1KeyWord();  // Function returns a vector<string> containing 
+                                                                   // 4 definitions and 1 key word
+            
+    std::vector<std::string> random4KeyWordsAnd1Def();      // Function returns a vector<string> containing
+                                                                // 4 key words and 1 definition
+                                                                
     // void quizWith4Definitions();
     // void quizWith4KeyWords();
 };
