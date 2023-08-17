@@ -8,7 +8,7 @@ void prebuildDictionaries()
     std::string dataDir               = Resources::currentExeDir + "../data/";
     std::vector<std::string> dictDirs = {
         dataDir + "engeng.dict", dataDir + "engvie.dict", dataDir + "vieeng.dict",
-        dataDir + "slang.dict",  dataDir + "emoji.dict",
+        dataDir + "emoji.dict",  dataDir + "slang.dict",
     };
 
     Dictionary engEng = Dictionary(dictDirs[0], 0);
@@ -38,7 +38,8 @@ void prebuildDictionaries()
     start = std::chrono::high_resolution_clock::now();
     build(emoji, PrebuiltTriesList[3]);
     end = std::chrono::high_resolution_clock::now();
-    std::cout << "emoji: " << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count() << "ms\n";
+    std::cout << "emoji: \033[;32m" << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count()
+              << "ms\033[0m\n";
     
 
     start = std::chrono::high_resolution_clock::now();
