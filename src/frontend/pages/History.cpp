@@ -59,9 +59,12 @@ void HistoryPage::update()
             Word tmp;
 
             currentTrie.search(wordStrings[i], tmp);
-            words.push_back(tmp);
+            if (tmp.getKey() != "")
+            {
+                words.push_back(tmp);
+                wordRects.push_back({307, float(225 + 130 * i), 921, 120});
+            }
 
-            wordRects.push_back({307, float(225 + 130 * i), 921, 120});
         }
     }
 
@@ -74,6 +77,22 @@ void HistoryPage::update()
                 CurrentState::currentWord = words[i];
                 CurrentState::currentPage = static_cast<Page>(5);
             }
+        }
+    }
+
+    if ((IsKeyPressed(KEY_UP) || GetMouseWheelMove() == 1) && wordRects[0].y < 200)
+    {
+        for (int i = 0; i < words.size(); i++)
+        {
+            wordRects[i].y += 40;
+        }
+    }
+
+    if ((IsKeyPressed(KEY_DOWN)) || GetMouseWheelMove() == -1 && wordRects[words.size() - 1].y + wordRects[words.size() - 1].height > 800)
+    {
+        for (int i = 0; i < words.size(); i++)
+        {
+            wordRects[i].y -= 40;
         }
     }
 }

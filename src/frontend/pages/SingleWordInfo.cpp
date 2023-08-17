@@ -92,12 +92,12 @@ void SingleWordInfo::editMenu()
         return;
     }
 
-    if (IsKeyPressed(KEY_UP) && edit_height[0] < 200)
+    if ((IsKeyPressed(KEY_UP) || GetMouseWheelMove() == 1)&& edit_height[0] < 200)
     {
         for (int i = 0; i <= eachDef.size(); i++)
             edit_height[i] += 40;
     }
-    if (IsKeyPressed(KEY_DOWN) && edit_height.back() >= 540)
+    if ((IsKeyPressed(KEY_DOWN) || GetMouseWheelMove() == -1) && edit_height.back() >= 540)
     {
         for (int i = 0; i <= eachDef.size(); i++)
             edit_height[i] -= 40;

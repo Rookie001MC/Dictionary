@@ -37,7 +37,7 @@ void WordPage::update()
         words.clear();
     }
 
-    if (IsKeyPressed(KEY_UP) && rec_result[0].y < 200)
+    if ((IsKeyPressed(KEY_UP) || GetMouseWheelMove() == 1) && rec_result[0].y < 200)
     {
         for (int i = 0; i < words.size(); ++i)
         {
@@ -45,7 +45,7 @@ void WordPage::update()
         }
     }
 
-    if (IsKeyPressed(KEY_DOWN) && rec_result[words.size() - 1].y >= 540)
+    if ((IsKeyPressed(KEY_DOWN) || GetMouseWheelMove() == -1)&& rec_result[words.size() - 1].y >= 540)
     {
         for (int i = 0; i < words.size(); ++i)
         {
