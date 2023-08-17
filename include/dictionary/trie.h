@@ -25,8 +25,7 @@ class Trie
     bool isEmptyNode(TrieNode *node);
     void serialize(TrieNode *root, std::ofstream &fout, char delimiter);
     void deserialize(std::ifstream &fin, char delimiter);
-    int getIndex(char c);
-    void wordSuggest(std::vector<Word> &wordlist, int limit);
+    void wordSuggest(std::vector<Word> &wordlist, int limit, std::queue<TrieNode*> &q);
 
   public:
     Trie();

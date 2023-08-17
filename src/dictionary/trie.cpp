@@ -118,7 +118,6 @@ void Trie::remove(std::string key)
     remove(root, key, 0);
 }
 
-std::queue<TrieNode *> q;
 // return vectors of possible words with given prefix
 // return empty vector of words if no word with given prefix found
 std::vector<Word> Trie::wordSuggest(std::string prefix)
@@ -138,12 +137,13 @@ std::vector<Word> Trie::wordSuggest(std::string prefix)
         wordlist.push_back(cur->word);
         --limit;
     }
+    std::queue<TrieNode *> q;
     q.push(cur);
-    wordSuggest(wordlist, limit);
+    wordSuggest(wordlist, limit, q);
     return wordlist;
 }
 
-void Trie::wordSuggest(std::vector<Word> &wordlist, int limit)
+void Trie::wordSuggest(std::vector<Word> &wordlist, int limit, std::queue<TrieNode*> &q)
 {
     while (!q.empty())
     {
