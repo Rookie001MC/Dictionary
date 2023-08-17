@@ -69,6 +69,12 @@ void extractSlang(Dictionary &dict, Trie &trie)
     while (!dict.eof())
     {
         Word word = dict.getWord();
+        Word cur;
+        if (trie.search(word.getKey(), cur)) {
+            cur.addDefinition(word.getDefinition(0));
+            trie.insert(cur);
+            continue;
+        }
         trie.insert(word);
     }
 }

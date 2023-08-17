@@ -10,7 +10,7 @@ int History::find(std::string key)
     return -1;
 }
 
-History::History(std::string path, bool mode = 0)
+History::History(std::string path, bool mode)
 {
     std::ifstream fin(path);
     while (!fin.eof())

@@ -1,4 +1,5 @@
 #include "dictionary/trie.h"
+#include <ctype.h>
 
 Trie::Trie()
 {
@@ -28,7 +29,7 @@ void Trie::insert(Word word)
     TrieNode *cur = root;
     for (int i = 0; i < word.getKey().length(); ++i)
     {
-        char c = word.getKey().at(i);
+        char c = tolower(word.getKey().at(i));
         if (!cur->children[c])
             cur->children[c] = createNode();
         cur = cur->children[c];
@@ -97,7 +98,7 @@ bool Trie::search(std::string key, Word &word)
     TrieNode *cur = root;
     for (int i = 0; i < key.length(); ++i)
     {
-        char c = key.at(i);
+        char c = tolower(key.at(i));
         if (cur->children[c] == nullptr)
             return false;
         else

@@ -270,19 +270,18 @@ Word Dictionary::getWordVieEng()
 
 Word Dictionary::getWordEmoji()
 {
-    std::string key, type = "emoji", definition;
-    fin >> key;
+    std::string key, type = "slang", definition;
+    getline(fin, key, '\t');
     getline(fin, definition, '\n');
-    Word word(key, definition, type);
+    Word word(key, type, definition);
     return word;
 }
 
 Word Dictionary::getWordSlang()
 {
     std::string key, type = "slang", definition;
-    fin >> key;
+    getline(fin, key, '\t');
     getline(fin, definition, '\n');
-    Word word(key, definition, type);
-    fin.ignore();
+    Word word(key, type, definition);
     return word;
 }

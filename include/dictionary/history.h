@@ -16,7 +16,7 @@ class History
     int find(std::string key);
 
   public:
-    History(std::string path, bool mode);
+    History(std::string path, bool mode = 0);
     ~History();
     std::vector<std::string> get();
     void add(std::string key);    // add to memory but does not modify the file
