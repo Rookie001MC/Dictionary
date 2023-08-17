@@ -23,11 +23,11 @@ void prebuildDictionaries()
     std::cout << "engEng: \033[;32m" << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count()
               << "ms\033[0m\n";
 
-    /*     start = std::chrono::high_resolution_clock::now();
-        build(engVie, *PrebuiltTries::engVie);
-        end = std::chrono::high_resolution_clock::now();
-        std::cout << "engVie: " << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count() << "ms\n";
-     */
+    start = std::chrono::high_resolution_clock::now();
+    build(engVie, PrebuiltTriesList[1]);
+    end = std::chrono::high_resolution_clock::now();
+    std::cout << "engVie: " << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count() << "ms\n";
+     
 
     start = std::chrono::high_resolution_clock::now();
     build(vieEng, PrebuiltTriesList[2]);
