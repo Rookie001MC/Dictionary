@@ -81,44 +81,7 @@ void HistoryPage::update()
 void HistoryPage::draw()
 {
     Vector2 mousePos = GetMousePosition();
-
-    // Function switcher container
-    DrawRectangleV(Vector2{0, 0}, Vector2{277, 720}, GetColor(SECONDARY_COLOR));
-    DrawRectangleLinesEx({0, 0, 277, 720}, 2, BLACK);
-
-    // Draw the Dict Picker
-    if (GuiDropdownBox(
-            dictChooserRect,
-            (dictLanguages[0] + "\n" + dictLanguages[1] + "\n" + dictLanguages[2] + "\n" + dictLanguages[3] + "\n" + dictLanguages[4]).c_str(),
-            CurrentState::currentDict, dictChooserActive))
-    {
-        dictChooserActive ^= 1;
-
-        // Update the history object
-        currentHistory = History(historyDirectories[*CurrentState::currentDict]);
-
-        // Update the trie object
-        currentTrie = PrebuiltTriesList[*CurrentState::currentDict];
-    }
-
-    // Draws the function switcher
-    for (int i = 0; i < dictPages.size(); i++)
-    {
-        if (i == selectedDictPage)
-        {
-            GuiSetStyle(BUTTON, BASE_COLOR_NORMAL, PRIMARY_COLOR_CONTAINER_HOVER);
-        }
-        else
-        {
-            GuiSetStyle(BUTTON, BASE_COLOR_NORMAL, PRIMARY_COLOR_CONTAINER);
-        }
-        if (GuiButton(dictPagesRects[i], dictPages[i].c_str()))
-        {
-            CurrentState::currentPage = static_cast<Page>(i);
-        }
-    }
-
-    // Draws each word
+   // Draws each word
     for (int i = 0; i < words.size(); i++)
     {
         std::string wordWithTypeTmp = words[i].getKey();
@@ -176,6 +139,43 @@ void HistoryPage::draw()
             }
         }
 
+    // Function switcher container
+    DrawRectangleV(Vector2{0, 0}, Vector2{277, 720}, GetColor(SECONDARY_COLOR));
+    DrawRectangleLinesEx({0, 0, 277, 720}, 2, BLACK);
+    // Draws the function switcher
+    for (int i = 0; i < dictPages.size(); i++)
+    {
+        if (i == selectedDictPage)
+        {
+            GuiSetStyle(BUTTON, BASE_COLOR_NORMAL, PRIMARY_COLOR_CONTAINER_HOVER);
+        }
+        else
+        {
+            GuiSetStyle(BUTTON, BASE_COLOR_NORMAL, PRIMARY_COLOR_CONTAINER);
+        }
+        if (GuiButton(dictPagesRects[i], dictPages[i].c_str()))
+        {
+            CurrentState::currentPage = static_cast<Page>(i);
+        }
+    }
+
+
+    // Draw the Dict Picker
+    if (GuiDropdownBox(
+            dictChooserRect,
+            (dictLanguages[0] + "\n" + dictLanguages[1] + "\n" + dictLanguages[2] + "\n" + dictLanguages[3] + "\n" + dictLanguages[4]).c_str(),
+            CurrentState::currentDict, dictChooserActive))
+    {
+        dictChooserActive ^= 1;
+
+        // Update the history object
+        currentHistory = History(historyDirectories[*CurrentState::currentDict]);
+
+        // Update the trie object
+        currentTrie = PrebuiltTriesList[*CurrentState::currentDict];
+    }
+
+ 
         // Draw the Search Box (disabled)
         DrawRectangle(305, 140, 420, 55, BG_COLOR_RGB);
     }
