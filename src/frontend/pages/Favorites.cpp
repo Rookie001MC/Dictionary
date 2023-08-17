@@ -37,7 +37,7 @@ void FavoritesPage::draw()
     // Draw the Dict Picker
     if (GuiDropdownBox(
             dictChooserRect,
-            (dictLanguages[0] + "\n" + dictLanguages[1] + "\n" + dictLanguages[2] + "\n" + dictLanguages[3]).c_str(),
+            (dictLanguages[0] + "\n" + dictLanguages[1] + "\n" + dictLanguages[2] + "\n" + dictLanguages[3] + "\n" + dictLanguages[4]).c_str(),
             currentDict, dictChooserActive))
     {
         dictChooserActive ^= 1;
