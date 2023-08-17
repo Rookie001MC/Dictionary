@@ -14,40 +14,40 @@
 #include <chrono>
 #include <iostream>
 
-// int main(int argc, const char *argv[])
-// {
-//     // Set the current executable directory.
-//     // This is used to avoid directory problems when running the executable from different locations.
-//     Resources::currentExeDir = getExeDir(argv[0]);
+int main(int argc, const char *argv[])
+{
+    // Set the current executable directory.
+    // This is used to avoid directory problems when running the executable from different locations.
+    Resources::currentExeDir = getExeDir(argv[0]);
 
-//     // Prebuild dictionaries
-//     prebuildDictionaries();
+    // Prebuild dictionaries
+    prebuildDictionaries();
 
-//     // Start the frontend
-//     std::cout << "\033[1;32mStarting Dictionary...\033[0m\n";
-//     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "CS163 Project - The Dictionary of Everything?");
-//     SetTargetFPS(60);
-//     loadResources();
-//     FrontendMain frontend;
-//     while (!WindowShouldClose())
-//     {
-//         frontend.start();
-//     }
+    // Start the frontend
+    std::cout << "\033[1;32mStarting Dictionary...\033[0m\n";
+    InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "CS163 Project - The Dictionary of Everything?");
+    SetTargetFPS(60);
+    loadResources();
+    FrontendMain frontend;
+    while (!WindowShouldClose())
+    {
+        frontend.start();
+    }
 
-//     // Unload all resources and close the window
-//     unloadResources();
-//     clearPrebuiltTries();
-//     CloseWindow();
-//     std::cout << "\033[1;31mBye!\033[0m\n";
+    // Unload all resources and close the window
+    unloadResources();
+    clearPrebuiltTries();
+    CloseWindow();
+    std::cout << "\033[1;31mBye!\033[0m\n";
 
-//     return 0;
-// }
+    return 0;
+}
 
 // keep this for debugging
 // int main(int argc, const char *argv[])
 // {
 //   //  auto start = std::chrono::high_resolution_clock::now();
-//     Dictionary dict(Resources::currentExeDir +"data/engeng.dict", 0);
+//     Dictionary dict(Resources::currentExeDir +"../data/engeng.dict", 0);
 //     Trie trie;
 //     build(dict, trie);
 //     // For random functions:
@@ -65,10 +65,10 @@
 //     std::vector<Word> wordlist = trie.wordSuggest("cas");
 //     for (int i = 0; i < wordlist.size(); ++i)
 //         std::cout << wordlist.at(i).getKey() << ' ' << wordlist.at(i).getType() << '\n';
-//     wordlist.clear();
-//     wordlist = trie.wordSuggest("ma");
-//     for (int i = 0; i < wordlist.size(); ++i)
-//         std::cout << wordlist.at(i).getKey() << ' ' << wordlist.at(i).getType() << '\n';
+//     // wordlist.clear();
+//     // wordlist = trie.wordSuggest("ma");
+//     // for (int i = 0; i < wordlist.size(); ++i)
+//     //     std::cout << wordlist.at(i).getKey() << ' ' << wordlist.at(i).getType() << '\n';
 //     //     std::vector<std::string> defs = wordlist.at(i).getDefinitions();
 //     //     for (int i = 0; i < defs.size(); ++i)
 //     //         std::cout << defs.at(i) << '\n';
