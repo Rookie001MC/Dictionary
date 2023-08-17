@@ -15,7 +15,7 @@ HistoryPage::HistoryPage()
 
     for (int i = 0; i < words.size(); i++)
     {
-        wordRects.push_back({300, float(220 + 100 * i), 949, 87});
+            wordRects.push_back({307, float(225 + 130 * i), 921, 120});
     }
 }
 // Truncate the text and add ellipsis if it exceeds the specified width
@@ -59,7 +59,6 @@ void HistoryPage::update()
             Word tmp;
 
             currentTrie.search(wordStrings[i], tmp);
-
             words.push_back(tmp);
 
             wordRects.push_back({307, float(225 + 130 * i), 921, 120});
@@ -122,7 +121,6 @@ void HistoryPage::draw()
     // Draws each word
     for (int i = 0; i < words.size(); i++)
     {
-
         std::string wordWithTypeTmp = words[i].getKey();
         if(!words[i].getType().empty())
         {
