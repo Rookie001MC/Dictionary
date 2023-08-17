@@ -1,4 +1,5 @@
 #include "dictionary/prebuildTries.h"
+#include "globalVars/globalVars.h"
 
 void prebuildDictionaries()
 {
@@ -13,8 +14,8 @@ void prebuildDictionaries()
     Dictionary engEng = Dictionary(dictDirs[0], 0);
     Dictionary engVie = Dictionary(dictDirs[1], 1);
     Dictionary vieEng = Dictionary(dictDirs[2], 2);
-    // Dictionary emoji = Dictionary(dictDirs[3], 3);
-    Dictionary slang = Dictionary(dictDirs[4], 3);
+    Dictionary emoji = Dictionary(dictDirs[3], 3);
+    Dictionary slang = Dictionary(dictDirs[4], 4);
 
     auto start = std::chrono::high_resolution_clock::now();
     build(engEng, PrebuiltTriesList[0]);
@@ -34,14 +35,14 @@ void prebuildDictionaries()
     std::cout << "vieEng: \033[;32m" << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count()
               << "ms\033[0m\n";
 
-    /*     start = std::chrono::high_resolution_clock::now();
-        build(emoji, *PrebuiltTries::emoji);
-        end = std::chrono::high_resolution_clock::now();
-        std::cout << "emoji: " << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count() << "ms\n";
-     */
+    start = std::chrono::high_resolution_clock::now();
+    build(emoji, PrebuiltTriesList[3]);
+    end = std::chrono::high_resolution_clock::now();
+    std::cout << "emoji: " << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count() << "ms\n";
+    
 
     start = std::chrono::high_resolution_clock::now();
-    build(slang, PrebuiltTriesList[3]);
+    build(slang, PrebuiltTriesList[4]);
     end = std::chrono::high_resolution_clock::now();
     std::cout << "slang: \033[;32m" << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count()
               << "ms\033[0m\n";
