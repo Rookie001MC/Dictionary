@@ -213,7 +213,7 @@ void WordPage::draw()
 
     if (SearchEdit)
     {
-        if (GetKeyPressed() && !IsKeyPressed(KEY_UP) && !IsKeyPressed(KEY_DOWN))
+        if (GetKeyPressed() && !(IsKeyPressed(KEY_UP) || IsKeyPressed(KEY_DOWN)))
         {
             words.clear();
             words = currentTrie.wordSuggest(SearchInput);
