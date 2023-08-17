@@ -38,6 +38,7 @@ class WordPage
 
   public:
     WordPage();
+    std::string TextEllipsis(const std::string& text, const Font& font, float maxWidth);
     void draw();
     void update();
     void resetBox();

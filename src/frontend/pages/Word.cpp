@@ -54,6 +54,32 @@ void WordPage::update()
     }
 }
 
+// Truncate the text and add ellipsis if it exceeds the specified width
+std::string WordPage::TextEllipsis(const std::string &text, const Font &font, float maxWidth)
+{
+    std::string ellipsis      = "...";
+    std::string truncatedText = text;
+
+    Vector2 textSize = MeasureTextEx(font, text.c_str(), TEXT_FONT_SIZE, 1);
+
+    if (textSize.x > maxWidth)
+    {
+        // Subtract the ellipsis width from the available width
+        maxWidth -= MeasureTextEx(font, ellipsis.c_str(), TEXT_FONT_SIZE, 1).x;
+
+        while (MeasureTextEx(font, truncatedText.c_str(), TEXT_FONT_SIZE, 1).x > maxWidth && !truncatedText.empty())
+        {
+            // Remove characters from the end until the text fits within maxWidth
+            truncatedText.pop_back();
+        }
+
+        // Add ellipsis
+        truncatedText += ellipsis;
+    }
+
+    return truncatedText;
+}
+
 void WordPage::draw()
 {
     if (confirmResetBox)
@@ -79,7 +105,10 @@ void WordPage::draw()
             DrawRectangleGradientV(rec_result[i].x, rec_result[i].y, rec_result[i].width, rec_result[i].height,
                                    GetColor(RESULT_COLOR_CONTAINER_HOVER), GetColor(RESULT_COLOR_CONTAINER_HOVER));
 
-        std::string wordsTmp = words[i].getKey() + ' ' + '(' + words[i].getType() + ')';
+        std::string wordsTmp = words[i].getKey();
+        if (!words[i].getType().empty())
+            wordsTmp += " (" + words[i].getType() + ")";
+
         Vector2 textPosition = {rec_result[i].x + 10, rec_result[i].y + 10};
         DrawTextEx(Resources::displayFontBold, wordsTmp.c_str(), textPosition, WORD_FONT_SIZE, 2, BLACK);
 
@@ -88,13 +117,27 @@ void WordPage::draw()
             Vector2 definitionPosition = {rec_result[i].x + 14, rec_result[i].y + 35 * j + 50};
 
             // Measure the text to determine if it fits within the rectangle
-            Vector2 textSize = MeasureTextEx(Resources::displayFontRegular, words[i].getDefinition(j).c_str(), TEXT_FONT_SIZE, 1);
+            Vector2 textSize =
+                MeasureTextEx(Resources::displayFontRegular, words[i].getDefinition(j).c_str(), TEXT_FONT_SIZE, 1);
 
             if (definitionPosition.x + textSize.x <= rec_result[i].x + rec_result[i].width &&
                 definitionPosition.y + textSize.y <= rec_result[i].y + rec_result[i].height)
             {
-                // Draw the text only if it fits within the rectangle
-                DrawTextEx(Resources::displayFontRegular, words[i].getDefinition(j).c_str(), definitionPosition, TEXT_FONT_SIZE, 1,
+                // Draw the text if it fits within the rectangle
+                DrawTextEx(Resources::displayFontRegular, words[i].getDefinition(j).c_str(), definitionPosition,
+                           TEXT_FONT_SIZE, 1, WHITE);
+            }
+            else
+            {
+                // Calculate available width for truncated text (consider space for ellipsis)
+                float availableWidth = rec_result[i].width - 16 - (definitionPosition.x - rec_result[i].x);
+
+                // Truncate the text to fit within the available width and add ellipsis
+                std::string truncatedText =
+                    TextEllipsis(words[i].getDefinition(j).c_str(), Resources::displayFontRegular, availableWidth);
+
+                // Draw the truncated text with ellipsis
+                DrawTextEx(Resources::displayFontRegular, truncatedText.c_str(), definitionPosition, TEXT_FONT_SIZE, 1,
                            WHITE);
             }
         }
@@ -144,15 +187,15 @@ void WordPage::draw()
     }
 
     // Draw the Dict Picker
-    if (GuiDropdownBox(
-            rec_dictionary,
-            (dictLanguages[0] + "\n" + dictLanguages[1] + "\n" + dictLanguages[2] + "\n" + dictLanguages[3]).c_str(),
-            CurrentState::currentDict, dropDownBox))
+    if (GuiDropdownBox(rec_dictionary,
+                       (dictLanguages[0] + "\n" + dictLanguages[1] + "\n" + dictLanguages[2] + "\n" + dictLanguages[3] +
+                        "\n" + dictLanguages[4])
+                           .c_str(),
+                       CurrentState::currentDict, dropDownBox))
     {
         dropDownBox ^= 1;
         currentTrie = PrebuiltTriesList[*CurrentState::currentDict];
         words.clear();
-        SearchInput[0]  = '\0';
         confirmResetBox = false;
     }
 
@@ -170,15 +213,10 @@ void WordPage::draw()
 
     if (SearchEdit)
     {
-        if (GetKeyPressed() && !IsKeyPressed(KEY_UP) && !IsKeyPressed(KEY_DOWN))
+        if (GetKeyPressed() && !(IsKeyPressed(KEY_UP) || IsKeyPressed(KEY_DOWN)))
         {
-            if (currentTrie.search(SearchInput, tmp))
-            {
-                words.clear();
-                words = currentTrie.wordSuggest(SearchInput);
-            }
-            else
-                words.clear();
+            words.clear();
+            words = currentTrie.wordSuggest(SearchInput);
         }
     }
 }

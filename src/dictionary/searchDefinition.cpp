@@ -1,5 +1,16 @@
 #include "dictionary/searchDefinition.h"
 
+RelevantWord::RelevantWord(Word word, double relevance)
+{
+    this->word      = word;
+    this->relevance = relevance;
+}
+
+double RelevantWord::getRelevance()
+{
+    return this->relevance;
+}
+
 std::string preprocessText(std::string text)
 {
     std::regex pattern("[[:punct:]]");
@@ -46,11 +57,12 @@ void lineHash(std::vector<std::string> &lines)
     }
 }
 
-bool comparingRelevance(RelevantWord &a, RelevantWord &b)
+bool comparingRelevance(RelevantWord a, RelevantWord b)
 {
-    return a.relevance > b.relevance;
+    return a.getRelevance() > b.getRelevance();
 }
-std::vector<RelevantWord> searchDefinition(std::string definitionFromUser)
+
+std::vector<RelevantWord> RelevantWord::searchDefinition(std::string definitionFromUser)
 {
     std::vector<std::string> lines;
     definitionFromUser = preprocessText(definitionFromUser);
@@ -94,7 +106,8 @@ std::vector<RelevantWord> searchDefinition(std::string definitionFromUser)
                 index = nextAtPos;
                 word.addDefinition(def);
             }
-            words.push_back(RelevantWord(word, percent));
+            RelevantWord relWord{word, percent};
+            words.push_back(relWord);
         }
         if (words.size() == wordLimit)
             break;
