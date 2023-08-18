@@ -1,5 +1,6 @@
 #include "dictionary/trie.h"
 #include <ctype.h>
+#include <algorithm>
 
 Trie::Trie()
 {
@@ -124,6 +125,7 @@ std::vector<Word> Trie::wordSuggest(std::string prefix)
 {
     TrieNode *cur = root;
     std::vector<Word> wordlist;
+    std::transform(prefix.begin(), prefix.end(), prefix.begin(), ::tolower);
     for (int i = 0; i < prefix.size(); ++i)
     {
         TrieNode *next = cur->children[prefix.at(i)];
