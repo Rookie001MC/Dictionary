@@ -62,56 +62,55 @@ bool comparingRelevance(RelevantWord a, RelevantWord b)
     return a.getRelevance() > b.getRelevance();
 }
 
-std::vector<RelevantWord> RelevantWord::searchDefinition(std::string definitionFromUser)
+std::vector<RelevantWord> RelevantWord::searchDefinition(std::string definitionFromUser, Trie &trie)
 {
-    std::vector<std::string> lines;
-    definitionFromUser = preprocessText(definitionFromUser);
-    lineHash(lines);
+    // definitionFromUser = preprocessText(definitionFromUser);
     
     std::ifstream read;
+    std::ifstream file;
     read.open("../data/engengRandom.txt"); 
     std::string line;
+    std::string processed;
     std::string def = "";
     std::vector<RelevantWord> words;
     int wordLimit = 20;
-    int numOfLine = 0;
 
-    while (std::getline(read, line))
+    while (std::getline(read, line) && std::getline(file, processed))
     {
-        ++numOfLine;
         Word word;
         std::unordered_set<std::string> wordCounts;
-        std::string processed = lines[numOfLine - 1]; 
         wordHashing(processed, wordCounts);
         double percent = calculateRelevance(definitionFromUser, wordCounts);
 
         if (percent >= 0.5)
         {
             std::string keyWord = line.substr(0, line.find('#') - 1); // get the word
-
-            int startType    = line.find('#') + 1;
-            int endType      = line.find_first_of('@') - 2;
-            std::string type = line.substr(startType, endType - startType + 1);
-
-            word.setKey(keyWord);
-            word.setType(type);
-
-            int index = endType + 2;
-            while (index < line.length())
+            if (trie.search(keyWord, word))
             {
-                int nextAtPos = line.find('@', index + 1);
-                if (nextAtPos == std::string::npos)
-                    break;
-                def   = line.substr(index + 1, nextAtPos - index - 2);
-                index = nextAtPos;
-                word.addDefinition(def);
+                RelevantWord relWord{word, percent};
+                words.push_back(relWord);
             }
-            RelevantWord relWord{word, percent};
-            words.push_back(relWord);
+            // int startType    = line.find('#') + 1;
+            // int endType      = line.find_first_of('@') - 2;
+            // std::string type = line.substr(startType, endType - startType + 1);
+
+            // word.setKey(keyWord);
+            // word.setType(type);
+
+            // int index = endType + 2;
+            // while (index < line.length())
+            // {
+            //     int nextAtPos = line.find('@', index + 1);
+            //     if (nextAtPos == std::string::npos)
+            //         break;
+            //     def   = line.substr(index + 1, nextAtPos - index - 2);
+            //     index = nextAtPos;
+            //     word.addDefinition(def);
+            // }
         }
         if (words.size() == wordLimit)
             break;
     }
-    std::sort(words.begin(), words.end(), comparingRelevance);
+    // std::sort(words.begin(), words.end(), comparingRelevance);
     return words;
 }

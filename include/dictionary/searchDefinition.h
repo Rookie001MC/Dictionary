@@ -2,6 +2,7 @@
 #define BACKEND_SEARCH_DEF_H
 
 #include "word.h"
+#include "trie.h"
 #include <fstream>
 #include <iostream>
 #include <regex>
@@ -16,7 +17,7 @@ class RelevantWord
     double relevance;
   public:
     RelevantWord(Word word, double relevance);
-    std::vector<RelevantWord> searchDefinition(std::string definitionFromUser);
+    std::vector<RelevantWord> searchDefinition(std::string definitionFromUser, Trie &trie);
     double getRelevance();
     
 };
