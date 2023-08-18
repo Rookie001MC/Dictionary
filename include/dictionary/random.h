@@ -11,13 +11,10 @@ class Random
 {
   private:
     Dictionary *dictionary = nullptr; // dictionary
-    int mode;                         // mode of dataset
     std::string path;                 // path to dataset
   public:
     void setDictionary(Dictionary *dict);
-    void setMode(Dictionary *dict);
-    int getMode();
-    void setPath();
+    void setPath(int mode);
     std::string getPath();
     // Helper function
     int getRandomNumber();

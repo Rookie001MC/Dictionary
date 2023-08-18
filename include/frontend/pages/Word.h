@@ -4,6 +4,7 @@
 #include "dictionary/build.h"
 #include "dictionary/trie.h"
 #include "dictionary/word.h"
+#include "dictionary/random.h"
 #include "frontend/styles.h"
 #include "globalVars/globalVars.h"
 #include "raylib.h"
@@ -23,10 +24,12 @@ class WordPage
     Rectangle rec_random{915, 140, 135, 55};
     Rectangle rec_search{305, 140, 420, 55};
 
-    bool dropDownBox = false, confirmResetBox = false, addWordButton = false;
+    bool dropDownBox = false, confirmResetBox = false, addWordButton = false, randomWord = false;
     std::string text;
 
     std::vector<Word> words;
+    Word randomWord;
+    Random r;
     std::vector<std::string> dictLanguages = {"ENG-ENG", "ENG-VIE", "VIE-ENG", "EMOJI", "SLANG"};
 
     Rectangle dictPagesRects[5];
