@@ -16,6 +16,7 @@ class WordPage
 {
   private:
     Trie currentTrie      = PrebuiltTriesList[*CurrentState::currentDict];
+    Dictionary* currentDictionary = new Dictionary(dictDirs[*CurrentState::currentDict], *CurrentState::currentDict);
     bool SearchEdit       = false;
     char SearchInput[101] = "";
     Rectangle rec_result[20];
@@ -24,7 +25,7 @@ class WordPage
     Rectangle rec_random{915, 140, 135, 55};
     Rectangle rec_search{305, 140, 420, 55};
 
-    bool dropDownBox = false, confirmResetBox = false, addWordButton = false, randomWord = false;
+    bool dropDownBox = false, confirmResetBox = false, addWordButton = false;
     std::string text;
 
     std::vector<Word> words;
