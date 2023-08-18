@@ -157,7 +157,7 @@ void HistoryPage::draw()
                            TEXT_COLOR_RGB);
             }
         }
-
+    }
     // Function switcher container
     DrawRectangleV(Vector2{0, 0}, Vector2{277, 720}, GetColor(SECONDARY_COLOR));
     DrawRectangleLinesEx({0, 0, 277, 720}, 2, BLACK);
@@ -197,5 +197,5 @@ void HistoryPage::draw()
  
         // Draw the Search Box (disabled)
         DrawRectangle(305, 140, 420, 55, BG_COLOR_RGB);
-    }
+    
 }

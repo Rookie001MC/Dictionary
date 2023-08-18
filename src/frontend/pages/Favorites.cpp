@@ -156,7 +156,7 @@ void FavoritesPage::draw()
             }
         }
 
-
+    }
 
     // Function switcher container
     DrawRectangleV(Vector2{0, 0}, Vector2{277, 720}, GetColor(SECONDARY_COLOR));
@@ -196,5 +196,5 @@ void FavoritesPage::draw()
 
         // Draw the Search Box (disabled)
         DrawRectangle(305, 140, 420, 55, BG_COLOR_RGB);
-    }
+    
 }
