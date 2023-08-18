@@ -14,7 +14,7 @@ class Random
     std::string path;                 // path to dataset
   public:
     void setDictionary(Dictionary *dict);
-    void setPath(int mode);
+    void setPath();
     std::string getPath();
     // Helper function
     int getRandomNumber();
@@ -27,10 +27,10 @@ class Random
         // index 1: correct answer (either a key word or a definition)
         // index 2-3-4: wrong answer (either a key word or a definition)
 
-    std::vector<std::string> random4DefinitionsAnd1KeyWord();  // Function returns a vector<string> containing 
+    std::vector<std::string> guessDefinition();  // Function returns a vector<string> containing 
                                                                    // 4 definitions and 1 key word
             
-    std::vector<std::string> random4KeyWordsAnd1Def();      // Function returns a vector<string> containing
+    std::vector<std::string> guessKeyWord();      // Function returns a vector<string> containing
                                                                 // 4 key words and 1 definition
                                                                 
     // void quizWith4Definitions();

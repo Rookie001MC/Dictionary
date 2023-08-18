@@ -5,15 +5,17 @@ void Random::setDictionary(Dictionary *dict)
     this->dictionary = dict;
 }
 
-void Random::setPath(int mode)
+void Random::setPath()
 {
-    //int mode = dictionary->getDictionaryType();
+    int mode = dictionary->getDictionaryType();
     switch (mode)
     {
         case 0:
             path = "../data/engengRandom.txt";
             break;
             // More to come
+        default:
+            break;
     }
 }
 
@@ -92,7 +94,7 @@ std::string get1stDefinitionFromText(const std::string &line)
     return definition;
 }
 
-std::vector<std::string> Random::random4DefinitionsAnd1KeyWord()
+std::vector<std::string> Random::guessDefinition()
 {
     std::vector<std::string> quiz;
     // Random the line that contains the correct keyword and definition
@@ -160,7 +162,7 @@ std::string getKeyWordFromText(const std::string &line)
     keyWord   = line.substr(start, end - start + 1);
     return keyWord;
 }
-std::vector<std::string> Random::random4KeyWordsAnd1Def()
+std::vector<std::string> Random::guessKeyWord()
 {
     // Random the line that contains the correct keyword and definition
     int randomCorrectAns = getRandomNumber();
