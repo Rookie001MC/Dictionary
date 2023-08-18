@@ -163,13 +163,18 @@ void WordPage::draw()
 
     if (GuiButton(rec_random, "RANDOM"))
     {
-        r.setPath(*CurrentState::currentDict);
+        for (int i = 0; i < sizeof(SearchInput); ++i) {
+            SearchInput[i] = '\0';
+        }
+
+        r.setDictionary(currentDictionary);
+        r.setPath();
         randomWord = r.viewRandomWord();
         for (int i = 0; i < randomWord.getKey().length(); ++i) {
             SearchInput[i] = randomWord.getKey()[i];
         }
         words.clear();
-        words.push_back(SearchInput);
+        words.push_back(randomWord);
     }
 
     // Function switcher container
@@ -202,6 +207,7 @@ void WordPage::draw()
     {
         dropDownBox ^= 1;
         currentTrie = PrebuiltTriesList[*CurrentState::currentDict];
+        currentDictionary = new Dictionary(dictLanguages[*CurrentState::currentDict], *CurrentState::currentDict);
         words.clear();
         confirmResetBox = false;
     }
