@@ -5,9 +5,9 @@ void Random::setDictionary(Dictionary *dict)
     this->dictionary = dict;
 }
 
-void Random::setPath()
+void Random::setPath(int mode)
 {
-    int mode = dictionary->getDictionaryType();
+    //int mode = dictionary->getDictionaryType();
     switch (mode)
     {
         case 0:
@@ -38,6 +38,7 @@ int Random::getRandomNumber()
     std::uniform_int_distribution<> dis(1, totalWords);
     return dis(gen);
 }
+
 Word Random::viewRandomWord()
 {
     std::ifstream fin(getPath());

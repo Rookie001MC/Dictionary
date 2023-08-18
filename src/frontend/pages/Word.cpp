@@ -163,6 +163,13 @@ void WordPage::draw()
 
     if (GuiButton(rec_random, "RANDOM"))
     {
+        r.setPath(*CurrentState::currentDict);
+        randomWord = r.viewRandomWord();
+        for (int i = 0; i < randomWord.getKey().length(); ++i) {
+            SearchInput[i] = randomWord.getKey()[i];
+        }
+        words.clear();
+        words.push_back(SearchInput);
     }
 
     // Function switcher container
