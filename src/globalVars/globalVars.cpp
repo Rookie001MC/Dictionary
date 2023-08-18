@@ -1,5 +1,12 @@
 #include "globalVars/globalVars.h"
 
+std::string dataDir               = Resources::currentExeDir + "../data/";
+std::vector<std::string> dictDirs = {
+    dataDir + "engeng.dict", dataDir + "engvie.dict", dataDir + "vieeng.dict",
+    dataDir + "emoji.dict",  dataDir + "slang.dict",
+};
+
+
 Page CurrentState::currentPage = Page::DICT_WORD;
 Word CurrentState::currentWord;
 int *CurrentState::currentDict = new int{0};
