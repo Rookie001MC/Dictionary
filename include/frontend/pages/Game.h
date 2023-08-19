@@ -24,8 +24,9 @@ class GamePage
     int mode = 0;
     std::string ans = "";
     bool correctAns = false, start = false, choosen = false;
-    int ansOption = 0;
     bool isBreakNewLines = false;
+    int choice = -1, check = 0;
+    Color button_ans[5];
 
     int COUNTDOWN_DURATION = 15;
     int cnt = COUNTDOWN_DURATION;

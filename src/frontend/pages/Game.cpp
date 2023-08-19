@@ -167,7 +167,12 @@ void GamePage::drawTimer()
 void GamePage::playGame()
 {
     drawQuestion();
-    if (!isBreakNewLines) buildAnswer();
+
+    // get the answer
+    choice = r.getChoice();
+
+    if (!isBreakNewLines)
+        buildAnswer();
     if (cnt > 0 && !choosen)
         drawTimer();
     else if (cnt > 0 && choosen)
@@ -182,10 +187,10 @@ void GamePage::playGame()
     if (GuiButton({1090, 222, 90, 45}, "Next"))
     {
         isBreakNewLines = false;
-        pressed   = false;
-        choosen   = false;
-        ansOption = 0;
-        cnt       = COUNTDOWN_DURATION + 1;
+        pressed         = false;
+        choosen         = false;
+        cnt             = COUNTDOWN_DURATION + 1;
+        int choice = -1, check = 0;
         if (mode == 1)
         {
             quiz.clear();
@@ -202,44 +207,89 @@ void GamePage::playGame()
     if (GuiButton({10, 130, 25, 27}, "X"))
     {
         isBreakNewLines = false;
-        cnt       = COUNTDOWN_DURATION + 1;
-        choosen   = false;
-        pressed   = false;
-        ansOption = 0;
-        gameQuiz  = false;
+        cnt             = COUNTDOWN_DURATION + 1;
+        choosen         = false;
+        pressed         = false;
+        int choice = -1, check = 0;
+        gameQuiz = false;
         quiz.clear();
         mode = 0;
     }
 
     checkAns();
 
+    for (int i = 1; i <= 4; ++i)
+    {
+        if (i == choice)
+        {
+            button_ans[i] = GetColor(CORRECT_ANS);
+        }
+        else
+        {
+            button_ans[i] = GetColor(WRONG_ANS);
+        }
+    }
+
     if (pressed)
     {
-        DrawRectangleV({1, 269}, {637, 223}, GetColor(CORRECT_ANS));
-        DrawTextEx(Resources::displayFontBold, quiz[1].c_str(), {31, 330}, 25, 1, WHITE);
-
-        if (ansOption == 4)
+        if (check == 5)
         {
             DrawTextEx(Resources::displayFontBold, ans.c_str(), {590, 230}, 30, 1, PURPLE);
         }
-        else
+        else {
             DrawTextEx(Resources::displayFontBold, ans.c_str(), {550, 230}, 30, 1,
                        correctAns ? GetColor(CORRECT_ANS) : RED);
+        }
 
-        switch (ansOption)
+        if (check != choice)
+        {
+            switch (choice)
+            {
+                case 1: {
+                    DrawRectangleV({1, 269}, {637, 223}, button_ans[1]);
+                    DrawTextEx(Resources::displayFontBold, quiz[1].c_str(), {31, 330}, 25, 1, WHITE);
+                    break;
+                }
+                case 2: {
+                    DrawRectangleV({643, 269}, {637, 223}, button_ans[2]);
+                    DrawTextEx(Resources::displayFontBold, quiz[2].c_str(), {673, 330}, 25, 1, WHITE);
+                    break;
+                }
+                case 3: {
+                    DrawRectangleV({1, 495}, {637, 223}, button_ans[3]);
+                    DrawTextEx(Resources::displayFontBold, quiz[3].c_str(), {31, 556}, 25, 1, WHITE);
+                    break;
+                }
+                case 4: {
+                    DrawRectangleV({643, 495}, {637, 223}, button_ans[4]);
+                    DrawTextEx(Resources::displayFontBold, quiz[4].c_str(), {673, 556}, 25, 1, WHITE);
+                    break;
+                }
+                default: {
+                    break;
+                }
+            }
+        }
+
+        switch (check)
         {
             case 1: {
-                DrawRectangleV({643, 269}, {637, 223}, GetColor(WRONG_ANS));
-                DrawTextEx(Resources::displayFontBold, quiz[2].c_str(), {673, 330}, 25, 1, WHITE);
+                DrawRectangleV({1, 269}, {637, 223}, button_ans[1]);
+                DrawTextEx(Resources::displayFontBold, quiz[1].c_str(), {31, 330}, 25, 1, WHITE);
                 break;
             }
             case 2: {
-                DrawRectangleV({1, 495}, {637, 223}, GetColor(WRONG_ANS));
-                DrawTextEx(Resources::displayFontBold, quiz[3].c_str(), {31, 556}, 25, 1, WHITE);
+                DrawRectangleV({643, 269}, {637, 223}, button_ans[2]);
+                DrawTextEx(Resources::displayFontBold, quiz[2].c_str(), {673, 330}, 25, 1, WHITE);
                 break;
             }
             case 3: {
-                DrawRectangleV({643, 495}, {637, 223}, GetColor(WRONG_ANS));
+                DrawRectangleV({1, 495}, {637, 223}, button_ans[3]);
+                DrawTextEx(Resources::displayFontBold, quiz[3].c_str(), {31, 556}, 25, 1, WHITE);
+                break;
+            }
+            case 4: {
+                DrawRectangleV({643, 495}, {637, 223}, button_ans[4]);
                 DrawTextEx(Resources::displayFontBold, quiz[4].c_str(), {673, 556}, 25, 1, WHITE);
                 break;
             }
@@ -288,37 +338,41 @@ void GamePage::checkAns()
         pressed    = true;
         correctAns = true;
         ans        = "TIME OUT";
-        ansOption  = 4;
+        check  = 5;
     }
     if (IsMouseButtonPressed(0) && !choosen)
     {
         choosen = true;
         if (CheckCollisionPointRec(GetMousePosition(), {1, 269, 637, 223}))
         {
-            pressed    = true;
-            correctAns = true;
-            ans        = "YOU ARE CORRECT !";
+            pressed = true;
+            check   = 1;
         }
         else if (CheckCollisionPointRec(GetMousePosition(), {643, 269, 637, 223}))
         {
-            ansOption  = 1;
-            pressed    = true;
-            correctAns = false;
-            ans        = "YOU ARE WRONG !";
+            pressed = true;
+            check   = 2;
         }
         else if (CheckCollisionPointRec(GetMousePosition(), {1, 495, 637, 223}))
         {
-            ansOption  = 2;
-            pressed    = true;
-            correctAns = false;
-            ans        = "YOU ARE WRONG !";
+            pressed = true;
+            check   = 3;
         }
         else if (CheckCollisionPointRec(GetMousePosition(), {643, 495, 637, 223}))
         {
-            ansOption  = 3;
-            pressed    = true;
+            pressed = true;
+            check   = 4;
+        }
+
+        if (check == choice)
+        {
+            ans        = "YOU ARE CORRECT";
+            correctAns = true;
+        }
+        else
+        {
+            ans        = "YOU ARE WRONG";
             correctAns = false;
-            ans        = "YOU ARE WRONG !";
         }
     }
 }
