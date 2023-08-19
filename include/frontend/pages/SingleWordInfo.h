@@ -29,6 +29,8 @@ class SingleWordInfo
     bool confirmDeleteBox = false, confirmSaveBox = false, editButton = false, editEachDefButton = false,
          addDefButton = false;
 
+    History currentFavorites = History(favoritesDirectories[*CurrentState::currentDict], 1);
+
   public:
     SingleWordInfo();
     ~SingleWordInfo()
