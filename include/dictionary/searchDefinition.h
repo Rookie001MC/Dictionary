@@ -16,17 +16,17 @@ class RelevantWord
     Word word;
     double relevance;
   public:
+    RelevantWord();
     RelevantWord(Word word, double relevance);
     std::vector<RelevantWord> searchDefinition(std::string definitionFromUser, Trie &trie);
     double getRelevance();
-    
+    Word getWord();
 };
 
 // support functions
 bool comparingRelevance(RelevantWord a, RelevantWord b);
 std::string preprocessText(std::string text);
 void wordHashing(std::string line, std::unordered_set<std::string> &wordCounts);
-void lineHash(std::vector<std::string> &lines);
 double calculateRelevance(std::string userInput, std::unordered_set<std::string> &wordCounts);
 
 

@@ -1,5 +1,10 @@
 #include "dictionary/searchDefinition.h"
 
+RelevantWord::RelevantWord()
+{
+    this->relevance = 0;
+}
+
 RelevantWord::RelevantWord(Word word, double relevance)
 {
     this->word      = word;
@@ -9,6 +14,11 @@ RelevantWord::RelevantWord(Word word, double relevance)
 double RelevantWord::getRelevance()
 {
     return this->relevance;
+}
+
+Word RelevantWord::getWord()
+{
+    return this->word;
 }
 
 std::string preprocessText(std::string text)
@@ -45,15 +55,6 @@ void wordHashing(std::string line, std::unordered_set<std::string> &wordCounts)
         auto it = wordCounts.find(word);
         if (it == wordCounts.end())
             wordCounts.emplace(word);
-    }
-}
-void lineHash(std::vector<std::string> &lines)
-{
-    std::ifstream read("../data/engeng_processed.txt");
-    std::string line;
-    while (std::getline(read, line))
-    {
-        lines.push_back(line);
     }
 }
 
