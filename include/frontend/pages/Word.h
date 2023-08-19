@@ -2,6 +2,7 @@
 #define FRONTEND_PAGE_WORD
 
 #include "dictionary/build.h"
+#include "dictionary/history.h"
 #include "dictionary/trie.h"
 #include "dictionary/word.h"
 #include "dictionary/random.h"
@@ -17,6 +18,8 @@ class WordPage
   private:
     Trie currentTrie      = PrebuiltTriesList[*CurrentState::currentDict];
     Dictionary* currentDictionary = new Dictionary(dictDirs[*CurrentState::currentDict], *CurrentState::currentDict);
+    History currentHistory = History(historyDirectories[*CurrentState::currentDict]);
+
     bool SearchEdit       = false;
     char SearchInput[101] = "";
     Rectangle rec_result[20];

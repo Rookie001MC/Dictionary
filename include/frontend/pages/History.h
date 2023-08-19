@@ -25,15 +25,6 @@ class HistoryPage
 
     // We should be able to load the history file depending on the current active dictionary
 
-    // Declare the possible history files 
-    std::vector<std::string> historyDirectories = {
-      Resources::currentExeDir + "../tmp/engeng/history.txt",
-      Resources::currentExeDir + "../tmp/engvie/history.txt",
-      Resources::currentExeDir + "../tmp/vieeng/history.txt",
-      Resources::currentExeDir + "../tmp/emoji/history.txt",
-      Resources::currentExeDir + "../tmp/slang/history.txt"
-    };
-
     // Create the storage
     History currentHistory = History(historyDirectories[*CurrentState::currentDict]);
     Trie currentTrie = PrebuiltTriesList[*CurrentState::currentDict];

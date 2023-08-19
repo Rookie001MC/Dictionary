@@ -29,7 +29,7 @@ History::History(std::string path, bool mode)
 
 History::~History()
 {
-    save();
+    /* save(); */
 }
 
 std::vector<std::string> History::get()
@@ -39,7 +39,7 @@ std::vector<std::string> History::get()
 
 void History::add(std::string key)
 {
-    if (find(key) != -1)
+    if (find(key) == -1)
         storage.push_back(key);
 }
 

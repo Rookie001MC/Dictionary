@@ -32,7 +32,7 @@ class FavoritesPage
     };
 
     // Both history and favorites uses the same function
-    History currentFavorites = History(favoritesDirectories[*CurrentState::currentDict]);
+    History currentFavorites = History(favoritesDirectories[*CurrentState::currentDict], 1);
     Trie currentTrie = PrebuiltTriesList[*CurrentState::currentDict];
   public:
     FavoritesPage();
