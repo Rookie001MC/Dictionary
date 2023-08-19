@@ -25,6 +25,7 @@ class GamePage
     std::string ans = "";
     bool correctAns = false, start = false, choosen = false;
     int ansOption = 0;
+    bool isBreakNewLines = false;
 
     int COUNTDOWN_DURATION = 15;
     int cnt = COUNTDOWN_DURATION;
@@ -37,6 +38,7 @@ class GamePage
     {
     }
     void draw();
+    void buildAnswer();
     void drawTimer();
     void checkAns();
     void drawQuestion();
