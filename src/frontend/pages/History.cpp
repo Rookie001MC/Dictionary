@@ -95,6 +95,7 @@ void HistoryPage::update()
             wordRects[i].y -= 40;
         }
     }
+
 }
 
 void HistoryPage::draw()
@@ -187,14 +188,16 @@ void HistoryPage::draw()
     {
         dictChooserActive ^= 1;
 
-        // Update the history object
-        currentHistory = History(historyDirectories[*CurrentState::currentDict]);
-
         // Update the trie object
         currentTrie = PrebuiltTriesList[*CurrentState::currentDict];
+        
+        words.clear();
+        wordStrings.clear();
+
+        currentHistory.save();
+        currentHistory = History(historyDirectories[*CurrentState::currentDict]);
     }
 
- 
         // Draw the Search Box (disabled)
         DrawRectangle(305, 140, 420, 55, BG_COLOR_RGB);
     

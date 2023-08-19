@@ -6,6 +6,15 @@ std::vector<std::string> dictDirs = {
     dataDir + "emoji.dict",  dataDir + "slang.dict",
 };
 
+// Declare the possible history files 
+std::vector<std::string> historyDirectories = {
+    Resources::currentExeDir + "../tmp/engeng/history.txt",
+    Resources::currentExeDir + "../tmp/engvie/history.txt",
+    Resources::currentExeDir + "../tmp/vieeng/history.txt",
+    Resources::currentExeDir + "../tmp/emoji/history.txt",
+    Resources::currentExeDir + "../tmp/slang/history.txt"
+};
+
 
 Page CurrentState::currentPage = Page::DICT_WORD;
 Word CurrentState::currentWord;
