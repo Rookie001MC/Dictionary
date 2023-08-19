@@ -6,6 +6,9 @@
 #include "word.h"
 #include <algorithm>
 #include <filesystem>
+#include <chrono>
+#include <iostream>
+#include <vector>
 
 const std::string ENGENG   = Resources::currentExeDir + "../tmp/engeng/";
 const std::string ENGVIE   = Resources::currentExeDir + "../tmp/engvie/";
@@ -19,5 +22,7 @@ const char EMOJIDELIMITER  = '$';
 const char SLANGDELIMITER  = '`';
 void build(Dictionary &dict, Trie &trie);
 void reset(Dictionary &dict, Trie &trie);
+void prebuildDictionaries();
+void clearPrebuiltTries();
 
 #endif
