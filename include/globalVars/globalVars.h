@@ -49,6 +49,7 @@ struct PrebuiltTries
 
 extern std::vector<Trie> PrebuiltTriesList;
 
-extern std::string dataDir;
 extern std::vector<std::string> dictDirs;
+
+extern std::vector<std::string> historyDirectories;
 #endif
