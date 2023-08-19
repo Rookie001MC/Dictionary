@@ -13,11 +13,11 @@ class History
     std::string path;
     int mode;
     std::vector<std::string> storage;
-    int find(std::string key);
 
   public:
     History(std::string path, bool mode = 0);
     ~History();
+    int find(std::string key);
     std::vector<std::string> get();
     void add(std::string key);    // add to memory but does not modify the file
     void remove(std::string key); // remove from memory but does not modify the file
