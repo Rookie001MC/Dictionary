@@ -77,7 +77,7 @@ Word Random::viewRandomWord()
     return randomWord;
 }
 
-int Random::randomInFour()
+int Random::randomFourAnswer()
 {
     std::random_device rd;
     std::mt19937 gen(rd());
@@ -98,19 +98,19 @@ std::vector<std::string> Random::guessDefinition()
 {
     std::vector<std::string> quiz;
     // Random the line that contains the correct keyword and definition
-    int randomCorrectAns = getRandomNumber();
-
+    int randomKeyWord = getRandomNumber();
+    int randomChoice  = randomFourAnswer();
     // Only get the definition of the wrong ans
     // While loop to make sure that 4 numbers are different from each other
-    int wrongAns1 = getRandomNumber();
-    while (wrongAns1 == randomCorrectAns)
-        wrongAns1 = getRandomNumber();
-    int wrongAns2 = getRandomNumber();
-    while (wrongAns2 == randomCorrectAns || wrongAns2 == wrongAns1)
-        wrongAns2 = getRandomNumber();
-    int wrongAns3 = getRandomNumber();
-    while (wrongAns3 == randomCorrectAns || wrongAns3 == wrongAns1 || wrongAns3 == wrongAns2)
-        wrongAns3 = getRandomNumber();
+    int ans1 = getRandomNumber();
+    while (ans1 == randomKeyWord)
+        ans1 = getRandomNumber();
+    int ans2 = getRandomNumber();
+    while (ans2 == randomKeyWord || ans2 == ans1)
+        ans2 = getRandomNumber();
+    int ans3 = getRandomNumber();
+    while (ans3 == randomKeyWord || ans3 == ans1 || ans3 == ans2)
+        ans3 = getRandomNumber();
 
     std::string keyWordQuestion;
     std::string correctAns, incorrectAns1, incorrectAns2, incorrectAns3;
@@ -121,16 +121,16 @@ std::vector<std::string> Random::guessDefinition()
     while (std::getline(fin, line))
     {
         lineNum++;
-        if (lineNum == randomCorrectAns)
+        if (lineNum == randomKeyWord)
         {
             keyWordQuestion = getKeyWordFromText(line);
             correctAns      = get1stDefinitionFromText(line);
         }
-        else if (lineNum == wrongAns1)
+        else if (lineNum == ans1)
             incorrectAns1 = get1stDefinitionFromText(line);
-        else if (lineNum == wrongAns2)
+        else if (lineNum == ans2)
             incorrectAns2 = get1stDefinitionFromText(line);
-        else if (lineNum == wrongAns3)
+        else if (lineNum == ans3)
             incorrectAns3 = get1stDefinitionFromText(line);
     }
     fin.close();
@@ -139,6 +139,8 @@ std::vector<std::string> Random::guessDefinition()
     quiz.push_back(incorrectAns1);
     quiz.push_back(incorrectAns2);
     quiz.push_back(incorrectAns3);
+
+    std::swap(quiz[1], quiz[randomChoice]);
 
     return quiz;
 }
@@ -165,18 +167,19 @@ std::string getKeyWordFromText(const std::string &line)
 std::vector<std::string> Random::guessKeyWord()
 {
     // Random the line that contains the correct keyword and definition
-    int randomCorrectAns = getRandomNumber();
+    int randomDef = getRandomNumber();
+    int randomChoice  = randomFourAnswer();
     // Only get the definition of the wrong ans
     // While loop to make sure that 4 numbers are different from each other
-    int wrongAns1 = getRandomNumber();
-    while (wrongAns1 == randomCorrectAns)
-        wrongAns1 = getRandomNumber();
-    int wrongAns2 = getRandomNumber();
-    while (wrongAns2 == randomCorrectAns || wrongAns2 == wrongAns1)
-        wrongAns2 = getRandomNumber();
-    int wrongAns3 = getRandomNumber();
-    while (wrongAns3 == randomCorrectAns || wrongAns3 == wrongAns1 || wrongAns3 == wrongAns2)
-        wrongAns3 = getRandomNumber();
+    int ans1 = getRandomNumber();
+    while (ans1 == randomDef)
+        ans1 = getRandomNumber();
+    int ans2 = getRandomNumber();
+    while (ans2 == randomDef || ans2 == ans1)
+        ans2 = getRandomNumber();
+    int ans3 = getRandomNumber();
+    while (ans3 == randomDef || ans3 == ans1 || ans3 == ans2)
+        ans3 = getRandomNumber();
 
     std::string question;
     std::string correctAns, incorrectAns1, incorrectAns2, incorrectAns3;
@@ -187,16 +190,16 @@ std::vector<std::string> Random::guessKeyWord()
     while (std::getline(fin, line))
     {
         lineNum++;
-        if (lineNum == randomCorrectAns)
+        if (lineNum == randomDef)
         {
             question   = get1stDefinitionFromText(line);
             correctAns = getKeyWordFromText(line);
         }
-        else if (lineNum == wrongAns1)
+        else if (lineNum == ans1)
             incorrectAns1 = getKeyWordFromText(line);
-        else if (lineNum == wrongAns2)
+        else if (lineNum == ans2)
             incorrectAns2 = getKeyWordFromText(line);
-        else if (lineNum == wrongAns3)
+        else if (lineNum == ans3)
             incorrectAns3 = getKeyWordFromText(line);
     }
     fin.close();
@@ -206,6 +209,8 @@ std::vector<std::string> Random::guessKeyWord()
     quiz.push_back(incorrectAns1);
     quiz.push_back(incorrectAns2);
     quiz.push_back(incorrectAns3);
+
+    std::swap(quiz[1], quiz[randomChoice]);
 
     return quiz;
 }

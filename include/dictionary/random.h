@@ -18,7 +18,7 @@ class Random
     std::string getPath();
     // Helper function
     int getRandomNumber();
-    int randomInFour();
+    int randomFourAnswer();
 
     Word viewRandomWord(); // Function for viewing a random word
 
