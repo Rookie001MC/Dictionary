@@ -77,10 +77,18 @@ void GamePage::drawQuestion()
     const char *text = quiz[0].c_str();
     Font font        = Resources::displayFontBold;
     int fontSize     = 30;
+    bool check = false;
     Color textColor  = BLACK;
 
     // Measure the width and height of the text
     Vector2 textSize = MeasureTextEx(font, text, fontSize, 1);
+    for (int i = 1; i <= 4; ++i) {
+        Vector2 ansSize = MeasureTextEx(Resources::displayFontBold, quiz[i].c_str(), 25, 1);
+        if (ansSize.x + 4 > 637) {
+            check = true;
+            break;
+        }
+    }
 
     // Calculate the position to center the text within the rectangle horizontally
     float centerX = rect.x + (rect.width - textSize.x) / 2;
@@ -89,8 +97,9 @@ void GamePage::drawQuestion()
     float centerY = rect.y + (rect.height - textSize.y) / 2;
 
     // Check if the text exceeds the width of the rectangle
-    if (textSize.x > rect.width || textSize.y > rect.height)
+    if (check && (textSize.x > rect.width || textSize.y > rect.height))
     {
+        check = false;
         // Text exceeds the rectangle boundaries, perform actions based on 'mode'
         if (mode == 1)
         {
@@ -104,8 +113,9 @@ void GamePage::drawQuestion()
             quiz.clear();
             quiz = r.guessDefinition();
         }
+        return;
     }
-    else
+    else 
     {
         // Text fits within the rectangle, so draw it centered
         DrawRectangleV({rect.x, rect.y}, {rect.width, rect.height}, secondaryColor);
@@ -141,6 +151,9 @@ void GamePage::playGame()
     else {
     DrawTextEx(Resources::displayFontBold, "Time left: 0", {10, 230}, 27, 1, DARKGRAY);
     }
+    if (choosen) {
+    DrawTextEx(Resources::displayFontBold, "Time left: 0", {10, 230}, 27, 1, DARKGRAY);
+    }
 
     if (GuiButton({1090, 222, 90, 45}, "Next"))
     {
@@ -163,6 +176,7 @@ void GamePage::playGame()
 
     if (GuiButton({10, 130, 25, 27}, "X"))
     {
+        cnt = COUNTDOWN_DURATION + 1;
         choosen   = false;
         pressed   = false;
         ansOption = 0;
@@ -176,7 +190,7 @@ void GamePage::playGame()
     if (pressed)
     {
         DrawRectangleV({1, 269}, {637, 223}, GetColor(CORRECT_ANS));
-        DrawTextEx(Resources::displayFontBold, quiz[1].c_str(), {31, 370}, 27, 1, WHITE);
+        DrawTextEx(Resources::displayFontBold, quiz[1].c_str(), {31, 370}, 25, 1, WHITE);
 
         if (ansOption == 4) {
             DrawTextEx(Resources::displayFontBold, ans.c_str(), {590, 230}, 30, 1, PURPLE);
@@ -188,17 +202,17 @@ void GamePage::playGame()
         {
             case 1: {
                 DrawRectangleV({643, 269}, {637, 223}, GetColor(WRONG_ANS));
-                DrawTextEx(Resources::displayFontBold, quiz[2].c_str(), {673, 370}, 27, 1, WHITE);
+                DrawTextEx(Resources::displayFontBold, quiz[2].c_str(), {673, 370}, 25, 1, WHITE);
                 break;
             }
             case 2: {
                 DrawRectangleV({1, 495}, {637, 223}, GetColor(WRONG_ANS));
-                DrawTextEx(Resources::displayFontBold, quiz[3].c_str(), {31, 596}, 27, 1, WHITE);
+                DrawTextEx(Resources::displayFontBold, quiz[3].c_str(), {31, 596}, 25, 1, WHITE);
                 break;
             }
             case 3: {
                 DrawRectangleV({643, 495}, {637, 223}, GetColor(WRONG_ANS));
-                DrawTextEx(Resources::displayFontBold, quiz[4].c_str(), {673, 596}, 27, 1, WHITE);
+                DrawTextEx(Resources::displayFontBold, quiz[4].c_str(), {673, 596}, 25, 1, WHITE);
                 break;
             }
             default: {
@@ -214,28 +228,28 @@ void GamePage::playGame()
         {
             DrawRectangle(1, 269, 637, 223, GetColor(QUESTION_HOVER_RED));
         }
-        DrawTextEx(Resources::displayFontBold, quiz[1].c_str(), {31, 370}, 27, 1, WHITE);
+        DrawTextEx(Resources::displayFontBold, quiz[1].c_str(), {31, 370}, 25, 1, WHITE);
 
         DrawRectangleV({643, 269}, {637, 223}, GetColor(QUESTION_COLOR_BLUE));
         if (CheckCollisionPointRec(GetMousePosition(), {643, 269, 637, 223}))
         {
             DrawRectangle(643, 269, 637, 223, GetColor(QUESTION_HOVER_BLUE));
         }
-        DrawTextEx(Resources::displayFontBold, quiz[2].c_str(), {673, 370}, 27, 1, WHITE);
+        DrawTextEx(Resources::displayFontBold, quiz[2].c_str(), {673, 370}, 25, 1, WHITE);
 
         DrawRectangleV({1, 495}, {637, 223}, GetColor(QUESTION_COLOR_YELLOW));
         if (CheckCollisionPointRec(GetMousePosition(), {1, 495, 637, 223}))
         {
             DrawRectangle(1, 495, 637, 223, GetColor(QUESTION_HOVER_YELLOW));
         }
-        DrawTextEx(Resources::displayFontBold, quiz[3].c_str(), {31, 596}, 27, 1, WHITE);
+        DrawTextEx(Resources::displayFontBold, quiz[3].c_str(), {31, 596}, 25, 1, WHITE);
 
         DrawRectangleV({643, 495}, {637, 223}, GetColor(QUESTION_COLOR_GREEN));
         if (CheckCollisionPointRec(GetMousePosition(), {643, 495, 637, 223}))
         {
             DrawRectangle(643, 495, 637, 223, GetColor(QUESTION_HOVER_GREEN));
         }
-        DrawTextEx(Resources::displayFontBold, quiz[4].c_str(), {673, 596}, 27, 1, WHITE);
+        DrawTextEx(Resources::displayFontBold, quiz[4].c_str(), {673, 596}, 25, 1, WHITE);
     }
 }
 
