@@ -27,6 +27,7 @@ void WordPage::update()
             if (GetMousePosition().y > 180 && CheckCollisionPointRec(GetMousePosition(), rec_result[i]))
             {
                 currentHistory.add(words[i].getKey());
+                currentHistory.save();
                 CurrentState::currentWord = words[i];
                 CurrentState::currentPage = static_cast<Page>(5);
 
@@ -217,7 +218,7 @@ void WordPage::draw()
         currentTrie = PrebuiltTriesList[*CurrentState::currentDict];
         currentDictionary = new Dictionary(dictLanguages[*CurrentState::currentDict], *CurrentState::currentDict);
 
-        currentHistory.save();
+        currentHistory.save(); 
         currentHistory = History(historyDirectories[*CurrentState::currentDict]);
     }
 
