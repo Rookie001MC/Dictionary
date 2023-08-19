@@ -25,7 +25,6 @@ class GamePage
                                 {LIME, GREEN}};
     std::string options[4] = {"A", "B", "C", "D"};
     bool pressed = false;
-    Rectangle rec_next{1030, 115, 135, 65};
     int mode = 0;
     std::string ans = "";
     bool correctAns = false;
@@ -36,6 +35,7 @@ class GamePage
     {
     }
     void draw();
+    void drawQuestion();
     void update();
     void playGame();
 };
