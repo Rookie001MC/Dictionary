@@ -187,7 +187,11 @@ void FavoritesPage::draw()
     {
         dictChooserActive ^= 1;
 
+        words.clear();
+        wordStrings.clear();
+
         // Update the history object
+        currentFavorites.save();
         currentFavorites= History(favoritesDirectories[*CurrentState::currentDict], 1);
 
         // Update the trie object
