@@ -26,16 +26,23 @@ class GamePage
     bool correctAns = false, start = false, choosen = false;
     int ansOption = 0;
 
+    int COUNTDOWN_DURATION = 15;
+    int cnt = COUNTDOWN_DURATION;
+    double currentTime = GetTime();
+    double previousTime = currentTime;
+
   public:
     GamePage();
     ~GamePage()
     {
     }
     void draw();
+    void drawTimer();
     void checkAns();
     void drawQuestion();
     void update();
     void playGame();
+    void drawCountDown(int timeLeft);
 };
 
 #endif

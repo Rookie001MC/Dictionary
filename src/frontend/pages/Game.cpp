@@ -113,15 +113,41 @@ void GamePage::drawQuestion()
     }
 }
 
+void GamePage::drawCountDown(int timeLeft)
+{
+    char timerText[20];
+    snprintf(timerText, sizeof(timerText), "Time Left: %d", timeLeft);
+    DrawTextEx(Resources::displayFontBold, timerText, {10, 230}, 27, 1, DARKGRAY);
+}
+
+void GamePage::drawTimer()
+{
+    currentTime      = GetTime();
+    double deltaTime = currentTime - previousTime;
+
+    if (deltaTime >= 1.0)
+    {
+        cnt--;
+        previousTime = currentTime;
+    }
+
+    drawCountDown(cnt);
+}
+
 void GamePage::playGame()
 {
     drawQuestion();
+    if (cnt > 0) drawTimer();
+    else {
+    DrawTextEx(Resources::displayFontBold, "Time left: 0", {10, 230}, 27, 1, DARKGRAY);
+    }
 
     if (GuiButton({1090, 222, 90, 45}, "Next"))
     {
         pressed   = false;
         choosen   = false;
         ansOption = 0;
+        cnt = COUNTDOWN_DURATION + 1;
         if (mode == 1)
         {
             quiz.clear();
@@ -152,7 +178,10 @@ void GamePage::playGame()
         DrawRectangleV({1, 269}, {637, 223}, GetColor(CORRECT_ANS));
         DrawTextEx(Resources::displayFontBold, quiz[1].c_str(), {31, 370}, 27, 1, WHITE);
 
-        DrawTextEx(Resources::displayFontBold, ans.c_str(), {550, 230}, 30, 1,
+        if (ansOption == 4) {
+            DrawTextEx(Resources::displayFontBold, ans.c_str(), {590, 230}, 30, 1, PURPLE);
+        }
+        else DrawTextEx(Resources::displayFontBold, ans.c_str(), {550, 230}, 30, 1,
                    correctAns ? GetColor(CORRECT_ANS) : RED);
 
         switch (ansOption)
@@ -165,6 +194,7 @@ void GamePage::playGame()
             case 2: {
                 DrawRectangleV({1, 495}, {637, 223}, GetColor(WRONG_ANS));
                 DrawTextEx(Resources::displayFontBold, quiz[3].c_str(), {31, 596}, 27, 1, WHITE);
+                break;
             }
             case 3: {
                 DrawRectangleV({643, 495}, {637, 223}, GetColor(WRONG_ANS));
@@ -211,6 +241,12 @@ void GamePage::playGame()
 
 void GamePage::checkAns()
 {
+    if (cnt <= 0) {
+        pressed = true;
+        correctAns = true;
+        ans = "TIME OUT";
+        ansOption = 4;
+    }
     if (IsMouseButtonPressed(0) && !choosen)
     {
         choosen = true;
