@@ -1,6 +1,7 @@
 #ifndef FRONTEND_PAGE_SINGLEWORDINFO_H
 #define FRONTEND_PAGE_SINGLEWORDINFO_H
 
+#include "dictionary/history.h"
 #include "frontend/pages/Word.h"
 #include "globalVars/globalVars.h"
 
@@ -28,6 +29,8 @@ class SingleWordInfo
     char newdata[501];
     bool confirmDeleteBox = false, confirmSaveBox = false, editButton = false, editEachDefButton = false,
          addDefButton = false;
+
+    History currentFavorites = History(favoritesDirectories[*CurrentState::currentDict], 1);
 
   public:
     SingleWordInfo();

@@ -23,14 +23,6 @@ class FavoritesPage
     short int selectedDictPage = 2;
     bool dictChooserActive     = false;
 
-    std::vector<std::string> favoritesDirectories = {
-      Resources::currentExeDir + "../tmp/engeng/favourite.txt",
-      Resources::currentExeDir + "../tmp/engvie/favourite.txt",
-      Resources::currentExeDir + "../tmp/vieeng/favourite.txt",
-      Resources::currentExeDir + "../tmp/emoji/favourite.txt",
-      Resources::currentExeDir + "../tmp/slang/favourite.txt"
-    };
-
     // Both history and favorites uses the same function
     History currentFavorites = History(favoritesDirectories[*CurrentState::currentDict], 1);
     Trie currentTrie = PrebuiltTriesList[*CurrentState::currentDict];
