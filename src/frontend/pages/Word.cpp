@@ -26,8 +26,10 @@ void WordPage::update()
         {
             if (GetMousePosition().y > 180 && CheckCollisionPointRec(GetMousePosition(), rec_result[i]))
             {
+                currentHistory.add(words[i].getKey());
                 CurrentState::currentWord = words[i];
                 CurrentState::currentPage = static_cast<Page>(5);
+
             }
         }
     }
@@ -206,10 +208,17 @@ void WordPage::draw()
                        CurrentState::currentDict, dropDownBox))
     {
         dropDownBox ^= 1;
-        currentTrie = PrebuiltTriesList[*CurrentState::currentDict];
-        currentDictionary = new Dictionary(dictLanguages[*CurrentState::currentDict], *CurrentState::currentDict);
         words.clear();
         confirmResetBox = false;
+        for (int i = 0; i < sizeof(SearchInput); ++i) {
+            SearchInput[i] = '\0';
+        }
+
+        currentTrie = PrebuiltTriesList[*CurrentState::currentDict];
+        currentDictionary = new Dictionary(dictLanguages[*CurrentState::currentDict], *CurrentState::currentDict);
+
+        currentHistory.save();
+        currentHistory = History(historyDirectories[*CurrentState::currentDict]);
     }
 
     if (SearchInput[0] != '\0')
