@@ -11,6 +11,7 @@ SingleWordInfo::SingleWordInfo()
 
 void SingleWordInfo::update()
 {
+    currentFavorites = History(favoritesDirectories[*CurrentState::currentDict], 1);
     if (isInfo)
     {
         isInfo                    = false;
@@ -66,8 +67,23 @@ void SingleWordInfo::draw()
         }
         return;
     }
-    if (GuiButton({855, 590, 165, 55}, "ADD FAVORITE"))
+    
+    // Find the word in the Favortite list first.
+    if (currentFavorites.find(CurrentState::currentWord.getKey()) == -1)
     {
+        if (GuiButton({855, 590, 165, 55}, "ADD FAVORITE"))
+        {
+            currentFavorites.add(CurrentState::currentWord.getKey());
+            currentFavorites.save();
+        }
+    }
+    else
+    {
+        if (GuiButton({855, 590, 165, 55}, "REMOVE FAVORITE"))
+        {
+            currentFavorites.remove(CurrentState::currentWord.getKey());
+            currentFavorites.save();
+        }
     }
     if (GuiButton({1040, 590, 135, 55}, "DELETE"))
     {

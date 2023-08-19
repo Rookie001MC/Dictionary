@@ -49,10 +49,10 @@ std::string FavoritesPage::TextEllipsis(const std::string &text, const Font &fon
 
 void FavoritesPage::update()
 {
+    currentFavorites = History(favoritesDirectories[*CurrentState::currentDict]);
     if (!words.size())
     {
         wordStrings = currentFavorites.get();
-
         for (int i = 0; i < wordStrings.size(); i++)
         {
             Word tmp;
@@ -98,6 +98,7 @@ void FavoritesPage::update()
 void FavoritesPage::draw()
 {
     Vector2 mousePos = GetMousePosition();
+
     // Draws each word
     for (int i = 0; i < words.size(); i++)
     {
@@ -187,15 +188,16 @@ void FavoritesPage::draw()
     {
         dictChooserActive ^= 1;
 
+        // Update the trie object
+        currentTrie = PrebuiltTriesList[*CurrentState::currentDict];
+
         words.clear();
         wordStrings.clear();
 
         // Update the history object
         currentFavorites.save();
-        currentFavorites= History(favoritesDirectories[*CurrentState::currentDict], 1);
+        currentFavorites = History(favoritesDirectories[*CurrentState::currentDict], 1);
 
-        // Update the trie object
-        currentTrie = PrebuiltTriesList[*CurrentState::currentDict];
     }
 
         // Draw the Search Box (disabled)
