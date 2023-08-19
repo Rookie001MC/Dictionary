@@ -188,7 +188,7 @@ void FavoritesPage::draw()
         dictChooserActive ^= 1;
 
         // Update the history object
-        currentFavorites= History(favoritesDirectories[*CurrentState::currentDict]);
+        currentFavorites= History(favoritesDirectories[*CurrentState::currentDict], 1);
 
         // Update the trie object
         currentTrie = PrebuiltTriesList[*CurrentState::currentDict];
