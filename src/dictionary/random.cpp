@@ -41,6 +41,15 @@ int Random::getRandomNumber()
     return dis(gen);
 }
 
+std::string get1stDefinitionFromText(const std::string &line)
+{
+    std::string definition;
+    int start  = line.find_first_of(':') + 2;
+    int end    = line.find('@', start + 1);
+    definition = line.substr(start, end - start);
+    return definition;
+}
+
 Word Random::viewRandomWord()
 {
     std::ifstream fin(getPath());
@@ -85,21 +94,13 @@ int Random::randomFourAnswer()
     return dis(gen);
 }
 
-std::string get1stDefinitionFromText(const std::string &line)
-{
-    std::string definition;
-    int start  = line.find_first_of(':') + 2;
-    int end    = line.find('@', start + 1);
-    definition = line.substr(start, end - start);
-    return definition;
-}
 
 std::vector<std::string> Random::guessDefinition()
 {
     std::vector<std::string> quiz;
     // Random the line that contains the correct keyword and definition
     int randomKeyWord = getRandomNumber();
-    int randomChoice  = randomFourAnswer();
+    randomChoice  = randomFourAnswer();
     // Only get the definition of the wrong ans
     // While loop to make sure that 4 numbers are different from each other
     int ans1 = getRandomNumber();
@@ -168,7 +169,7 @@ std::vector<std::string> Random::guessKeyWord()
 {
     // Random the line that contains the correct keyword and definition
     int randomDef = getRandomNumber();
-    int randomChoice  = randomFourAnswer();
+    randomChoice  = randomFourAnswer();
     // Only get the definition of the wrong ans
     // While loop to make sure that 4 numbers are different from each other
     int ans1 = getRandomNumber();
@@ -213,6 +214,11 @@ std::vector<std::string> Random::guessKeyWord()
     std::swap(quiz[1], quiz[randomChoice]);
 
     return quiz;
+}
+
+int Random::getChoice()
+{
+    return randomChoice;
 }
 
 // void quizWith4KeyWords()
