@@ -147,12 +147,12 @@ void GamePage::drawTimer()
 void GamePage::playGame()
 {
     drawQuestion();
-    if (cnt > 0) drawTimer();
-    else {
-    DrawTextEx(Resources::displayFontBold, "Time left: 0", {10, 230}, 27, 1, DARKGRAY);
+    if (cnt > 0 && !choosen) drawTimer();
+    else if (cnt > 0 && choosen) {
+        drawCountDown(cnt);
     }
-    if (choosen) {
-    DrawTextEx(Resources::displayFontBold, "Time left: 0", {10, 230}, 27, 1, DARKGRAY);
+    else {
+        DrawTextEx(Resources::displayFontBold, "Time left: 0", {10, 230}, 27, 1, DARKGRAY);
     }
 
     if (GuiButton({1090, 222, 90, 45}, "Next"))
