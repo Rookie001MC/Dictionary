@@ -19,15 +19,12 @@ class GamePage
     Dictionary* currentDictionary = new Dictionary(dictDirs[*CurrentState::currentDict], *CurrentState::currentDict);
     std::vector<std::string> quiz;
     bool gameQuiz = false;
-    Color button_color[4][2] = {{RED, MAROON},
-                                {YELLOW, GOLD},
-                                {BLUE, DARKBLUE},
-                                {LIME, GREEN}};
     std::string options[4] = {"A", "B", "C", "D"};
     bool pressed = false;
     int mode = 0;
     std::string ans = "";
-    bool correctAns = false;
+    bool correctAns = false, start = false, choosen = false;
+    int ansOption = 0;
 
   public:
     GamePage();
@@ -35,6 +32,7 @@ class GamePage
     {
     }
     void draw();
+    void checkAns();
     void drawQuestion();
     void update();
     void playGame();

@@ -16,26 +16,6 @@ GamePage::GamePage()
 
 void GamePage::update()
 {
-    if (IsMouseButtonPressed(0))
-    {
-        for (int i = 1; i <= 4; i++)
-        {
-            if (CheckCollisionPointRec(GetMousePosition(), {(float)320 + 220 * (i - 1), 500, 200, 65}))
-            {
-                pressed = true;
-                if (quiz[i] == quiz[1])
-                {
-                    ans        = "Correct answer: " + quiz[i];
-                    correctAns = true;
-                }
-                else
-                {
-                    ans        = "Wrong answer: " + quiz[i];
-                    correctAns = false;
-                }
-            }
-        }
-    }
 }
 
 void GamePage::draw()
@@ -137,8 +117,11 @@ void GamePage::playGame()
 {
     drawQuestion();
 
-    if (GuiButton({1090, 220, 90, 45}, "Next"))
+    if (GuiButton({1090, 222, 90, 45}, "Next"))
     {
+        pressed   = false;
+        choosen   = false;
+        ansOption = 0;
         if (mode == 1)
         {
             quiz.clear();
@@ -152,22 +135,111 @@ void GamePage::playGame()
         pressed = false;
     }
 
-    if (GuiButton({30, 135, 25, 25}, "X"))
+    if (GuiButton({10, 130, 25, 27}, "X"))
     {
-        gameQuiz = false;
+        choosen   = false;
+        pressed   = false;
+        ansOption = 0;
+        gameQuiz  = false;
         quiz.clear();
         mode = 0;
     }
 
-    // Draw 4 answer
-    for (int i = 1; i <= 4; i++)
-    {
-        DrawRectangleGradientH(320 + 220 * (i - 1), 500, 200, 65, button_color[i - 1][0], button_color[i - 1][1]);
-        if (CheckCollisionPointRec(GetMousePosition(), {(float)320 + 220 * i, 500, 200, 65}))
-            DrawRectangleGradientH(320 + 220 * i, 500, 200, 65, button_color[i - 1][1], button_color[i - 1][0]);
-        DrawTextEx(Resources::displayFontBold, options[i - 1].c_str(),
-                   {(float)320 + 220 * (i - 1) + (200 - 40) / 2, (float)500 + (65 - 40) / 2}, 40, 1, WHITE);
-    }
+    checkAns();
+
     if (pressed)
-        DrawTextEx(Resources::displayFontBold, ans.c_str(), {320, 145}, 30, 1, correctAns ? GREEN : RED);
+    {
+        DrawRectangleV({1, 269}, {637, 223}, GetColor(CORRECT_ANS));
+        DrawTextEx(Resources::displayFontBold, quiz[1].c_str(), {31, 370}, 27, 1, WHITE);
+
+        DrawTextEx(Resources::displayFontBold, ans.c_str(), {550, 230}, 30, 1,
+                   correctAns ? GetColor(CORRECT_ANS) : RED);
+
+        switch (ansOption)
+        {
+            case 1: {
+                DrawRectangleV({643, 269}, {637, 223}, GetColor(WRONG_ANS));
+                DrawTextEx(Resources::displayFontBold, quiz[2].c_str(), {673, 370}, 27, 1, WHITE);
+                break;
+            }
+            case 2: {
+                DrawRectangleV({1, 495}, {637, 223}, GetColor(WRONG_ANS));
+                DrawTextEx(Resources::displayFontBold, quiz[3].c_str(), {31, 596}, 27, 1, WHITE);
+            }
+            case 3: {
+                DrawRectangleV({643, 495}, {637, 223}, GetColor(WRONG_ANS));
+                DrawTextEx(Resources::displayFontBold, quiz[4].c_str(), {673, 596}, 27, 1, WHITE);
+                break;
+            }
+            default: {
+                break;
+            }
+        }
+    }
+    else
+    {
+        // Draw 4 answer
+        DrawRectangleV({1, 269}, {637, 223}, RED);
+        if (CheckCollisionPointRec(GetMousePosition(), {1, 269, 637, 223}))
+        {
+            DrawRectangle(1, 269, 637, 223, GetColor(QUESTION_HOVER_RED));
+        }
+        DrawTextEx(Resources::displayFontBold, quiz[1].c_str(), {31, 370}, 27, 1, WHITE);
+
+        DrawRectangleV({643, 269}, {637, 223}, GetColor(QUESTION_COLOR_BLUE));
+        if (CheckCollisionPointRec(GetMousePosition(), {643, 269, 637, 223}))
+        {
+            DrawRectangle(643, 269, 637, 223, GetColor(QUESTION_HOVER_BLUE));
+        }
+        DrawTextEx(Resources::displayFontBold, quiz[2].c_str(), {673, 370}, 27, 1, WHITE);
+
+        DrawRectangleV({1, 495}, {637, 223}, GetColor(QUESTION_COLOR_YELLOW));
+        if (CheckCollisionPointRec(GetMousePosition(), {1, 495, 637, 223}))
+        {
+            DrawRectangle(1, 495, 637, 223, GetColor(QUESTION_HOVER_YELLOW));
+        }
+        DrawTextEx(Resources::displayFontBold, quiz[3].c_str(), {31, 596}, 27, 1, WHITE);
+
+        DrawRectangleV({643, 495}, {637, 223}, GetColor(QUESTION_COLOR_GREEN));
+        if (CheckCollisionPointRec(GetMousePosition(), {643, 495, 637, 223}))
+        {
+            DrawRectangle(643, 495, 637, 223, GetColor(QUESTION_HOVER_GREEN));
+        }
+        DrawTextEx(Resources::displayFontBold, quiz[4].c_str(), {673, 596}, 27, 1, WHITE);
+    }
+}
+
+void GamePage::checkAns()
+{
+    if (IsMouseButtonPressed(0) && !choosen)
+    {
+        choosen = true;
+        if (CheckCollisionPointRec(GetMousePosition(), {1, 269, 637, 223}))
+        {
+            pressed    = true;
+            correctAns = true;
+            ans        = "YOU ARE CORRECT !";
+        }
+        else if (CheckCollisionPointRec(GetMousePosition(), {643, 269, 637, 223}))
+        {
+            ansOption  = 1;
+            pressed    = true;
+            correctAns = false;
+            ans        = "YOU ARE WRONG !";
+        }
+        else if (CheckCollisionPointRec(GetMousePosition(), {1, 495, 637, 223}))
+        {
+            ansOption  = 2;
+            pressed    = true;
+            correctAns = false;
+            ans        = "YOU ARE WRONG !";
+        }
+        else if (CheckCollisionPointRec(GetMousePosition(), {643, 495, 637, 223}))
+        {
+            ansOption  = 3;
+            pressed    = true;
+            correctAns = false;
+            ans        = "YOU ARE WRONG !";
+        }
+    }
 }
