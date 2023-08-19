@@ -21,18 +21,26 @@ DefPage::DefPage()
 
 void DefPage::update()
 {
-    if (selectedDictPage != 0)
+    if (SearchInput[0] == '\0')
     {
+        words.clear();
     }
-    // if (selectedDictPage != 0)
-    // {
-    //     if (SearchInput[0] == '\0')
-    //         words.clear();
-    //     short tmp = selectedDictPage;
-    //     selectedDictPage = 0;
-    //     return static_cast<CurrentState::currentPage>(tmp);
-    // }
-    // return DICT_DEF_SEARCH;
+
+    if ((IsKeyPressed(KEY_UP) || GetMouseWheelMove() == 1) && rec_result[0].y < 200)
+    {
+        for (int i = 0; i < words.size(); ++i)
+        {
+            rec_result[i].y += 40;
+        }
+    }
+
+    if ((IsKeyPressed(KEY_DOWN) || GetMouseWheelMove() == -1)&& rec_result[words.size() - 1].y >= 540)
+    {
+        for (int i = 0; i < words.size(); ++i)
+        {
+            rec_result[i].y -= 40;
+        }
+    }
 }
 
 void DefPage::draw()
@@ -48,22 +56,6 @@ void DefPage::draw()
     }
 
     Vector2 mousePos = GetMousePosition();
-
-    // draw the Search Box
-    if (GuiTextBox(rec_search, SearchInput, 101, SearchEdit))
-    {
-        SearchEdit ^= 1;
-    }
-    if (SearchInput[0] == '\0')
-        DrawTextEx(Resources::displayFontRegular, "Search...", {330, 155}, TEXT_FONT_SIZE, 0, GRAY);
-
-    // draw the reset button
-    if (GuiButton(rec_reset, "RESET"))
-        confirmResetBox = true;
-
-    if (GuiButton(rec_random, "RANDOM"))
-    {
-    }
 
     // draw the background of textbox
     DrawRectangleRec({277, 100, 1280, 115}, BG_COLOR_RGB);
@@ -88,6 +80,18 @@ void DefPage::draw()
         {
             CurrentState::currentPage = static_cast<Page>(i);
         }
+    }
+
+    // draw the Search Box
+    if (GuiTextBox(rec_search, SearchInput, 101, SearchEdit))
+    {
+        SearchEdit ^= 1;
+    }
+    if (SearchInput[0] == '\0')
+        DrawTextEx(Resources::displayFontRegular, "Search...", {330, 155}, TEXT_FONT_SIZE, 0, GRAY);
+
+    if (GuiButton(rec_reset, "RESET"))
+    {
     }
 
     // Draws each word
@@ -116,7 +120,29 @@ void DefPage::draw()
         dropDownBox ^= 1;
         currentTrie     = PrebuiltTriesList[*CurrentState::currentDict];
         confirmResetBox = false;
+        for (int i = 0; i < sizeof(SearchInput); ++i) {
+            SearchInput[i] = '\0';
+        }
+        words.clear();
     }
+
+    if (SearchInput[0] != '\0')
+    {
+        if (words.empty())
+        {
+            DrawTextEx(Resources::displayFontBold, "No definition match this search !!!", {310, 240}, 25, 1, RED);
+        }
+    }
+
+    if (SearchEdit)
+    {
+        if (GetKeyPressed() && !(IsKeyPressed(KEY_UP) || IsKeyPressed(KEY_DOWN)))
+        {
+            words.clear();
+            words = currentTrie.wordSuggest(SearchInput);
+        }
+    }
+
 }
 
 void DefPage::resetBox()

@@ -4,6 +4,7 @@
 #include "dictionary/trie.h"
 #include "dictionary/word.h"
 #include "frontend/styles.h"
+#include "dictionary/searchDefinition.h"
 #include "globalVars/globalVars.h"
 #include "raylib.h"
 #include <cstring>
@@ -13,17 +14,21 @@ class DefPage
 {
   private:
     Trie currentTrie      = PrebuiltTriesList[*CurrentState::currentDict];
+    Dictionary* currentDictionary = new Dictionary(dictDirs[*CurrentState::currentDict], *CurrentState::currentDict);
+    History currentHistory = History(historyDirectories[*CurrentState::currentDict]);
+    
     bool SearchEdit       = false;
     char SearchInput[101] = "";
     Rectangle rec_dictionary{1075, 140, 155, 55};
-    Rectangle rec_reset{760, 140, 135, 55};
-    Rectangle rec_random{915, 140, 135, 55};
-    Rectangle rec_search{305, 140, 420, 55};
+    Rectangle rec_reset{915, 140, 135, 55};
+    Rectangle rec_search{305, 140, 590, 55};
+    Rectangle rec_result[20];
 
     bool dropDownBox = false, confirmResetBox = false, addWordButton = false;
     std::string text;
 
-    std::vector<Word *> words;
+    std::vector<RelevantWord> words;
+
     std::vector<Rectangle> wordRects;
     std::vector<std::string> dictLanguages = {"ENG-ENG", "ENG-VIE", "VIE-ENG", "EMOJI", "SLANG"};
 
