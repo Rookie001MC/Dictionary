@@ -1,6 +1,7 @@
 #ifndef FRONTEND_PAGE_SINGLEWORDINFO_H
 #define FRONTEND_PAGE_SINGLEWORDINFO_H
 
+#include "dictionary/history.h"
 #include "frontend/pages/Word.h"
 #include "globalVars/globalVars.h"
 

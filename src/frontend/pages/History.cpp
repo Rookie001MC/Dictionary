@@ -48,6 +48,7 @@ std::string HistoryPage::TextEllipsis(const std::string &text, const Font &font,
 
 void HistoryPage::update()
 {
+    currentHistory = History(historyDirectories[*CurrentState::currentDict]);
     if (!words.size())
     {
         // Get the history strings

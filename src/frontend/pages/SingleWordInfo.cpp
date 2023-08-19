@@ -11,6 +11,7 @@ SingleWordInfo::SingleWordInfo()
 
 void SingleWordInfo::update()
 {
+    currentFavorites = History(favoritesDirectories[*CurrentState::currentDict], 1);
     if (isInfo)
     {
         isInfo                    = false;
