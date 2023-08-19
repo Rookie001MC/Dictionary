@@ -117,6 +117,7 @@
     "stack": "cpp",
     "__nullptr": "cpp",
     "__string": "cpp",
-    "*.ipp": "cpp"
+    "*.ipp": "cpp",
+    "queue": "cpp"
   }
 }

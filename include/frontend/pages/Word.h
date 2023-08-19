@@ -26,7 +26,7 @@ class WordPage
     Rectangle rec_dictionary{1075, 140, 155, 55};
     Rectangle rec_reset{760, 140, 135, 55};
     Rectangle rec_random{915, 140, 135, 55};
-    Rectangle rec_search{305, 140, 420, 55};
+    Rectangle rec_search{305, 140, 440, 55};
 
     bool dropDownBox = false, confirmResetBox = false, addWordButton = false;
     std::string text;
