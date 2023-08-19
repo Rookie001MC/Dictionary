@@ -52,4 +52,5 @@ extern std::vector<Trie> PrebuiltTriesList;
 extern std::vector<std::string> dictDirs;
 
 extern std::vector<std::string> historyDirectories;
+extern std::vector<std::string> favoritesDirectories;
 #endif
