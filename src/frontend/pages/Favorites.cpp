@@ -99,11 +99,6 @@ void FavoritesPage::draw()
 {
     Vector2 mousePos = GetMousePosition();
 
-    for (auto &word : words)
-    {
-        std::cout << word.getKey();
-    }
-
     // Draws each word
     for (int i = 0; i < words.size(); i++)
     {
