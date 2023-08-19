@@ -77,29 +77,24 @@ void GamePage::drawQuestion()
     const char *text = quiz[0].c_str();
     Font font        = Resources::displayFontBold;
     int fontSize     = 30;
-    bool check = false;
+    bool check       = false;
     Color textColor  = BLACK;
 
     // Measure the width and height of the text
     Vector2 textSize = MeasureTextEx(font, text, fontSize, 1);
-    for (int i = 1; i <= 4; ++i) {
+    for (int i = 1; i <= 4; ++i)
+    {
         Vector2 ansSize = MeasureTextEx(Resources::displayFontBold, quiz[i].c_str(), 25, 1);
-        if (ansSize.x + 4 > 637) {
+        if (ansSize.x + 4 > 637)
+        {
             check = true;
             break;
         }
     }
 
-    // Calculate the position to center the text within the rectangle horizontally
-    float centerX = rect.x + (rect.width - textSize.x) / 2;
-
-    // Calculate the position to center the text within the rectangle vertically
-    float centerY = rect.y + (rect.height - textSize.y) / 2;
-
     // Check if the text exceeds the width of the rectangle
-    if (check && (textSize.x > rect.width || textSize.y > rect.height))
+    if (check || textSize.x > rect.width || textSize.y > rect.height)
     {
-        check = false;
         // Text exceeds the rectangle boundaries, perform actions based on 'mode'
         if (mode == 1)
         {
@@ -113,12 +108,20 @@ void GamePage::drawQuestion()
             quiz.clear();
             quiz = r.guessDefinition();
         }
-        return;
     }
-    else 
+    else
     {
         // Text fits within the rectangle, so draw it centered
+        // Calculate the position to center the text within the rectangle horizontally
+        float centerX = rect.x + (rect.width - textSize.x) / 2;
+
+        // Calculate the position to center the text within the rectangle vertically
+        float centerY = rect.y + (rect.height - textSize.y) / 2;
+
+        // Draw the rectangle
         DrawRectangleV({rect.x, rect.y}, {rect.width, rect.height}, secondaryColor);
+
+        // Draw the text within the rectangle
         DrawTextEx(font, text, {centerX, centerY}, fontSize, 1, textColor);
     }
 }
@@ -147,11 +150,14 @@ void GamePage::drawTimer()
 void GamePage::playGame()
 {
     drawQuestion();
-    if (cnt > 0 && !choosen) drawTimer();
-    else if (cnt > 0 && choosen) {
+    if (cnt > 0 && !choosen)
+        drawTimer();
+    else if (cnt > 0 && choosen)
+    {
         drawCountDown(cnt);
     }
-    else {
+    else
+    {
         DrawTextEx(Resources::displayFontBold, "Time left: 0", {10, 230}, 27, 1, DARKGRAY);
     }
 
@@ -160,7 +166,7 @@ void GamePage::playGame()
         pressed   = false;
         choosen   = false;
         ansOption = 0;
-        cnt = COUNTDOWN_DURATION + 1;
+        cnt       = COUNTDOWN_DURATION + 1;
         if (mode == 1)
         {
             quiz.clear();
@@ -176,7 +182,7 @@ void GamePage::playGame()
 
     if (GuiButton({10, 130, 25, 27}, "X"))
     {
-        cnt = COUNTDOWN_DURATION + 1;
+        cnt       = COUNTDOWN_DURATION + 1;
         choosen   = false;
         pressed   = false;
         ansOption = 0;
@@ -192,11 +198,13 @@ void GamePage::playGame()
         DrawRectangleV({1, 269}, {637, 223}, GetColor(CORRECT_ANS));
         DrawTextEx(Resources::displayFontBold, quiz[1].c_str(), {31, 370}, 25, 1, WHITE);
 
-        if (ansOption == 4) {
+        if (ansOption == 4)
+        {
             DrawTextEx(Resources::displayFontBold, ans.c_str(), {590, 230}, 30, 1, PURPLE);
         }
-        else DrawTextEx(Resources::displayFontBold, ans.c_str(), {550, 230}, 30, 1,
-                   correctAns ? GetColor(CORRECT_ANS) : RED);
+        else
+            DrawTextEx(Resources::displayFontBold, ans.c_str(), {550, 230}, 30, 1,
+                       correctAns ? GetColor(CORRECT_ANS) : RED);
 
         switch (ansOption)
         {
@@ -255,11 +263,12 @@ void GamePage::playGame()
 
 void GamePage::checkAns()
 {
-    if (cnt <= 0) {
-        pressed = true;
+    if (cnt <= 0)
+    {
+        pressed    = true;
         correctAns = true;
-        ans = "TIME OUT";
-        ansOption = 4;
+        ans        = "TIME OUT";
+        ansOption  = 4;
     }
     if (IsMouseButtonPressed(0) && !choosen)
     {
