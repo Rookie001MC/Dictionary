@@ -13,14 +13,24 @@ DefPage::DefPage()
     }
     dictPagesRects[selectedDictPage] = {51, float(140 + (122 * selectedDictPage)), 195, 65};
 
-    for (int i = 0; i < words.size(); i++)
-    {
-        wordRects.push_back({300, float(220 + 100 * i), 949, 87});
-    }
+    for (int i = 0; i < 20; i++)
+        rec_result[i] = {307, (float)225 + 130 * i, 921, 120};
 }
 
 void DefPage::update()
 {
+    if (IsMouseButtonPressed(0) && !dropDownBox)
+    {
+        for (int i = 0; i < words.size(); ++i)
+        {
+            if (GetMousePosition().y > 180 && CheckCollisionPointRec(GetMousePosition(), rec_result[i]))
+            {
+                CurrentState::currentWord = words[i].getWord();
+                CurrentState::currentPage = static_cast<Page>(5);
+            }
+        }
+    }
+
     if (SearchInput[0] == '\0')
     {
         words.clear();
@@ -34,13 +44,39 @@ void DefPage::update()
         }
     }
 
-    if ((IsKeyPressed(KEY_DOWN) || GetMouseWheelMove() == -1)&& rec_result[words.size() - 1].y >= 540)
+    if ((IsKeyPressed(KEY_DOWN) || GetMouseWheelMove() == -1) && rec_result[words.size() - 1].y >= 540)
     {
         for (int i = 0; i < words.size(); ++i)
         {
             rec_result[i].y -= 40;
         }
     }
+}
+
+// Truncate the text and add ellipsis if it exceeds the specified width
+std::string DefPage::TextEllipsis(const std::string &text, const Font &font, float maxWidth)
+{
+    std::string ellipsis      = "...";
+    std::string truncatedText = text;
+
+    Vector2 textSize = MeasureTextEx(font, text.c_str(), TEXT_FONT_SIZE, 1);
+
+    if (textSize.x > maxWidth)
+    {
+        // Subtract the ellipsis width from the available width
+        maxWidth -= MeasureTextEx(font, ellipsis.c_str(), TEXT_FONT_SIZE, 1).x;
+
+        while (MeasureTextEx(font, truncatedText.c_str(), TEXT_FONT_SIZE, 1).x > maxWidth && !truncatedText.empty())
+        {
+            // Remove characters from the end until the text fits within maxWidth
+            truncatedText.pop_back();
+        }
+
+        // Add ellipsis
+        truncatedText += ellipsis;
+    }
+
+    return truncatedText;
 }
 
 void DefPage::draw()
@@ -57,6 +93,54 @@ void DefPage::draw()
 
     Vector2 mousePos = GetMousePosition();
 
+    // Draws each word
+    for (int i = 0; i < words.size(); ++i)
+    {
+        DrawRectangleGradientV(rec_result[i].x, rec_result[i].y, rec_result[i].width, rec_result[i].height,
+                               BOX_COLOR_RGB, BOX_COLOR_RGB);
+
+        if (CheckCollisionPointRec(mousePos, rec_result[i]) && mousePos.y > 180 && !dropDownBox)
+            DrawRectangleGradientV(rec_result[i].x, rec_result[i].y, rec_result[i].width, rec_result[i].height,
+                                   GetColor(RESULT_COLOR_CONTAINER_HOVER), GetColor(RESULT_COLOR_CONTAINER_HOVER));
+
+        std::string wordsTmp = words[i].getWord().getKey();
+        if (!words[i].getWord().getType().empty())
+            wordsTmp += " (" + words[i].getWord().getType() + ")";
+
+        Vector2 textPosition = {rec_result[i].x + 10, rec_result[i].y + 10};
+        DrawTextEx(Resources::displayFontBold, wordsTmp.c_str(), textPosition, WORD_FONT_SIZE, 2, BLACK);
+
+        for (int j = 0; j < std::min(2, int(words[i].getWord().getDefinitionCount())); j++)
+        {
+            Vector2 definitionPosition = {rec_result[i].x + 14, rec_result[i].y + 35 * j + 50};
+
+            // Measure the text to determine if it fits within the rectangle
+            Vector2 textSize = MeasureTextEx(Resources::displayFontRegular, words[i].getWord().getDefinition(j).c_str(),
+                                             TEXT_FONT_SIZE, 1);
+
+            if (definitionPosition.x + textSize.x <= rec_result[i].x + rec_result[i].width &&
+                definitionPosition.y + textSize.y <= rec_result[i].y + rec_result[i].height)
+            {
+                // Draw the text if it fits within the rectangle
+                DrawTextEx(Resources::displayFontRegular, words[i].getWord().getDefinition(j).c_str(),
+                           definitionPosition, TEXT_FONT_SIZE, 1, WHITE);
+            }
+            else
+            {
+                // Calculate available width for truncated text (consider space for ellipsis)
+                float availableWidth = rec_result[i].width - 16 - (definitionPosition.x - rec_result[i].x);
+
+                // Truncate the text to fit within the available width and add ellipsis
+                std::string truncatedText = TextEllipsis(words[i].getWord().getDefinition(j).c_str(),
+                                                         Resources::displayFontRegular, availableWidth);
+
+                // Draw the truncated text with ellipsis
+                DrawTextEx(Resources::displayFontRegular, truncatedText.c_str(), definitionPosition, TEXT_FONT_SIZE, 1,
+                           WHITE);
+            }
+        }
+    }
+
     // draw the background of textbox
     DrawRectangleRec({277, 100, 1280, 115}, BG_COLOR_RGB);
     DrawRectangleLinesEx({270, 0, 1280, 215}, 2, BLACK);
@@ -64,7 +148,7 @@ void DefPage::draw()
     // Function switcher container
     DrawRectangleV(Vector2{0, 0}, Vector2{277, 720}, GetColor(SECONDARY_COLOR));
     DrawRectangleLinesEx({0, 0, 277, 720}, 2, BLACK);
-    
+
     // Draws the function switcher
     for (int i = 0; i < dictPages.size(); i++)
     {
@@ -92,57 +176,48 @@ void DefPage::draw()
 
     if (GuiButton(rec_reset, "RESET"))
     {
-    }
-
-    // Draws each word
-    for (int i = 0; i < words.size(); i++)
-    {
-        DrawRectangleV({wordRects[i].x, wordRects[i].y}, {wordRects[i].width, wordRects[i].height},
-                       SECONDARY_COLOR_CONTAINER_RGB);
-        DrawRectangleLinesEx(wordRects[i], 2, OUTLINE_COLOR_RGB);
-
-        if (CheckCollisionPointRec(mousePos, wordRects[i]) && !dropDownBox)
-        {
-            DrawRectangleV({wordRects[i].x, wordRects[i].y}, {wordRects[i].width, wordRects[i].height},
-                           SECONDARY_COLOR_RGB);
-        }
-
-        DrawTextEx(Resources::wordFontRegular, words[i]->getKey().c_str(), {wordRects[i].x + 10, wordRects[i].y + 10},
-                   WORD_FONT_SIZE, 0, TEXT_COLOR_RGB);
+        confirmResetBox = true;
     }
 
     // Draw the Dict Picker
-    if (GuiDropdownBox(
-            rec_dictionary,
-            (dictLanguages[0] + "\n" + dictLanguages[1] + "\n" + dictLanguages[2] + "\n" + dictLanguages[3] + "\n" + dictLanguages[4]).c_str(),
-            CurrentState::currentDict, dropDownBox))
+    if (GuiDropdownBox(rec_dictionary,
+                       (dictLanguages[0] + "\n" + dictLanguages[1] + "\n" + dictLanguages[2] + "\n" + dictLanguages[3] +
+                        "\n" + dictLanguages[4])
+                           .c_str(),
+                       CurrentState::currentDict, dropDownBox))
     {
         dropDownBox ^= 1;
         currentTrie     = PrebuiltTriesList[*CurrentState::currentDict];
         confirmResetBox = false;
-        for (int i = 0; i < sizeof(SearchInput); ++i) {
+        for (int i = 0; i < sizeof(SearchInput); ++i)
+        {
             SearchInput[i] = '\0';
         }
         words.clear();
     }
 
+    if (words.empty() && pressed)
+    {
+        DrawTextEx(Resources::displayFontBold, "No definition match this search !!!", {310, 240}, 25, 1, RED);
+    }
+
+    if (GetKeyPressed())
+    {
+        pressed = false;
+    }
+
     if (SearchInput[0] != '\0')
     {
-        if (words.empty())
-        {
-            DrawTextEx(Resources::displayFontBold, "No definition match this search !!!", {310, 240}, 25, 1, RED);
-        }
+        if (!pressed && words.empty())
+            DrawTextEx(Resources::displayFontBold, "...", {310, 240}, 30, 1, BLACK);
     }
 
-    if (SearchEdit)
+    if (IsKeyPressed(KEY_ENTER))
     {
-        if (GetKeyPressed() && !(IsKeyPressed(KEY_UP) || IsKeyPressed(KEY_DOWN)))
-        {
-            words.clear();
-            words = currentTrie.wordSuggest(SearchInput);
-        }
+        pressed = true;
+        words.clear();
+        words = r.searchDefinition(SearchInput, currentTrie);
     }
-
 }
 
 void DefPage::resetBox()
@@ -150,10 +225,14 @@ void DefPage::resetBox()
     if (GuiWindowBox({300, 170, 600, 250}, ""))
         confirmResetBox = false;
     text = "Are you sure to reset ?";
-    DrawTextEx(Resources::wordFontBold, text.c_str(),
-               {600 - MeasureTextEx(Resources::wordFontBold, text.c_str(), 27, 1).x / 2, 220}, 27, 1, BLACK);
+    DrawTextEx(Resources::displayFontBold, text.c_str(),
+               {600 - MeasureTextEx(Resources::displayFontBold, text.c_str(), 27, 1).x / 2, 220}, 27, 1, BLACK);
     if (GuiButton({400, 330, 100, 50}, "YES"))
+    {
         confirmResetBox = false;
+        memset(SearchInput, 0, sizeof(SearchInput));
+        words.clear();
+    }
     if (GuiButton({700, 330, 100, 50}, "NO"))
     {
         confirmResetBox = false;

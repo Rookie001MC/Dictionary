@@ -75,7 +75,7 @@ std::vector<RelevantWord> RelevantWord::searchDefinition(std::string definitionF
     std::string keyWord;
     std::string processed;
     std::vector<RelevantWord> words;
-    int wordLimit = 20;
+    int wordLimit = 10;
 
     while (std::getline(read, keyWord) && std::getline(file, processed))
     {
@@ -84,7 +84,7 @@ std::vector<RelevantWord> RelevantWord::searchDefinition(std::string definitionF
         wordHashing(processed, wordCounts);
         double percent = calculateRelevance(definitionFromUser, wordCounts);
 
-        if (percent >= 0.5)
+        if (percent >= 0.3)
         {
             if (trie.search(keyWord, word))
             {
