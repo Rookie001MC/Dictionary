@@ -15,7 +15,7 @@ FavoritesPage::FavoritesPage()
 
     for (int i = 0; i < words.size(); i++)
     {
-            wordRects.push_back({307, float(225 + 130 * i), 921, 120});
+        wordRects.push_back({307, float(225 + 130 * i), 921, 120});
     }
 }
 
@@ -45,40 +45,28 @@ std::string FavoritesPage::TextEllipsis(const std::string &text, const Font &fon
     return truncatedText;
 }
 
-
-
 void FavoritesPage::update()
 {
     currentFavorites = History(favoritesDirectories[*CurrentState::currentDict]);
     if (!words.size())
     {
         wordStrings = currentFavorites.get();
-        for (int i = 0; i < wordStrings.size(); i++)
-        {
-            Word tmp;
 
-            currentTrie.search(wordStrings[i], tmp);
-
-            if (tmp.getKey() != "")
-            {
-                words.push_back(tmp);
-                wordRects.push_back({307, float(225 + 130 * i), 921, 120});
-            }
-        }
+        getFavorites(wordStrings);
     }
 
-    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && !dictChooserActive)
+    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && !dictChooserActive && !confirmDeleteRecordBox)
     {
         for (int i = 0; i < words.size(); ++i)
         {
-            if (GetMousePosition().y > 180 && CheckCollisionPointRec(GetMousePosition(), wordRects[i]))
+            if (GetMousePosition().y > 180 && CheckCollisionPointRec(GetMousePosition(), wordRects[i]) && !CheckCollisionPointRec(GetMousePosition(), deleteRects[i]))
             {
                 CurrentState::currentWord = words[i];
                 CurrentState::currentPage = static_cast<Page>(5);
             }
         }
-    } 
-   if ((IsKeyPressed(KEY_UP) || GetMouseWheelMove() == 1) && wordRects[0].y < 200)
+    }
+    if ((IsKeyPressed(KEY_UP) || GetMouseWheelMove() == 1) && wordRects[0].y < 200)
     {
         for (int i = 0; i < words.size(); i++)
         {
@@ -86,7 +74,8 @@ void FavoritesPage::update()
         }
     }
 
-    if ((IsKeyPressed(KEY_DOWN)) || GetMouseWheelMove() == -1 && wordRects[words.size() - 1].y + wordRects[words.size() - 1].height > 800)
+    if ((IsKeyPressed(KEY_DOWN)) ||
+        GetMouseWheelMove() == -1 && wordRects[words.size() - 1].y + wordRects[words.size() - 1].height > 800)
     {
         for (int i = 0; i < words.size(); i++)
         {
@@ -97,6 +86,13 @@ void FavoritesPage::update()
 
 void FavoritesPage::draw()
 {
+
+    if (confirmDeleteRecordBox)
+    {
+        deleteRecord();
+        return;
+    }
+
     Vector2 mousePos = GetMousePosition();
 
     // Draw the Search Box (disabled)
@@ -106,31 +102,32 @@ void FavoritesPage::draw()
     for (int i = 0; i < words.size(); i++)
     {
         std::string wordWithTypeTmp = words[i].getKey();
-        if(!words[i].getType().empty())
+        if (!words[i].getType().empty())
         {
             wordWithTypeTmp += " (" + words[i].getType() + ")";
         }
 
+        DrawRectangleGradientV(wordRects[i].x, wordRects[i].y, wordRects[i].width, wordRects[i].height, BOX_COLOR_RGB,
+                               BOX_COLOR_RGB);
 
-        DrawRectangleGradientV(wordRects[i].x, wordRects[i].y, wordRects[i].width, wordRects[i].height, BOX_COLOR_RGB, BOX_COLOR_RGB); 
+        /*         DrawRectangleV({wordRects[i].x, wordRects[i].y}, {wordRects[i].width, wordRects[i].height},
+                               SECONDARY_COLOR_CONTAINER_RGB);
+                DrawRectangleLinesEx(wordRects[i], 2, OUTLINE_COLOR_RGB); */
 
-/*         DrawRectangleV({wordRects[i].x, wordRects[i].y}, {wordRects[i].width, wordRects[i].height},
-                       SECONDARY_COLOR_CONTAINER_RGB);
-        DrawRectangleLinesEx(wordRects[i], 2, OUTLINE_COLOR_RGB); */
+        if (CheckCollisionPointRec(mousePos, wordRects[i]) && !CheckCollisionPointRec(mousePos, deleteRects[i]) && mousePos.y > 180 && !dictChooserActive)
+        {
 
-        if (CheckCollisionPointRec(mousePos, wordRects[i]) && mousePos.y > 180 && !dictChooserActive)
             DrawRectangleGradientV(wordRects[i].x, wordRects[i].y, wordRects[i].width, wordRects[i].height,
                                    GetColor(RESULT_COLOR_CONTAINER_HOVER), GetColor(RESULT_COLOR_CONTAINER_HOVER));
+        }
 
-/*         if (CheckCollisionPointRec(mousePos, wordRects[i]) && !dictChooserActive)
-        {
-            DrawRectangleV({wordRects[i].x, wordRects[i].y}, {wordRects[i].width, wordRects[i].height},
-                           SECONDARY_COLOR_RGB);
-        } */
-
-        DrawTextEx(Resources::wordFontBold, wordWithTypeTmp.c_str(), {wordRects[i].x + 10, wordRects[i].y + 10},
-                   WORD_FONT_SIZE, 0, TEXT_COLOR_RGB);
-
+        /*         if (CheckCollisionPointRec(mousePos, wordRects[i]) && !dictChooserActive)
+                {
+                    DrawRectangleV({wordRects[i].x, wordRects[i].y}, {wordRects[i].width, wordRects[i].height},
+                                   SECONDARY_COLOR_RGB);
+                } */
+        Vector2 textPosition = {wordRects[i].x + 10, wordRects[i].y + 10};
+        DrawTextEx(Resources::wordFontBold, wordWithTypeTmp.c_str(), textPosition, WORD_FONT_SIZE, 0, TEXT_COLOR_RGB);
 
         for (int j = 0; j < std::min(2, int(words[i].getDefinitionCount())); j++)
         {
@@ -162,6 +159,12 @@ void FavoritesPage::draw()
             }
         }
 
+
+        if (GuiButton({wordRects[i].x + 850, wordRects[i].y + 10, 30, 30}, "#143#"))
+        {
+            CurrentState::currentWord = words[i];
+            confirmDeleteRecordBox    = true;
+        }
     }
 
     // Function switcher container
@@ -184,12 +187,12 @@ void FavoritesPage::draw()
         }
     }
 
-
     // Draw the Dict Picker
-    if (GuiDropdownBox(
-            dictChooserRect,
-            (dictLanguages[0] + "\n" + dictLanguages[1] + "\n" + dictLanguages[2] + "\n" + dictLanguages[3] + "\n" + dictLanguages[4]).c_str(),
-            CurrentState::currentDict, dictChooserActive))
+    if (GuiDropdownBox(dictChooserRect,
+                       (dictLanguages[0] + "\n" + dictLanguages[1] + "\n" + dictLanguages[2] + "\n" + dictLanguages[3] +
+                        "\n" + dictLanguages[4])
+                           .c_str(),
+                       CurrentState::currentDict, dictChooserActive))
     {
         dictChooserActive ^= 1;
 
@@ -202,8 +205,58 @@ void FavoritesPage::draw()
         // Update the history object
         currentFavorites.save();
         currentFavorites = History(favoritesDirectories[*CurrentState::currentDict], 1);
-
     }
+}
+void FavoritesPage::deleteRecord()
+{
+    if (GuiWindowBox({300, 170, 600, 250}, ""))
+    {
+        confirmDeleteRecordBox = false;
+    }
+    std::string promptText = "Are you sure you want to delete this from your history?";
+    DrawTextEx(Resources::displayFontRegular, promptText.c_str(),
+               {850 - MeasureTextEx(Resources::displayFontRegular, promptText.c_str(), TEXT_FONT_SIZE, 0).x, 220},
+               TEXT_FONT_SIZE, 0, TEXT_COLOR_RGB);
+    DrawTextEx(Resources::wordFontRegular, CurrentState::currentWord.getKey().c_str(), {620, 260}, WORD_FONT_SIZE, 0,
+               TEXT_COLOR_RGB);
+    if (GuiButton({400, 330, 100, 50}, "YES"))
+    {
 
-    
+        // Delete the word from the history
+        if (currentFavorites.find(CurrentState::currentWord.getKey()))
+        {
+            currentFavorites.remove(CurrentState::currentWord.getKey());
+        }
+        currentFavorites.save();
+
+        // Update the words vector
+        words.clear();
+        wordStrings.clear();
+
+        getFavorites(currentFavorites.get());
+
+        CurrentState::currentWord = Word();
+        confirmDeleteRecordBox    = false;
+    }
+    if (GuiButton({700, 330, 100, 50}, "NO"))
+    {
+        confirmDeleteRecordBox = false;
+    }
+}
+
+void FavoritesPage::getFavorites(std::vector<std::string> wordStrings)
+{
+    // Search through the trie for the words
+    for (int i = 0; i < wordStrings.size(); i++)
+    {
+        Word tmp;
+
+        currentTrie.search(wordStrings[i], tmp);
+        if (tmp.getKey() != "")
+        {
+            words.push_back(tmp);
+            wordRects.push_back({307, float(225 + 130 * i), 921, 120});
+            deleteRects.push_back({wordRects[i].x + 850, wordRects[i].y + 10, 30, 30});
+        }
+    }
 }
