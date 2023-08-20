@@ -223,18 +223,17 @@ Word Dictionary::getWordEngVie()
     while (!tmp.empty())
     {
         if (tmp.at(0) == '*')
-            type += (tmp.substr(1) + '/');
+            type += (tmp.substr(3) + '/');
         else if (tmp.at(0) == '=')
         {
             int pos = tmp.find('+');
-            word.addDefinition("Example: " + tmp.substr(1, pos - 1) + ": " + tmp.substr(pos + 1) + '\n');
+            word.addDefinition("Vi du: " + tmp.substr(1, pos - 1) + ": " + tmp.substr(pos + 1) + '\n');
         }
         else
             word.addDefinition(tmp.substr(1) + '\n');
 
         std::getline(fin, tmp, '\n');
     }
-    type = type.substr(0, type.size() - 1);
     word.setType(type.substr(0, type.size() - 1));
     return word;
 }
