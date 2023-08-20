@@ -9,7 +9,7 @@ SingleWordInfo::SingleWordInfo()
 {
     for (int i = 0; i < 20; ++i)
     {
-        defHeight[i]     = 220 + i * 60;
+        defHeight[i]     = 240 + i * 60;
         defBreakLines[i] = false;
     }
 
@@ -46,7 +46,8 @@ void SingleWordInfo::update()
         }
     }
 
-    if ((IsKeyPressed(KEY_UP) || GetMouseWheelMove() == 1) && defHeight[0] < 300)
+    // for the main page of single word info
+    if ((IsKeyPressed(KEY_UP) || GetMouseWheelMove() == 1) && defHeight[0] < 230)
     {
         for (int i = 0; i < CurrentState::currentWord.getDefinitionCount(); ++i)
         {
@@ -140,11 +141,11 @@ void SingleWordInfo::draw()
 
     std::string selectedTmp =
         CurrentState::currentWord.getKey() + ' ' + '(' + CurrentState::currentWord.getType() + ')';
-    DrawTextEx(Resources::wordFontBold, selectedTmp.c_str(), {115, 135}, 47, 2, BLACK);
+    DrawTextEx(Resources::displayFontBold, selectedTmp.c_str(), {105, 135}, 47, 2, GetColor(WRONG_ANS));
 
     if (GuiButton({700, 133, 135, 55}, "EDIT"))
     {
-        edit_height.push_back(200);
+        edit_height.push_back(230);
         editButton = true;
         for (int i = 1; i <= eachDef.size(); i++)
         {
@@ -206,7 +207,8 @@ void SingleWordInfo::editMenu()
         return;
     }
 
-    if ((IsKeyPressed(KEY_UP) || GetMouseWheelMove() == 1) && edit_height[0] < 200)
+    //for the edit menu
+    if ((IsKeyPressed(KEY_UP) || GetMouseWheelMove() == 1) && edit_height[0] < 230)
     {
         for (int i = 0; i <= eachDef.size(); i++)
             edit_height[i] += 40;
@@ -220,9 +222,9 @@ void SingleWordInfo::editMenu()
     for (int i = 0; i < eachDef.size(); i++)
     {
         DrawTextEx(Resources::displayFontRegular, eachDef[i].c_str(), {48, (float)edit_height[i] + 8}, 25, 1, BLACK);
-        DrawRectangleLinesEx({41, (float)edit_height[i], 1110, (float)edit_height[i + 1] - edit_height[i] - 20}, 2,
+        DrawRectangleLinesEx({41, (float)edit_height[i], 1130, (float)edit_height[i + 1] - edit_height[i] - 20}, 2,
                              BLACK);
-        if (GuiButton({1158, (float)edit_height[i], 65, 40}, "Edit"))
+        if (GuiButton({1180, (float)edit_height[i], 65, 40}, "Edit"))
         {
             edit_height.clear();
             // defChosen = i;
@@ -232,13 +234,19 @@ void SingleWordInfo::editMenu()
         }
     }
 
-    DrawRectangleRec({0, 100, 1280, 90}, GetColor(SECONDARY_COLOR));
-    DrawRectangleLinesEx({-5, 0, 1289, 190}, 2, BLACK);
+    // draw the line that divide the key and definition
+    DrawRectangleLinesEx({-5, 0, 1290, 200}, 2, BLACK);
+    DrawRectangleV({0, 120}, {1280, 79}, GetColor(SECONDARY_COLOR));
 
-    DrawTextEx(Resources::displayFontBold, "EDIT MENU", {70, 136}, 40, 1, RED);
-    if (GuiButton({750, 130, 100, 50}, "SAVE"))
+    if (GuiButton({10, 130, 25, 25}, "#113#"))
+    {
+        editButton = false;
+    }
+
+    DrawTextEx(Resources::displayFontBold, "EDIT MENU", {105, 135}, 47, 1, GetColor(WRONG_ANS));
+    if (GuiButton({750, 133, 100, 50}, "SAVE"))
         confirmSaveBox = true;
-    if (GuiButton({880, 130, 170, 50}, "ADD MORE"))
+    if (GuiButton({880, 133, 170, 50}, "ADD MORE"))
     {
         addDefButton = true;
         // newData = "\0";
