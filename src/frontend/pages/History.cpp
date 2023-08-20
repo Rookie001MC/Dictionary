@@ -17,7 +17,17 @@ HistoryPage::HistoryPage()
     {
         wordRects.push_back({307, float(225 + 130 * i), 921, 120});
     }
+
+    // drawing snow
+    for (int i = 0; i < 100; i++)
+    {
+        snowflakes[i].x      = GetRandomValue(0, 720);
+        snowflakes[i].y      = GetRandomValue(0, 1280);
+        snowflakes[i].width  = GetRandomValue(2, 4);
+        snowflakes[i].height = GetRandomValue(2, 4);
+    }
 }
+
 // Truncate the text and add ellipsis if it exceeds the specified width
 std::string HistoryPage::TextEllipsis(const std::string &text, const Font &font, float maxWidth)
 {
@@ -82,6 +92,17 @@ void HistoryPage::update()
         for (int i = 0; i < words.size(); i++)
         {
             wordRects[i].y -= 40;
+        }
+    }
+
+    // drawing snow
+    for (int i = 0; i < 100; i++)
+    {
+        snowflakes[i].y += 1.5 ; // Adjust the speed of falling snow
+        if (snowflakes[i].y > 720)
+        {
+            snowflakes[i].y = 0;
+            snowflakes[i].x = GetRandomValue(0, 1280);
         }
     }
 }
@@ -203,6 +224,13 @@ void HistoryPage::draw()
         currentHistory.save();
         currentHistory = History(historyDirectories[*CurrentState::currentDict]);
     }
+
+    // Draw snowflakes
+    for (int i = 0; i < 100; i++)
+    {
+        DrawRectangleRec(snowflakes[i], snowflakeColor);
+    }
+
 }
 
 void HistoryPage::deleteRecord()

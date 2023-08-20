@@ -15,6 +15,15 @@ DefPage::DefPage()
 
     for (int i = 0; i < 20; i++)
         rec_result[i] = {307, (float)225 + 130 * i, 921, 120};
+
+    // drawing snow
+    for (int i = 0; i < 100; i++)
+    {
+        snowflakes[i].x      = GetRandomValue(0, 720);
+        snowflakes[i].y      = GetRandomValue(0, 1280);
+        snowflakes[i].width  = GetRandomValue(2, 4);
+        snowflakes[i].height = GetRandomValue(2, 4);
+    }
 }
 
 void DefPage::update()
@@ -49,6 +58,16 @@ void DefPage::update()
         for (int i = 0; i < words.size(); ++i)
         {
             rec_result[i].y -= 40;
+        }
+    }
+    // drawing snow
+    for (int i = 0; i < 100; i++)
+    {
+        snowflakes[i].y += 1.5; // Adjust the speed of falling snow
+        if (snowflakes[i].y > 720)
+        {
+            snowflakes[i].y = 0;
+            snowflakes[i].x = GetRandomValue(0, 1280);
         }
     }
 }
@@ -217,6 +236,11 @@ void DefPage::draw()
         pressed = true;
         words.clear();
         words = r.searchDefinition(SearchInput, currentTrie);
+    }
+    // Draw snowflakes
+    for (int i = 0; i < 100; i++)
+    {
+        DrawRectangleRec(snowflakes[i], snowflakeColor);
     }
 }
 

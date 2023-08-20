@@ -30,6 +30,10 @@ class FavoritesPage
     History currentFavorites = History(favoritesDirectories[*CurrentState::currentDict], 1);
     Trie currentTrie         = PrebuiltTriesList[*CurrentState::currentDict];
 
+    // Initialize snow variables
+    Rectangle snowflakes[100];
+    Color snowflakeColor = GetColor(SNOW);
+
   public:
     FavoritesPage();
     std::string TextEllipsis(const std::string &text, const Font &font, float maxWidth);

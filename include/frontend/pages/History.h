@@ -31,6 +31,11 @@ class HistoryPage
     History currentHistory = History(historyDirectories[*CurrentState::currentDict]);
     Trie currentTrie = PrebuiltTriesList[*CurrentState::currentDict];
     bool confirmDeleteRecordBox = false;
+
+    // Initialize snow variables
+    Rectangle snowflakes[100];
+    Color snowflakeColor = GetColor(SNOW);
+    
   public:
     HistoryPage();
     std::string TextEllipsis(const std::string &text, const Font &font, float maxWidth);

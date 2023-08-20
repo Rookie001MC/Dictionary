@@ -18,8 +18,8 @@ SingleWordInfo::SingleWordInfo()
     {
         snowflakes[i].x      = GetRandomValue(0, 720);
         snowflakes[i].y      = GetRandomValue(0, 1280);
-        snowflakes[i].width  = GetRandomValue(2, 6);
-        snowflakes[i].height = GetRandomValue(2, 6);
+        snowflakes[i].width  = GetRandomValue(2, 4);
+        snowflakes[i].height = GetRandomValue(2, 4);
     }
 }
 
