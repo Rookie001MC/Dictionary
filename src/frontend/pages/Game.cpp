@@ -204,7 +204,7 @@ void GamePage::playGame()
         pressed = false;
     }
 
-    if (GuiButton({10, 130, 25, 27}, "X"))
+    if (GuiButton({10, 130, 25, 25}, "#113#"))
     {
         isBreakNewLines = false;
         cnt             = COUNTDOWN_DURATION + 1;
