@@ -16,6 +16,15 @@ WordPage::WordPage()
 
     for (int i = 0; i < 20; i++)
         rec_result[i] = {307, (float)225 + 130 * i, 921, 120};
+
+    // drawing snow
+    for (int i = 0; i < 100; i++)
+    {
+        snowflakes[i].x      = GetRandomValue(0, 720);
+        snowflakes[i].y      = GetRandomValue(0, 1280);
+        snowflakes[i].width  = GetRandomValue(2, 6);
+        snowflakes[i].height = GetRandomValue(2, 6);
+    }
 }
 
 void WordPage::update()
@@ -30,7 +39,6 @@ void WordPage::update()
                 currentHistory.save();
                 CurrentState::currentWord = words[i];
                 CurrentState::currentPage = static_cast<Page>(5);
-
             }
         }
     }
@@ -48,13 +56,25 @@ void WordPage::update()
         }
     }
 
-    if ((IsKeyPressed(KEY_DOWN) || GetMouseWheelMove() == -1)&& rec_result[words.size() - 1].y >= 540)
+    if ((IsKeyPressed(KEY_DOWN) || GetMouseWheelMove() == -1) && rec_result[words.size() - 1].y >= 540)
     {
         for (int i = 0; i < words.size(); ++i)
         {
             rec_result[i].y -= 40;
         }
     }
+
+    // drawing snow
+    for (int i = 0; i < 100; i++)
+    {
+        snowflakes[i].y += 1 ; // Adjust the speed of falling snow
+        if (snowflakes[i].y > 720)
+        {
+            snowflakes[i].y = 0;
+            snowflakes[i].x = GetRandomValue(0, 1280);
+        }
+    }
+
 }
 
 // Truncate the text and add ellipsis if it exceeds the specified width
@@ -161,19 +181,21 @@ void WordPage::draw()
     }
 
     // draw the reset button
-    if (GuiButton(rec_reset, "RESET")) 
+    if (GuiButton(rec_reset, "RESET"))
         confirmResetBox = true;
 
     if (GuiButton(rec_random, "RANDOM"))
     {
-        for (int i = 0; i < sizeof(SearchInput); ++i) {
+        for (int i = 0; i < sizeof(SearchInput); ++i)
+        {
             SearchInput[i] = '\0';
         }
 
         r.setDictionary(currentDictionary);
         r.setPath();
         randomWord = r.viewRandomWord();
-        for (int i = 0; i < randomWord.getKey().length(); ++i) {
+        for (int i = 0; i < randomWord.getKey().length(); ++i)
+        {
             SearchInput[i] = randomWord.getKey()[i];
         }
         words.clear();
@@ -211,14 +233,15 @@ void WordPage::draw()
         dropDownBox ^= 1;
         words.clear();
         confirmResetBox = false;
-        for (int i = 0; i < sizeof(SearchInput); ++i) {
+        for (int i = 0; i < sizeof(SearchInput); ++i)
+        {
             SearchInput[i] = '\0';
         }
 
-        currentTrie = PrebuiltTriesList[*CurrentState::currentDict];
+        currentTrie       = PrebuiltTriesList[*CurrentState::currentDict];
         currentDictionary = new Dictionary(dictLanguages[*CurrentState::currentDict], *CurrentState::currentDict);
 
-        currentHistory.save(); 
+        currentHistory.save();
         currentHistory = History(historyDirectories[*CurrentState::currentDict]);
     }
 
@@ -242,6 +265,13 @@ void WordPage::draw()
             words = currentTrie.wordSuggest(SearchInput);
         }
     }
+
+    // Draw snowflakes
+    for (int i = 0; i < 100; i++)
+    {
+        DrawRectangleRec(snowflakes[i], snowflakeColor);
+    }
+
 }
 
 void WordPage::resetBox()

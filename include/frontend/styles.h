@@ -84,6 +84,9 @@
 #define CORRECT_ANS (0x7BC178FF)
 #define WRONG_ANS (0xD4494Cff)
 
+#define BACKGROUND_TEXT_BOX (0xCBFFA9FF)
+#define SNOW (0xfaf0e6ff)
+
 // Màu nền
 #define BG_COLOR (0xFFECAFF)
 #define BG_COLOR_RGB                                                                                                   \

@@ -39,6 +39,10 @@ class DefPage
 
     short int selectedDictPage = 1;
 
+    // Initialize snow variables
+    Rectangle snowflakes[100];
+    Color snowflakeColor = GetColor(SNOW);
+
   public:
     DefPage();
     void draw();

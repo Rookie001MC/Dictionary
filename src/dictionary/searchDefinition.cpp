@@ -66,7 +66,7 @@ bool comparingRelevance(RelevantWord a, RelevantWord b)
 std::vector<RelevantWord> RelevantWord::searchDefinition(std::string definitionFromUser, Trie &trie)
 {
     // definitionFromUser = preprocessText(definitionFromUser);
-    
+    std::transform(definitionFromUser.begin(), definitionFromUser.end(), definitionFromUser.begin(), ::tolower);
     std::ifstream read;
     std::ifstream file;
     file.open("../data/engeng_processed.txt"); 

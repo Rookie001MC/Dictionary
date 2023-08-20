@@ -12,10 +12,29 @@ GamePage::GamePage()
 
     r.setDictionary(currentDictionary);
     r.setPath();
+
+    // drawing snow
+    for (int i = 0; i < 100; i++)
+    {
+        snowflakes[i].x      = GetRandomValue(0, 720);
+        snowflakes[i].y      = GetRandomValue(0, 1280);
+        snowflakes[i].width  = GetRandomValue(2, 4);
+        snowflakes[i].height = GetRandomValue(2, 4);
+    }
 }
 
 void GamePage::update()
 {
+    // drawing snow
+    for (int i = 0; i < 100; i++)
+    {
+        snowflakes[i].y += 1.5 ; // Adjust the speed of falling snow
+        if (snowflakes[i].y > 720)
+        {
+            snowflakes[i].y = 0;
+            snowflakes[i].x = GetRandomValue(0, 1280);
+        }
+    }
 }
 
 void GamePage::draw()
@@ -65,6 +84,13 @@ void GamePage::draw()
         mode     = 2;
         gameQuiz = true;
     }
+
+    // Draw snowflakes
+    for (int i = 0; i < 100; i++)
+    {
+        DrawRectangleRec(snowflakes[i], snowflakeColor);
+    }
+
 }
 
 void GamePage::drawQuestion()
@@ -115,6 +141,13 @@ void GamePage::drawQuestion()
         // Draw the text within the rectangle
         DrawTextEx(font, text, {centerX, centerY}, fontSize, 1, textColor);
     }
+
+    // Draw snowflakes
+    for (int i = 0; i < 100; i++)
+    {
+        DrawRectangleRec(snowflakes[i], snowflakeColor);
+    }
+
 }
 
 void GamePage::buildAnswer()
@@ -204,7 +237,7 @@ void GamePage::playGame()
         pressed = false;
     }
 
-    if (GuiButton({10, 130, 25, 27}, "X"))
+    if (GuiButton({10, 130, 25, 25}, "#113#"))
     {
         isBreakNewLines = false;
         cnt             = COUNTDOWN_DURATION + 1;
@@ -329,6 +362,13 @@ void GamePage::playGame()
         }
         DrawTextEx(Resources::displayFontBold, quiz[4].c_str(), {673, 556}, 25, 1, WHITE);
     }
+
+    // Draw snowflakes
+    for (int i = 0; i < 100; i++)
+    {
+        DrawRectangleRec(snowflakes[i], snowflakeColor);
+    }
+    
 }
 
 void GamePage::checkAns()

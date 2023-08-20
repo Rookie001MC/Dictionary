@@ -77,6 +77,7 @@ target_include_directories(${PROJECT_NAME} PUBLIC include)
 # Adding the libraries
 target_link_libraries(${PROJECT_NAME} PUBLIC raylib raygui)
 
+
 # MacOS jibbirish
 if (APPLE)
     target_link_libraries(${PROJECT_NAME} PUBLIC "-framework IOKit")

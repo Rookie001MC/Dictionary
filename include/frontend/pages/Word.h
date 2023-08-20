@@ -43,6 +43,10 @@ class WordPage
 
     Word tmp;
 
+    // Initialize snow variables
+    Rectangle snowflakes[100];
+    Color snowflakeColor = GetColor(SNOW);
+
   public:
     WordPage();
     std::string TextEllipsis(const std::string& text, const Font& font, float maxWidth);

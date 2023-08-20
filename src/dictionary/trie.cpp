@@ -96,6 +96,8 @@ void Trie::clear(TrieNode *root)
 
 bool Trie::search(std::string key, Word &word)
 {
+    std::transform(key.begin(), key.end(), key.begin(), ::tolower);         // convert the input to lowercase letters
+    
     TrieNode *cur = root;
     for (int i = 0; i < key.length(); ++i)
     {
