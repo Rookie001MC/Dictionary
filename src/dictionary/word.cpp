@@ -59,6 +59,9 @@ void Word::setDefinition(std::string definition, int index)
 
 void Word::addDefinition(std::string definition)
 {
+    for (int i = 0; i < getDefinitionCount(); ++i)
+        if (getDefinition(i) == definition)
+            return;
     this->definitions.push_back(definition);
 }
 
