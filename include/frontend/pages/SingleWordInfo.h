@@ -22,7 +22,13 @@ class SingleWordInfo
     {
     }
 
-    std::string fullDef = "\0";
+    // Initialize snow variables
+    Rectangle snowflakes[100];
+
+    bool defBreakLines[30];
+    int defHeight[30];
+    bool isBreakNewLines = false;
+    bool isFullDef = false;
     std::vector<std::string> eachDef;
     std::vector<int> edit_height;
     bool isInfo = false;
@@ -37,6 +43,8 @@ class SingleWordInfo
     ~SingleWordInfo()
     {
     }
+    void buildAnswer();
+    void drawSnow();
     void update();
     void draw();
 };

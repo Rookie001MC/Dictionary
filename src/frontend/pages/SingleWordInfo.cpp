@@ -7,6 +7,20 @@
 
 SingleWordInfo::SingleWordInfo()
 {
+    for (int i = 0; i < 20; ++i)
+    {
+        defHeight[i]     = 220 + i * 60;
+        defBreakLines[i] = false;
+    }
+
+    // drawing snow
+    for (int i = 0; i < 100; i++)
+    {
+        snowflakes[i].x      = GetRandomValue(0, 720);
+        snowflakes[i].y      = GetRandomValue(0, 1280);
+        snowflakes[i].width  = GetRandomValue(2, 6);
+        snowflakes[i].height = GetRandomValue(2, 6);
+    }
 }
 
 void SingleWordInfo::update()
@@ -14,17 +28,76 @@ void SingleWordInfo::update()
     currentFavorites = History(favoritesDirectories[*CurrentState::currentDict], 1);
     if (isInfo)
     {
+        eachDef.clear();
+        isFullDef                 = false;
         isInfo                    = false;
         CurrentState::currentPage = static_cast<Page>(0);
     }
-    if (fullDef == "\0")
+
+    if (!isFullDef)
     {
         std::string tmp;
+        isFullDef = true;
+
         for (int i = 0; i < CurrentState::currentWord.getDefinitionCount(); ++i)
         {
             tmp = CurrentState::currentWord.getDefinition(i);
             eachDef.push_back(tmp);
-            fullDef += tmp + "\n";
+        }
+    }
+
+    if ((IsKeyPressed(KEY_UP) || GetMouseWheelMove() == 1) && defHeight[0] < 300)
+    {
+        for (int i = 0; i < CurrentState::currentWord.getDefinitionCount(); ++i)
+        {
+            defHeight[i] += 40;
+        }
+    }
+
+    if ((IsKeyPressed(KEY_DOWN) || GetMouseWheelMove() == -1) &&
+        defHeight[std::min(20, (int)eachDef.size()) - 1] >= 540)
+    {
+        for (int i = 0; i < CurrentState::currentWord.getDefinitionCount(); ++i)
+        {
+            defHeight[i] -= 40;
+        }
+    }
+
+    // drawing snow
+    for (int i = 0; i < 100; i++)
+    {
+        snowflakes[i].y += 1.5 ; // Adjust the speed of falling snow
+        if (snowflakes[i].y > 720)
+        {
+            snowflakes[i].y = 0;
+            snowflakes[i].x = GetRandomValue(0, 1280);
+        }
+    }
+}
+
+void SingleWordInfo::buildAnswer()
+{
+    // break the new lines
+    isBreakNewLines = true;
+    for (int i = 0; i < eachDef.size(); ++i)
+    {
+        if (MeasureTextEx(Resources::displayFontBold, eachDef[i].c_str(), 25, 1).x > 1220)
+        {
+            defBreakLines[i] = true;
+            float propotion  = float(MeasureTextEx(Resources::displayFontBold, eachDef[i].c_str(), 25, 1).x / 1220);
+            int pre          = 0;
+            int position     = eachDef[i].length() / (float)propotion;
+            while (position < eachDef[i].length())
+            {
+                while (
+                    eachDef[i][position] != ' ' ||
+                    MeasureTextEx(Resources::displayFontBold, eachDef[i].substr(pre, position - pre).c_str(), 25, 1).x >
+                        1220)
+                    position--;
+                eachDef[i][position] = '\n';
+                pre                  = position + 1;
+                position += eachDef[i].length() / (float)propotion;
+            }
         }
     }
 }
@@ -42,21 +115,34 @@ void SingleWordInfo::draw()
         return;
     }
 
-    if (GuiWindowBox({73, 160, 1140, 510}, ""))
+    for (int i = 0; i < std::min(20, (int)eachDef.size()); ++i)
+    {
+        if (!isBreakNewLines)
+            buildAnswer();
+        if (defBreakLines[i])
+        {
+            defHeight[i + 1] += 19;
+            defHeight[i + 2] += 5;
+            defBreakLines[i] = false;
+        }
+        DrawTextEx(Resources::displayFontRegular, eachDef[i].c_str(), {75, (float)defHeight[i]}, TEXT_FONT_SIZE, 1,
+                   BLACK);
+    }
+
+    // draw the line that divide the key and definition
+    DrawRectangleLinesEx({-5, 0, 1290, 200}, 2, BLACK);
+    DrawRectangleV({0, 120}, {1280, 79}, GetColor(SECONDARY_COLOR));
+
+    if (GuiButton({10, 130, 25, 25}, "#113#"))
     {
         isInfo = true;
     }
+
     std::string selectedTmp =
         CurrentState::currentWord.getKey() + ' ' + '(' + CurrentState::currentWord.getType() + ')';
-    DrawTextEx(Resources::wordFontBold, selectedTmp.c_str(), {105, 200}, WORD_FONT_SIZE, 2, BLACK);
+    DrawTextEx(Resources::wordFontBold, selectedTmp.c_str(), {115, 135}, 47, 2, BLACK);
 
-    for (int i = 0; i < std::min(4, int(CurrentState::currentWord.getDefinitionCount())); ++i)
-    {
-        DrawTextEx(Resources::displayFontRegular, CurrentState::currentWord.getDefinition(i).c_str(),
-                   {105, (float)(270 + i * 65)}, TEXT_FONT_SIZE, 2, BLACK);
-    }
-
-    if (GuiButton({700, 590, 135, 55}, "EDIT"))
+    if (GuiButton({700, 133, 135, 55}, "EDIT"))
     {
         edit_height.push_back(200);
         editButton = true;
@@ -67,11 +153,11 @@ void SingleWordInfo::draw()
         }
         return;
     }
-    
+
     // Find the word in the Favortite list first.
     if (currentFavorites.find(CurrentState::currentWord.getKey()) == -1)
     {
-        if (GuiButton({855, 590, 165, 55}, "ADD FAVORITE"))
+        if (GuiButton({855, 133, 195, 55}, "ADD FAVORITE"))
         {
             currentFavorites.add(CurrentState::currentWord.getKey());
             currentFavorites.save();
@@ -79,14 +165,26 @@ void SingleWordInfo::draw()
     }
     else
     {
-        if (GuiButton({855, 590, 165, 55}, "REMOVE FAVORITE"))
+        if (GuiButton({855, 133, 195, 55}, "REMOVE FAVORITE"))
         {
             currentFavorites.remove(CurrentState::currentWord.getKey());
             currentFavorites.save();
         }
     }
-    if (GuiButton({1040, 590, 135, 55}, "DELETE"))
+    if (GuiButton({1065, 133, 135, 55}, "DELETE"))
     {
+    }
+
+    drawSnow();
+}
+
+void SingleWordInfo::drawSnow() {
+    Color snowflakeColor = GetColor(SNOW);
+
+    // Draw snowflakes
+    for (int i = 0; i < 100; i++)
+    {
+        DrawRectangleRec(snowflakes[i], snowflakeColor);
     }
 }
 
@@ -108,7 +206,7 @@ void SingleWordInfo::editMenu()
         return;
     }
 
-    if ((IsKeyPressed(KEY_UP) || GetMouseWheelMove() == 1)&& edit_height[0] < 200)
+    if ((IsKeyPressed(KEY_UP) || GetMouseWheelMove() == 1) && edit_height[0] < 200)
     {
         for (int i = 0; i <= eachDef.size(); i++)
             edit_height[i] += 40;
