@@ -25,6 +25,7 @@ class Word
     void setType(std::string type);
     void setDefinition(std::string definition, int index);
     void addDefinition(std::string definition);
+    void removeDefinition(int index);
 };
 
 class Dictionary

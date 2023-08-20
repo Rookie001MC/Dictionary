@@ -65,6 +65,11 @@ void Word::addDefinition(std::string definition)
     this->definitions.push_back(definition);
 }
 
+void Word::removeDefinition(int index) {
+    if (index < definitions.size())
+        definitions.erase(definitions.begin() + index);
+}
+
 // define Dictionary
 Dictionary::Dictionary(std::string path, int dictType)
 {
