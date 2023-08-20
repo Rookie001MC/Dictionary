@@ -99,6 +99,9 @@ void FavoritesPage::draw()
 {
     Vector2 mousePos = GetMousePosition();
 
+    // Draw the Search Box (disabled)
+    DrawRectangle(305, 140, 420, 55, BG_COLOR_RGB);
+
     // Draws each word
     for (int i = 0; i < words.size(); i++)
     {
@@ -109,19 +112,21 @@ void FavoritesPage::draw()
         }
 
 
-        DrawRectangleV({wordRects[i].x, wordRects[i].y}, {wordRects[i].width, wordRects[i].height},
+        DrawRectangleGradientV(wordRects[i].x, wordRects[i].y, wordRects[i].width, wordRects[i].height, BOX_COLOR_RGB, BOX_COLOR_RGB); 
+
+/*         DrawRectangleV({wordRects[i].x, wordRects[i].y}, {wordRects[i].width, wordRects[i].height},
                        SECONDARY_COLOR_CONTAINER_RGB);
-        DrawRectangleLinesEx(wordRects[i], 2, OUTLINE_COLOR_RGB);
+        DrawRectangleLinesEx(wordRects[i], 2, OUTLINE_COLOR_RGB); */
 
         if (CheckCollisionPointRec(mousePos, wordRects[i]) && mousePos.y > 180 && !dictChooserActive)
             DrawRectangleGradientV(wordRects[i].x, wordRects[i].y, wordRects[i].width, wordRects[i].height,
                                    GetColor(RESULT_COLOR_CONTAINER_HOVER), GetColor(RESULT_COLOR_CONTAINER_HOVER));
 
-        if (CheckCollisionPointRec(mousePos, wordRects[i]) && !dictChooserActive)
+/*         if (CheckCollisionPointRec(mousePos, wordRects[i]) && !dictChooserActive)
         {
             DrawRectangleV({wordRects[i].x, wordRects[i].y}, {wordRects[i].width, wordRects[i].height},
                            SECONDARY_COLOR_RGB);
-        }
+        } */
 
         DrawTextEx(Resources::wordFontBold, wordWithTypeTmp.c_str(), {wordRects[i].x + 10, wordRects[i].y + 10},
                    WORD_FONT_SIZE, 0, TEXT_COLOR_RGB);
@@ -200,7 +205,5 @@ void FavoritesPage::draw()
 
     }
 
-        // Draw the Search Box (disabled)
-        DrawRectangle(305, 140, 420, 55, BG_COLOR_RGB);
     
 }

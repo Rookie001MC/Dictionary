@@ -113,7 +113,7 @@ void WordPage::draw()
             wordsTmp += " (" + words[i].getType() + ")";
 
         Vector2 textPosition = {rec_result[i].x + 10, rec_result[i].y + 10};
-        DrawTextEx(Resources::displayFontBold, wordsTmp.c_str(), textPosition, WORD_FONT_SIZE, 2, BLACK);
+        DrawTextEx(Resources::wordFontBold, wordsTmp.c_str(), textPosition, WORD_FONT_SIZE, 2, TEXT_COLOR_RGB);
 
         for (int j = 0; j < std::min(2, int(words[i].getDefinitionCount())); j++)
         {
@@ -128,7 +128,7 @@ void WordPage::draw()
             {
                 // Draw the text if it fits within the rectangle
                 DrawTextEx(Resources::displayFontRegular, words[i].getDefinition(j).c_str(), definitionPosition,
-                           TEXT_FONT_SIZE, 1, WHITE);
+                           TEXT_FONT_SIZE, 1, TEXT_COLOR_RGB);
             }
             else
             {
@@ -141,7 +141,7 @@ void WordPage::draw()
 
                 // Draw the truncated text with ellipsis
                 DrawTextEx(Resources::displayFontRegular, truncatedText.c_str(), definitionPosition, TEXT_FONT_SIZE, 1,
-                           WHITE);
+                           TEXT_COLOR_RGB);
             }
         }
     }
