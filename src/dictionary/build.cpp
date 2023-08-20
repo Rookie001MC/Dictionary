@@ -2,6 +2,79 @@
 
 std::string nextKey;
 
+UserData::UserData(Trie* pTrie, Dictionary* pDict) {
+    this->pTrie = pTrie;
+    switch (pDict->getDictionaryType())
+    {
+        case 0:
+            this->path      = ENGENG + "user.dict";
+            break;
+        case 1:
+            this->path      = ENGVIE + "user.dict";
+            break;
+        case 2:
+            this->path      = VIEENG + + "user.dict";
+            break;
+        case 3:
+            this->path      = EMOJI + + "user.dict";
+            break;
+        case 4:
+            this->path      = SLANG + + "user.dict";
+    }
+    std::ifstream fin(path);
+    while (!fin.eof()) {
+        std::string key, type, tmp;
+        getline(fin, key, '\n');
+        if (key.empty()) break;
+        getline(fin, type, '\n');
+        getline(fin, tmp, '\n');
+        int numOfDefs = std::stoi(tmp);
+        Word word(key, type);
+        while (numOfDefs--) {
+            getline(fin, tmp);
+            word.addDefinition(tmp);
+        }
+        listOfWords.push_back(word);
+        pTrie->insert(word);
+    }
+    fin.close();
+}
+
+UserData::~UserData() {
+    save();
+}
+
+int UserData::find(std::string key) {
+    for (int i = 0; i < listOfWords.size(); ++i)
+        if (key == listOfWords.at(i).getKey())
+            return i;
+    return -1;
+}
+
+void UserData::addWord(Word word) {
+    if (find(word.getKey()) == -1)    
+        listOfWords.push_back(word);
+    pTrie->insert(word);
+}
+
+void UserData::removeWord(std::string key) {
+    int index = find(key);
+    if (index != -1) 
+        listOfWords.erase(listOfWords.begin() + index);
+}
+
+void UserData::save() {
+    std::ofstream fout(path);
+    for (int i = 0; i < listOfWords.size(); ++i) {
+        Word word = listOfWords.at(i);
+        fout << word.getKey() << std::endl;
+        fout << word.getType() << std::endl;
+        fout << word.getDefinitionCount() << std::endl;
+        for (int j = 0; j < word.getDefinitionCount(); ++j) 
+            fout << word.getDefinition(j) << std::endl;
+    }
+}
+
 void extractEngEng(Dictionary &dict, Trie &trie)
 {
     bool sign = false;
@@ -118,6 +191,11 @@ void build(Dictionary &dict, Trie &trie)
         std::ofstream fout(path + "favourite.txt");
         fout.close();
     }
+    if (!std::filesystem::exists(path + "user.dict"))
+    {
+        std::ofstream fout(path + "user.dict");
+        fout.close();
+    }
     if (std::filesystem::exists(path + "data.dict"))
         trie.deserialize(path + "data.dict", delimiter);
     else
@@ -142,6 +220,36 @@ void build(Dictionary &dict, Trie &trie)
         }
         trie.serialize(path + "data.dict", delimiter);
     }
+    UserData user(&trie, &dict);
+}
+
+void save(Dictionary &dict, Trie &trie) {
+    std::string path;
+    char delimiter;
+    switch (dict.getDictionaryType())
+    {
+        case 0:
+            path      = ENGENG;
+            delimiter = ENGENGDELIMITER;
+            break;
+        case 1:
+            path      = ENGVIE;
+            delimiter = ENGVIEDELIMITER;
+            break;
+        case 2:
+            path      = VIEENG;
+            delimiter = VIEENGDELIMITER;
+            break;
+        case 3:
+            path      = EMOJI;
+            delimiter = EMOJIDELIMITER;
+            break;
+        case 4:
+            path      = SLANG;
+            delimiter = SLANGDELIMITER;
+            break;
+    }
+    trie.serialize(path + "data.dict", delimiter);
 }
 
 void reset(Dictionary &dict, Trie &trie)

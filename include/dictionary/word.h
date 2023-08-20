@@ -15,7 +15,7 @@ class Word
 
   public:
     Word();
-    Word(std::string key, std::string type, std::string definition);
+    Word(std::string key, std::string type = "", std::string definition = "");
     std::string getKey();
     std::string getType();
     std::string getDefinition(int index);

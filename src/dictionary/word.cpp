@@ -9,7 +9,7 @@ Word::Word()
     type = "";
 }
 
-Word::Word(std::string key, std::string type = "", std::string definition = "")
+Word::Word(std::string key, std::string type, std::string definition)
 {
     this->key  = key;
     this->type = type;
@@ -143,6 +143,7 @@ std::string extractWordType(const std::string &line)
     iss >> std::skipws >> wordType;
     return wordType;
 }
+
 Word Dictionary::getWordEngEng()
 {
     bool isEndOfDefinition = false;
