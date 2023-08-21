@@ -132,9 +132,6 @@ void FavoritesPage::draw()
         DrawRectangleGradientV(wordRects[i].x, wordRects[i].y, wordRects[i].width, wordRects[i].height, BOX_COLOR_RGB,
                                BOX_COLOR_RGB);
 
-        /*         DrawRectangleV({wordRects[i].x, wordRects[i].y}, {wordRects[i].width, wordRects[i].height},
-                               SECONDARY_COLOR_CONTAINER_RGB);
-                DrawRectangleLinesEx(wordRects[i], 2, OUTLINE_COLOR_RGB); */
 
         if (CheckCollisionPointRec(mousePos, wordRects[i]) && !CheckCollisionPointRec(mousePos, deleteRects[i]) && mousePos.y > 180 && !dictChooserActive)
         {
@@ -143,11 +140,6 @@ void FavoritesPage::draw()
                                    GetColor(RESULT_COLOR_CONTAINER_HOVER), GetColor(RESULT_COLOR_CONTAINER_HOVER));
         }
 
-        /*         if (CheckCollisionPointRec(mousePos, wordRects[i]) && !dictChooserActive)
-                {
-                    DrawRectangleV({wordRects[i].x, wordRects[i].y}, {wordRects[i].width, wordRects[i].height},
-                                   SECONDARY_COLOR_RGB);
-                } */
         Vector2 textPosition = {wordRects[i].x + 10, wordRects[i].y + 10};
         DrawTextEx(Resources::wordFontBold, wordWithTypeTmp.c_str(), textPosition, WORD_FONT_SIZE, 0, TEXT_COLOR_RGB);
 
