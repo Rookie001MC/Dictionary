@@ -190,7 +190,10 @@ void FavoritesPage::draw()
     {
         SearchEdit ^= 1;
     }
-
+    if (GuiButton(ResetRect, "RESET"))
+    {
+        confirmResetBox = true;
+    }
     // Search logic, should be only in the wordString vector, therefore it should be simple.
     if (SearchEdit)
     {
@@ -327,5 +330,34 @@ void FavoritesPage::getFavorites(std::vector<std::string> wordStrings)
             wordRects.push_back({307, float(225 + 130 * i), 921, 120});
             deleteRects.push_back({wordRects[i].x + 850, wordRects[i].y + 10, 30, 30});
         }
+    }
+}
+
+void FavoritesPage::deleteAll()
+{   
+    if (GuiWindowBox({300, 170, 600, 250}, ""))
+    {
+        confirmResetBox = false;
+    }
+    std::string promptText = "Are you sure you want to delete all your history?";
+    DrawTextEx(Resources::displayFontRegular, promptText.c_str(),
+               {850 - MeasureTextEx(Resources::displayFontRegular, promptText.c_str(), TEXT_FONT_SIZE, 0).x, 220},
+               TEXT_FONT_SIZE, 0, TEXT_COLOR_RGB);
+    if (GuiButton({400, 330, 100, 50}, "YES"))
+    {
+        
+        for(int i = 0; i < currentFavorites.get().size(); i++)
+        {
+            currentFavorites.remove(currentFavorites.get()[i]);
+        }
+
+        currentFavorites.save();
+        words.clear();
+        wordStrings.clear();
+        confirmResetBox = false;
+    }
+    if (GuiButton({700, 330, 100, 50}, "NO"))
+    {
+        confirmResetBox = false;
     }
 }
