@@ -19,8 +19,8 @@ class SingleWordInfo
     // Initialize snow variables
     Rectangle snowflakes[100];
 
-    bool defBreakLines[30];
-    int defHeight[30];
+    bool defBreakLines[55];
+    int defHeight[55];
     bool isBreakNewLines = false;
     bool isFullDef       = false;
     std::vector<std::string> eachDef;
