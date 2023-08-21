@@ -1,10 +1,10 @@
 #ifndef FRONTEND_PAGE_HISTORY
 #define FRONTEND_PAGE_HISTORY
 
+#include "dictionary/history.h"
 #include "dictionary/word.h"
 #include "frontend/styles.h"
 #include "globalVars/globalVars.h"
-#include "dictionary/history.h"
 #include "raylib.h"
 #include <vector>
 
@@ -12,8 +12,8 @@ class HistoryPage
 {
   private:
     std::vector<Word> words;
-    std::vector <std::string> wordStrings;
-    std::vector <std::string> tempSearched;
+    std::vector<std::string> wordStrings;
+    std::vector<std::string> tempSearched;
     std::vector<Rectangle> wordRects;
     std::vector<Rectangle> deleteRects;
 
@@ -28,16 +28,16 @@ class HistoryPage
 
     char SearchInput[101] = "";
     Rectangle SearchInputRect{305, 140, 440, 55};
-    bool SearchEdit      = false;
+    bool SearchEdit = false;
     // Create the storage
-    History currentHistory = History(historyDirectories[*CurrentState::currentDict]);
-    Trie currentTrie = PrebuiltTriesList[*CurrentState::currentDict];
+    History currentHistory      = History(historyDirectories[*CurrentState::currentDict]);
+    Trie currentTrie            = PrebuiltTriesList[*CurrentState::currentDict];
     bool confirmDeleteRecordBox = false;
 
     // Initialize snow variables
     Rectangle snowflakes[100];
     Color snowflakeColor = GetColor(SNOW);
-    
+
   public:
     HistoryPage();
     std::string TextEllipsis(const std::string &text, const Font &font, float maxWidth);
@@ -45,7 +45,7 @@ class HistoryPage
     void draw();
     void deleteRecord();
     void getHistory(std::vector<std::string> wordStrings);
-    void searchHistory(char* searchInput);
+    void searchHistory(char *searchInput);
 };
 
 #endif

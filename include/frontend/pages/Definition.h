@@ -1,11 +1,11 @@
 #ifndef FRONTEND_PAGE_DEFINITION
 #define FRONTEND_PAGE_DEFINITION
 
+#include "dictionary/history.h"
+#include "dictionary/searchDefinition.h"
 #include "dictionary/trie.h"
 #include "dictionary/word.h"
 #include "frontend/styles.h"
-#include "dictionary/searchDefinition.h"
-#include "dictionary/history.h"
 #include "globalVars/globalVars.h"
 #include "raylib.h"
 #include <cstring>
@@ -14,9 +14,9 @@
 class DefPage
 {
   private:
-    Trie currentTrie      = PrebuiltTriesList[*CurrentState::currentDict];
-    Dictionary* currentDictionary = new Dictionary(dictDirs[*CurrentState::currentDict], *CurrentState::currentDict);
-    History currentHistory = History(historyDirectories[*CurrentState::currentDict]);
+    Trie currentTrie              = PrebuiltTriesList[*CurrentState::currentDict];
+    Dictionary *currentDictionary = new Dictionary(dictDirs[*CurrentState::currentDict], *CurrentState::currentDict);
+    History currentHistory        = History(historyDirectories[*CurrentState::currentDict]);
 
     bool SearchEdit       = false;
     char SearchInput[101] = "";
@@ -34,7 +34,7 @@ class DefPage
     std::vector<std::string> dictLanguages = {"ENG-ENG", "ENG-VIE", "VIE-ENG", "EMOJI", "SLANG"};
 
     Rectangle dictPagesRects[5];
-    bool pressed = false;
+    bool pressed                       = false;
     std::vector<std::string> dictPages = {"WORD", "Definition", "Favorites", "History", "Game"};
 
     short int selectedDictPage = 1;

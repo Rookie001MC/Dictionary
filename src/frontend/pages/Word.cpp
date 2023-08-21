@@ -174,7 +174,7 @@ void WordPage::draw()
     {
         SearchEdit ^= 1;
     }
-    
+
     if (SearchInput[0] == '\0')
     {
         DrawTextEx(Resources::displayFontRegular, "Search...", {330, 155}, TEXT_FONT_SIZE, 0, GRAY);

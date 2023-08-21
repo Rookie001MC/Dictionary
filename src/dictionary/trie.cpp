@@ -1,6 +1,6 @@
 #include "dictionary/trie.h"
-#include <ctype.h>
 #include <algorithm>
+#include <ctype.h>
 
 Trie::Trie()
 {
@@ -96,8 +96,8 @@ void Trie::clear(TrieNode *root)
 
 bool Trie::search(std::string key, Word &word)
 {
-    std::transform(key.begin(), key.end(), key.begin(), ::tolower);         // convert the input to lowercase letters
-    
+    std::transform(key.begin(), key.end(), key.begin(), ::tolower); // convert the input to lowercase letters
+
     TrieNode *cur = root;
     for (int i = 0; i < key.length(); ++i)
     {
@@ -147,7 +147,7 @@ std::vector<Word> Trie::wordSuggest(std::string prefix)
     return wordlist;
 }
 
-void Trie::wordSuggest(std::vector<Word> &wordlist, int limit, std::queue<TrieNode*> &q)
+void Trie::wordSuggest(std::vector<Word> &wordlist, int limit, std::queue<TrieNode *> &q)
 {
     while (!q.empty())
     {

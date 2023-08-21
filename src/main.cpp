@@ -1,8 +1,7 @@
 // main function currently used for testing. will be changed in the future
 #include "dictionary/build.h"
-#include "dictionary/trie.h"
-#include "dictionary/word.h"
 #include "dictionary/filePathHandler.h"
+#include "dictionary/trie.h"
 #include "dictionary/word.h"
 #include "frontend/FrontendMain.h"
 #include "frontend/ResourcesLoad.h"
@@ -54,7 +53,7 @@ int main(int argc, const char *argv[])
 //     // w.addDefinition("Hoang");
 //     // w.addDefinition("Thong");
 //     // Word ww("canhcut", "name", "khoa");
-//     // trie.insert(w); 
+//     // trie.insert(w);
 //     // trie.insert(ww);
 //     // For random functions:
 //     // Random random;

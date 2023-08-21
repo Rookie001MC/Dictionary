@@ -197,9 +197,9 @@ void SingleWordInfo::addDef()
 
     if (GuiButton({390, 390, 100, 50}, "ENTER"))
     {
-        addDefButton = false;
-        editButton = false;
-        std::string definition  = std::to_string(CurrentState::currentWord.getDefinitionCount()) + ": " + NewDef;
+        addDefButton           = false;
+        editButton             = false;
+        std::string definition = std::to_string(CurrentState::currentWord.getDefinitionCount()) + ": " + NewDef;
         CurrentState::currentWord.addDefinition(definition.c_str());
         CurrentState::currentPage = static_cast<Page>(5);
     }

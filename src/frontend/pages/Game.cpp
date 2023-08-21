@@ -28,7 +28,7 @@ void GamePage::update()
     // drawing snow
     for (int i = 0; i < 100; i++)
     {
-        snowflakes[i].y += 1.5 ; // Adjust the speed of falling snow
+        snowflakes[i].y += 1.5; // Adjust the speed of falling snow
         if (snowflakes[i].y > 720)
         {
             snowflakes[i].y = 0;
@@ -90,7 +90,6 @@ void GamePage::draw()
     {
         DrawRectangleRec(snowflakes[i], snowflakeColor);
     }
-
 }
 
 void GamePage::drawQuestion()
@@ -147,7 +146,6 @@ void GamePage::drawQuestion()
     {
         DrawRectangleRec(snowflakes[i], snowflakeColor);
     }
-
 }
 
 void GamePage::buildAnswer()
@@ -269,7 +267,8 @@ void GamePage::playGame()
         {
             DrawTextEx(Resources::displayFontBold, ans.c_str(), {590, 230}, 30, 1, PURPLE);
         }
-        else {
+        else
+        {
             DrawTextEx(Resources::displayFontBold, ans.c_str(), {550, 230}, 30, 1,
                        correctAns ? GetColor(CORRECT_ANS) : RED);
         }
@@ -368,7 +367,6 @@ void GamePage::playGame()
     {
         DrawRectangleRec(snowflakes[i], snowflakeColor);
     }
-    
 }
 
 void GamePage::checkAns()
@@ -378,7 +376,7 @@ void GamePage::checkAns()
         pressed    = true;
         correctAns = true;
         ans        = "TIME OUT";
-        check  = 5;
+        check      = 5;
     }
     if (IsMouseButtonPressed(0) && !choosen)
     {

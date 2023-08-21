@@ -98,7 +98,7 @@ void HistoryPage::update()
     // drawing snow
     for (int i = 0; i < 100; i++)
     {
-        snowflakes[i].y += 1.5 ; // Adjust the speed of falling snow
+        snowflakes[i].y += 1.5; // Adjust the speed of falling snow
         if (snowflakes[i].y > 720)
         {
             snowflakes[i].y = 0;
@@ -193,14 +193,15 @@ void HistoryPage::draw()
     // Search logic, should be only in the wordString vector, therefore it should be simple.
     if (SearchEdit)
     {
-        if(GetKeyPressed() && !(IsKeyPressed(KEY_UP) || IsKeyPressed(KEY_DOWN)))
+        if (GetKeyPressed() && !(IsKeyPressed(KEY_UP) || IsKeyPressed(KEY_DOWN)))
         {
             words.clear();
             wordRects.clear();
             tempSearched.clear();
 
             // Find the words that match the substring or the entire string in the entire history
-            // If we do, then we push the word to the tempSearched vector, which will be passed to the getHistory function
+            // If we do, then we push the word to the tempSearched vector, which will be passed to the getHistory
+            // function
             for (int i = 0; i < wordStrings.size(); i++)
             {
                 if (wordStrings[i].find(SearchInput) != std::string::npos)
@@ -214,7 +215,6 @@ void HistoryPage::draw()
             {
                 getHistory(tempSearched);
             }
-
         }
     }
     if (SearchInput[0] != '\0')
@@ -223,7 +223,8 @@ void HistoryPage::draw()
         {
             wordRects.clear();
             words.clear();
-            DrawTextEx(Resources::displayFontBold, "That word does not exist in the history!", {523, 384}, TEXT_FONT_SIZE, 1, TEXT_COLOR_RGB);
+            DrawTextEx(Resources::displayFontBold, "That word does not exist in the history!", {523, 384},
+                       TEXT_FONT_SIZE, 1, TEXT_COLOR_RGB);
         }
     }
 
@@ -266,13 +267,11 @@ void HistoryPage::draw()
         currentHistory = History(historyDirectories[*CurrentState::currentDict]);
     }
 
-
     // Draw snowflakes
     for (int i = 0; i < 100; i++)
     {
         DrawRectangleRec(snowflakes[i], snowflakeColor);
     }
-
 }
 
 void HistoryPage::deleteRecord()
