@@ -53,4 +53,11 @@ extern std::vector<std::string> dictDirs;
 
 extern std::vector<std::string> historyDirectories;
 extern std::vector<std::string> favoritesDirectories;
+
+extern Dictionary engEng;
+extern Dictionary engVie;
+extern Dictionary vieEng;
+extern Dictionary emoji;
+extern Dictionary slang;
+
 #endif

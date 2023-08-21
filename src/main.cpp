@@ -32,6 +32,7 @@ int main(int argc, const char *argv[])
 
     // Unload all resources and close the window
     unloadResources();
+    savePrebuiltTries();
     clearPrebuiltTries();
     CloseWindow();
     std::cout << "\033[1;31mBye!\033[0m\n";

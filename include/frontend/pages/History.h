@@ -45,7 +45,6 @@ class HistoryPage
     void draw();
     void deleteRecord();
     void getHistory(std::vector<std::string> wordStrings);
-    void searchHistory(char *searchInput);
 };
 
 #endif
