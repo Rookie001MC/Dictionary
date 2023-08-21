@@ -7,7 +7,7 @@
 
 SingleWordInfo::SingleWordInfo()
 {
-    for (int i = 0; i < 20; ++i)
+    for (int i = 0; i < 40; ++i)
     {
         defHeight[i]     = 240 + i * 60;
         defBreakLines[i] = false;
@@ -56,7 +56,7 @@ void SingleWordInfo::update()
     }
 
     if ((IsKeyPressed(KEY_DOWN) || GetMouseWheelMove() == -1) &&
-        defHeight[std::min(20, (int)eachDef.size()) - 1] >= 540)
+        defHeight[std::min(40, (int)eachDef.size()) - 1] >= 540)
     {
         for (int i = 0; i < CurrentState::currentWord.getDefinitionCount(); ++i)
         {
@@ -116,7 +116,7 @@ void SingleWordInfo::draw()
         return;
     }
 
-    for (int i = 0; i < std::min(20, (int)eachDef.size()); ++i)
+    for (int i = 0; i < std::min(40, (int)eachDef.size()); ++i)
     {
         if (!isBreakNewLines)
             buildAnswer();
@@ -199,9 +199,11 @@ void SingleWordInfo::addDef()
     {
         addDefButton           = false;
         editButton             = false;
-        std::string definition = std::to_string(CurrentState::currentWord.getDefinitionCount()) + ": " + NewDef;
-        CurrentState::currentWord.addDefinition(definition.c_str());
-        CurrentState::currentPage = static_cast<Page>(5);
+        isFullDef              = false;
+        eachDef.clear();
+        edit_height.clear();
+        CurrentState::currentWord.addDefinition(NewDef);
+        currentTrie.insert(CurrentState::currentWord);
     }
 
     if (GuiButton({690, 390, 100, 50}, "BACK"))
