@@ -197,9 +197,8 @@ void SingleWordInfo::addDef()
 
     if (GuiButton({390, 390, 100, 50}, "ENTER"))
     {
-        addDefButton           = false;
-        editButton             = false;
-        isFullDef              = false;
+        addDefButton = false;
+        isFullDef    = false;
         eachDef.clear();
         edit_height.clear();
         CurrentState::currentWord.addDefinition(NewDef);
@@ -280,10 +279,8 @@ void SingleWordInfo::editMenu()
                              BLACK);
         if (GuiButton({1180, (float)edit_height[i], 65, 40}, "Edit"))
         {
-            edit_height.clear();
-            // defChosen = i;
+            defChosen         = i;
             editEachDefButton = true;
-            // strcpy(newdata, selectedWord->defs[defChosen]->data.c_str());
             return;
         }
     }
@@ -304,5 +301,55 @@ void SingleWordInfo::editMenu()
     {
         memset(NewDef, 0, sizeof(NewDef));
         addDefButton = true;
+    }
+    drawSnow();
+}
+
+void SingleWordInfo::editEachDef()
+{
+    if (GuiWindowBox({250, 170, 650, 300}, "")) {
+        editEachDefButton = false;
+        isEdited = false;
+    }
+
+    text = "Edit Definition";
+    DrawTextEx(Resources::displayFontBold, text.c_str(),
+               {580 - MeasureTextEx(Resources::displayFontBold, text.c_str(), 27, 1).x / 2, 220}, 27, 1, BLACK);
+
+    // draw the Search Box
+    if (GuiTextBox({300, 290, 550, 50}, NewDef, 500, SearchEdit))
+    {
+        SearchEdit ^= 1;
+    }
+
+    if (!isEdited)
+    {
+        isEdited = true;
+        for (int i = 0; i < CurrentState::currentWord.getDefinition(defChosen).size(); ++i)
+        {
+            NewDef[i] = CurrentState::currentWord.getDefinition(defChosen)[i];
+        }
+    }
+
+    if (GuiButton({390, 390, 100, 50}, "ENTER"))
+    {
+        isEdited = false;
+        editEachDefButton = false;
+        isFullDef         = false;
+        eachDef.clear();
+        edit_height.clear();
+        CurrentState::currentWord.editDefinition(defChosen, NewDef);
+        currentTrie.insert(CurrentState::currentWord);
+    }
+
+    if (GuiButton({690, 390, 100, 50}, "DELETE"))
+    {
+        isEdited = false;
+        editEachDefButton = false;
+        isFullDef         = false;
+        eachDef.clear();
+        edit_height.clear();
+        CurrentState::currentWord.removeDefinition(defChosen);
+        currentTrie.insert(CurrentState::currentWord);
     }
 }

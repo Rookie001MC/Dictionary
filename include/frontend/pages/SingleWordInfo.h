@@ -9,11 +9,10 @@ class SingleWordInfo
 {
   private:
     void editMenu();
-    void editEachDef()
-    {
-    }
     void saveBox()
     {
+      confirmSaveBox         = false;
+      editButton             = false;
     }
 
     // Initialize snow variables
@@ -29,8 +28,9 @@ class SingleWordInfo
     char NewDef[501];
     bool SearchEdit       = false;
     bool confirmDeleteBox = false, confirmSaveBox = false, editButton = false, editEachDefButton = false,
-         addDefButton = false;
+         addDefButton = false, isEdited = false;
     std::string text;
+    int defChosen = -1;
 
     History currentFavorites      = History(favoritesDirectories[*CurrentState::currentDict], 1);
     Trie currentTrie              = PrebuiltTriesList[*CurrentState::currentDict];
@@ -48,6 +48,7 @@ class SingleWordInfo
     void deleteBox();
     void draw();
     void addDef();
+    void editEachDef();
 };
 
 #endif
