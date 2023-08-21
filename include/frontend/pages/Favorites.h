@@ -19,8 +19,11 @@ class FavoritesPage
     std::vector<Rectangle> deleteRects;
 
     char SearchInput[101] = "";
-    Rectangle SearchInputRect{305, 140, 440, 55};
+    Rectangle SearchInputRect{305, 140, 590, 55};
     bool SearchEdit = false;
+
+    Rectangle ResetRect{915, 140, 135, 55};
+    bool confirmResetBox = true;
 
     Rectangle dictChooserRect{1075, 140, 155, 55};
     std::vector<std::string> dictLanguages = {"ENG-ENG", "ENG-VIE", "VIE-ENG", "EMOJI", "SLANG"};
@@ -47,7 +50,7 @@ class FavoritesPage
     void draw();
     void getFavorites(std::vector<std::string> wordStrings);
     void deleteRecord();
-    void SearchFavorites(char *searchInput);
+    void deleteAll();
 };
 
 #endif
