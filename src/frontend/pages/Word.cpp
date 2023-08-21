@@ -37,6 +37,7 @@ void WordPage::update()
             {
                 currentHistory.add(words[i].getKey());
                 currentHistory.save();
+                memset(SearchInput, 0, sizeof(SearchInput));
                 CurrentState::currentWord = words[i];
                 CurrentState::currentPage = static_cast<Page>(5);
             }
@@ -67,14 +68,13 @@ void WordPage::update()
     // drawing snow
     for (int i = 0; i < 100; i++)
     {
-        snowflakes[i].y += 1 ; // Adjust the speed of falling snow
+        snowflakes[i].y += 1; // Adjust the speed of falling snow
         if (snowflakes[i].y > 720)
         {
             snowflakes[i].y = 0;
             snowflakes[i].x = GetRandomValue(0, 1280);
         }
     }
-
 }
 
 // Truncate the text and add ellipsis if it exceeds the specified width
@@ -174,6 +174,7 @@ void WordPage::draw()
     {
         SearchEdit ^= 1;
     }
+
     if (SearchInput[0] == '\0')
     {
         DrawTextEx(Resources::displayFontRegular, "Search...", {330, 155}, TEXT_FONT_SIZE, 0, GRAY);
@@ -271,7 +272,6 @@ void WordPage::draw()
     {
         DrawRectangleRec(snowflakes[i], snowflakeColor);
     }
-
 }
 
 void WordPage::resetBox()
@@ -302,7 +302,10 @@ void WordPage::addWord()
                {600 - MeasureTextEx(Resources::displayFontBold, text.c_str(), 27, 1).x / 2, 220}, 27, 1, BLACK);
     if (GuiButton({400, 330, 100, 50}, "YES"))
     {
+        memset(SearchInput, 0, sizeof(SearchInput));
         addWordButton = false;
+        Word newWord(SearchInput, "", "");
+        currentTrie.insert(newWord);
     }
     if (GuiButton({700, 330, 100, 50}, "CANCEL"))
     {

@@ -70,7 +70,8 @@ void extractSlang(Dictionary &dict, Trie &trie)
     {
         Word word = dict.getWord();
         Word cur;
-        if (trie.search(word.getKey(), cur)) {
+        if (trie.search(word.getKey(), cur))
+        {
             cur.addDefinition(word.getDefinition(0));
             trie.insert(cur);
             continue;
@@ -144,7 +145,8 @@ void build(Dictionary &dict, Trie &trie)
     }
 }
 
-void save(Dictionary &dict, Trie &trie) {
+void save(Dictionary &dict, Trie &trie)
+{
     std::string path;
     char delimiter;
     switch (dict.getDictionaryType())

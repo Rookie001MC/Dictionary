@@ -31,7 +31,7 @@ std::string preprocessText(std::string text)
 
 double calculateRelevance(std::string userInput, std::unordered_set<std::string> &wordCounts)
 {
-    int matchWord = 0;
+    int matchWord       = 0;
     int totalInputWords = 0;
     std::istringstream iss(userInput);
     std::string word;
@@ -69,9 +69,9 @@ std::vector<RelevantWord> RelevantWord::searchDefinition(std::string definitionF
     std::transform(definitionFromUser.begin(), definitionFromUser.end(), definitionFromUser.begin(), ::tolower);
     std::ifstream read;
     std::ifstream file;
-    file.open("../data/engeng_processed.txt"); 
+    file.open("../data/engeng_processed.txt");
     read.open("../data/engengKeyWord.txt");
-    
+
     std::string keyWord;
     std::string processed;
     std::vector<RelevantWord> words;

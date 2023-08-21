@@ -57,7 +57,7 @@ std::string HistoryPage::TextEllipsis(const std::string &text, const Font &font,
 void HistoryPage::update()
 {
     currentHistory = History(historyDirectories[*CurrentState::currentDict]);
-    if (!words.size())
+    if (!words.size() && !wordStrings.size() && !tempSearched.size())
     {
         // Get the history strings
         wordStrings = currentHistory.get();
@@ -98,7 +98,7 @@ void HistoryPage::update()
     // drawing snow
     for (int i = 0; i < 100; i++)
     {
-        snowflakes[i].y += 1.5 ; // Adjust the speed of falling snow
+        snowflakes[i].y += 1.5; // Adjust the speed of falling snow
         if (snowflakes[i].y > 720)
         {
             snowflakes[i].y = 0;
@@ -115,9 +115,13 @@ void HistoryPage::draw()
         deleteRecord();
         return;
     }
+    if (words.empty() && wordStrings.empty())
+    {
+        DrawTextEx(Resources::displayFontBold, "History is empty!", {715, 384}, TEXT_FONT_SIZE, 1, TEXT_COLOR_RGB);
+        DrawTextEx(Resources::displayFontBold, "Go search something!", {689, 439}, TEXT_FONT_SIZE, 1, TEXT_COLOR_RGB);
+    }
     Vector2 mousePos = GetMousePosition();
-    // Draw the Search Box (disabled)
-    DrawRectangle(305, 140, 420, 55, BG_COLOR_RGB);
+
     // Draws each word
     for (int i = 0; i < words.size(); i++)
     {
@@ -130,22 +134,12 @@ void HistoryPage::draw()
         DrawRectangleGradientV(wordRects[i].x, wordRects[i].y, wordRects[i].width, wordRects[i].height, BOX_COLOR_RGB,
                                BOX_COLOR_RGB);
 
-        /*         DrawRectangleV({wordRects[i].x, wordRects[i].y}, {wordRects[i].width, wordRects[i].height},
-                               SECONDARY_COLOR_CONTAINER_RGB);
-                DrawRectangleLinesEx(wordRects[i], 2, OUTLINE_COLOR_RGB); */
-
         if (CheckCollisionPointRec(mousePos, wordRects[i]) && !CheckCollisionPointRec(mousePos, deleteRects[i]) &&
             mousePos.y > 180 && !dictChooserActive)
         {
             DrawRectangleGradientV(wordRects[i].x, wordRects[i].y, wordRects[i].width, wordRects[i].height,
                                    GetColor(RESULT_COLOR_CONTAINER_HOVER), GetColor(RESULT_COLOR_CONTAINER_HOVER));
         }
-
-        /*         if (CheckCollisionPointRec(mousePos, wordRects[i]) && !dictChooserActive)
-                {
-                    DrawRectangleV({wordRects[i].x, wordRects[i].y}, {wordRects[i].width, wordRects[i].height},
-                                   SECONDARY_COLOR_RGB);
-                } */
 
         Vector2 textPosition = {wordRects[i].x + 10, wordRects[i].y + 10};
         DrawTextEx(Resources::wordFontBold, wordWithTypeTmp.c_str(), textPosition, WORD_FONT_SIZE, 0, TEXT_COLOR_RGB);
@@ -186,6 +180,54 @@ void HistoryPage::draw()
             confirmDeleteRecordBox    = true;
         }
     }
+    // Search Box container
+    DrawRectangleRec({277, 100, 1280, 115}, BG_COLOR_RGB);
+    DrawRectangleLinesEx({270, 0, 1280, 215}, 2, BLACK);
+
+    // draw the Search Box
+    if (GuiTextBox(SearchInputRect, SearchInput, 101, SearchEdit))
+    {
+        SearchEdit ^= 1;
+    }
+
+    // Search logic, should be only in the wordString vector, therefore it should be simple.
+    if (SearchEdit)
+    {
+        if (GetKeyPressed() && !(IsKeyPressed(KEY_UP) || IsKeyPressed(KEY_DOWN)))
+        {
+            words.clear();
+            wordRects.clear();
+            tempSearched.clear();
+
+            // Find the words that match the substring or the entire string in the entire history
+            // If we do, then we push the word to the tempSearched vector, which will be passed to the getHistory
+            // function
+            for (int i = 0; i < wordStrings.size(); i++)
+            {
+                if (wordStrings[i].find(SearchInput) != std::string::npos)
+                {
+                    tempSearched.push_back(wordStrings[i]);
+                }
+            }
+
+            // If the tempSearched vector is not empty, then we pass it to the getHistory function
+            if (!tempSearched.empty())
+            {
+                getHistory(tempSearched);
+            }
+        }
+    }
+    if (SearchInput[0] != '\0')
+    {
+        if (tempSearched.empty())
+        {
+            wordRects.clear();
+            words.clear();
+            DrawTextEx(Resources::displayFontBold, "That word does not exist in the history!", {523, 384},
+                       TEXT_FONT_SIZE, 1, TEXT_COLOR_RGB);
+        }
+    }
+
     // Function switcher container
     DrawRectangleV(Vector2{0, 0}, Vector2{277, 720}, GetColor(SECONDARY_COLOR));
     DrawRectangleLinesEx({0, 0, 277, 720}, 2, BLACK);
@@ -230,7 +272,6 @@ void HistoryPage::draw()
     {
         DrawRectangleRec(snowflakes[i], snowflakeColor);
     }
-
 }
 
 void HistoryPage::deleteRecord()
@@ -249,12 +290,11 @@ void HistoryPage::deleteRecord()
     {
 
         // Delete the word from the history
-        if (currentHistory.find(CurrentState::currentWord.getKey()))
+        if (currentHistory.find(CurrentState::currentWord.getKey()) != -1)
         {
             currentHistory.remove(CurrentState::currentWord.getKey());
         }
         currentHistory.save();
-
         // Update the words vector
         words.clear();
         wordStrings.clear();

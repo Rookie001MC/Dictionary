@@ -5,8 +5,8 @@
 #include "trie.h"
 #include "word.h"
 #include <algorithm>
-#include <filesystem>
 #include <chrono>
+#include <filesystem>
 #include <iostream>
 #include <vector>
 

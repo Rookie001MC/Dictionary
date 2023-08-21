@@ -3,9 +3,9 @@
 
 #include "dictionary/build.h"
 #include "dictionary/history.h"
+#include "dictionary/random.h"
 #include "dictionary/trie.h"
 #include "dictionary/word.h"
-#include "dictionary/random.h"
 #include "frontend/styles.h"
 #include "globalVars/globalVars.h"
 #include "raylib.h"
@@ -16,9 +16,9 @@
 class WordPage
 {
   private:
-    Trie currentTrie      = PrebuiltTriesList[*CurrentState::currentDict];
-    Dictionary* currentDictionary = new Dictionary(dictDirs[*CurrentState::currentDict], *CurrentState::currentDict);
-    History currentHistory = History(historyDirectories[*CurrentState::currentDict]);
+    Trie currentTrie              = PrebuiltTriesList[*CurrentState::currentDict];
+    Dictionary *currentDictionary = new Dictionary(dictDirs[*CurrentState::currentDict], *CurrentState::currentDict);
+    History currentHistory        = History(historyDirectories[*CurrentState::currentDict]);
 
     bool SearchEdit       = false;
     char SearchInput[101] = "";
@@ -49,7 +49,7 @@ class WordPage
 
   public:
     WordPage();
-    std::string TextEllipsis(const std::string& text, const Font& font, float maxWidth);
+    std::string TextEllipsis(const std::string &text, const Font &font, float maxWidth);
     void draw();
     void update();
     void resetBox();

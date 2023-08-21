@@ -94,13 +94,12 @@ int Random::randomFourAnswer()
     return dis(gen);
 }
 
-
 std::vector<std::string> Random::guessDefinition()
 {
     std::vector<std::string> quiz;
     // Random the line that contains the correct keyword and definition
     int randomKeyWord = getRandomNumber();
-    randomChoice  = randomFourAnswer();
+    randomChoice      = randomFourAnswer();
     // Only get the definition of the wrong ans
     // While loop to make sure that 4 numbers are different from each other
     int ans1 = getRandomNumber();

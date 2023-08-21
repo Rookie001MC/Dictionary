@@ -7,7 +7,7 @@
 
 SingleWordInfo::SingleWordInfo()
 {
-    for (int i = 0; i < 20; ++i)
+    for (int i = 0; i < 40; ++i)
     {
         defHeight[i]     = 240 + i * 60;
         defBreakLines[i] = false;
@@ -56,7 +56,7 @@ void SingleWordInfo::update()
     }
 
     if ((IsKeyPressed(KEY_DOWN) || GetMouseWheelMove() == -1) &&
-        defHeight[std::min(20, (int)eachDef.size()) - 1] >= 540)
+        defHeight[std::min(40, (int)eachDef.size()) - 1] >= 540)
     {
         for (int i = 0; i < CurrentState::currentWord.getDefinitionCount(); ++i)
         {
@@ -67,7 +67,7 @@ void SingleWordInfo::update()
     // drawing snow
     for (int i = 0; i < 100; i++)
     {
-        snowflakes[i].y += 1.5 ; // Adjust the speed of falling snow
+        snowflakes[i].y += 1.5; // Adjust the speed of falling snow
         if (snowflakes[i].y > 720)
         {
             snowflakes[i].y = 0;
@@ -112,11 +112,11 @@ void SingleWordInfo::draw()
     }
     if (confirmDeleteBox)
     {
-        deleteBox(-1);
+        deleteBox();
         return;
     }
 
-    for (int i = 0; i < std::min(20, (int)eachDef.size()); ++i)
+    for (int i = 0; i < std::min(40, (int)eachDef.size()); ++i)
     {
         if (!isBreakNewLines)
             buildAnswer();
@@ -174,18 +174,72 @@ void SingleWordInfo::draw()
     }
     if (GuiButton({1065, 133, 135, 55}, "DELETE"))
     {
+        confirmDeleteBox = true;
     }
 
     drawSnow();
 }
 
-void SingleWordInfo::drawSnow() {
+void SingleWordInfo::addDef()
+{
+    if (GuiWindowBox({250, 170, 650, 300}, ""))
+        addDefButton = false;
+
+    text = "Please input new definition !";
+    DrawTextEx(Resources::displayFontBold, text.c_str(),
+               {580 - MeasureTextEx(Resources::displayFontBold, text.c_str(), 27, 1).x / 2, 220}, 27, 1, BLACK);
+
+    // draw the Search Box
+    if (GuiTextBox({300, 290, 550, 50}, NewDef, 500, SearchEdit))
+    {
+        SearchEdit ^= 1;
+    }
+
+    if (GuiButton({390, 390, 100, 50}, "ENTER"))
+    {
+        addDefButton           = false;
+        editButton             = false;
+        isFullDef              = false;
+        eachDef.clear();
+        edit_height.clear();
+        CurrentState::currentWord.addDefinition(NewDef);
+        currentTrie.insert(CurrentState::currentWord);
+    }
+
+    if (GuiButton({690, 390, 100, 50}, "BACK"))
+    {
+        addDefButton = false;
+    }
+}
+
+void SingleWordInfo::drawSnow()
+{
     Color snowflakeColor = GetColor(SNOW);
 
     // Draw snowflakes
     for (int i = 0; i < 100; i++)
     {
         DrawRectangleRec(snowflakes[i], snowflakeColor);
+    }
+}
+
+void SingleWordInfo::deleteBox()
+{
+    if (GuiWindowBox({300, 170, 600, 250}, ""))
+        confirmDeleteBox = false;
+
+    text = "Are you sure to delete ?";
+    DrawTextEx(Resources::displayFontBold, text.c_str(),
+               {600 - MeasureTextEx(Resources::displayFontBold, text.c_str(), 27, 1).x / 2, 220}, 27, 1, BLACK);
+    if (GuiButton({400, 330, 100, 50}, "YES"))
+    {
+        confirmDeleteBox = false;
+        currentTrie.remove(CurrentState::currentWord.getKey());
+        CurrentState::currentPage = static_cast<Page>(0);
+    }
+    if (GuiButton({700, 330, 100, 50}, "NO"))
+    {
+        confirmDeleteBox = false;
     }
 }
 
@@ -207,7 +261,7 @@ void SingleWordInfo::editMenu()
         return;
     }
 
-    //for the edit menu
+    // for the edit menu
     if ((IsKeyPressed(KEY_UP) || GetMouseWheelMove() == 1) && edit_height[0] < 230)
     {
         for (int i = 0; i <= eachDef.size(); i++)
@@ -248,9 +302,7 @@ void SingleWordInfo::editMenu()
         confirmSaveBox = true;
     if (GuiButton({880, 133, 170, 50}, "ADD MORE"))
     {
+        memset(NewDef, 0, sizeof(NewDef));
         addDefButton = true;
-        // newData = "\0";
-        // defChosen = eachDef.size();
-        // newdata[0] = '\0';
     }
 }
