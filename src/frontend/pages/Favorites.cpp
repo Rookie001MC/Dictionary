@@ -116,7 +116,7 @@ void FavoritesPage::draw()
     if (words.empty() && wordStrings.empty())
     {
         DrawTextEx(Resources::displayFontBold, "Favorites is empty!", {715, 384}, TEXT_FONT_SIZE, 0, TEXT_COLOR_RGB);
-        DrawTextEx(Resources::displayFontBold, "Find your favorite words before coming back here!", {666, 439}, TEXT_FONT_SIZE, 0, TEXT_COLOR_RGB);
+        DrawTextEx(Resources::displayFontBold, "Find your favorite words before coming back here!", {575, 439}, TEXT_FONT_SIZE, 0, TEXT_COLOR_RGB);
     }
     Vector2 mousePos = GetMousePosition();
 
