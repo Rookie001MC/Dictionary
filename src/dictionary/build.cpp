@@ -118,11 +118,6 @@ void build(Dictionary &dict, Trie &trie)
         std::ofstream fout(path + "favourite.txt");
         fout.close();
     }
-    if (!std::filesystem::exists(path + "user.dict"))
-    {
-        std::ofstream fout(path + "user.dict");
-        fout.close();
-    }
     if (std::filesystem::exists(path + "data.dict"))
         trie.deserialize(path + "data.dict", delimiter);
     else
