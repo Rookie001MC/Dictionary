@@ -299,7 +299,7 @@ void FavoritesPage::deleteRecord()
     {
 
         // Delete the word from the history
-        if (currentFavorites.find(CurrentState::currentWord.getKey()))
+        if (currentFavorites.find(CurrentState::currentWord.getKey()) != -1)
         {
             currentFavorites.remove(CurrentState::currentWord.getKey());
         }
