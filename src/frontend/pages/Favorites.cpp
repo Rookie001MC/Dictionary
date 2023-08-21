@@ -57,7 +57,7 @@ std::string FavoritesPage::TextEllipsis(const std::string &text, const Font &fon
 void FavoritesPage::update()
 {
     currentFavorites = History(favoritesDirectories[*CurrentState::currentDict]);
-    if (!words.size())
+    if (!words.size() && !wordStrings.size() && !tempSearched.size())
     {
         wordStrings = currentFavorites.get();
 
@@ -113,10 +113,12 @@ void FavoritesPage::draw()
         return;
     }
 
+    if (words.empty() && wordStrings.empty())
+    {
+        DrawTextEx(Resources::displayFontBold, "Favorites is empty!", {715, 384}, TEXT_FONT_SIZE, 0, TEXT_COLOR_RGB);
+        DrawTextEx(Resources::displayFontBold, "Find your favorite words before coming back here!", {575, 439}, TEXT_FONT_SIZE, 0, TEXT_COLOR_RGB);
+    }
     Vector2 mousePos = GetMousePosition();
-
-    // Draw the Search Box (disabled)
-    DrawRectangle(305, 140, 420, 55, BG_COLOR_RGB);
 
     // Draws each word
     for (int i = 0; i < words.size(); i++)
@@ -130,9 +132,6 @@ void FavoritesPage::draw()
         DrawRectangleGradientV(wordRects[i].x, wordRects[i].y, wordRects[i].width, wordRects[i].height, BOX_COLOR_RGB,
                                BOX_COLOR_RGB);
 
-        /*         DrawRectangleV({wordRects[i].x, wordRects[i].y}, {wordRects[i].width, wordRects[i].height},
-                               SECONDARY_COLOR_CONTAINER_RGB);
-                DrawRectangleLinesEx(wordRects[i], 2, OUTLINE_COLOR_RGB); */
 
         if (CheckCollisionPointRec(mousePos, wordRects[i]) && !CheckCollisionPointRec(mousePos, deleteRects[i]) && mousePos.y > 180 && !dictChooserActive)
         {
@@ -141,11 +140,6 @@ void FavoritesPage::draw()
                                    GetColor(RESULT_COLOR_CONTAINER_HOVER), GetColor(RESULT_COLOR_CONTAINER_HOVER));
         }
 
-        /*         if (CheckCollisionPointRec(mousePos, wordRects[i]) && !dictChooserActive)
-                {
-                    DrawRectangleV({wordRects[i].x, wordRects[i].y}, {wordRects[i].width, wordRects[i].height},
-                                   SECONDARY_COLOR_RGB);
-                } */
         Vector2 textPosition = {wordRects[i].x + 10, wordRects[i].y + 10};
         DrawTextEx(Resources::wordFontBold, wordWithTypeTmp.c_str(), textPosition, WORD_FONT_SIZE, 0, TEXT_COLOR_RGB);
 
@@ -186,6 +180,53 @@ void FavoritesPage::draw()
             confirmDeleteRecordBox    = true;
         }
     }
+    // Search Box container
+    DrawRectangleRec({277, 100, 1280, 115}, BG_COLOR_RGB);
+    DrawRectangleLinesEx({270, 0, 1280, 215}, 2, BLACK);
+
+    // draw the Search Box
+    if (GuiTextBox(SearchInputRect, SearchInput, 101, SearchEdit))
+    {
+        SearchEdit ^= 1;
+    }
+
+    // Search logic, should be only in the wordString vector, therefore it should be simple.
+    if (SearchEdit)
+    {
+        if(GetKeyPressed() && !(IsKeyPressed(KEY_UP) || IsKeyPressed(KEY_DOWN)))
+        {
+            words.clear();
+            wordRects.clear();
+            tempSearched.clear();
+
+            // Find the words that match the substring or the entire string in the entire history
+            // If we do, then we push the word to the tempSearched vector, which will be passed to the getHistory function
+            for (int i = 0; i < wordStrings.size(); i++)
+            {
+                if (wordStrings[i].find(SearchInput) != std::string::npos)
+                {
+                    tempSearched.push_back(wordStrings[i]);
+                }
+            }
+
+            // If the tempSearched vector is not empty, then we pass it to the getHistory function
+            if (!tempSearched.empty())
+            {
+                getFavorites(tempSearched);
+            }
+
+        }
+    }
+    if (SearchInput[0] != '\0')
+    {
+        if (tempSearched.empty())
+        {
+            wordRects.clear();
+            words.clear();
+            DrawTextEx(Resources::displayFontBold, "That word does not exist in the history!", {523, 384}, TEXT_FONT_SIZE, 1, TEXT_COLOR_RGB);
+        }
+    }
+
 
     // Function switcher container
     DrawRectangleV(Vector2{0, 0}, Vector2{277, 720}, GetColor(SECONDARY_COLOR));
@@ -250,7 +291,7 @@ void FavoritesPage::deleteRecord()
     {
 
         // Delete the word from the history
-        if (currentFavorites.find(CurrentState::currentWord.getKey()))
+        if (currentFavorites.find(CurrentState::currentWord.getKey()) != -1)
         {
             currentFavorites.remove(CurrentState::currentWord.getKey());
         }
