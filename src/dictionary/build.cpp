@@ -210,12 +210,6 @@ void prebuildDictionaries()
 {
     std::cout << "\033[1;32mPrebuilding dictionaries...\033[0m\n";
 
-    Dictionary engEng = Dictionary(dictDirs[0], 0);
-    Dictionary engVie = Dictionary(dictDirs[1], 1);
-    Dictionary vieEng = Dictionary(dictDirs[2], 2);
-    Dictionary emoji  = Dictionary(dictDirs[3], 3);
-    Dictionary slang  = Dictionary(dictDirs[4], 4);
-
     auto start = std::chrono::high_resolution_clock::now();
     build(engEng, PrebuiltTriesList[0]);
     auto end = std::chrono::high_resolution_clock::now();
@@ -245,6 +239,16 @@ void prebuildDictionaries()
     end = std::chrono::high_resolution_clock::now();
     std::cout << "slang: \033[;32m" << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count()
               << "ms\033[0m\n";
+}
+
+void savePrebuiltTries()
+{
+    std::cout << "\033[1;31mSaving current state of the tries...\033[0m\n";
+    save(engEng, PrebuiltTriesList[0]);
+    save(engVie, PrebuiltTriesList[1]);
+    save(vieEng, PrebuiltTriesList[2]);
+    save(emoji, PrebuiltTriesList[3]);
+    save(slang, PrebuiltTriesList[4]);
 }
 
 void clearPrebuiltTries()
