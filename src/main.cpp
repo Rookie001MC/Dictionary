@@ -7,11 +7,19 @@
 #include "frontend/ResourcesLoad.h"
 #include "frontend/styles.h"
 #include "globalVars/globalVars.h"
+#include "raylib.h"
 #include <chrono>
 #include <iostream>
 
 int main(int argc, const char *argv[])
 {
+    // Supress all debug messages
+    #ifndef NDEBUG
+    SetTraceLogLevel(LOG_ALL);
+    #else
+    SetTraceLogLevel(LOG_ERROR);
+    #endif
+
     // Set the current executable directory.
     // This is used to avoid directory problems when running the executable from different locations.
     Resources::currentExeDir = getExeDir(argv[0]);
