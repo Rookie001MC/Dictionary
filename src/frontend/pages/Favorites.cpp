@@ -114,6 +114,12 @@ void FavoritesPage::draw()
         return;
     }
 
+    if (confirmResetBox)
+    {
+        deleteAll();
+        return;
+    }
+
     if (words.empty() && wordStrings.empty())
     {
         DrawTextEx(Resources::displayFontBold, "Favorites is empty!", {715, 384}, TEXT_FONT_SIZE, 0, TEXT_COLOR_RGB);
@@ -190,10 +196,15 @@ void FavoritesPage::draw()
     {
         SearchEdit ^= 1;
     }
+    if (SearchInput[0] == '\0')
+        DrawTextEx(Resources::displayFontRegular, "Search...", {330, 155}, TEXT_FONT_SIZE, 0, GRAY);
+    
+    // Reset button
     if (GuiButton(ResetRect, "RESET"))
     {
-        confirmResetBox = true;
+        confirmResetBox ^= 1;
     }
+
     // Search logic, should be only in the wordString vector, therefore it should be simple.
     if (SearchEdit)
     {
@@ -337,9 +348,9 @@ void FavoritesPage::deleteAll()
 {   
     if (GuiWindowBox({300, 170, 600, 250}, ""))
     {
-        confirmResetBox = false;
+        confirmResetBox ^= 1;
     }
-    std::string promptText = "Are you sure you want to delete all your history?";
+    std::string promptText = "Are you sure you want to delete all your favorites?";
     DrawTextEx(Resources::displayFontRegular, promptText.c_str(),
                {850 - MeasureTextEx(Resources::displayFontRegular, promptText.c_str(), TEXT_FONT_SIZE, 0).x, 220},
                TEXT_FONT_SIZE, 0, TEXT_COLOR_RGB);
@@ -358,6 +369,6 @@ void FavoritesPage::deleteAll()
     }
     if (GuiButton({700, 330, 100, 50}, "NO"))
     {
-        confirmResetBox = false;
+        confirmResetBox ^= 1;
     }
 }

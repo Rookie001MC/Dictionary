@@ -23,7 +23,7 @@ class FavoritesPage
     bool SearchEdit = false;
 
     Rectangle ResetRect{915, 140, 135, 55};
-    bool confirmResetBox = true;
+    bool confirmResetBox = false;
 
     Rectangle dictChooserRect{1075, 140, 155, 55};
     std::vector<std::string> dictLanguages = {"ENG-ENG", "ENG-VIE", "VIE-ENG", "EMOJI", "SLANG"};

@@ -27,8 +27,12 @@ class HistoryPage
     bool dictChooserActive     = false;
 
     char SearchInput[101] = "";
-    Rectangle SearchInputRect{305, 140, 440, 55};
+    Rectangle SearchInputRect{305, 140, 590, 55};
     bool SearchEdit = false;
+    
+    Rectangle ResetRect{915, 140, 135, 55};
+    bool confirmDeleteAllBox = false;
+
     // Create the storage
     History currentHistory      = History(historyDirectories[*CurrentState::currentDict]);
     Trie currentTrie            = PrebuiltTriesList[*CurrentState::currentDict];
@@ -45,6 +49,7 @@ class HistoryPage
     void draw();
     void deleteRecord();
     void getHistory(std::vector<std::string> wordStrings);
+    void deleteAll();
 };
 
 #endif

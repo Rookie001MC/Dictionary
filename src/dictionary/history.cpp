@@ -59,3 +59,8 @@ void History::save()
         fout << storage.at(i) << std::endl;
     fout.close();
 }
+
+void History::clear()
+{
+    storage.clear();
+}

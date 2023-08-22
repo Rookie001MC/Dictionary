@@ -22,6 +22,7 @@ class History
     void add(std::string key);    // add to memory but does not modify the file
     void remove(std::string key); // remove from memory but does not modify the file
     void save();                  // modify the file
+    void clear();                 // clear the memory
 };
 
 #endif

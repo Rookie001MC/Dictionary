@@ -62,10 +62,11 @@ void HistoryPage::update()
         // Get the history strings
         wordStrings = currentHistory.get();
 
+
         getHistory(wordStrings);
     }
 
-    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && !dictChooserActive && !confirmDeleteRecordBox)
+    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && !dictChooserActive && !confirmDeleteAllBox)
     {
         for (int i = 0; i < words.size(); ++i)
         {
@@ -110,16 +111,22 @@ void HistoryPage::update()
 void HistoryPage::draw()
 {
 
+    if (confirmDeleteAllBox)
+    {
+        deleteAll();
+        return;
+    }
     if (confirmDeleteRecordBox)
     {
         deleteRecord();
         return;
     }
-    if (words.empty() && wordStrings.empty())
+    if (words.empty() && wordStrings.empty() && tempSearched.empty())
     {
         DrawTextEx(Resources::displayFontBold, "History is empty!", {715, 384}, TEXT_FONT_SIZE, 1, TEXT_COLOR_RGB);
         DrawTextEx(Resources::displayFontBold, "Go search something!", {689, 439}, TEXT_FONT_SIZE, 1, TEXT_COLOR_RGB);
     }
+
     Vector2 mousePos = GetMousePosition();
 
     // Draws each word
@@ -177,7 +184,7 @@ void HistoryPage::draw()
         if (GuiButton({wordRects[i].x + 850, wordRects[i].y + 10, 30, 30}, "#143#"))
         {
             CurrentState::currentWord = words[i];
-            confirmDeleteRecordBox    = true;
+            confirmDeleteRecordBox    ^= 1;
         }
     }
     // Search Box container
@@ -189,7 +196,10 @@ void HistoryPage::draw()
     {
         SearchEdit ^= 1;
     }
-
+    if (GuiButton(ResetRect, "RESET"))
+    {
+        confirmDeleteAllBox ^= 1;
+    }
     // Search logic, should be only in the wordString vector, therefore it should be simple.
     if (SearchEdit)
     {
@@ -278,7 +288,7 @@ void HistoryPage::deleteRecord()
 {
     if (GuiWindowBox({300, 170, 600, 250}, ""))
     {
-        confirmDeleteRecordBox = false;
+        confirmDeleteRecordBox ^= 1;
     }
     std::string promptText = "Are you sure you want to delete this from your history?";
     DrawTextEx(Resources::displayFontRegular, promptText.c_str(),
@@ -302,11 +312,11 @@ void HistoryPage::deleteRecord()
         getHistory(currentHistory.get());
 
         CurrentState::currentWord = Word();
-        confirmDeleteRecordBox    = false;
+        confirmDeleteRecordBox    ^= 1 ;
     }
     if (GuiButton({700, 330, 100, 50}, "NO"))
     {
-        confirmDeleteRecordBox = false;
+        confirmDeleteRecordBox ^= 1;
     }
 }
 
@@ -324,5 +334,30 @@ void HistoryPage::getHistory(std::vector<std::string> wordStrings)
             wordRects.push_back({307, float(225 + 130 * i), 921, 120});
             deleteRects.push_back({wordRects[i].x + 850, wordRects[i].y + 10, 30, 30});
         }
+    }
+}
+void HistoryPage::deleteAll()
+{
+    if (GuiWindowBox({300, 170, 600, 250}, ""))
+    {
+        confirmDeleteAllBox ^= 1;
+    }
+    std::string promptText = "Are you sure you want to delete all your history?";
+    DrawTextEx(Resources::displayFontRegular, promptText.c_str(),
+               {850 - MeasureTextEx(Resources::displayFontRegular, promptText.c_str(), TEXT_FONT_SIZE, 0).x, 220},
+               TEXT_FONT_SIZE, 0, TEXT_COLOR_RGB);
+    if (GuiButton({400, 330, 100, 50}, "YES"))
+    {
+        // Delete all the words from the history
+        confirmDeleteAllBox ^= 1;
+        currentHistory.clear();
+        currentHistory.save();
+        words.clear();
+        wordStrings.clear();
+
+    }
+    if (GuiButton({700, 330, 100, 50}, "NO"))
+    {
+        confirmDeleteAllBox ^= 1;
     }
 }
