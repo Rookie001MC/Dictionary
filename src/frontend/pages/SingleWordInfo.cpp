@@ -75,16 +75,16 @@ void SingleWordInfo::update()
         }
     }
 
-    // // drawing snow
-    // for (int i = 0; i < 100; i++)
-    // {
-    //     snowflakes[i].y += 1.5; // Adjust the speed of falling snow
-    //     if (snowflakes[i].y > 720)
-    //     {
-    //         snowflakes[i].y = 0;
-    //         snowflakes[i].x = GetRandomValue(0, 1280);
-    //     }
-    // }
+    // drawing snow
+    for (int i = 0; i < 100; i++)
+    {
+        snowflakes[i].y += 1.5; // Adjust the speed of falling snow
+        if (snowflakes[i].y > 720)
+        {
+            snowflakes[i].y = 0;
+            snowflakes[i].x = GetRandomValue(0, 1280);
+        }
+    }
 }
 
 void SingleWordInfo::buildAnswer()
