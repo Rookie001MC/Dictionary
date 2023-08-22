@@ -21,6 +21,25 @@ Word RelevantWord::getWord()
     return this->word;
 }
 
+void RelevantWord::setDictionary(Dictionary *dict)
+{
+    this->dictionary = dict;
+}
+
+void RelevantWord::setPath()
+{
+    int mode = this->dictionary->getDictionaryType();
+    switch(mode)
+    {
+        // case 0:
+    }
+}
+
+std::string RelevantWord::getPath()
+{
+    return this->path;
+}
+
 std::string preprocessText(std::string text)
 {
     std::regex pattern("[[:punct:]]");
@@ -58,11 +77,6 @@ void wordHashing(std::string line, std::unordered_set<std::string> &wordCounts)
     }
 }
 
-bool comparingRelevance(RelevantWord a, RelevantWord b)
-{
-    return a.getRelevance() > b.getRelevance();
-}
-
 std::vector<RelevantWord> RelevantWord::searchDefinition(std::string definitionFromUser, Trie &trie)
 {
     // definitionFromUser = preprocessText(definitionFromUser);
@@ -95,6 +109,5 @@ std::vector<RelevantWord> RelevantWord::searchDefinition(std::string definitionF
         if (words.size() == wordLimit)
             break;
     }
-    // std::sort(words.begin(), words.end(), comparingRelevance);
     return words;
 }
