@@ -14,7 +14,8 @@ class RelevantWord
 {
   private:
     Dictionary *dictionary;
-    std::string path;
+    std::string keywordPath;
+    std::string filePath;
     Word word;
     double relevance;
 
@@ -23,7 +24,8 @@ class RelevantWord
     RelevantWord(Word word, double relevance);
     void setDictionary(Dictionary *dict);
     void setPath();
-    std::string getPath();
+    std::string getKeyWordPath();
+    std::string getFilePath();
     std::vector<RelevantWord> searchDefinition(std::string definitionFromUser, Trie &trie);
     double getRelevance();
     Word getWord();

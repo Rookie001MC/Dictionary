@@ -13,8 +13,17 @@ void Random::setPath()
         case 0:
             path = "../data/engengRandom.txt";
             break;
-            // More to come
-        default:
+        case 1: 
+            path = "../data/engvieRandom.txt";
+            break;
+        case 2:
+            path = "../data/vieengRandom.txt";
+            break;
+        case 3:
+            path = "../data/emojiRandom.txt";
+            break;
+        case 4:
+            path = "../data/slangRandom.txt";
             break;
     }
 }
@@ -32,9 +41,19 @@ int Random::getRandomNumber()
         case 0: // engeng
             totalWords = 144307;
             break;
-            // More to come
+        case 1: // engvie
+            totalWords = 58099;
+            break;
+        case 2: // vieeng
+            totalWords = 23467;
+            break;
+        case 3: // emoji
+            totalWords = 678;
+            break;
+        case 4: 
+            totalWords = 7635;
+            break;
     }
-
     std::random_device rd;
     std::mt19937 gen(rd());
     std::uniform_int_distribution<> dis(1, totalWords);
@@ -144,17 +163,6 @@ std::vector<std::string> Random::guessDefinition()
 
     return quiz;
 }
-// void quizWith4Definitions()
-// {
-//     char userChoice;
-//     do
-//     {
-//         random4Definitions();
-//         std::cout << "Do you want to continue? Enter Y (or y) to continue or enter any other key to exit!" << "\n";
-//         std::cout << "Your choice: ";
-//         std::cin >> userChoice;
-//     } while (userChoice == 'Y' || userChoice == 'y');
-// }
 
 std::string getKeyWordFromText(const std::string &line)
 {
@@ -219,15 +227,3 @@ int Random::getChoice()
 {
     return randomChoice;
 }
-
-// void quizWith4KeyWords()
-// {
-//     char userChoice;
-//     do
-//     {
-//         random4KeyWords();
-//         std::cout << "Do you want to continue? Enter Y (or y) to continue or enter any other key to exit!" << "\n";
-//         std::cout << "Your choice: ";
-//         std::cin >> userChoice;
-//     } while (userChoice == 'Y' || userChoice == 'y');
-// }
