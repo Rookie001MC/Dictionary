@@ -13,19 +13,23 @@
 class RelevantWord
 {
   private:
+    Dictionary *dictionary;
+    std::string path;
     Word word;
     double relevance;
 
   public:
     RelevantWord();
     RelevantWord(Word word, double relevance);
+    void setDictionary(Dictionary *dict);
+    void setPath();
+    std::string getPath();
     std::vector<RelevantWord> searchDefinition(std::string definitionFromUser, Trie &trie);
     double getRelevance();
     Word getWord();
 };
 
 // support functions
-bool comparingRelevance(RelevantWord a, RelevantWord b);
 std::string preprocessText(std::string text);
 void wordHashing(std::string line, std::unordered_set<std::string> &wordCounts);
 double calculateRelevance(std::string userInput, std::unordered_set<std::string> &wordCounts);
