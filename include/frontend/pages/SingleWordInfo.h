@@ -31,6 +31,7 @@ class SingleWordInfo
          addDefButton = false, isEdited = false;
     std::string text;
     int defChosen = -1;
+    bool isUpdated = false;
 
     History currentFavorites      = History(favoritesDirectories[*CurrentState::currentDict], 1);
     Trie currentTrie              = PrebuiltTriesList[*CurrentState::currentDict];

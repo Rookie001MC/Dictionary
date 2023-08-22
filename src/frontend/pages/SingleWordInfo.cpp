@@ -7,6 +7,7 @@
 
 SingleWordInfo::SingleWordInfo()
 {
+    isFullDef = false;
     for (int i = 0; i < 40; ++i)
     {
         defHeight[i]     = 240 + i * 60;
@@ -25,19 +26,29 @@ SingleWordInfo::SingleWordInfo()
 
 void SingleWordInfo::update()
 {
+    isUpdated = true;
     currentFavorites = History(favoritesDirectories[*CurrentState::currentDict], 1);
     if (isInfo)
     {
         eachDef.clear();
-        isFullDef                 = false;
+        edit_height.clear();
+        for (int i = 0; i < 40; ++i)
+        {
+            defHeight[i]     = 240 + i * 60;
+            defBreakLines[i] = false;
+        }
+        isUpdated = false;
+        isFullDef = false;
+        isBreakNewLines           = false;
         isInfo                    = false;
         CurrentState::currentPage = static_cast<Page>(0);
     }
 
-    if (!isFullDef)
+    else if (!isFullDef)
     {
         std::string tmp;
         isFullDef = true;
+        eachDef.clear();
 
         for (int i = 0; i < CurrentState::currentWord.getDefinitionCount(); ++i)
         {
@@ -105,6 +116,7 @@ void SingleWordInfo::buildAnswer()
 
 void SingleWordInfo::draw()
 {
+    if (!isUpdated) update();
     if (editButton)
     {
         editMenu();
@@ -116,10 +128,11 @@ void SingleWordInfo::draw()
         return;
     }
 
+    if (!isBreakNewLines)
+        buildAnswer();
+
     for (int i = 0; i < std::min(40, (int)eachDef.size()); ++i)
     {
-        if (!isBreakNewLines)
-            buildAnswer();
         if (defBreakLines[i])
         {
             defHeight[i + 1] += 19;
