@@ -123,8 +123,8 @@ void HistoryPage::draw()
     }
     if (words.empty() && wordStrings.empty() && tempSearched.empty())
     {
-        DrawTextEx(Resources::displayFontBold, "History is empty!", {715, 384}, TEXT_FONT_SIZE, 1, TEXT_COLOR_RGB);
-        DrawTextEx(Resources::displayFontBold, "Go search something!", {689, 439}, TEXT_FONT_SIZE, 1, TEXT_COLOR_RGB);
+        DrawTextEx(Resources::displayFontBold, "History is empty!", {715, 384}, TEXT_FONT_SIZE, 0, TEXT_COLOR_RGB);
+        DrawTextEx(Resources::displayFontBold, "Go search something!", {689, 439}, TEXT_FONT_SIZE,0, TEXT_COLOR_RGB);
     }
 
     Vector2 mousePos = GetMousePosition();
