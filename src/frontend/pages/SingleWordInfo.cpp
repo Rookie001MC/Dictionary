@@ -155,7 +155,7 @@ void SingleWordInfo::draw()
 
     std::string selectedTmp =
         CurrentState::currentWord.getKey() + ' ' + '(' + CurrentState::currentWord.getType() + ')';
-    DrawTextEx(Resources::displayFontBold, selectedTmp.c_str(), {105, 135}, 47, 2, GetColor(WRONG_ANS));
+    DrawTextEx(Resources::displayFontBold, selectedTmp.c_str(), {105, 135}, 40, 2, GetColor(WRONG_ANS));
 
     if (GuiButton({700, 133, 135, 55}, "EDIT"))
     {
@@ -361,6 +361,7 @@ void SingleWordInfo::editEachDef()
     if (!isEdited)
     {
         isEdited = true;
+        memset(NewDef, 0, sizeof(NewDef));
         for (int i = 0; i < CurrentState::currentWord.getDefinition(defChosen).size(); ++i)
         {
             NewDef[i] = CurrentState::currentWord.getDefinition(defChosen)[i];
