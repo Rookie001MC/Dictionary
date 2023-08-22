@@ -29,7 +29,7 @@ WordPage::WordPage()
 
 void WordPage::update()
 {
-    if (IsMouseButtonPressed(0) && !dropDownBox)
+    if (IsMouseButtonPressed(0) && !dropDownBox && !confirmResetBox && !addWordButton)
     {
         for (int i = 0; i < words.size(); ++i)
         {
