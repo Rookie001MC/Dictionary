@@ -65,7 +65,7 @@ void HistoryPage::update()
         getHistory(wordStrings);
     }
 
-    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && !dictChooserActive && !confirmDeleteAllBox)
+    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && !dictChooserActive && !confirmDeleteAllBox && !confirmDeleteRecordBox)
     {
         for (int i = 0; i < words.size(); ++i)
         {

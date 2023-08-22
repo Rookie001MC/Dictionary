@@ -64,7 +64,7 @@ void FavoritesPage::update()
         getFavorites(wordStrings);
     }
 
-    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && !dictChooserActive && !confirmDeleteRecordBox)
+    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && !dictChooserActive && !confirmDeleteRecordBox && !confirmResetBox)
     {
         for (int i = 0; i < words.size(); ++i)
         {
