@@ -26,7 +26,7 @@ SingleWordInfo::SingleWordInfo()
 
 void SingleWordInfo::update()
 {
-    isUpdated = true;
+    isUpdated        = true;
     currentFavorites = History(favoritesDirectories[*CurrentState::currentDict], 1);
     if (isInfo)
     {
@@ -37,8 +37,8 @@ void SingleWordInfo::update()
             defHeight[i]     = 240 + i * 60;
             defBreakLines[i] = false;
         }
-        isUpdated = false;
-        isFullDef = false;
+        isUpdated                 = false;
+        isFullDef                 = false;
         isBreakNewLines           = false;
         isInfo                    = false;
         CurrentState::currentPage = static_cast<Page>(0);
@@ -75,16 +75,16 @@ void SingleWordInfo::update()
         }
     }
 
-    // drawing snow
-    for (int i = 0; i < 100; i++)
-    {
-        snowflakes[i].y += 1.5; // Adjust the speed of falling snow
-        if (snowflakes[i].y > 720)
-        {
-            snowflakes[i].y = 0;
-            snowflakes[i].x = GetRandomValue(0, 1280);
-        }
-    }
+    // // drawing snow
+    // for (int i = 0; i < 100; i++)
+    // {
+    //     snowflakes[i].y += 1.5; // Adjust the speed of falling snow
+    //     if (snowflakes[i].y > 720)
+    //     {
+    //         snowflakes[i].y = 0;
+    //         snowflakes[i].x = GetRandomValue(0, 1280);
+    //     }
+    // }
 }
 
 void SingleWordInfo::buildAnswer()
@@ -116,7 +116,8 @@ void SingleWordInfo::buildAnswer()
 
 void SingleWordInfo::draw()
 {
-    if (!isUpdated) update();
+    if (!isUpdated)
+        update();
     if (editButton)
     {
         editMenu();
@@ -158,13 +159,7 @@ void SingleWordInfo::draw()
 
     if (GuiButton({700, 133, 135, 55}, "EDIT"))
     {
-        edit_height.push_back(230);
         editButton = true;
-        for (int i = 1; i <= eachDef.size(); i++)
-        {
-            edit_height.push_back(MeasureTextEx(Resources::displayFontRegular, eachDef[i - 1].c_str(), 25, 1).y +
-                                  edit_height[i - 1] + 35);
-        }
         return;
     }
 
@@ -288,6 +283,13 @@ void SingleWordInfo::editMenu()
     {
         for (int i = 0; i <= eachDef.size(); i++)
             edit_height[i] -= 40;
+    }
+
+    edit_height.push_back(230);
+    for (int i = 1; i <= eachDef.size(); i++)
+    {
+        edit_height.push_back(MeasureTextEx(Resources::displayFontRegular, eachDef[i - 1].c_str(), 25, 1).y +
+                              edit_height[i - 1] + 35);
     }
 
     for (int i = 0; i < eachDef.size(); i++)
