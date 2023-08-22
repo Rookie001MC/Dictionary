@@ -253,6 +253,12 @@ void HistoryPage::draw()
         }
         if (GuiButton(dictPagesRects[i], dictPages[i].c_str()))
         {
+            // Clear the words and wordRects vectors still in memory
+            words.clear();
+            wordStrings.clear();
+            wordRects.clear();
+
+            // Set the new page
             CurrentState::currentPage = static_cast<Page>(i);
         }
     }

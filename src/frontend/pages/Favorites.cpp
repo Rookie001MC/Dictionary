@@ -259,6 +259,9 @@ void FavoritesPage::draw()
         }
         if (GuiButton(dictPagesRects[i], dictPages[i].c_str()))
         {
+            words.clear();
+            wordStrings.clear();
+            wordRects.clear();
             CurrentState::currentPage = static_cast<Page>(i);
         }
     }
