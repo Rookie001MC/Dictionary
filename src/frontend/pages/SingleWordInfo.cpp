@@ -273,6 +273,8 @@ void SingleWordInfo::editMenu()
         return;
     }
 
+    buildAnswer();
+
     // for the edit menu
     if ((IsKeyPressed(KEY_UP) || GetMouseWheelMove() == 1) && edit_height[0] < 230)
     {
