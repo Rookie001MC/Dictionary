@@ -238,7 +238,7 @@ void FavoritesPage::draw()
         {
             wordRects.clear();
             words.clear();
-            DrawTextEx(Resources::displayFontBold, "That word does not exist in the history!", {523, 384},
+            DrawTextEx(Resources::displayFontBold, "That word does not exist in the favorites!", {523, 384},
                        TEXT_FONT_SIZE, 1, TEXT_COLOR_RGB);
         }
     }
