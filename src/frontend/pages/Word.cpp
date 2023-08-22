@@ -308,10 +308,10 @@ void WordPage::addWord()
                {600 - MeasureTextEx(Resources::displayFontBold, text.c_str(), 27, 1).x / 2, 220}, 27, 1, BLACK);
     if (GuiButton({400, 330, 100, 50}, "YES"))
     {
-        memset(SearchInput, 0, sizeof(SearchInput));
         addWordButton = false;
         Word newWord(SearchInput, "", "");
         currentTrie.insert(newWord);
+        memset(SearchInput, 0, sizeof(SearchInput));
     }
     if (GuiButton({700, 330, 100, 50}, "CANCEL"))
     {
