@@ -120,7 +120,7 @@ void FavoritesPage::draw()
         return;
     }
 
-    if (words.empty() && wordStrings.empty() && !tempSearched.size())
+    if (words.empty() && wordStrings.empty() && tempSearched.empty() && SearchInput[0] == '\0') 
     {
         DrawTextEx(Resources::displayFontBold, "Favorites is empty!", {715, 384}, TEXT_FONT_SIZE, 0, TEXT_COLOR_RGB);
         DrawTextEx(Resources::displayFontBold, "Find your favorite words before coming back here!", {575, 439},
