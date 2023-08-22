@@ -182,6 +182,11 @@ void SingleWordInfo::draw()
 
 void SingleWordInfo::addDef()
 {
+    for (int i = 0; i < 40; ++i)
+    {
+        defHeight[i]     = 240 + i * 60;
+        defBreakLines[i] = false;
+    }
     if (GuiWindowBox({250, 170, 650, 300}, ""))
         addDefButton = false;
 
@@ -299,6 +304,12 @@ void SingleWordInfo::editMenu()
         confirmSaveBox = true;
     if (GuiButton({880, 133, 170, 50}, "ADD MORE"))
     {
+        for (int i = 0; i < 40; ++i)
+        {
+            defHeight[i]     = 240 + i * 60;
+            defBreakLines[i] = false;
+        }
+        isBreakNewLines = false;
         memset(NewDef, 0, sizeof(NewDef));
         addDefButton = true;
     }
@@ -307,9 +318,17 @@ void SingleWordInfo::editMenu()
 
 void SingleWordInfo::editEachDef()
 {
-    if (GuiWindowBox({250, 170, 650, 300}, "")) {
+    for (int i = 0; i < 40; ++i)
+    {
+        defHeight[i]     = 240 + i * 60;
+        defBreakLines[i] = false;
+    }
+
+    isBreakNewLines = false;
+    if (GuiWindowBox({250, 170, 650, 300}, ""))
+    {
         editEachDefButton = false;
-        isEdited = false;
+        isEdited          = false;
     }
 
     text = "Edit Definition";
@@ -333,7 +352,7 @@ void SingleWordInfo::editEachDef()
 
     if (GuiButton({390, 390, 100, 50}, "ENTER"))
     {
-        isEdited = false;
+        isEdited          = false;
         editEachDefButton = false;
         isFullDef         = false;
         eachDef.clear();
@@ -344,7 +363,7 @@ void SingleWordInfo::editEachDef()
 
     if (GuiButton({690, 390, 100, 50}, "DELETE"))
     {
-        isEdited = false;
+        isEdited          = false;
         editEachDefButton = false;
         isFullDef         = false;
         eachDef.clear();
