@@ -188,7 +188,7 @@ void WordPage::draw()
     }
 
     // draw the reset button
-    if (GuiButton(rec_reset, "RESET"))
+    if (GuiButton(rec_reset, "RESET")) 
         confirmResetBox = true;
 
     if (GuiButton(rec_random, "RANDOM"))
