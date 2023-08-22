@@ -111,7 +111,8 @@ void DefPage::draw()
     }
     if (words.empty() && SearchInput[0] == '\0')
     {
-        DrawTextEx(Resources::displayFontBold, "Start typing to search...", {715, 390}, TEXT_FONT_SIZE, 1, TEXT_COLOR_RGB);
+        DrawTextEx(Resources::displayFontBold, "Start typing to search...", {715, 390}, TEXT_FONT_SIZE, 1,
+                   TEXT_COLOR_RGB);
     }
 
     Vector2 mousePos = GetMousePosition();

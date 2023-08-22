@@ -62,7 +62,6 @@ void HistoryPage::update()
         // Get the history strings
         wordStrings = currentHistory.get();
 
-
         getHistory(wordStrings);
     }
 
@@ -124,7 +123,7 @@ void HistoryPage::draw()
     if (words.empty() && wordStrings.empty() && tempSearched.empty())
     {
         DrawTextEx(Resources::displayFontBold, "History is empty!", {715, 384}, TEXT_FONT_SIZE, 0, TEXT_COLOR_RGB);
-        DrawTextEx(Resources::displayFontBold, "Go search something!", {689, 439}, TEXT_FONT_SIZE,0, TEXT_COLOR_RGB);
+        DrawTextEx(Resources::displayFontBold, "Go search something!", {689, 439}, TEXT_FONT_SIZE, 0, TEXT_COLOR_RGB);
     }
 
     Vector2 mousePos = GetMousePosition();
@@ -184,7 +183,7 @@ void HistoryPage::draw()
         if (GuiButton({wordRects[i].x + 850, wordRects[i].y + 10, 30, 30}, "#143#"))
         {
             CurrentState::currentWord = words[i];
-            confirmDeleteRecordBox    ^= 1;
+            confirmDeleteRecordBox ^= 1;
         }
     }
     // Search Box container
@@ -312,7 +311,7 @@ void HistoryPage::deleteRecord()
         getHistory(currentHistory.get());
 
         CurrentState::currentWord = Word();
-        confirmDeleteRecordBox    ^= 1 ;
+        confirmDeleteRecordBox ^= 1;
     }
     if (GuiButton({700, 330, 100, 50}, "NO"))
     {
@@ -354,7 +353,6 @@ void HistoryPage::deleteAll()
         currentHistory.save();
         words.clear();
         wordStrings.clear();
-
     }
     if (GuiButton({700, 330, 100, 50}, "NO"))
     {

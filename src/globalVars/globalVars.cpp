@@ -17,14 +17,11 @@ std::vector<std::string> favoritesDirectories = {
     Resources::currentExeDir + "../tmp/vieeng/favourite.txt", Resources::currentExeDir + "../tmp/emoji/favourite.txt",
     Resources::currentExeDir + "../tmp/slang/favourite.txt"};
 
-
 Dictionary engEng = Dictionary(dictDirs[0], 0);
 Dictionary engVie = Dictionary(dictDirs[1], 1);
 Dictionary vieEng = Dictionary(dictDirs[2], 2);
 Dictionary emoji  = Dictionary(dictDirs[3], 3);
 Dictionary slang  = Dictionary(dictDirs[4], 4);
-
-
 
 Page CurrentState::currentPage = Page::DICT_WORD;
 Word CurrentState::currentWord;

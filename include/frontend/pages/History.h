@@ -29,7 +29,7 @@ class HistoryPage
     char SearchInput[101] = "";
     Rectangle SearchInputRect{305, 140, 590, 55};
     bool SearchEdit = false;
-    
+
     Rectangle ResetRect{915, 140, 135, 55};
     bool confirmDeleteAllBox = false;
 

@@ -11,8 +11,8 @@ class SingleWordInfo
     void editMenu();
     void saveBox()
     {
-      confirmSaveBox         = false;
-      editButton             = false;
+        confirmSaveBox = false;
+        editButton     = false;
     }
 
     // Initialize snow variables

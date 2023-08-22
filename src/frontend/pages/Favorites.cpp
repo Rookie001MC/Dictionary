@@ -198,7 +198,7 @@ void FavoritesPage::draw()
     }
     if (SearchInput[0] == '\0')
         DrawTextEx(Resources::displayFontRegular, "Search...", {330, 155}, TEXT_FONT_SIZE, 0, GRAY);
-    
+
     // Reset button
     if (GuiButton(ResetRect, "RESET"))
     {
@@ -345,7 +345,7 @@ void FavoritesPage::getFavorites(std::vector<std::string> wordStrings)
 }
 
 void FavoritesPage::deleteAll()
-{   
+{
     if (GuiWindowBox({300, 170, 600, 250}, ""))
     {
         confirmResetBox ^= 1;
@@ -356,8 +356,8 @@ void FavoritesPage::deleteAll()
                TEXT_FONT_SIZE, 0, TEXT_COLOR_RGB);
     if (GuiButton({400, 330, 100, 50}, "YES"))
     {
-        
-        for(int i = 0; i < currentFavorites.get().size(); i++)
+
+        for (int i = 0; i < currentFavorites.get().size(); i++)
         {
             currentFavorites.remove(currentFavorites.get()[i]);
         }

@@ -71,7 +71,8 @@ void Word::removeDefinition(int index)
         definitions.erase(definitions.begin() + index);
 }
 
-void Word::editDefinition(int index, std::string edit) {
+void Word::editDefinition(int index, std::string edit)
+{
     if (index < definitions.size())
         definitions[index] = edit;
 }
