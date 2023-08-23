@@ -188,7 +188,7 @@ void WordPage::draw()
     }
 
     // draw the reset button
-    if (GuiButton(rec_reset, "RESET")) 
+    if (GuiButton(rec_reset, "RESET"))
         confirmResetBox = true;
 
     if (GuiButton(rec_random, "RANDOM"))
@@ -245,7 +245,7 @@ void WordPage::draw()
             SearchInput[i] = '\0';
         }
 
-        currentTrie       = PrebuiltTriesList[*CurrentState::currentDict];
+        currentTrie = PrebuiltTriesList[*CurrentState::currentDict];
         delete currentDictionary;
         currentDictionary = new Dictionary(dictLanguages[*CurrentState::currentDict], *CurrentState::currentDict);
 
@@ -303,14 +303,19 @@ void WordPage::resetBox()
 
 void WordPage::addWord()
 {
-    if (GuiWindowBox({250, 170, 650, 300}, "")) {
-        isEdited = false;
+    if (GuiWindowBox({250, 170, 650, 300}, ""))
+    {
+        isEdited      = false;
         addWordButton = false;
     }
-        
+
     text = "Are you sure to add this word?";
     DrawTextEx(Resources::displayFontBold, text.c_str(),
                {600 - MeasureTextEx(Resources::displayFontBold, text.c_str(), 27, 1).x / 2, 220}, 27, 1, BLACK);
+
+    std::string type = "Please input the type for this word !";
+    DrawTextEx(Resources::displayFontRegular, type.c_str(),
+               {600 - MeasureTextEx(Resources::displayFontBold, type.c_str(), 27, 1).x / 2, 250}, 27, 1, BLACK);
 
     // draw the Search Box
     if (GuiTextBox({300, 290, 550, 50}, NewType, 500, TypeEdit))
@@ -323,10 +328,10 @@ void WordPage::addWord()
         isEdited = true;
         memset(NewType, 0, sizeof(NewType));
     }
-    
+
     if (GuiButton({390, 390, 100, 50}, "ENTER"))
     {
-        isEdited = false;
+        isEdited      = false;
         addWordButton = false;
         Word newWord(SearchInput, NewType, "");
         currentTrie.insert(newWord);
@@ -334,7 +339,7 @@ void WordPage::addWord()
     }
     if (GuiButton({690, 390, 100, 50}, "CANCEL"))
     {
-        isEdited = false;
+        isEdited      = false;
         addWordButton = false;
     }
 }
