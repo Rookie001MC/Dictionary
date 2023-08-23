@@ -31,13 +31,37 @@ void RelevantWord::setPath()
     int mode = this->dictionary->getDictionaryType();
     switch(mode)
     {
-        // case 0:
+        case 0:
+            this->keywordPath = "../data/engengKeyWord.txt";
+            this->filePath    = "../data/engeng_processed.txt";
+            break;
+        case 1:
+            this->keywordPath = "../data/engvieKeyWord.txt";
+            this->filePath    = "../data/engvie_processed.txt";
+            break;
+        case 2:
+            this->keywordPath = "../data/vieengKeyWord.txt";
+            this->filePath    = "../data/vieeng_processed.txt";
+            break;
+        case 3:
+            this->keywordPath = "../data/emojiKeyWord.txt";
+            this->filePath    = "../data/emoji_processed.txt";
+            break;
+        case 4:
+            this->keywordPath = "../data/slangKeyWord.txt";
+            this->filePath    = "../data/slang_processed.txt";
+            break;
     }
 }
 
-std::string RelevantWord::getPath()
+std::string RelevantWord::getKeyWordPath()
 {
-    return this->path;
+    return this->keywordPath;
+}
+
+std::string RelevantWord::getFilePath()
+{
+    return this->filePath;
 }
 
 std::string preprocessText(std::string text)
@@ -83,8 +107,8 @@ std::vector<RelevantWord> RelevantWord::searchDefinition(std::string definitionF
     std::transform(definitionFromUser.begin(), definitionFromUser.end(), definitionFromUser.begin(), ::tolower);
     std::ifstream read;
     std::ifstream file;
-    file.open("../data/engeng_processed.txt");
-    read.open("../data/engengKeyWord.txt");
+    file.open(getFilePath());
+    read.open(getKeyWordPath());
 
     std::string keyWord;
     std::string processed;

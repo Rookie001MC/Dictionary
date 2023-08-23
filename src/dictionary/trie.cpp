@@ -4,6 +4,10 @@
 
 Trie::Trie()
 {
+    init();
+}
+
+void Trie::init() {
     this->root      = new TrieNode;
     root->endOfWord = false;
     for (int i = 0; i < ALPHABET; ++i)

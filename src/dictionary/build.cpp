@@ -197,6 +197,7 @@ void reset(Dictionary &dict, Trie &trie)
             break;
     }
     trie.clear();
+    trie.init();
     std::filesystem::remove_all(path);
     build(dict, trie);
 }
