@@ -26,7 +26,11 @@ class GamePage
     bool correctAns = false, start = false, choosen = false;
     bool isBreakNewLines = false;
     int choice = -1, check = 0;
+    bool dropDownBox = false;
+    std::vector<std::string> dictLanguages = {"ENG-ENG", "ENG-VIE", "VIE-ENG", "EMOJI", "SLANG"};
     Color button_ans[5];
+    Rectangle rec_dictionary{1075, 140, 155, 55};
+
 
     int COUNTDOWN_DURATION = 15;
     int cnt                = COUNTDOWN_DURATION;

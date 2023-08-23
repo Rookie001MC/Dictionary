@@ -10,9 +10,6 @@ GamePage::GamePage()
     }
     dictPagesRects[selectedDictPage] = {51, float(140 + (122 * selectedDictPage)), 195, 65};
 
-    r.setDictionary(currentDictionary);
-    r.setPath();
-
     // drawing snow
     for (int i = 0; i < 100; i++)
     {
@@ -21,6 +18,8 @@ GamePage::GamePage()
         snowflakes[i].width  = GetRandomValue(2, 4);
         snowflakes[i].height = GetRandomValue(2, 4);
     }
+    r.setDictionary(currentDictionary);
+    r.setPath();
 }
 
 void GamePage::update()
@@ -65,6 +64,19 @@ void GamePage::draw()
             quiz.clear();
             CurrentState::currentPage = static_cast<Page>(i);
         }
+    }
+
+    // Draw the Dict Picker
+    if (GuiDropdownBox(rec_dictionary,
+                       (dictLanguages[0] + "\n" + dictLanguages[1] + "\n" + dictLanguages[2] + "\n" + dictLanguages[3] +
+                        "\n" + dictLanguages[4])
+                           .c_str(),
+                       CurrentState::currentDict, dropDownBox))
+    {
+        dropDownBox ^= 1;
+        currentDictionary = new Dictionary(dictLanguages[*CurrentState::currentDict], *CurrentState::currentDict);
+        r.setDictionary(currentDictionary);
+        r.setPath();
     }
 
     DrawTextEx(Resources::displayFontBold, "CHOOSE THE QUIZ MODE", {573, 253}, 43, 1, BLACK);
