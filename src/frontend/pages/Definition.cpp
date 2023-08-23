@@ -215,6 +215,11 @@ void DefPage::draw()
     {
         dropDownBox ^= 1;
         currentTrie     = PrebuiltTriesList[*CurrentState::currentDict];
+        delete currentDictionary;
+        currentDictionary = new Dictionary(dictLanguages[*CurrentState::currentDict], *CurrentState::currentDict);
+        r.setDictionary(currentDictionary);
+        r.setPath();
+        
         confirmResetBox = false;
         for (int i = 0; i < sizeof(SearchInput); ++i)
         {

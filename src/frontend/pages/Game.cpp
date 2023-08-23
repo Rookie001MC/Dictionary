@@ -75,6 +75,7 @@ void GamePage::draw()
                        CurrentState::currentDict, dropDownBox))
     {
         dropDownBox ^= 1;
+        delete currentDictionary;
         currentDictionary = new Dictionary(dictLanguages[*CurrentState::currentDict], *CurrentState::currentDict);
         r.setDictionary(currentDictionary);
         r.setPath();
