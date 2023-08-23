@@ -24,6 +24,9 @@ DefPage::DefPage()
         snowflakes[i].width  = GetRandomValue(2, 4);
         snowflakes[i].height = GetRandomValue(2, 4);
     }
+
+    r.setDictionary(currentDictionary);
+    r.setPath();
 }
 
 void DefPage::update()
