@@ -37,6 +37,9 @@ void DefPage::update()
         {
             if (GetMousePosition().y > 180 && CheckCollisionPointRec(GetMousePosition(), rec_result[i]))
             {
+                currentHistory.add(words[i].getWord().getKey());
+                currentHistory.save();
+                memset(SearchInput, 0, sizeof(SearchInput));
                 CurrentState::currentWord = words[i].getWord();
                 CurrentState::currentPage = static_cast<Page>(5);
             }
