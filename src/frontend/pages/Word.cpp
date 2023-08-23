@@ -303,20 +303,38 @@ void WordPage::resetBox()
 
 void WordPage::addWord()
 {
-    if (GuiWindowBox({300, 170, 600, 250}, ""))
+    if (GuiWindowBox({250, 170, 650, 300}, "")) {
+        isEdited = false;
         addWordButton = false;
+    }
+        
     text = "Are you sure to add this word?";
     DrawTextEx(Resources::displayFontBold, text.c_str(),
                {600 - MeasureTextEx(Resources::displayFontBold, text.c_str(), 27, 1).x / 2, 220}, 27, 1, BLACK);
-    if (GuiButton({400, 330, 100, 50}, "YES"))
+
+    // draw the Search Box
+    if (GuiTextBox({300, 290, 550, 50}, NewType, 500, TypeEdit))
     {
+        TypeEdit ^= 1;
+    }
+
+    if (!isEdited)
+    {
+        isEdited = true;
+        memset(NewType, 0, sizeof(NewType));
+    }
+    
+    if (GuiButton({390, 390, 100, 50}, "ENTER"))
+    {
+        isEdited = false;
         addWordButton = false;
-        Word newWord(SearchInput, "", "");
+        Word newWord(SearchInput, NewType, "");
         currentTrie.insert(newWord);
         memset(SearchInput, 0, sizeof(SearchInput));
     }
-    if (GuiButton({700, 330, 100, 50}, "CANCEL"))
+    if (GuiButton({690, 390, 100, 50}, "CANCEL"))
     {
+        isEdited = false;
         addWordButton = false;
     }
 }

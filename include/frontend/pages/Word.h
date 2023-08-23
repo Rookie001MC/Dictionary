@@ -22,6 +22,10 @@ class WordPage
 
     bool SearchEdit       = false;
     char SearchInput[101] = "";
+    char NewType[101] = "";
+    bool TypeEdit = false;
+    bool isEdited = false;
+    
     Rectangle rec_result[20];
     Rectangle rec_dictionary{1075, 140, 155, 55};
     Rectangle rec_reset{760, 140, 135, 55};
