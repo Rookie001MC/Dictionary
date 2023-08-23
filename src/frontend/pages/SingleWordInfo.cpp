@@ -153,8 +153,14 @@ void SingleWordInfo::draw()
         isInfo = true;
     }
 
-    std::string selectedTmp =
-        CurrentState::currentWord.getKey() + ' ' + '(' + CurrentState::currentWord.getType() + ')';
+    std::string selectedTmp = CurrentState::currentWord.getKey();
+    std::string type        = CurrentState::currentWord.getType();
+
+    if (!type.empty())
+    {
+        selectedTmp += " (" + type + ")";
+    }
+
     DrawTextEx(Resources::displayFontBold, selectedTmp.c_str(), {105, 135}, 40, 2, GetColor(WRONG_ANS));
 
     if (GuiButton({700, 133, 135, 55}, "EDIT"))
