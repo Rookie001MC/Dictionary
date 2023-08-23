@@ -56,6 +56,7 @@ class WordPage
     void addWord();
     ~WordPage()
     {
+      delete currentDictionary;
     }
 };
 

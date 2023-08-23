@@ -246,6 +246,7 @@ void WordPage::draw()
         }
 
         currentTrie       = PrebuiltTriesList[*CurrentState::currentDict];
+        delete currentDictionary;
         currentDictionary = new Dictionary(dictLanguages[*CurrentState::currentDict], *CurrentState::currentDict);
 
         currentHistory.save();
