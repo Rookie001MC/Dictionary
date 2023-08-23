@@ -2,6 +2,7 @@
 #define FRONTEND_PAGE_DEFINITION
 
 #include "dictionary/history.h"
+#include "dictionary/build.h"
 #include "dictionary/searchDefinition.h"
 #include "dictionary/trie.h"
 #include "dictionary/word.h"
