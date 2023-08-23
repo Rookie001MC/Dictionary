@@ -30,6 +30,7 @@ class Trie
   public:
     Trie();
     ~Trie();
+    void init();
     void insert(Word word);
     // bool prefixSearch(std::string key);
     bool search(std::string key, Word &word);
