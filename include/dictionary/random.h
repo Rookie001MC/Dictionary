@@ -14,6 +14,7 @@ class Random
     std::string path;                 // path to dataset
   public:
     void setDictionary(Dictionary *dict);
+    Dictionary *getDictionary();
     void setPath();
     std::string getPath();
     // Helper function

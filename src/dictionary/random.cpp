@@ -5,6 +5,10 @@ void Random::setDictionary(Dictionary *dict)
     this->dictionary = dict;
 }
 
+Dictionary *Random::getDictionary()
+{
+    return this->dictionary;
+}
 void Random::setPath()
 {
     int mode = dictionary->getDictionaryType();
@@ -13,7 +17,7 @@ void Random::setPath()
         case 0:
             path = "../data/engengRandom.txt";
             break;
-        case 1: 
+        case 1:
             path = "../data/engvieRandom.txt";
             break;
         case 2:
@@ -50,7 +54,7 @@ int Random::getRandomNumber()
         case 3: // emoji
             totalWords = 678;
             break;
-        case 4: 
+        case 4:
             totalWords = 7635;
             break;
     }
@@ -63,9 +67,9 @@ int Random::getRandomNumber()
 std::string get1stDefinitionFromText(const std::string &line)
 {
     std::string definition;
-    int start  = line.find_first_of(':') + 2;
-    int end    = line.find('@', start + 1);
-    definition = line.substr(start, end - start);
+    int start  = line.find_first_of('@') + 2;
+    int end    = line.find('@', start + 1) - 2;
+    definition = line.substr(start, end - start + 1);
     return definition;
 }
 
@@ -143,14 +147,50 @@ std::vector<std::string> Random::guessDefinition()
         if (lineNum == randomKeyWord)
         {
             keyWordQuestion = getKeyWordFromText(line);
-            correctAns      = get1stDefinitionFromText(line);
+            if (getDictionary()->getDictionaryType() == 0) // for engeng dictionary
+            {
+                int start  = line.find_first_of(':') + 2;
+                int end    = line.find('@', start + 1) - 3;
+                correctAns = line.substr(start, end - start + 1);
+            }
+            else
+            {
+                correctAns = get1stDefinitionFromText(line);
+            }
         }
         else if (lineNum == ans1)
-            incorrectAns1 = get1stDefinitionFromText(line);
+        {
+            if (getDictionary()->getDictionaryType() == 0) // for engeng dictionary
+            {
+                int start     = line.find_first_of(':') + 2;
+                int end       = line.find('@', start + 1) - 3;
+                incorrectAns1 = line.substr(start, end - start + 1);
+            }
+            else
+                incorrectAns1 = get1stDefinitionFromText(line);
+        }
         else if (lineNum == ans2)
-            incorrectAns2 = get1stDefinitionFromText(line);
+        {
+            if (getDictionary()->getDictionaryType() == 0) // for engeng dictionary
+            {
+                int start     = line.find_first_of(':') + 2;
+                int end       = line.find('@', start + 1) - 3;
+                incorrectAns2 = line.substr(start, end - start + 1);
+            }
+            else
+                incorrectAns2 = get1stDefinitionFromText(line);
+        }
         else if (lineNum == ans3)
-            incorrectAns3 = get1stDefinitionFromText(line);
+        {
+            if (getDictionary()->getDictionaryType() == 0) // for engeng dictionary
+            {
+                int start     = line.find_first_of(':') + 2;
+                int end       = line.find('@', start + 1) - 3;
+                incorrectAns3 = line.substr(start, end - start + 1);
+            }
+            else
+                incorrectAns3 = get1stDefinitionFromText(line);
+        }
     }
     fin.close();
     quiz.push_back(keyWordQuestion);
@@ -200,8 +240,15 @@ std::vector<std::string> Random::guessKeyWord()
         lineNum++;
         if (lineNum == randomDef)
         {
-            question   = get1stDefinitionFromText(line);
             correctAns = getKeyWordFromText(line);
+            if (getDictionary()->getDictionaryType() == 0) // for engeng dictionary
+            {
+                int start  = line.find_first_of(':') + 2;
+                int end    = line.find('@', start + 1) - 3;
+                question = line.substr(start, end - start + 1);
+            }
+            else
+                question = get1stDefinitionFromText(line);
         }
         else if (lineNum == ans1)
             incorrectAns1 = getKeyWordFromText(line);
