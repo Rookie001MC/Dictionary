@@ -1,4 +1,5 @@
 #include "frontend/pages/Game.h"
+#include "frontend/styles.h"
 #include "raygui.h"
 #include "raylib.h"
 
@@ -112,8 +113,8 @@ void GamePage::drawQuestion()
 
     // Define the text to be displayed
     const char *text = quiz[0].c_str();
-    Font font        = Resources::displayFontBold;
-    int fontSize     = 30;
+    Font font        = Resources::wordFontBold;
+    int fontSize     = WORD_FONT_SIZE;
     bool check       = false;
     Color textColor  = BLACK;
 
