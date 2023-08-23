@@ -299,7 +299,7 @@ void FavoritesPage::deleteRecord()
     {
         confirmDeleteRecordBox = false;
     }
-    std::string promptText = "Are you sure you want to delete this from your history?";
+    std::string promptText = "Are you sure you want to delete this from your favorites?";
     DrawTextEx(Resources::displayFontRegular, promptText.c_str(),
                {850 - MeasureTextEx(Resources::displayFontRegular, promptText.c_str(), TEXT_FONT_SIZE, 0).x, 220},
                TEXT_FONT_SIZE, 0, TEXT_COLOR_RGB);
