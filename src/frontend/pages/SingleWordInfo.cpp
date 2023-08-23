@@ -161,7 +161,7 @@ void SingleWordInfo::draw()
         selectedTmp += " (" + type + ")";
     }
 
-    DrawTextEx(Resources::displayFontBold, selectedTmp.c_str(), {105, 135}, 40, 2, GetColor(WRONG_ANS));
+    DrawTextEx(Resources::displayFontBold, selectedTmp.c_str(), {105, 135}, 35, 2, GetColor(WRONG_ANS));
 
     if (GuiButton({700, 133, 135, 55}, "EDIT"))
     {

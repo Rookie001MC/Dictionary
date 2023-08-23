@@ -272,6 +272,7 @@ void DefPage::resetBox()
         confirmResetBox = false;
         memset(SearchInput, 0, sizeof(SearchInput));
         words.clear();
+        reset(*currentDictionary, currentTrie);
     }
     if (GuiButton({700, 330, 100, 50}, "NO"))
     {
