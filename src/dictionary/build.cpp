@@ -197,12 +197,11 @@ void reset(Dictionary &dict, Trie &trie)
             path = SLANG;
             break;
     }
-    save(dict, trie);
     dict.reset();
     trie.clear();
     trie.init();
     std::filesystem::remove_all(path);
-    build(dict, trie);
+    extractEngEng(dict, trie);
 }
 
 void prebuildDictionaries()
