@@ -171,7 +171,6 @@ void save(Dictionary &dict, Trie &trie)
         case 4:
             path      = SLANG;
             delimiter = SLANGDELIMITER;
-            break;
     }
     trie.serialize(path + "data.dict", delimiter);
 }
@@ -179,23 +178,28 @@ void save(Dictionary &dict, Trie &trie)
 void reset(Dictionary &dict, Trie &trie)
 {
     std::string path;
+    char delimiter;
     switch (dict.getDictionaryType())
     {
         case 0:
-            path = ENGENG;
+            path      = ENGENG;
+            delimiter = ENGENGDELIMITER;
             break;
         case 1:
-            path = ENGVIE;
+            path      = ENGVIE;
+            delimiter = ENGVIEDELIMITER;
             break;
         case 2:
-            path = VIEENG;
+            path      = VIEENG;
+            delimiter = VIEENGDELIMITER;
             break;
         case 3:
-            path = EMOJI;
+            path      = EMOJI;
+            delimiter = EMOJIDELIMITER;
             break;
         case 4:
-            path = SLANG;
-            break;
+            path      = SLANG;
+            delimiter = SLANGDELIMITER;
     }
     dict.reset();
     trie.clear();
@@ -223,6 +227,7 @@ void reset(Dictionary &dict, Trie &trie)
         case 4:
             extractSlang(dict, trie);
     }
+    trie.serialize(path + "data.dict", delimiter);
 }
 
 void prebuildDictionaries()
