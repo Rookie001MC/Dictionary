@@ -14,6 +14,7 @@ void extractEngEng(Dictionary &dict, Trie &trie)
             break;
         trie.insert(word);
     }
+    nextKey = "";
 }
 
 void extractEngVie(Dictionary &dict, Trie &trie)
@@ -196,6 +197,8 @@ void reset(Dictionary &dict, Trie &trie)
             path = SLANG;
             break;
     }
+    save(dict, trie);
+    dict.reset();
     trie.clear();
     trie.init();
     std::filesystem::remove_all(path);
