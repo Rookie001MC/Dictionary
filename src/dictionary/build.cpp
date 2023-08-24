@@ -201,7 +201,28 @@ void reset(Dictionary &dict, Trie &trie)
     trie.clear();
     trie.init();
     std::filesystem::remove_all(path);
-    extractEngEng(dict, trie);
+    std::filesystem::create_directories(path);
+    std::ofstream fout(path + "history.txt");
+    fout.close();
+    fout.open(path + "favourite.txt");
+    fout.close();
+    switch (dict.getDictionaryType())
+    {
+        case 0:
+            extractEngEng(dict, trie);
+            break;
+        case 1:
+            extractEngVie(dict, trie);
+            break;
+        case 2:
+            extractVieEng(dict, trie);
+            break;
+        case 3:
+            extractEmoji(dict, trie);
+            break;
+        case 4:
+            extractSlang(dict, trie);
+    }
 }
 
 void prebuildDictionaries()
