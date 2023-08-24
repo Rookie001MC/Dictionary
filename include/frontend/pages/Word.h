@@ -23,6 +23,8 @@ class WordPage
     bool SearchEdit       = false;
     char SearchInput[101] = "";
     char NewType[101] = "";
+    char NewDef[101] = "";
+    bool DefEdit = false;
     bool TypeEdit = false;
     bool isEdited = false;
     

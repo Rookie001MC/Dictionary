@@ -303,7 +303,7 @@ void WordPage::resetBox()
 
 void WordPage::addWord()
 {
-    if (GuiWindowBox({250, 170, 650, 300}, ""))
+    if (GuiWindowBox({250, 170, 680, 400}, ""))
     {
         isEdited      = false;
         addWordButton = false;
@@ -315,12 +315,21 @@ void WordPage::addWord()
 
     std::string type = "Please input the type for this word !";
     DrawTextEx(Resources::displayFontRegular, type.c_str(),
-               {600 - MeasureTextEx(Resources::displayFontBold, type.c_str(), 27, 1).x / 2, 250}, 27, 1, BLACK);
+               {600 - MeasureTextEx(Resources::displayFontBold, type.c_str(), 27, 1).x / 2, 260}, 27, 1, BLACK);
 
     // draw the Search Box
-    if (GuiTextBox({300, 290, 550, 50}, NewType, 500, TypeEdit))
+    if (GuiTextBox({300, 300, 550, 50}, NewType, 500, TypeEdit))
     {
         TypeEdit ^= 1;
+    }
+
+    std::string def = "Please input the definition for this word !";
+    DrawTextEx(Resources::displayFontRegular, def.c_str(),
+               {600 - MeasureTextEx(Resources::displayFontBold, def.c_str(), 27, 1).x / 2, 370}, 27, 1, BLACK);
+
+    if (GuiTextBox({300, 410, 550, 50}, NewDef, 500, DefEdit))
+    {
+        DefEdit ^= 1;
     }
 
     if (!isEdited)
@@ -329,15 +338,17 @@ void WordPage::addWord()
         memset(NewType, 0, sizeof(NewType));
     }
 
-    if (GuiButton({390, 390, 100, 50}, "ENTER"))
+    if (GuiButton({390, 490, 100, 50}, "ENTER"))
     {
         isEdited      = false;
         addWordButton = false;
-        Word newWord(SearchInput, NewType, "");
+        Word newWord(SearchInput, NewType, NewDef);
         currentTrie.insert(newWord);
         memset(SearchInput, 0, sizeof(SearchInput));
+        memset(SearchInput, 0, sizeof(NewDef));
+        memset(SearchInput, 0, sizeof(NewType));
     }
-    if (GuiButton({690, 390, 100, 50}, "CANCEL"))
+    if (GuiButton({690, 490, 100, 50}, "CANCEL"))
     {
         isEdited      = false;
         addWordButton = false;
