@@ -33,6 +33,7 @@ class Dictionary
 {
   private:
     std::ifstream fin;
+    std::string path;
     int dictType; // 0: eng-eng, 1: eng-vie, 2: vie-eng, 3: emoji, 4: slang
     Word getWordEngEng();
     Word getWordEngVie();
@@ -46,6 +47,7 @@ class Dictionary
     Word getWord();
     int getDictionaryType();
     bool eof();
+    void reset();
 };
 
 #endif

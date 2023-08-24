@@ -81,6 +81,7 @@ void Word::editDefinition(int index, std::string edit)
 Dictionary::Dictionary(std::string path, int dictType)
 {
     fin.open(path);
+    this->path = path;
     this->dictType = dictType;
 }
 
@@ -299,4 +300,9 @@ Word Dictionary::getWordSlang()
     getline(fin, definition, '\n');
     Word word(key, type, definition);
     return word;
+}
+
+void Dictionary::reset() {
+    fin.close();
+    fin.open(path);
 }
