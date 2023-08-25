@@ -279,6 +279,7 @@ void HistoryPage::draw()
 
         words.clear();
         wordStrings.clear();
+        wordRects.clear();
 
         currentDictHistory->save();
         currentDictHistory = new History(historyDirectories[*CurrentState::currentDict]);
