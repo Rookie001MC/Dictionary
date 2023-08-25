@@ -33,9 +33,6 @@ class SingleWordInfo
     int defChosen = -1;
     bool isUpdated = false;
 
-    
-    Dictionary *currentDictionary;
-
   public:
     SingleWordInfo();
     void buildAnswer();
