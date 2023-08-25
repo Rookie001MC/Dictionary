@@ -280,6 +280,7 @@ void FavoritesPage::draw()
 
         words.clear();
         wordStrings.clear();
+        wordRects.clear();
 
         // Update the history object
         currentDictFavorites->save();
