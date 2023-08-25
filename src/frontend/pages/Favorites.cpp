@@ -362,11 +362,8 @@ void FavoritesPage::deleteAll()
     if (GuiButton({400, 330, 100, 50}, "YES"))
     {
 
-        for (int i = 0; i < currentDictFavorites->get().size(); i++)
-        {
-            currentDictFavorites->remove(currentDictFavorites->get()[i]);
-        }
-
+        confirmResetBox ^= 1;
+        currentDictFavorites->clear();
         currentDictFavorites->save();
         words.clear();
         wordStrings.clear();
