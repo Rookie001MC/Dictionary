@@ -244,7 +244,7 @@ void prebuildDictionaries()
     build(engVie, PrebuiltTriesList[1]);
     end = std::chrono::high_resolution_clock::now();
     std::cout << "engVie: \033[;32m" << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count()
-              << "ms\033[;32m\n";
+              << "ms\033[;0m\n";
 
     start = std::chrono::high_resolution_clock::now();
     build(vieEng, PrebuiltTriesList[2]);
