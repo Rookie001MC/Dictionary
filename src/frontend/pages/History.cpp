@@ -180,7 +180,7 @@ void HistoryPage::draw()
             }
         }
 
-        if (GuiButton({wordRects[i].x + 850, wordRects[i].y + 10, 30, 30}, "#143#"))
+        if (GuiButton({wordRects[i].x + 850, wordRects[i].y + 10, 30, 30}, "#143#") && !dictChooserActive)
         {
             CurrentState::currentWord = words[i];
             confirmDeleteRecordBox ^= 1;
