@@ -16,7 +16,6 @@ class DefPage
 {
   private:
     Trie currentTrie              = PrebuiltTriesList[*CurrentState::currentDict];
-    Dictionary *currentDictionary = new Dictionary(dictDirs[*CurrentState::currentDict], *CurrentState::currentDict);
     History currentHistory        = History(historyDirectories[*CurrentState::currentDict]);
 
     bool SearchEdit       = false;
@@ -51,10 +50,6 @@ class DefPage
     void update();
     void resetBox();
     void addDef();
-    ~DefPage()
-    {
-      delete currentDictionary;
-    }
 };
 
 #endif

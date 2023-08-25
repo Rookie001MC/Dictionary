@@ -36,6 +36,7 @@ struct CurrentState
         currentPage; // Current page (e.g. what search mode it's currently on, word search, definition search, etc.)
     static Word currentWord;
     static int *currentDict;
+    static Dictionary *currentDictObject;
 };
 
 struct PrebuiltTries

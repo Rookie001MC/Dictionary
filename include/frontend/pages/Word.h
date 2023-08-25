@@ -17,7 +17,6 @@ class WordPage
 {
   private:
     Trie currentTrie              = PrebuiltTriesList[*CurrentState::currentDict];
-    Dictionary *currentDictionary = new Dictionary(dictDirs[*CurrentState::currentDict], *CurrentState::currentDict);
     History currentHistory        = History(historyDirectories[*CurrentState::currentDict]);
 
     bool SearchEdit       = false;
@@ -60,10 +59,7 @@ class WordPage
     void update();
     void resetBox();
     void addWord();
-    ~WordPage()
-    {
-      delete currentDictionary;
-    }
+
 };
 
 #endif

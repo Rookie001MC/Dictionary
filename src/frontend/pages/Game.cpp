@@ -1,5 +1,6 @@
 #include "frontend/pages/Game.h"
 #include "frontend/styles.h"
+#include "globalVars/globalVars.h"
 #include "raygui.h"
 #include "raylib.h"
 
@@ -19,7 +20,7 @@ GamePage::GamePage()
         snowflakes[i].width  = GetRandomValue(2, 4);
         snowflakes[i].height = GetRandomValue(2, 4);
     }
-    r.setDictionary(currentDictionary);
+    r.setDictionary(CurrentState::currentDictObject);
     r.setPath();
 }
 
@@ -75,9 +76,27 @@ void GamePage::draw()
                        CurrentState::currentDict, dropDownBox))
     {
         dropDownBox ^= 1;
-        delete currentDictionary;
-        currentDictionary = new Dictionary(dictLanguages[*CurrentState::currentDict], *CurrentState::currentDict);
-        r.setDictionary(currentDictionary);
+        switch (*CurrentState::currentDict)
+        {
+            case 0:
+                CurrentState::currentDictObject = &engEng;
+                break;
+            case 1:
+                CurrentState::currentDictObject = &engVie;
+                break;
+            case 2:
+                CurrentState::currentDictObject = &vieEng;
+                break;
+            case 3:
+                CurrentState::currentDictObject = &emoji;
+                break;
+            case 4:
+                CurrentState::currentDictObject = &slang;
+                break;            
+        }
+
+
+        r.setDictionary(CurrentState::currentDictObject);
         r.setPath();
     }
 

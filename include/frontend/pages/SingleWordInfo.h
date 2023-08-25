@@ -41,10 +41,6 @@ class SingleWordInfo
 
   public:
     SingleWordInfo();
-    ~SingleWordInfo()
-    {
-      delete currentDictionary;
-    }
     void buildAnswer();
     void drawSnow();
     void update();

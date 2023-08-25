@@ -1,4 +1,5 @@
 #include "globalVars/globalVars.h"
+#include "dictionary/word.h"
 
 std::string dataDir               = Resources::currentExeDir + "../data/";
 std::vector<std::string> dictDirs = {
@@ -26,6 +27,7 @@ Dictionary slang  = Dictionary(dictDirs[4], 4);
 Page CurrentState::currentPage = Page::DICT_WORD;
 Word CurrentState::currentWord;
 int *CurrentState::currentDict = new int{0};
+Dictionary *CurrentState::currentDictObject = &engEng;
 
 Font Resources::titleFont;
 

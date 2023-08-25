@@ -1,3 +1,4 @@
+#include "globalVars/globalVars.h"
 #define RAYGUI_IMPLEMENTATION
 
 #include "frontend/FrontendMain.h"
@@ -76,3 +77,4 @@ void FrontendMain::start()
     }
     EndDrawing();
 }
+

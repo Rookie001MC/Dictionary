@@ -16,7 +16,6 @@ class GamePage
     std::vector<std::string> dictPages = {"WORD", "Definition", "Favorites", "History", "Game"};
     short int selectedDictPage         = 4;
     Random r;
-    Dictionary *currentDictionary = new Dictionary(dictDirs[*CurrentState::currentDict], *CurrentState::currentDict);
     std::vector<std::string> quiz;
     bool gameQuiz          = false;
     std::string options[4] = {"A", "B", "C", "D"};
@@ -43,10 +42,6 @@ class GamePage
 
   public:
     GamePage();
-    ~GamePage()
-    {
-      delete currentDictionary;
-    }
     void draw();
     void buildAnswer();
     void drawTimer();
