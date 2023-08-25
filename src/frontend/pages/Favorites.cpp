@@ -56,10 +56,10 @@ std::string FavoritesPage::TextEllipsis(const std::string &text, const Font &fon
 
 void FavoritesPage::update()
 {
-    currentFavorites = History(favoritesDirectories[*CurrentState::currentDict]);
+    CurrentState::currentDictFavorites = History(favoritesDirectories[*CurrentState::currentDict]);
     if (!words.size() && !wordStrings.size() && !tempSearched.size())
     {
-        wordStrings = currentFavorites.get();
+        wordStrings = CurrentState::currentDictFavorites.get();
 
         getFavorites(wordStrings);
     }
@@ -276,14 +276,14 @@ void FavoritesPage::draw()
         dictChooserActive ^= 1;
 
         // Update the trie object
-        currentTrie = PrebuiltTriesList[*CurrentState::currentDict];
+        CurrentState::currentTrie = PrebuiltTriesList[*CurrentState::currentDict];
 
         words.clear();
         wordStrings.clear();
 
         // Update the history object
-        currentFavorites.save();
-        currentFavorites = History(favoritesDirectories[*CurrentState::currentDict], 1);
+        CurrentState::currentDictFavorites.save();
+        CurrentState::currentDictFavorites = History(favoritesDirectories[*CurrentState::currentDict], 1);
     }
 
     // Draw snowflakes
@@ -309,17 +309,17 @@ void FavoritesPage::deleteRecord()
     {
 
         // Delete the word from the history
-        if (currentFavorites.find(CurrentState::currentWord.getKey()) != -1)
+        if (CurrentState::currentDictFavorites.find(CurrentState::currentWord.getKey()) != -1)
         {
-            currentFavorites.remove(CurrentState::currentWord.getKey());
+            CurrentState::currentDictFavorites.remove(CurrentState::currentWord.getKey());
         }
-        currentFavorites.save();
+        CurrentState::currentDictFavorites.save();
 
         // Update the words vector
         words.clear();
         wordStrings.clear();
 
-        getFavorites(currentFavorites.get());
+        getFavorites(CurrentState::currentDictFavorites.get());
 
         CurrentState::currentWord = Word();
         confirmDeleteRecordBox    = false;
@@ -337,7 +337,7 @@ void FavoritesPage::getFavorites(std::vector<std::string> wordStrings)
     {
         Word tmp;
 
-        currentTrie.search(wordStrings[i], tmp);
+        CurrentState::currentTrie.search(wordStrings[i], tmp);
         if (tmp.getKey() != "")
         {
             words.push_back(tmp);
@@ -360,12 +360,12 @@ void FavoritesPage::deleteAll()
     if (GuiButton({400, 330, 100, 50}, "YES"))
     {
 
-        for (int i = 0; i < currentFavorites.get().size(); i++)
+        for (int i = 0; i < CurrentState::currentDictFavorites.get().size(); i++)
         {
-            currentFavorites.remove(currentFavorites.get()[i]);
+            CurrentState::currentDictFavorites.remove(CurrentState::currentDictFavorites.get()[i]);
         }
 
-        currentFavorites.save();
+        CurrentState::currentDictFavorites.save();
         words.clear();
         wordStrings.clear();
         confirmResetBox = false;

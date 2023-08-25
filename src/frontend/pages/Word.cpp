@@ -35,8 +35,8 @@ void WordPage::update()
         {
             if (GetMousePosition().y > 180 && CheckCollisionPointRec(GetMousePosition(), rec_result[i]))
             {
-                currentHistory.add(words[i].getKey());
-                currentHistory.save();
+                CurrentState::currentDictHistory.add(words[i].getKey());
+                CurrentState::currentDictHistory.save();
                 memset(SearchInput, 0, sizeof(SearchInput));
                 CurrentState::currentWord = words[i];
                 CurrentState::currentPage = static_cast<Page>(5);
@@ -245,7 +245,7 @@ void WordPage::draw()
             SearchInput[i] = '\0';
         }
 
-        currentTrie = PrebuiltTriesList[*CurrentState::currentDict];
+        CurrentState::currentTrie = PrebuiltTriesList[*CurrentState::currentDict];
 
         switch (*CurrentState::currentDict)
         {
@@ -266,8 +266,8 @@ void WordPage::draw()
                 break;            
         }
 
-        currentHistory.save();
-        currentHistory = History(historyDirectories[*CurrentState::currentDict]);
+        CurrentState::currentDictHistory.save();
+        CurrentState::currentDictHistory = History(historyDirectories[*CurrentState::currentDict]);
     }
 
     if (SearchInput[0] != '\0')
@@ -287,7 +287,7 @@ void WordPage::draw()
         if (GetKeyPressed() && !(IsKeyPressed(KEY_UP) || IsKeyPressed(KEY_DOWN)))
         {
             words.clear();
-            words = currentTrie.wordSuggest(SearchInput);
+            words = CurrentState::currentTrie.wordSuggest(SearchInput);
         }
     }
 
@@ -310,7 +310,13 @@ void WordPage::resetBox()
         confirmResetBox = false;
         memset(SearchInput, 0, sizeof(SearchInput));
         words.clear();
-        reset(*CurrentState::currentDictObject, currentTrie);
+        reset(*CurrentState::currentDictObject, CurrentState::currentTrie);
+
+        CurrentState::currentDictHistory.clear();
+        CurrentState::currentDictHistory.save();
+        
+        CurrentState::currentDictFavorites.clear();
+        CurrentState::currentDictFavorites.save();
     }
     if (GuiButton({700, 330, 100, 50}, "NO"))
     {
@@ -360,7 +366,7 @@ void WordPage::addWord()
         isEdited      = false;
         addWordButton = false;
         Word newWord(SearchInput, NewType, NewDef);
-        currentTrie.insert(newWord);
+        CurrentState::currentTrie.insert(newWord);
         memset(SearchInput, 0, sizeof(SearchInput));
         memset(NewDef, 0, sizeof(NewDef));
         memset(NewType, 0, sizeof(NewType));
