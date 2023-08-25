@@ -204,8 +204,9 @@ void reset(Dictionary &dict, Trie &trie)
     dict.reset();
     trie.clear();
     trie.init();
-    std::filesystem::remove_all(path);
-    std::filesystem::create_directories(path);
+    std::filesystem::remove(path + "history.txt");
+    std::filesystem::remove(path + "favourite.txt");
+    std::filesystem::remove(path + "data.dict");
     std::ofstream fout(path + "history.txt");
     fout.close();
     fout.open(path + "favourite.txt");
