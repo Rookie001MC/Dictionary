@@ -121,6 +121,7 @@ bool Trie::search(std::string key, Word &word)
 
 void Trie::remove(std::string key)
 {
+    std::transform(key.begin(), key.end(), key.begin(), ::tolower);
     remove(root, key, 0);
 }
 
