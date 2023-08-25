@@ -85,7 +85,7 @@ void FavoritesPage::update()
     }
 
     if ((IsKeyPressed(KEY_DOWN)) ||
-        GetMouseWheelMove() == -1 && wordRects[words.size() - 1].y + wordRects[words.size() - 1].height > 800)
+        GetMouseWheelMove() == -1 && wordRects[words.size() - 1].y + wordRects[words.size() - 1].height >= 540)
     {
         for (int i = 0; i < words.size(); i++)
         {
