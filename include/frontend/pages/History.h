@@ -34,8 +34,6 @@ class HistoryPage
     bool confirmDeleteAllBox = false;
 
     // Create the storage
-    History currentHistory      = History(historyDirectories[*CurrentState::currentDict]);
-    Trie currentTrie            = PrebuiltTriesList[*CurrentState::currentDict];
     bool confirmDeleteRecordBox = false;
 
     // Initialize snow variables

@@ -15,8 +15,6 @@
 class DefPage
 {
   private:
-    Trie currentTrie              = PrebuiltTriesList[*CurrentState::currentDict];
-    History currentHistory        = History(historyDirectories[*CurrentState::currentDict]);
 
     bool SearchEdit       = false;
     char SearchInput[101] = "";

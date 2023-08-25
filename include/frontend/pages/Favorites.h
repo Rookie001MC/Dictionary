@@ -35,9 +35,6 @@ class FavoritesPage
     bool dictChooserActive      = false;
     bool confirmDeleteRecordBox = false;
 
-    // Both history and favorites uses the same function
-    History currentFavorites = History(favoritesDirectories[*CurrentState::currentDict], 1);
-    Trie currentTrie         = PrebuiltTriesList[*CurrentState::currentDict];
 
     // Initialize snow variables
     Rectangle snowflakes[100];

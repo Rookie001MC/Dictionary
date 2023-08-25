@@ -2,6 +2,7 @@
 #define GLOBAL_VARS
 
 #include "dictionary/filePathHandler.h"
+#include "dictionary/history.h"
 #include "dictionary/trie.h"
 #include "dictionary/word.h"
 #include "raylib.h"
@@ -37,6 +38,9 @@ struct CurrentState
     static Word currentWord;
     static int *currentDict;
     static Dictionary *currentDictObject;
+    static History currentDictHistory;
+    static History currentDictFavorites;
+    static Trie currentTrie;
 };
 
 struct PrebuiltTries

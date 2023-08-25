@@ -35,9 +35,6 @@ class SingleWordInfo
 
     
     Dictionary *currentDictionary;
-    History currentFavorites      = History(favoritesDirectories[*CurrentState::currentDict], 1);
-    Trie currentTrie              = PrebuiltTriesList[*CurrentState::currentDict];
-    History currentHistory        = History(historyDirectories[*CurrentState::currentDict]);
 
   public:
     SingleWordInfo();
