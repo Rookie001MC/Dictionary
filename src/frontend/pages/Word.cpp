@@ -103,6 +103,16 @@ std::string WordPage::TextEllipsis(const std::string &text, const Font &font, fl
     return truncatedText;
 }
 
+bool IsAnyKeyPressed()
+{
+    bool keyPressed = false;
+    int key = GetKeyPressed();
+
+    if ((key >= 0) && (key <= 126)) keyPressed = true;
+
+    return keyPressed;
+}
+
 void WordPage::draw()
 {
     if (confirmResetBox)
@@ -284,7 +294,7 @@ void WordPage::draw()
 
     if (SearchEdit)
     {
-        if (GetKeyPressed() && !(IsKeyPressed(KEY_UP) || IsKeyPressed(KEY_DOWN)))
+        if (IsAnyKeyPressed())
         {
             words.clear();
             words = currentTrie.wordSuggest(SearchInput);
