@@ -37,8 +37,8 @@ void DefPage::update()
         {
             if (GetMousePosition().y > 180 && CheckCollisionPointRec(GetMousePosition(), rec_result[i]))
             {
-                CurrentState::currentDictHistory.add(words[i].getWord().getKey());
-                CurrentState::currentDictHistory.save();
+                currentDictHistory->add(words[i].getWord().getKey());
+                currentDictHistory->save();
                 memset(SearchInput, 0, sizeof(SearchInput));
                 CurrentState::currentWord = words[i].getWord();
                 CurrentState::currentPage = static_cast<Page>(5);
@@ -217,7 +217,7 @@ void DefPage::draw()
                        CurrentState::currentDict, dropDownBox))
     {
         dropDownBox ^= 1;
-        CurrentState::currentTrie     = PrebuiltTriesList[*CurrentState::currentDict];
+        currentTrie     = PrebuiltTriesList[*CurrentState::currentDict];
 
         switch (*CurrentState::currentDict)
         {
@@ -269,7 +269,7 @@ void DefPage::draw()
     {
         pressed = true;
         words.clear();
-        words = r.searchDefinition(SearchInput, CurrentState::currentTrie);
+        words = r.searchDefinition(SearchInput, currentTrie);
     }
     // Draw snowflakes
     for (int i = 0; i < 100; i++)
@@ -290,13 +290,13 @@ void DefPage::resetBox()
         confirmResetBox = false;
         memset(SearchInput, 0, sizeof(SearchInput));
         words.clear();
-        reset(*CurrentState::currentDictObject, CurrentState::currentTrie);
+        reset(*CurrentState::currentDictObject, currentTrie);
 
-        CurrentState::currentDictHistory.clear();
-        CurrentState::currentDictHistory.save();
+        currentDictHistory->clear();
+        currentDictHistory->save();
         
-        CurrentState::currentDictFavorites.clear();
-        CurrentState::currentDictFavorites.save();
+        currentDictFavorites->clear();
+        currentDictFavorites->save();
     }
     if (GuiButton({700, 330, 100, 50}, "NO"))
     {

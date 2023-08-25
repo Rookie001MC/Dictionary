@@ -27,9 +27,9 @@ SingleWordInfo::SingleWordInfo()
 void SingleWordInfo::update()
 {
     isUpdated        = true;
-    CurrentState::currentDictFavorites = History(favoritesDirectories[*CurrentState::currentDict], 1);
-    CurrentState::currentTrie      = PrebuiltTriesList[*CurrentState::currentDict];
-    CurrentState::currentDictHistory   = History(historyDirectories[*CurrentState::currentDict]);
+    currentDictFavorites = new History(favoritesDirectories[*CurrentState::currentDict], 1);
+    currentTrie      = PrebuiltTriesList[*CurrentState::currentDict];
+    currentDictHistory   = new History(historyDirectories[*CurrentState::currentDict]);
 
     if (isInfo)
     {
@@ -184,20 +184,20 @@ void SingleWordInfo::draw()
     }
 
     // Find the word in the Favortite list first.
-    if (CurrentState::currentDictFavorites.find(CurrentState::currentWord.getKey()) == -1)
+    if (currentDictFavorites->find(CurrentState::currentWord.getKey()) == -1)
     {
         if (GuiButton({855, 133, 195, 55}, "ADD FAVORITE"))
         {
-            CurrentState::currentDictFavorites.add(CurrentState::currentWord.getKey());
-            CurrentState::currentDictFavorites.save();
+            currentDictFavorites->add(CurrentState::currentWord.getKey());
+            currentDictFavorites->save();
         }
     }
     else
     {
         if (GuiButton({855, 133, 195, 55}, "REMOVE FAVORITE"))
         {
-            CurrentState::currentDictFavorites.remove(CurrentState::currentWord.getKey());
-            CurrentState::currentDictFavorites.save();
+            currentDictFavorites->remove(CurrentState::currentWord.getKey());
+            currentDictFavorites->save();
         }
     }
     if (GuiButton({1065, 133, 135, 55}, "DELETE"))
@@ -235,7 +235,7 @@ void SingleWordInfo::addDef()
         eachDef.clear();
         edit_height.clear();
         CurrentState::currentWord.addDefinition(NewDef);
-        CurrentState::currentTrie.insert(CurrentState::currentWord);
+        currentTrie.insert(CurrentState::currentWord);
     }
 
     if (GuiButton({690, 390, 100, 50}, "BACK"))
@@ -266,7 +266,7 @@ void SingleWordInfo::deleteBox()
     if (GuiButton({400, 330, 100, 50}, "YES"))
     {
         confirmDeleteBox = false;
-        CurrentState::currentTrie.remove(CurrentState::currentWord.getKey());
+        currentTrie.remove(CurrentState::currentWord.getKey());
         CurrentState::currentPage = static_cast<Page>(0);
     }
     if (GuiButton({700, 330, 100, 50}, "NO"))
@@ -396,7 +396,7 @@ void SingleWordInfo::editEachDef()
         eachDef.clear();
         edit_height.clear();
         CurrentState::currentWord.editDefinition(defChosen, NewDef);
-        CurrentState::currentTrie.insert(CurrentState::currentWord);
+        currentTrie.insert(CurrentState::currentWord);
     }
 
     if (GuiButton({690, 390, 100, 50}, "DELETE"))
@@ -407,6 +407,6 @@ void SingleWordInfo::editEachDef()
         eachDef.clear();
         edit_height.clear();
         CurrentState::currentWord.removeDefinition(defChosen);
-        CurrentState::currentTrie.insert(CurrentState::currentWord);
+        currentTrie.insert(CurrentState::currentWord);
     }
 }

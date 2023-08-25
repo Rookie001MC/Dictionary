@@ -29,9 +29,6 @@ Page CurrentState::currentPage = Page::DICT_WORD;
 Word CurrentState::currentWord;
 int *CurrentState::currentDict = new int{0};
 Dictionary *CurrentState::currentDictObject = &engEng;
-History CurrentState::currentDictHistory = History(historyDirectories[*CurrentState::currentDict], 0);
-History CurrentState::currentDictFavorites = History(favoritesDirectories[*CurrentState::currentDict], 1);
-Trie CurrentState::currentTrie;
 
 Font Resources::titleFont;
 
@@ -47,3 +44,7 @@ std::string Resources::currentExeDir;
 Texture2D Resources::headerImage;
 
 std::vector<Trie> PrebuiltTriesList(5);
+
+History* currentDictHistory;
+History* currentDictFavorites;
+Trie currentTrie;

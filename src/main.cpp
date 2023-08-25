@@ -1,6 +1,7 @@
 // main function currently used for testing. will be changed in the future
 #include "dictionary/build.h"
 #include "dictionary/filePathHandler.h"
+#include "dictionary/history.h"
 #include "dictionary/trie.h"
 #include "dictionary/word.h"
 #include "frontend/FrontendMain.h"
@@ -33,7 +34,11 @@ int main(int argc, const char *argv[])
     SetTargetFPS(60);
     loadResources();
     FrontendMain frontend;
-    CurrentState::currentTrie = PrebuiltTriesList.at(*CurrentState::currentDict);
+
+    currentTrie = PrebuiltTriesList.at(*CurrentState::currentDict);
+    currentDictHistory = new History(historyDirectories.at(*CurrentState::currentDict), 0);
+    currentDictFavorites = new History(favoritesDirectories.at(*CurrentState::currentDict), 1);
+
     while (!WindowShouldClose())
     {
         frontend.start();

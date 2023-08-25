@@ -56,11 +56,11 @@ std::string HistoryPage::TextEllipsis(const std::string &text, const Font &font,
 
 void HistoryPage::update()
 {
-    CurrentState::currentDictHistory = History(historyDirectories[*CurrentState::currentDict]);
+    currentDictHistory = new History(historyDirectories[*CurrentState::currentDict]);
     if (!words.size() && !wordStrings.size() && !tempSearched.size())
     {
         // Get the history strings
-        wordStrings = CurrentState::currentDictHistory.get();
+        wordStrings = currentDictHistory->get();
 
         getHistory(wordStrings);
     }
@@ -275,13 +275,13 @@ void HistoryPage::draw()
         dictChooserActive ^= 1;
 
         // Update the trie object
-        CurrentState::currentTrie = PrebuiltTriesList[*CurrentState::currentDict];
+        currentTrie = PrebuiltTriesList[*CurrentState::currentDict];
 
         words.clear();
         wordStrings.clear();
 
-        CurrentState::currentDictHistory.save();
-        CurrentState::currentDictHistory = History(historyDirectories[*CurrentState::currentDict]);
+        currentDictHistory->save();
+        currentDictHistory = new History(historyDirectories[*CurrentState::currentDict]);
     }
 
     // Draw snowflakes
@@ -307,16 +307,16 @@ void HistoryPage::deleteRecord()
     {
 
         // Delete the word from the history
-        if (CurrentState::currentDictHistory.find(CurrentState::currentWord.getKey()) != -1)
+        if (currentDictHistory->find(CurrentState::currentWord.getKey()) != -1)
         {
-            CurrentState::currentDictHistory.remove(CurrentState::currentWord.getKey());
+            currentDictHistory->remove(CurrentState::currentWord.getKey());
         }
-        CurrentState::currentDictHistory.save();
+        currentDictHistory->save();
         // Update the words vector
         words.clear();
         wordStrings.clear();
 
-        getHistory(CurrentState::currentDictHistory.get());
+        getHistory(currentDictHistory->get());
 
         CurrentState::currentWord = Word();
         confirmDeleteRecordBox ^= 1;
@@ -334,7 +334,7 @@ void HistoryPage::getHistory(std::vector<std::string> wordStrings)
     {
         Word tmp;
 
-        CurrentState::currentTrie.search(wordStrings[i], tmp);
+        currentTrie.search(wordStrings[i], tmp);
         if (tmp.getKey() != "")
         {
             words.push_back(tmp);
@@ -357,8 +357,8 @@ void HistoryPage::deleteAll()
     {
         // Delete all the words from the history
         confirmDeleteAllBox ^= 1;
-        CurrentState::currentDictHistory.clear();
-        CurrentState::currentDictHistory.save();
+        currentDictHistory->clear();
+        currentDictHistory->save();
         words.clear();
         wordStrings.clear();
     }

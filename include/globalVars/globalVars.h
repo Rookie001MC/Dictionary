@@ -38,9 +38,6 @@ struct CurrentState
     static Word currentWord;
     static int *currentDict;
     static Dictionary *currentDictObject;
-    static History currentDictHistory;
-    static History currentDictFavorites;
-    static Trie currentTrie;
 };
 
 struct PrebuiltTries
@@ -65,4 +62,7 @@ extern Dictionary vieEng;
 extern Dictionary emoji;
 extern Dictionary slang;
 
+extern History* currentDictHistory;
+extern History* currentDictFavorites;
+extern Trie currentTrie;
 #endif
