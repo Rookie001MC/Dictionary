@@ -28,6 +28,10 @@ void SingleWordInfo::update()
 {
     isUpdated        = true;
     currentFavorites = History(favoritesDirectories[*CurrentState::currentDict], 1);
+    currentTrie              = PrebuiltTriesList[*CurrentState::currentDict];
+    currentDictionary = new Dictionary(dictDirs[*CurrentState::currentDict], *CurrentState::currentDict);
+    currentHistory        = History(historyDirectories[*CurrentState::currentDict]);
+
     if (isInfo)
     {
         eachDef.clear();

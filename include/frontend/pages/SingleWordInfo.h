@@ -33,9 +33,10 @@ class SingleWordInfo
     int defChosen = -1;
     bool isUpdated = false;
 
+    
+    Dictionary *currentDictionary = new Dictionary(dictDirs[*CurrentState::currentDict], *CurrentState::currentDict);
     History currentFavorites      = History(favoritesDirectories[*CurrentState::currentDict], 1);
     Trie currentTrie              = PrebuiltTriesList[*CurrentState::currentDict];
-    Dictionary *currentDictionary = new Dictionary(dictDirs[*CurrentState::currentDict], *CurrentState::currentDict);
     History currentHistory        = History(historyDirectories[*CurrentState::currentDict]);
 
   public:

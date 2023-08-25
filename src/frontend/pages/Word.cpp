@@ -345,8 +345,8 @@ void WordPage::addWord()
         Word newWord(SearchInput, NewType, NewDef);
         currentTrie.insert(newWord);
         memset(SearchInput, 0, sizeof(SearchInput));
-        memset(SearchInput, 0, sizeof(NewDef));
-        memset(SearchInput, 0, sizeof(NewType));
+        memset(NewDef, 0, sizeof(NewDef));
+        memset(NewType, 0, sizeof(NewType));
     }
     if (GuiButton({690, 490, 100, 50}, "CANCEL"))
     {
