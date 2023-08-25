@@ -1,4 +1,9 @@
+# CMake file based on:
+# https://github.com/SasLuca/raylib-cmake-template
+# https://github.com/raysan5/raylib/blob/master/projects/CMake/CMakeLists.txt
+
 cmake_minimum_required(VERSION 3.15)
+SET(MSVC_INCREMENTAL_DEFAULT ON)
 project(cs163_project)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
@@ -6,40 +11,56 @@ set(FETCHCONTENT_QUIET FALSE)
 
 set(CMAKE_CXX_STANDARD 20)
 
-set(RAYLIB_VERSION 4.5.0)
-set(RAYLIB-CPP_VERSION 4.5.1)
-
 # Setting libraries
 
 # Raylib
-find_package(raylib ${RAYLIB_VERSION} QUIET)
-if (NOT raylib_FOUND) # If there's none, fetch and build raylib
-   include(FetchContent)
-    FetchContent_Declare(
-        raylib
-        GIT_REPOSITORY https://github.com/raysan5/raylib.git
-        GIT_TAG ${RAYLIB_VERSION}
-    )
-    FetchContent_MakeAvailable(raylib)
+set(RAYLIB_VERSION 4.5.0)
+if (NOT raylib_FOUND)
+  include(FetchContent)
+  FetchContent_Declare(
+    raylib
+    DOWNLOAD_EXTRACT_TIMESTAMP ON
+    USES_TERMINAL_DOWNLOAD TRUE
+    GIT_PROGRESS TRUE
+    GIT_SHALLOW TRUE
+    URL https://github.com/raysan5/raylib/archive/refs/tags/${RAYLIB_VERSION}.tar.gz
+  )
+  FetchContent_GetProperties(raylib)
+  if (NOT raylib_POPULATED)
+    set(FETCHCONTENT_QUIET NO)
+    FetchContent_Populate(raylib)
+    set(BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+    set(BUILD_GAMES    OFF CACHE BOOL "" FORCE)
+    add_subdirectory(${raylib_SOURCE_DIR} ${raylib_BINARY_DIR})
+  endif()
 endif()
 
-# Raylib-cpp
-find_package(raylib_cpp QUIET)
-if (NOT raylib_cpp_FOUND)
-    include(FetchContent)
-    FetchContent_Declare(
-        raylib_cpp
-        GIT_REPOSITORY https://github.com/RobLoach/raylib-cpp.git
-        GIT_TAG v${RAYLIB-CPP_VERSION}
-    )
-    FetchContent_MakeAvailable(raylib_cpp)
+# RayGUI
+set(RAYGUI_VERSION 3.6)
+find_package(raygui ${RAYGUI_VERSION} QUIET)
+if (NOT raygui_FOUND)
+  include(FetchContent)
+  FetchContent_Declare(
+    raygui
+    DOWNLOAD_EXTRACT_TIMESTAMP ON
+    USES_TERMINAL_DOWNLOAD TRUE
+    GIT_PROGRESS TRUE
+    GIT_SHALLOW TRUE
+    URL https://github.com/raysan5/raygui/archive/refs/tags/${RAYGUI_VERSION}.tar.gz
+  )
+  FetchContent_GetProperties(raygui)
+  if (NOT raygui_POPULATED)
+    set(FETCHCONTENT_QUIET NO)
+    FetchContent_Populate(raygui)
+    set(BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+    add_subdirectory(${raygui_SOURCE_DIR}/projects/CMake ${raygui_BINARY_DIR})
+  endif()
 endif()
 
 
 # Defining the source files and includes
-file(GLOB_RECURSE SOURCES "src/*.cpp")
-file(GLOB_RECURSE HEADERS "header/*.hpp")
-file(GLOB_RECURSE HEADERS "header/*.h")
+file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS "src/*.cpp")
+file(GLOB_RECURSE HEADERS CONFIGURE_DEPENDS "include/*.hpp include/*.h")
 
 # Set the built executable directory
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
@@ -48,17 +69,18 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
 set(CMAKE_BINARY_DIR ${PROJECT_SOURCE_DIR}/build)
 
 # Adding the source files to the executable
-add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})
+add_executable(${PROJECT_NAME} ${SOURCES})
 
 # Adding the include directory
-target_include_directories(${PROJECT_NAME} PUBLIC header)
+target_include_directories(${PROJECT_NAME} PUBLIC include)
 
 # Adding the libraries
-target_link_libraries(${PROJECT_NAME} raylib raylib_cpp)
+target_link_libraries(${PROJECT_NAME} PUBLIC raylib raygui)
+
 
 # MacOS jibbirish
 if (APPLE)
-    target_link_libraries(${PROJECT_NAME} "-framework IOKit")
-    target_link_libraries(${PROJECT_NAME} "-framework Cocoa")
-    target_link_libraries(${PROJECT_NAME} "-framework OpenGL")
+    target_link_libraries(${PROJECT_NAME} PUBLIC "-framework IOKit")
+    target_link_libraries(${PROJECT_NAME} PUBLIC "-framework Cocoa")
+    target_link_libraries(${PROJECT_NAME} PUBLIC "-framework OpenGL")
 endif()

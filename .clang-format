@@ -13,7 +13,7 @@ UseTab: Never
 IndentCaseLabels: true
 
 # Right-align pointers and references
-PointerAlignment: Left
+PointerAlignment: Right
 
 # ANGLE likes to align things as much as possible.
 AlignOperands: true

@@ -1,0 +1,679 @@
+%-) #slang @ User has been staring at a green screen for 15 hours straight. @ 
+(-: #slang @ User is left handed. @ 
+(:I #slang @ User is an egghead. @ 
+*<:-) #slang @ User is wearing a Santa Claus Hat. @ 
++-:-) #slang @ User is the Pope or holds some other religious office. @ 
+,-) #slang @ Ditto...but he's winking. @ 
+,:-) #slang @ Same thing...other side. @ 
+-6% #slang @ User is braindead. @ 
+-:-( #slang @ Real punk rockers don't smile. @ 
+-:-) #slang @ User is a punk rocker. @ 
+-=* :-) #slang @ User is a TeX wizard. @ 
+.-) #slang @ User only has one eye. @ 
+2MFM #slang @ To much for me @ 
+2U2 #slang @ To you too @ 
+3:[ #slang @ Mean Pet smiley. @ 
+3:] #slang @ Pet smiley. @ 
+4AYN #slang @ For all you know @ 
+4COL #slang @ For crying out loud @ 
+4SALE #slang @ For sale @ 
+4U #slang @ For you @ 
+8 :-) #slang @ User is a wizard. @ 
+8 :-I #slang @ Net.unix-wizards @ 
+8-) #slang @ User is wearing sunglasses. @ 
+8:-) #slang @ User is a little girl. @ 
+:'-( #slang @ User is crying. @ 
+:'-) #slang @ User is so happy, s/he is crying. @ 
+:( #slang @ Sad. @ 
+:) #slang @ Happy. @ 
+:* #slang @ Kisses. @ 
+:*) #slang @ User is drunk. @ 
+:,( #slang @ Crying. @ 
+:-# #slang @ User wears braces. @ 
+:-& #slang @ User is tongue tied. @ 
+:-( #slang @ boo hoo @ 
+:-) #slang @ ha ha @ 
+:-)-8 #slang @ User is a Big girl. @ 
+:-)~ #slang @ User drools. @ 
+:-* #slang @ User just ate something sour. @ 
+:-/ #slang @ User is skeptical. @ 
+:-0 #slang @ No Yelling!(Quiet Lab) @ 
+:-7 #slang @ User juust made a wry statement. @ 
+:-9 #slang @ User is licking his/her lips. @ 
+:-: #slang @ Mutant smiley; the invisible smiley. @ 
+:-> #slang @ hey hey @ 
+:-? #slang @ User smokes a pipe. @ 
+:-@ #slang @ User is screaming. @ 
+:-C #slang @ User is really bummed. @ 
+:-D #slang @ User is laughing (at you!) @ 
+:-E #slang @ Bucktoothed vampire. @ 
+:-F #slang @ Bucktoothed vampire with one tooth missing. @ 
+:-I #slang @ hmmm @ 
+:-O #slang @ oops @ 
+:-P #slang @ nyahhhh! @ 
+:-Q #slang @ User is a smoker. @ 
+:-S #slang @ User just made an incoherent statement. @ 
+:-X #slang @ User's lips are sealed. @ 
+:-[ #slang @ User is a vampire. @ 
+:-` #slang @ User spitting out its chewing tobacco. @ 
+:-{) #slang @ User has a mustache. @ 
+:-{} #slang @ User wears lipstick. @ 
+:-~) #slang @ User has a cold. @ 
+::-) #slang @ User wears normal glasses. @ 
+:< #slang @ What? @ 
+:<) #slang @ User is from an Ivy League School. @ 
+:=) #slang @ User has two noses. @ 
+:> #slang @ What? @ 
+:@ #slang @ What? @ 
+:C #slang @ What? @ 
+:D #slang @ Laughter. @ 
+:I #slang @ Hmmm... @ 
+:O #slang @ Yelling. @ 
+:Q #slang @ What? @ 
+:[ #slang @ Real Downer. @ 
+:] #slang @ Gleep...a friendly midget smiley who will gladly be your friend. @ 
+:^) #slang @ User has a broken nose. @ 
+:_) #slang @ User's nose is sliding off of his face. @ 
+:{ #slang @ What? @ 
+:} #slang @ What should we call these? (what?) @ 
+;-) #slang @ Winky smiley. User just made a flirtatious and/or sarcastic remark.More of a "don't hit me for what I just said" smiley. @ 
+<:-I #slang @ User is a dunce. @ 
+<|-( #slang @ User is Chinese and doesn't like these kind of jokes. @ 
+<|-) #slang @ User is Chinese. @ 
+=) #slang @ Variation on a theme... @ 
+=)) #slang @ Full of laughing @ 
+=:-) #slang @ User is a hosehead. @ 
+=W= #slang @ Whatever @ 
+>:-> #slang @ User just made a really devilish remark. @ 
+>;-> #slang @ Winky and devil combined. A very lewd remark was just made. @ 
+>U #slang @ Screw you! @ 
+? #slang @ Huh? @ 
+?4U #slang @ Question for you @ 
+@:-) #slang @ User is wearing a turban. @ 
+@= #slang @ User is pro-nuclear war. @ 
+A/S/L #slang @ Age/Sex/Location @ 
+AAMOF #slang @ As a matter of fact @ 
+ABFL #slang @ A big fat lady @ 
+ABT #slang @ About @ 
+ADN #slang @ Any day now @ 
+AFAIC #slang @ As far as I'm concerned @ 
+AFAICS #slang @ As far as I can see @ 
+AFAICT #slang @ As far as I can tell @ 
+AFAIK #slang @ As far as I know @ 
+AFAYC #slang @ As far as you're concerned @ 
+AFK #slang @ Away from computer keyboard (for wireless users) @ 
+AIM #slang @ AOL Instant Messenger; also verb for FTP'ing files via AIM @ 
+AISI #slang @ As I see it @ 
+AIUI #slang @ As I understand it @ 
+AKA #slang @ Also known as @ 
+AML #slang @ All my love @ 
+ANFSCD #slang @ And now for something completely different @ 
+ASAP #slang @ As soon as possible @ 
+ASL #slang @ Assistant section leader @ 
+ASOP #slang @ Assistant system operator @ 
+ATM #slang @ At the moment @ 
+AWA #slang @ As well as @ 
+AWGTHTGTTA #slang @ Are we going to have to go trough this again? @ 
+AWHFY #slang @ Are we having fun yet? @ 
+AWOL #slang @ Absent without leave @ 
+AYOR #slang @ At your own risk @ 
+AYPI? #slang @ And your point is? @ 
+B #slang @ Back @ 
+B-) #slang @ User wears horn-rimmed glasses. @ 
+B/C #slang @ Because @ 
+B/F #slang @ Boyfriend @ 
+B4 #slang @ Before @ 
+B4N #slang @ Bye for now @ 
+B:-) #slang @ Sunglasses on head. @ 
+BAC #slang @ Back at computer @ 
+BAG #slang @ Busting a gut @ 
+BAK #slang @ Back at the keyboard @ 
+BBIAB #slang @ Be back in a bit @ 
+BBL #slang @ Be back later @ 
+BBLBNTSBO... #slang @ Be back later but not to soon because of... @ 
+BBR #slang @ Burnt beyond repair @ 
+BBS #slang @ Be back soon @ 
+BC #slang @ Because @ 
+BCNU #slang @ Be Seein' You @ 
+BEG #slang @ Big evil grin @ 
+BF #slang @ Boyfriend @ 
+BFN #slang @ Bye for now @ 
+BG #slang @ Big grin @ 
+BICBW #slang @ But I could be wrong @ 
+BION #slang @ Believe it or not @ 
+BIOYIOB #slang @ Blow it out your I/O port @ 
+BITMT #slang @ But in the meantime @ 
+BKA #slang @ Better known as @ 
+BL #slang @ Belly laughing @ 
+BM #slang @ Bite me @ 
+BMB #slang @ bite my bum @ 
+BMG #slang @ Be my guest @ 
+BMTIPG #slang @ Brilliant minds think in parallel gutters @ 
+BOB #slang @ Back off bastard @ 
+BOL #slang @ Be on later @ 
+BOM #slang @ Bitch of mine @ 
+BOT #slang @ Back on topic @ 
+BRB #slang @ Be right back @ 
+BRBB #slang @ Be right back bitch @ 
+BRBS #slang @ Be right back soon @ 
+BRH #slang @ Be right here @ 
+BRS #slang @ Big red switch @ 
+BS #slang @ Big smile @ 
+BSF #slang @ But seriously folks @ 
+BST #slang @ But seriously though @ 
+BTA #slang @ But then again @ 
+BTAIM #slang @ Be that as it may @ 
+BTDT #slang @ Been there done that @ 
+BTOBD #slang @ Be there or be dead @ 
+BTOBS #slang @ Be there or be square @ 
+BTSOOM #slang @ Beats the shit out of me @ 
+BTW #slang @ By the way @ 
+BUDWEISER #slang @ Because you deserve what every individual should ever receive @ 
+BWQ #slang @ Buzz word quotient @ 
+BWTHDIK #slang @ But what the heck do I know @ 
+BYOB #slang @ Bring your own bottle @ 
+BYOH #slang @ Bat You Onna Head @ 
+C&G #slang @ Chuckle and grin @ 
+C=:-) #slang @ User is a chef. @ 
+C=}>;*{)) #slang @ A drunk, devilish chef with a toupee in an updraft, a mustache, and a double chin. @ 
+CAD #slang @ Ctrl-alt-delete @ 
+CADET #slang @ Can't add, doesn't even try @ 
+CDIWY #slang @ Couldn't do it without you @ 
+CFN #slang @ Ciao for now @ 
+CFS #slang @ Care for secret? @ 
+CFV #slang @ Call for votes @ 
+CFY #slang @ Calling for you @ 
+CID #slang @ Consider it done @ 
+CIM #slang @ CompuServe information manager @ 
+CLM #slang @ Career limiting move @ 
+CM@TW #slang @ Catch me at the web @ 
+CMIIW #slang @ Correct me if I'm wrong @ 
+CNP #slang @ Continue in next post @ 
+CO #slang @ Conference @ 
+CRAFT #slang @ Can't remember a frighten thing @ 
+CRS #slang @ Can�t remember shit @ 
+CSG #slang @ Chuckle snicker grin @ 
+CTS #slang @ Changing the subject @ 
+CU #slang @ See you @ 
+CU2 #slang @ See you too @ 
+CUL #slang @ See you later @ 
+CUL8R #slang @ See you later @ 
+CWOT #slang @ Complete waste of time @ 
+CWYL #slang @ Chat with you later @ 
+CYA #slang @ See ya @ 
+CYAL8R #slang @ See ya later @ 
+CYO #slang @ See you online @ 
+DBA #slang @ Doing business as @ 
+DCED #slang @ Disconnected @ 
+DFLA #slang @ Disenhanced four-letter acronym @ 
+DGA #slang @ Digital guardian angel @ 
+DH #slang @ Darling husband @ 
+DIIK #slang @ Darn if i know @ 
+DIKU #slang @ Do I know you? @ 
+DITYID #slang @ Did I tell you I'm distressed @ 
+DIY #slang @ Do it yourself @ 
+DL #slang @ Dead link @ 
+DLTBBB #slang @ Don't let the bad bugs bite @ 
+DMMGH #slang @ Don't make me get hostile @ 
+DND #slang @ Do not disturb @ 
+DQMOT #slang @ Don't quote me on this @ 
+DTC #slang @ Damn this computer @ 
+DTRT #slang @ Do the right thing @ 
+DUCT #slang @ Did you see that? @ 
+DWAI #slang @ Don't worry about it @ 
+DWIM #slang @ Do what I mean @ 
+DWIMC #slang @ Do what I mean, correctly @ 
+DWISNWID #slang @ Do what I say, not what I do @ 
+DYJHIW #slang @ Don't you just hate it when... @ 
+DYK #slang @ Do you know @ 
+DYOH #slang @ Do your own homework @ 
+E-:-) #slang @ User is a Ham radio operator. @ 
+E-:-I #slang @ Net.ham-radio @ 
+EAK #slang @ Eating at keyboard @ 
+EG #slang @ Evil grin @ 
+EIE #slang @ Enough is enough @ 
+EMFJI #slang @ Excuse me for jumping in @ 
+EMSG #slang @ Email message @ 
+EOD #slang @ End of discussion @ 
+EOF #slang @ End of file @ 
+EOL #slang @ End of lecture @ 
+EOM #slang @ End of message @ 
+EOT #slang @ End of thread @ 
+ETLA #slang @ Extended three letter acronym @ 
+F #slang @ Female @ 
+F/F #slang @ Face to face @ 
+F2F #slang @ Face to face @ 
+FAQ #slang @ Frequently asked questions @ 
+FAWC #slang @ For anyone who cares @ 
+FBOW #slang @ For better or worse @ 
+FBTW #slang @ Fine, be that way @ 
+FCFS #slang @ First come, first served @ 
+FCOL #slang @ For crying out loud @ 
+FIFO #slang @ First in, first out @ 
+FISH #slang @ First in, still here @ 
+FLA #slang @ Four-letter acronym @ 
+FOAD #slang @ Fight over and die @ 
+FOAF #slang @ Friend of a friend @ 
+FOB #slang @ Full of bless @ 
+FOC #slang @ Free of charge @ 
+FOCL #slang @ Falling of chair laughing @ 
+FOFL #slang @ Falling on the floor laughing @ 
+FOS #slang @ Freedom of speech @ 
+FOTCL #slang @ Falling of the chair laughing @ 
+FTF #slang @ Face to face @ 
+FTTT #slang @ From time to time @ 
+FU #slang @ F*cked up @ 
+FUBAR #slang @ F*cked up beyond all recognition @ 
+FUD #slang @ Fear, uncertainty and doubt @ 
+FURTB #slang @ Full up ready to burst (about hard disk drives) @ 
+FW #slang @ Forward @ 
+FWIW #slang @ For what it's worth @ 
+FYA #slang @ For your amusement @ 
+FYE #slang @ For your entertainment @ 
+FYEO #slang @ For your eyes only @ 
+FYI #slang @ For your information @ 
+G #slang @ Grin @ 
+G&BIT #slang @ Grin and bear it @ 
+G2B #slang @ Going to bed @ 
+G2G #slang @ Got to go @ 
+G2GGS2D #slang @ Got to go get something to drink @ 
+GA #slang @ Good afternoon @ 
+GAFIA #slang @ Get away from it all @ 
+GAL #slang @ Get a life @ 
+GAS #slang @ Greetings and salutations @ 
+GBH #slang @ Great big hug @ 
+GBH&K #slang @ Great big huh and kisses @ 
+GBR #slang @ Garbled beyond recovery @ 
+GBY #slang @ God bless you @ 
+GD&H #slang @ Grinning, ducking and hiding @ 
+GD&R #slang @ Grinning, ducking and running @ 
+GD&RAFAP #slang @ Grinning, ducking and running as fast as possible @ 
+GD&REF&F #slang @ grinning, ducking and running even further and faster @ 
+GD&RF #slang @ Grinning, ducking and running fast @ 
+GD&RVF #slang @ Grinning, ducking and running very @ 
+GD&W #slang @ Grin, duck and wave @ 
+GDW #slang @ Grin, duck and wave @ 
+GE #slang @ Good evening @ 
+GF #slang @ Girlfriend @ 
+GFETE #slang @ Grinning from ear to ear @ 
+GFN #slang @ Gone for now @ 
+GFU #slang @ Good for you @ 
+GG #slang @ Good game @ 
+GGU2 #slang @ Good game you two @ 
+GIGO #slang @ Garbage in garbage out @ 
+GJ #slang @ Good job @ 
+GL #slang @ Good luck @ 
+GL&GH #slang @ Good luck and good hunting @ 
+GM #slang @ Good morning @ 
+GMAB #slang @ Give me a break @ 
+GMTA #slang @ Great minds think alike @ 
+GN #slang @ Good night @ 
+GOK #slang @ God only knows @ 
+GOWI #slang @ Get on with it @ 
+GPF #slang @ General protection fault @ 
+GR&D #slang @ Grinning, running and ducking @ 
+GR8 #slang @ Great @ 
+GRA #slang @ Go right ahead @ 
+GTG #slang @ Got to go @ 
+GTSY #slang @ Glad to see you @ 
+GW #slang @ Good work @ 
+H #slang @ Hug @ 
+H&K #slang @ Hug and kiss @ 
+H/O #slang @ Hold on @ 
+HAG1 #slang @ Have a good one @ 
+HAGD #slang @ Have a good day @ 
+HAGN #slang @ Have a good night @ 
+HAGS #slang @ Have a good summer @ 
+HAHA #slang @ Having a heart attack @ 
+HAK #slang @ Hug and kiss @ 
+HAND #slang @ Have a nice day @ 
+HB #slang @ Hug back @ 
+HDYWTDT #slang @ How do you work this dratted thing @ 
+HF #slang @ Have fun @ 
+HH #slang @ Holding hands @ 
+HHIS #slang @ Hanging head in shame @ 
+HHJK #slang @ Ha ha, just kidding @ 
+HHOJ #slang @ Ha ha, only joking @ 
+HHOK #slang @ Ha ha, only kidding @ 
+HHOS #slang @ Ha ha, only seriously @ 
+HIH #slang @ Hope it helps @ 
+HILIACACLO #slang @ Help I lapsed into a coma and can�t log off @ 
+HIWTH #slang @ Hate it when that happens @ 
+HLM #slang @ He loves me @ 
+HMS #slang @ Home made smiley @ 
+HMT #slang @ Here�s my try @ 
+HMWK #slang @ Homework @ 
+HOAS #slang @ Hold on a second @ 
+HSIK #slang @ How should i know @ 
+HT #slang @ Hi there @ 
+HTH #slang @ Hope this helps @ 
+HTHBE #slang @ Hope this has been enlightening @ 
+HYLMS #slang @ Hate you like my sister @ 
+IAAA #slang @ I am an accountant @ 
+IAAL #slang @ I am a lawyer @ 
+IAC #slang @ In any case @ 
+IAE #slang @ In any event @ 
+IAG #slang @ It's all good @ 
+IAIM #slang @ In an Irish minute @ 
+IANAA #slang @ I am not an accountant @ 
+IANAL #slang @ I am not a lawyer @ 
+IBN #slang @ I'm bucked naked @ 
+IC #slang @ I see @ 
+ICOCBW #slang @ I could of course be wrong @ 
+IDC #slang @ I don't care @ 
+IDGI #slang @ I don't get it @ 
+IDGW #slang @ In a good way @ 
+IDI #slang @ I doubt it @ 
+IDK #slang @ I don't know @ 
+IDTT #slang @ I'll drink to that @ 
+IFVB #slang @ I feel very bad @ 
+IGP #slang @ I gotta pee @ 
+IGTP #slang @ I get the point @ 
+IHTFP #slang @ I hate this fountain place @ 
+IHU #slang @ I hate you @ 
+IHY #slang @ I hate you @ 
+II #slang @ I�m impressed @ 
+IIR #slang @ If I recall @ 
+IIRC #slang @ If I recall correctly @ 
+IIT #slang @ I�m impressed too @ 
+IJWTK #slang @ I just want to know @ 
+IJWTS #slang @ I just want to say @ 
+IK #slang @ I know @ 
+IKWUM #slang @ I know what you mean @ 
+ILBCNU #slang @ I"ll be seeing you @ 
+ILU #slang @ I love you @ 
+ILY #slang @ I love you @ 
+ILYFAE #slang @ I love you forever and ever @ 
+IM #slang @ Instant message @ 
+IMAO #slang @ In my arrogant opinion @ 
+IMBO #slang @ In my bloody opinion @ 
+IMCO #slang @ In my considered opinion @ 
+IME #slang @ In my experience @ 
+IMFAO #slang @ In my fooling arrogant opinion @ 
+IMHO #slang @ In my humble opinion @ 
+IMNSHO #slang @ In my, not so humble opinion @ 
+IMO #slang @ In my opinion @ 
+IMOBO #slang @ In my own biased opinion @ 
+IMP #slang @ I might be pregnant @ 
+IMPOV #slang @ In my point of view @ 
+IMS #slang @ I am sorry @ 
+INAL #slang @ I'm not a lawyer @ 
+INPO #slang @ In no particular order @ 
+IOIT #slang @ I'm on Irish Time @ 
+IOW #slang @ In other words @ 
+IRC #slang @ Internet Relay Chat; an multiuser, multinetwork conversing platform (http://www.irc.org) @ 
+IRL #slang @ In real life @ 
+IRMFI #slang @ I reply merely for information @ 
+IS #slang @ I'm sorry @ 
+ISTM #slang @ It seems to me @ 
+ISTR #slang @ I seem to recall @ 
+ISWYM #slang @ I see what you mean @ 
+ITFA #slang @ In the final analysis @ 
+ITRO #slang @ In the reality of @ 
+ITRW #slang @ In the real world @ 
+ITSFWI #slang @ If the shoe fits, wear it @ 
+IVL #slang @ In virtual live @ 
+IWALY #slang @ I will always love you @ 
+IWBNI #slang @ It would be nice if @ 
+IYKWIM #slang @ If you know what I mean @ 
+IYSWIM #slang @ If you see what I mean @ 
+J/K #slang @ Just kidding @ 
+J/P #slang @ Just playing @ 
+JAM #slang @ Just a minute @ 
+JAS #slang @ Just a second @ 
+JASE #slang @ Just another system error @ 
+JAWS #slang @ Just another windows shell @ 
+JIC #slang @ Just in case @ 
+JJWY #slang @ Just joking with you @ 
+JK #slang @ Just kidding @ 
+JMHO #slang @ Just my humble opinion @ 
+JMO #slang @ Just my opinion @ 
+JP #slang @ Just playing @ 
+JTLYK #slang @ Just to let you know @ 
+JW #slang @ Just wondering @ 
+K #slang @ Kiss (rarely used) @ 
+K:P #slang @ User is a little kid with a propeller beenie. @ 
+KB #slang @ Kiss back @ 
+KHYF #slang @ Know how you feel @ 
+KIS #slang @ Keep it simple @ 
+KISS #slang @ Keeping it sweetly simple @ 
+KIT #slang @ Keep in touch @ 
+KOTC #slang @ Kiss on the cheek @ 
+KOTL #slang @ Kiss on the lips @ 
+KUTGW #slang @ Keep up the good work @ 
+KWIM #slang @ Know what I mean? @ 
+L #slang @ Laugh @ 
+L8R #slang @ Later @ 
+L8R G8R #slang @ Later gator @ 
+LAB #slang @ Life's a bitch @ 
+LBR #slang @ Little boys room @ 
+LD #slang @ Long distance @ 
+LGR #slang @ Little girls room @ 
+LHM #slang @ Lord help me @ 
+LHU #slang @ Lord help us @ 
+LL&P #slang @ Live long & prosper @ 
+LMA #slang @ Leave me alone @ 
+LMHO #slang @ Laughing my head off @ 
+LMK #slang @ Let me know @ 
+LNK #slang @ Love and kisses @ 
+LOL #slang @ Lots of love @ 
+LOLA #slang @ Laughing out loud again @ 
+LOML #slang @ Light of my life (or love of my life) @ 
+LOMLILY #slang @ Light of my life, I love you @ 
+LOOL #slang @ Laughing out outrageously loud @ 
+LSHIPMP #slang @ Laughing so hard I pissed my pants @ 
+LSHMBB #slang @ Laughing so hard my belly is bouncing @ 
+LSHMBH #slang @ Laughing so hard my belly hurts @ 
+LTNS #slang @ Long time no see @ 
+LTR #slang @ Long term relationship @ 
+LTS #slang @ Laughing to self @ 
+LULAS #slang @ Love you like a sister @ 
+LUWAMH #slang @ Love you with all my heart @ 
+LY #slang @ Love ya @ 
+LYK #slang @ Let you know @ 
+LYL #slang @ Love ya lots @ 
+LYLAB #slang @ Love ya like a brother @ 
+LYLAS #slang @ Love ya like a sister @ 
+M #slang @ Male @ 
+M8 #slang @ Mate @ 
+MB #slang @ Maybe @ 
+MYOB #slang @ Mind your own business @ 
+N #slang @ In @ 
+N/C #slang @ Not cool @ 
+N/M #slang @ Never mind / nothing much @ 
+N/S #slang @ No shit @ 
+N2M #slang @ Not too much @ 
+NBD #slang @ No big deal @ 
+NE1 #slang @ Anyone @ 
+NETUA #slang @ Nobody ever tells us anything @ 
+NFI #slang @ No found idea @ 
+NL #slang @ Not likely @ 
+NM #slang @ Never mind / nothing much @ 
+NMH #slang @ Not much here @ 
+NMJC #slang @ Nothing much, just chillin' @ 
+NOM #slang @ No offense meant @ 
+NOTTOMH #slang @ Not of the top of my mind @ 
+NOYB #slang @ None of your business @ 
+NOYFB #slang @ None of your failing business @ 
+NP #slang @ No problem @ 
+NRN #slang @ No response necessary @ 
+NS #slang @ No shit @ 
+NTA #slang @ Non-technical acronym @ 
+NVM #slang @ Nevermind @ 
+O :-) #slang @ User is an angel (at heart, at least). @ 
+O |-) #slang @ Net.religion @ 
+O-) #slang @ Megaton Man On Patrol!(or else, user is a scuba diver) @ 
+OBTW #slang @ Oh, by the way @ 
+OF #slang @ On fire @ 
+OFIS #slang @ On floor with stitches @ 
+OH #slang @ Off hand @ 
+OIC #slang @ Oh I see @ 
+OK #slang @ Abbreviation of oll korrect (all correct) @ 
+OL #slang @ Old lady (wife, girlfriend) @ 
+OM #slang @ Old man (husband, boyfriend) @ 
+OMG #slang @ Oh my god / gosh / goodness @ 
+OOC #slang @ Out of character @ 
+OT #slang @ Off topic / other topic @ 
+OTOH #slang @ On the other hand @ 
+OTP #slang @ On the phone @ 
+OTTOMH #slang @ Off the top of my head @ 
+PAW #slang @ Parents are watching @ 
+PDS #slang @ Please don't shoot @ 
+PEBCAK #slang @ Problem exists between chair and keyboard @ 
+PLS #slang @ Please @ 
+PLZ #slang @ Please @ 
+PM #slang @ Private message @ 
+PMFJI #slang @ Pardon me for jumping in @ 
+PMJI #slang @ Pardon my jumping in (Another way for PMFJI) @ 
+PMP #slang @ Peed my pants @ 
+POAHF #slang @ Put on a happy face @ 
+POC #slang @ Point of contact @ 
+POOF #slang @ I have left the chat @ 
+POS #slang @ Parents over shoulder @ 
+POTB #slang @ Pats on the back @ 
+POV #slang @ Point of view @ 
+PPL #slang @ People @ 
+PS #slang @ Post script @ 
+PSA #slang @ Public show of affection @ 
+Q4U #slang @ Question for you @ 
+QSL #slang @ Reply @ 
+QSO #slang @ Conversation @ 
+QT #slang @ Cutie @ 
+RCED #slang @ Reconnected @ 
+RE #slang @ Hi again (same as re's) @ 
+ROFL #slang @ Rolling on floor laughing @ 
+ROFLOLAY #slang @ Rolling on floor laughing out loud at you @ 
+ROFLOLTSDMC #slang @ Rolling on floor laughing out loud tears streaming down my cheeks @ 
+ROFLOLUTS #slang @ Rolling on floor laughing out loud unable to speak @ 
+ROFLOLWTIME #slang @ Rolling on floor laughing out loud with tears in my eyes @ 
+ROTFL #slang @ Rolling on the floor laughing @ 
+RSN #slang @ Real soon now @ 
+RTF #slang @ Read the FAQ @ 
+RTSM #slang @ Read the stupid manual @ 
+RUOK? #slang @ Are you okay? @ 
+RUTTM #slang @ Are you talking to me @ 
+RVD #slang @ Really very dumb @ 
+S #slang @ Smile @ 
+S2R #slang @ Send to receive @ 
+SAMAGAL #slang @ Stop annoying me and get a live @ 
+SCNR #slang @ Sorry, could not resist @ 
+SETE #slang @ Smiling ear to ear @ 
+SH #slang @ So hot @ 
+SHICPMP #slang @ So happy I could piss my pants @ 
+SHID #slang @ Slaps head in disgust @ 
+SHMILY #slang @ See how much I love you @ 
+SIM #slang @ Shit, it's Monday @ 
+SITWB #slang @ Sorry, in the wrong box @ 
+SNAFU #slang @ Situation normal, all fed up @ 
+SO #slang @ Significant other @ 
+SOHF #slang @ Sense of humor failure @ 
+SOMY #slang @ Sick of me yet? @ 
+SPAM #slang @ Stupid persons' advertisement @ 
+SRY #slang @ Sorry @ 
+STW #slang @ Search the web @ 
+SWAK #slang @ Sealed with a kiss @ 
+SWALK #slang @ Sweet, with all love, kisses @ 
+SWL #slang @ Screaming with laughter @ 
+SYS #slang @ See you soon @ 
+SYSOP #slang @ System operator @ 
+T #slang @ Tickle @ 
+TA #slang @ Thanks again @ 
+TAFN #slang @ That's all for now @ 
+TBA #slang @ To be announced @ 
+TBH #slang @ To be honest @ 
+TCO #slang @ Taken care of @ 
+TGIF #slang @ Thank god its Friday @ 
+THTH #slang @ To hot to handle @ 
+THX #slang @ Thanks @ 
+TIA #slang @ Thanks in advance @ 
+TIIC #slang @ The idiots in charge @ 
+TJM #slang @ That's just me @ 
+TLA #slang @ Three-letter acronym @ 
+TMA #slang @ Take my advice @ 
+TMI #slang @ To much information @ 
+TNSTAAFL #slang @ There's no such thing as a free lunch @ 
+TNX #slang @ Thanks @ 
+TOH #slang @ To other half @ 
+TOY #slang @ Thinking of you @ 
+TPTB #slang @ The powers that be @ 
+TSDMC #slang @ Tears streaming down my cheeks @ 
+TT2T #slang @ To tired to talk @ 
+TTFN #slang @ Ta ta for now @ 
+TTT #slang @ Thought that, too @ 
+TTUL #slang @ Talk to you later @ 
+TTYL #slang @ Talk to you later @ 
+TTYLMF #slang @ Talk to you later my friend @ 
+TU #slang @ Thank you @ 
+TWMA #slang @ Till we meet again @ 
+TX #slang @ Thanx @ 
+TY #slang @ Thank you @ 
+TYVM #slang @ Thank you very much @ 
+U2 #slang @ You too @ 
+UR #slang @ Your @ 
+URAQT! #slang @ You are a cutie! @ 
+UW #slang @ You're welcom @ 
+VBG #slang @ Very big grin @ 
+VBS #slang @ Very big smile @ 
+W #slang @ Wink @ 
+W/E #slang @ Whatever @ 
+W8 #slang @ Wait @ 
+W8AM #slang @ Wait a minute @ 
+WAY #slang @ Who are you @ 
+WB #slang @ Welcome back @ 
+WBS #slang @ Write back soon @ 
+WDHLM #slang @ Why doesn't he love me @ 
+WE #slang @ Whatever @ 
+WFM #slang @ Works for me @ 
+WNDITWB #slang @ We never did it this way before @ 
+WP #slang @ Wrong person @ 
+WRT #slang @ With respect to @ 
+WTF #slang @ What/who the fool? @ 
+WTG #slang @ Way to go @ 
+WTGP #slang @ Want to go private? @ 
+WTH #slang @ What/who the heck? @ 
+WTMI #slang @ Way to much information @ 
+WU #slang @ What's up? @ 
+WU? #slang @ What's up? @ 
+WUD #slang @ What's up dog? @ 
+WUF #slang @ Where are you from? @ 
+WUWT #slang @ Whats up with that @ 
+WYMM #slang @ Will you marry me? @ 
+WYSIWYG #slang @ What you see is what you get @ 
+X-( #slang @ Net.suicide @ 
+XTLA #slang @ Extended three letter acronym @ 
+Y #slang @ Why? @ 
+Y2K #slang @ You're too kind @ 
+YATB #slang @ You are the best @ 
+YBS #slang @ You'll be sorry @ 
+YG #slang @ Young gentleman @ 
+YHBBYBD #slang @ You'd have better bet your bottom dollar @ 
+YL #slang @ You 'll live @ 
+YM #slang @ You mean @ 
+YMMD #slang @ You've made my day @ 
+YMMV #slang @ Your mileage may vary @ 
+YOYO #slang @ You're on your own @ 
+YT? #slang @ You there? @ 
+YVW #slang @ You're very welcome @ 
+YW #slang @ You are welcome @ 
+YWIA #slang @ You're welcome in advance @ 
+YWTKM #slang @ You want to kiss me @ 
+YWTLM #slang @ You want to love me @ 
+YY4U #slang @ Two wise for you @ 
+[:-) #slang @ User is wearing a walkman. @ 
+[:] #slang @ User is a robot. @ 
+[] #slang @ Hugs and ... @ 
+^-^ #slang @ Satisfied Smile @ 
+^-~ #slang @ Wink @ 
+^_- #slang @ Wink @ 
+^_^ #slang @ Smile @ 
+`:-) #slang @ User shaved one of his eyebrows off this morning. @ 
+{:-) #slang @ User wears a toupee. @ 
+|-) #slang @ hee hee @ 
+|-D #slang @ ho ho @ 
+|-I #slang @ User is asleep. @ 
+|-O #slang @ User is yawning/snoring. @ 
+|I #slang @ Asleep. @ 
+}:-( #slang @ Toupee in an updraft. @ 
+}:^#}) #slang @ Updrafted bushy-mustached pointy nosed smiley with a double-chin. @ 
+~~:-( #slang @ Net.flame @ 
+ #slang @ 
