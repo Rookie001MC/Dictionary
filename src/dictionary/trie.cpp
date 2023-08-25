@@ -51,7 +51,7 @@ bool Trie::isEmptyNode(TrieNode *node)
     return true;
 }
 
-TrieNode *Trie::remove(TrieNode *root, std::string key, int index = 0)
+TrieNode *Trie::remove(TrieNode *root, std::string key, int index)
 {
     if (!root)
         return nullptr;
@@ -67,7 +67,6 @@ TrieNode *Trie::remove(TrieNode *root, std::string key, int index = 0)
     }
     char c            = key.at(index);
     root->children[c] = remove(root->children[c], key, index + 1);
-    Trie::remove(root->children[c], key, index + 1);
     if (isEmptyNode(root) && root->endOfWord == false)
     {
         delete root;
