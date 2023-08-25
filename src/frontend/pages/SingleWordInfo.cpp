@@ -266,6 +266,17 @@ void SingleWordInfo::deleteBox()
     if (GuiButton({400, 330, 100, 50}, "YES"))
     {
         confirmDeleteBox = false;
+        eachDef.clear();
+        edit_height.clear();
+        for (int i = 0; i < 40; ++i)
+        {
+            defHeight[i]     = 240 + i * 60;
+            defBreakLines[i] = false;
+        }
+        isUpdated                 = false;
+        isFullDef                 = false;
+        isBreakNewLines           = false;
+        isInfo                    = false;
         currentTrie.remove(CurrentState::currentWord.getKey());
         CurrentState::currentPage = static_cast<Page>(0);
     }
