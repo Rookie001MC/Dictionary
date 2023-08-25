@@ -328,7 +328,7 @@ void SingleWordInfo::editMenu()
     for (int i = 0; i < eachDef.size(); i++)
     {
         DrawTextEx(Resources::displayFontRegular, eachDef[i].c_str(), {48, (float)edit_height[i] + 8}, 25, 1, BLACK);
-        DrawRectangleLinesEx({41, (float)edit_height[i], 1130, (float)edit_height[i + 1] - edit_height[i] - 20}, 2,
+        DrawRectangleLinesEx({41, (float)edit_height[i], 1135, (float)edit_height[i + 1] - edit_height[i] - 20}, 2,
                              BLACK);
         if (GuiButton({1180, (float)edit_height[i], 65, 40}, "Edit"))
         {
