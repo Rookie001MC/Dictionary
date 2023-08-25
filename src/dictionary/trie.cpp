@@ -233,14 +233,14 @@ void Trie::deserialize(std::ifstream &fin, char delimiter)
 // eng-vie & vie-eng: '#'
 void Trie::serialize(std::string path, char delimiter)
 {
-    std::ofstream fout(path, std::ios::binary);
+    std::ofstream fout(path);
     serialize(root, fout, delimiter);
     fout.close();
 }
 
 void Trie::deserialize(std::string path, char delimiter)
 {
-    std::ifstream fin(path, std::ios::binary);
+    std::ifstream fin(path);
     deserialize(fin, delimiter);
     fin.close();
 }
