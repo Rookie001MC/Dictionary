@@ -45,6 +45,7 @@ class GamePage
     GamePage();
     ~GamePage()
     {
+      delete currentDictionary;
     }
     void draw();
     void buildAnswer();

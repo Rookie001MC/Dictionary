@@ -34,7 +34,7 @@ class SingleWordInfo
     bool isUpdated = false;
 
     
-    Dictionary *currentDictionary = new Dictionary(dictDirs[*CurrentState::currentDict], *CurrentState::currentDict);
+    Dictionary *currentDictionary;
     History currentFavorites      = History(favoritesDirectories[*CurrentState::currentDict], 1);
     Trie currentTrie              = PrebuiltTriesList[*CurrentState::currentDict];
     History currentHistory        = History(historyDirectories[*CurrentState::currentDict]);
@@ -43,6 +43,7 @@ class SingleWordInfo
     SingleWordInfo();
     ~SingleWordInfo()
     {
+      delete currentDictionary;
     }
     void buildAnswer();
     void drawSnow();

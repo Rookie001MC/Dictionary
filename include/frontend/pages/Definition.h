@@ -53,6 +53,7 @@ class DefPage
     void addDef();
     ~DefPage()
     {
+      delete currentDictionary;
     }
 };
 

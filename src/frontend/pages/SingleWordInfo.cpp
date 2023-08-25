@@ -26,11 +26,11 @@ SingleWordInfo::SingleWordInfo()
 
 void SingleWordInfo::update()
 {
-    isUpdated        = true;
-    currentFavorites = History(favoritesDirectories[*CurrentState::currentDict], 1);
-    currentTrie              = PrebuiltTriesList[*CurrentState::currentDict];
+    isUpdated         = true;
+    currentFavorites  = History(favoritesDirectories[*CurrentState::currentDict], 1);
+    currentTrie       = PrebuiltTriesList[*CurrentState::currentDict];
     currentDictionary = new Dictionary(dictDirs[*CurrentState::currentDict], *CurrentState::currentDict);
-    currentHistory        = History(historyDirectories[*CurrentState::currentDict]);
+    currentHistory    = History(historyDirectories[*CurrentState::currentDict]);
 
     if (isInfo)
     {
@@ -97,10 +97,10 @@ void SingleWordInfo::buildAnswer()
     isBreakNewLines = true;
     for (int i = 0; i < eachDef.size(); ++i)
     {
-        if (MeasureTextEx(Resources::displayFontBold, eachDef[i].c_str(), 25, 1).x > 1220)
+        if (MeasureTextEx(Resources::displayFontBold, eachDef[i].c_str(), 25, 1).x > 1180)
         {
             defBreakLines[i] = true;
-            float propotion  = float(MeasureTextEx(Resources::displayFontBold, eachDef[i].c_str(), 25, 1).x / 1220);
+            float propotion  = float(MeasureTextEx(Resources::displayFontBold, eachDef[i].c_str(), 25, 1).x / 1180);
             int pre          = 0;
             int position     = eachDef[i].length() / (float)propotion;
             while (position < eachDef[i].length())
@@ -108,7 +108,7 @@ void SingleWordInfo::buildAnswer()
                 while (
                     eachDef[i][position] != ' ' ||
                     MeasureTextEx(Resources::displayFontBold, eachDef[i].substr(pre, position - pre).c_str(), 25, 1).x >
-                        1220)
+                        1180)
                     position--;
                 eachDef[i][position] = '\n';
                 pre                  = position + 1;
@@ -160,12 +160,20 @@ void SingleWordInfo::draw()
     std::string selectedTmp = CurrentState::currentWord.getKey();
     std::string type        = CurrentState::currentWord.getType();
 
-    if (!type.empty())
+    if (MeasureTextEx(Resources::displayFontBold, type.c_str(), 32, 2).x > 400)
     {
-        selectedTmp += " (" + type + ")";
+        type = "(" + type + ")"; 
+        DrawTextEx(Resources::displayFontBold, type.c_str(), {100, 165}, 25, 1, GetColor(WRONG_ANS));
+        DrawTextEx(Resources::displayFontBold, selectedTmp.c_str(), {100, 130}, 35, 2, GetColor(WRONG_ANS));
     }
-
-    DrawTextEx(Resources::displayFontBold, selectedTmp.c_str(), {105, 135}, 35, 2, GetColor(WRONG_ANS));
+    else
+    {
+        if (!type.empty())
+        {
+            selectedTmp += " (" + type + ")";
+        }
+        DrawTextEx(Resources::displayFontBold, selectedTmp.c_str(), {108, 140}, 35, 2, GetColor(WRONG_ANS));
+    }
 
     if (GuiButton({700, 133, 135, 55}, "EDIT"))
     {
