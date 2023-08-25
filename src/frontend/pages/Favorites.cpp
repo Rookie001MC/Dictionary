@@ -200,7 +200,7 @@ void FavoritesPage::draw()
         DrawTextEx(Resources::displayFontRegular, "Search...", {330, 155}, TEXT_FONT_SIZE, 0, GRAY);
 
     // Reset button
-    if (GuiButton(ResetRect, "RESET"))
+    if (GuiButton(ResetRect, "CLEAR ALL"))
     {
         confirmResetBox ^= 1;
     }

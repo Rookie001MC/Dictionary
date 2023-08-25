@@ -197,7 +197,7 @@ void HistoryPage::draw()
     }
     if (SearchInput[0] == '\0')
         DrawTextEx(Resources::displayFontRegular, "Search...", {330, 155}, TEXT_FONT_SIZE, 0, GRAY);
-    if (GuiButton(ResetRect, "RESET"))
+    if (GuiButton(ResetRect, "CLEAR ALL"))
     {
         confirmDeleteAllBox ^= 1;
     }
