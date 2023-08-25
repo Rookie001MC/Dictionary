@@ -139,7 +139,7 @@ void WordPage::draw()
             wordsTmp += " (" + words[i].getType() + ")";
 
         Vector2 textPosition = {rec_result[i].x + 10, rec_result[i].y + 10};
-        DrawTextEx(Resources::wordFontBold, wordsTmp.c_str(), textPosition, WORD_FONT_SIZE, 2, TEXT_COLOR_RGB);
+        DrawTextEx(Resources::wordFontBold, wordsTmp.c_str(), textPosition, WORD_FONT_SIZE - 1, 2, TEXT_COLOR_RGB);
 
         for (int j = 0; j < std::min(2, int(words[i].getDefinitionCount())); j++)
         {

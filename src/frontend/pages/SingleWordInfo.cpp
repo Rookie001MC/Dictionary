@@ -26,10 +26,10 @@ SingleWordInfo::SingleWordInfo()
 
 void SingleWordInfo::update()
 {
-    isUpdated         = true;
-    currentFavorites  = History(favoritesDirectories[*CurrentState::currentDict], 1);
-    currentTrie       = PrebuiltTriesList[*CurrentState::currentDict];
-    currentHistory    = History(historyDirectories[*CurrentState::currentDict]);
+    isUpdated        = true;
+    currentFavorites = History(favoritesDirectories[*CurrentState::currentDict], 1);
+    currentTrie      = PrebuiltTriesList[*CurrentState::currentDict];
+    currentHistory   = History(historyDirectories[*CurrentState::currentDict]);
 
     if (isInfo)
     {
@@ -161,15 +161,18 @@ void SingleWordInfo::draw()
 
     if (MeasureTextEx(Resources::displayFontBold, type.c_str(), 32, 2).x > 400)
     {
-        type = "(" + type + ")"; 
+        type = "(" + type + ")";
         DrawTextEx(Resources::displayFontBold, type.c_str(), {100, 165}, 25, 1, GetColor(WRONG_ANS));
         DrawTextEx(Resources::displayFontBold, selectedTmp.c_str(), {100, 130}, 35, 2, GetColor(WRONG_ANS));
     }
     else
     {
-        if (!type.empty())
+        if (MeasureTextEx(Resources::displayFontBold, type.c_str(), 32, 2).x < 600)
         {
-            selectedTmp += " (" + type + ")";
+            if (!type.empty())
+            {
+                selectedTmp += " (" + type + ")";
+            }
         }
         DrawTextEx(Resources::displayFontBold, selectedTmp.c_str(), {108, 140}, 35, 2, GetColor(WRONG_ANS));
     }
