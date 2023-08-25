@@ -33,6 +33,7 @@ int main(int argc, const char *argv[])
     SetTargetFPS(60);
     loadResources();
     FrontendMain frontend;
+    CurrentState::currentTrie = PrebuiltTriesList.at(*CurrentState::currentDict);
     while (!WindowShouldClose())
     {
         frontend.start();
