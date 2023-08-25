@@ -333,17 +333,19 @@ void FavoritesPage::deleteRecord()
 void FavoritesPage::getFavorites(std::vector<std::string> wordStrings)
 {
     // Search through the trie for the words
-    for (int i = 0; i < wordStrings.size(); i++)
+    int i = 0;
+    for (auto& word: wordStrings)
     {
         Word tmp;
 
-        currentTrie.search(wordStrings[i], tmp);
+        currentTrie.search(word, tmp);
         if (tmp.getKey() != "")
         {
             words.push_back(tmp);
             wordRects.push_back({307, float(225 + 130 * i), 921, 120});
             deleteRects.push_back({wordRects[i].x + 850, wordRects[i].y + 10, 30, 30});
-        }
+            i++;
+        }    
     }
 }
 
