@@ -373,8 +373,20 @@ void SingleWordInfo::editEachDef()
     }
 
     isBreakNewLines = false;
+
+    if (!isEdited)
+    {
+        isEdited = true;
+        memset(NewDef, 0, sizeof(NewDef));
+        for (int i = 0; i < CurrentState::currentWord.getDefinition(defChosen).size(); ++i)
+        {
+            NewDef[i] = CurrentState::currentWord.getDefinition(defChosen)[i];
+        }
+    }
+    
     if (GuiWindowBox({250, 170, 650, 300}, ""))
     {
+        editEachDefButton = false;
         editEachDefButton = false;
         isEdited          = false;
     }
@@ -387,16 +399,6 @@ void SingleWordInfo::editEachDef()
     if (GuiTextBox({300, 290, 550, 50}, NewDef, 500, SearchEdit))
     {
         SearchEdit ^= 1;
-    }
-
-    if (!isEdited)
-    {
-        isEdited = true;
-        memset(NewDef, 0, sizeof(NewDef));
-        for (int i = 0; i < CurrentState::currentWord.getDefinition(defChosen).size(); ++i)
-        {
-            NewDef[i] = CurrentState::currentWord.getDefinition(defChosen)[i];
-        }
     }
 
     if (GuiButton({390, 390, 100, 50}, "ENTER"))
