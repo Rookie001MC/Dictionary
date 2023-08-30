@@ -1,14 +1,22 @@
+/**
+ * @file dictionary/word.cpp
+ * @author Group7 - CS163 - 2022-2023
+ * @brief Function definitions for the Word and Dictionary classes.
+ * @version 1.0
+ */
 #include "dictionary/word.h"
 
+// Define the next key to be added
 extern std::string nextKey;
 
-// define Word
+// Define the Word class
 Word::Word()
 {
     key  = "";
     type = "";
 }
 
+// Define the Word class with data.
 Word::Word(std::string key, std::string type, std::string definition)
 {
     this->key  = key;
@@ -17,19 +25,25 @@ Word::Word(std::string key, std::string type, std::string definition)
         definitions.push_back(definition);
 }
 
+// Getter for definitions
 std::vector<std::string> Word::getDefinitions()
 {
     return definitions;
 }
 
+// Getter for key
 std::string Word::getKey()
 {
     return key;
 }
+
+// Getter for word type
 std::string Word::getType()
 {
     return type;
 }
+
+// Getter for definition at index
 std::string Word::getDefinition(int index)
 {
     if (definitions.size() <= index)
@@ -37,26 +51,31 @@ std::string Word::getDefinition(int index)
     return definitions.at(index);
 }
 
+// Getter for definition count
 int Word::getDefinitionCount()
 {
     return definitions.size();
 }
 
+// Setter for key
 void Word::setKey(std::string key)
 {
     this->key = key;
 }
 
+// Setter for word type
 void Word::setType(std::string type)
 {
     this->type = type;
 }
 
+// Setter for definition at index
 void Word::setDefinition(std::string definition, int index)
 {
     definitions.at(index) = definition;
 }
 
+// Appending a new definition
 void Word::addDefinition(std::string definition)
 {
     for (int i = 0; i < getDefinitionCount(); ++i)
@@ -65,19 +84,21 @@ void Word::addDefinition(std::string definition)
     this->definitions.push_back(definition);
 }
 
+// Removing a definition at index
 void Word::removeDefinition(int index)
 {
     if (index < definitions.size())
         definitions.erase(definitions.begin() + index);
 }
 
+// Editing a definition at index
 void Word::editDefinition(int index, std::string edit)
 {
     if (index < definitions.size())
         definitions[index] = edit;
 }
 
-// define Dictionary
+// Define a Dictionary class
 Dictionary::Dictionary(std::string path, int dictType)
 {
     fin.open(path);
@@ -85,21 +106,25 @@ Dictionary::Dictionary(std::string path, int dictType)
     this->dictType = dictType;
 }
 
+// Destructor for Dictionary class
 Dictionary::~Dictionary()
 {
     fin.close();
 }
 
+// Getter for dictionary type
 int Dictionary::getDictionaryType()
 {
     return dictType;
 }
 
+// Getter for path
 bool Dictionary::eof()
 {
     return fin.eof();
 }
 
+// Get a single word from the dictionary file
 Word Dictionary::getWord()
 {
     switch (dictType)
@@ -118,6 +143,14 @@ Word Dictionary::getWord()
     return Word();
 }
 
+/**
+ * @brief Extract the definition from one or more lines.
+ * 
+ * @param line Current line
+ * @param isEndOfDefinition Whether the definition is over 
+ * @return std::string The definition
+ * @note This is used extensively by the `getWordEngEng()` function.
+ */
 std::string extractDefinition(const std::string &line, bool &isEndOfDefinition)
 {
     // get the whole line except when meet the '[' - meaning that the definition is over
@@ -152,6 +185,13 @@ std::string extractDefinition(const std::string &line, bool &isEndOfDefinition)
     return definition;
 }
 
+/**
+ * @brief Extract the word type from one line.
+ * 
+ * @param line Current line
+ * @return std::string The word type
+ * @note This is used extensively by the `getWordEngEng()` function.
+ */
 std::string extractWordType(const std::string &line)
 {
     std::string wordType;
@@ -160,6 +200,11 @@ std::string extractWordType(const std::string &line)
     return wordType;
 }
 
+/**
+ * @brief Get a word from the English-English dictionary.
+ * 
+ * @return Word A single Word object with all the data.
+ */
 Word Dictionary::getWordEngEng()
 {
     bool isEndOfDefinition = false;
@@ -227,8 +272,12 @@ Word Dictionary::getWordEngEng()
     return word;
 }
 
-// at the end of each definition has a '\n' character.
-// it can be erased easily from the code below, but will somehow cause bug !?
+/**
+ * @brief Get a word from the English-Vietnamese dictionary.
+ * 
+ * @return Word A single Word object with all the data.
+ * @note At the end of each definition, there is a '\n' character. For whatever reason, this will cause a bug if attempt to delete it.
+ */
 Word Dictionary::getWordEngVie()
 {
     std::string key = "", type, tmp;
@@ -255,7 +304,12 @@ Word Dictionary::getWordEngVie()
     return word;
 }
 
-// words that don't have type will have "na" as type
+/**
+ * @brief Get a word from the Vietnamese-English dictionary.
+ * 
+ * @return Word A single Word object with all the data.
+ * @note Words that don't have type will have "na" as type.
+ */
 Word Dictionary::getWordVieEng()
 {
     std::string key, type, tmp;
@@ -284,6 +338,12 @@ Word Dictionary::getWordVieEng()
     return word;
 }
 
+/**
+ * @brief Get a word from the Emoji dictionary.
+ * 
+ * @return Word A single Word object with all the data.
+ * @note The Emoji dictionary is a special case. It doesn't have a word type. We can consider these to be a special type of slang.
+ */
 Word Dictionary::getWordEmoji()
 {
     std::string key, type = "slang", definition;
@@ -293,6 +353,11 @@ Word Dictionary::getWordEmoji()
     return word;
 }
 
+/**
+ * @brief Get a word from the Slang dictionary.
+ * 
+ * @return Word A single Word object with all the data.
+ */
 Word Dictionary::getWordSlang()
 {
     std::string key, type = "slang", definition;
@@ -302,6 +367,10 @@ Word Dictionary::getWordSlang()
     return word;
 }
 
+/**
+ * @brief Reset the serialized dictionary data, by clearing everything.
+ * 
+ */
 void Dictionary::reset() {
     fin.close();
     fin.open(path);

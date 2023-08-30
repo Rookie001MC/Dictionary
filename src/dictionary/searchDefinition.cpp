@@ -1,31 +1,66 @@
+/**
+ * @file dictionary/searchDefinition.cpp
+ * @author Group7 - CS163 - 2022-2023
+ * @brief Function definitions for the Random class.
+ * @version 1.0
+ */
 #include "dictionary/searchDefinition.h"
 
+/**
+ * @brief Construct a new RelevantWord::RelevantWord object
+ * 
+ */
 RelevantWord::RelevantWord()
 {
     this->relevance = 0;
 }
 
+/**
+ * @brief Construct a new RelevantWord::RelevantWord object, with the Word object and the relevance index
+ * 
+ * @param word The Word object
+ * @param relevance The relevance index
+ */
 RelevantWord::RelevantWord(Word word, double relevance)
 {
     this->word      = word;
     this->relevance = relevance;
 }
 
+/**
+ * @brief Get the relevance index
+ * 
+ * @return double The relevance index
+ */
 double RelevantWord::getRelevance()
 {
     return this->relevance;
 }
 
+/**
+ * @brief Get the key of the Word object
+ * 
+ * @return Word the key of the Word object
+ */
 Word RelevantWord::getWord()
 {
     return this->word;
 }
 
+/**
+ * @brief Set the dictionary to be used
+ * 
+ * @param dict The Dictionary object to be used
+ */
 void RelevantWord::setDictionary(Dictionary *dict)
 {
     this->dictionary = dict;
 }
 
+/**
+ * @brief Set the path of the keyword file and the processed file
+ * 
+ */
 void RelevantWord::setPath()
 {
     int mode = this->dictionary->getDictionaryType();
@@ -54,16 +89,32 @@ void RelevantWord::setPath()
     }
 }
 
+/**
+ * @brief Get the path of the keyword file
+ * 
+ * @return std::string The path of the keyword file
+ */
 std::string RelevantWord::getKeyWordPath()
 {
     return this->keywordPath;
 }
 
+/**
+ * @brief Get the path of the processed file
+ * 
+ * @return std::string 
+ */
 std::string RelevantWord::getFilePath()
 {
     return this->filePath;
 }
 
+/**
+ * @brief Preprocess the text by transforming all characters to lowercase and removing all punctuations
+ * 
+ * @param text The text to be preprocessed
+ * @return std::string The preprocessed text 
+ */
 std::string preprocessText(std::string text)
 {
     std::regex pattern("[[:punct:]]");
@@ -72,6 +123,13 @@ std::string preprocessText(std::string text)
     return text;
 }
 
+/**
+ * @brief Calculate the relevance index of the input text
+ * 
+ * @param userInput The input text
+ * @param wordCounts The set of words in the definition
+ * @return double The relevance index
+ */
 double calculateRelevance(std::string userInput, std::unordered_set<std::string> &wordCounts)
 {
     int matchWord       = 0;
@@ -89,6 +147,12 @@ double calculateRelevance(std::string userInput, std::unordered_set<std::string>
     return percent;
 }
 
+/**
+ * @brief Hash the words in the definition
+ * 
+ * @param line The definition
+ * @param wordCounts The set of words in the definition
+ */
 void wordHashing(std::string line, std::unordered_set<std::string> &wordCounts)
 {
     std::istringstream iss(line);
@@ -101,6 +165,13 @@ void wordHashing(std::string line, std::unordered_set<std::string> &wordCounts)
     }
 }
 
+/**
+ * @brief Search the definition of the input text
+ * 
+ * @param definitionFromUser The input text
+ * @param trie The Trie object
+ * @return std::vector<RelevantWord> The words that have the relevance index greater than 0.3
+ */
 std::vector<RelevantWord> RelevantWord::searchDefinition(std::string definitionFromUser, Trie &trie)
 {
     // definitionFromUser = preprocessText(definitionFromUser);

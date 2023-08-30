@@ -1,3 +1,10 @@
+/**
+ * @file frontend/pages/Definition.cpp
+ * @author Group 07 - CS163 - 2022-2023
+ * @brief The Definition Search page of the dictionary
+ * @version 1.0
+ * 
+ */
 #include "frontend/pages/Definition.h"
 #include "dictionary/word.h"
 #include "frontend/styles.h"
@@ -5,6 +12,10 @@
 #include "raygui.h"
 #include "raylib.h"
 
+/**
+ * @brief Construct a new DefPage:: DefPage object
+ * 
+ */
 DefPage::DefPage()
 {
     for (int i = 0; i < 5; i++)
@@ -25,32 +36,47 @@ DefPage::DefPage()
         snowflakes[i].height = GetRandomValue(2, 4);
     }
 
+    // Set the dictionary currently using for the random word generator
     r.setDictionary(CurrentState::currentDictObject);
     r.setPath();
 }
 
+/**
+ * @brief Setup and update the Definition page
+ * Mostly just on click event and scrolling.
+ */
 void DefPage::update()
 {
+    // On click event
     if (IsMouseButtonPressed(0) && !dropDownBox && !confirmResetBox && !addWordButton)
     {
         for (int i = 0; i < words.size(); ++i)
         {
             if (GetMousePosition().y > 180 && CheckCollisionPointRec(GetMousePosition(), rec_result[i]))
             {
+                // Add the word to the history
                 currentDictHistory->add(words[i].getWord().getKey());
+
+                // Save the history to file
                 currentDictHistory->save();
+
+                // Clear the search input
                 memset(SearchInput, 0, sizeof(SearchInput));
+
+                // Set the current word and page
                 CurrentState::currentWord = words[i].getWord();
                 CurrentState::currentPage = static_cast<Page>(5);
             }
         }
     }
 
+    // Clear the search input if there's nothing.
     if (SearchInput[0] == '\0')
     {
         words.clear();
     }
 
+    // Scrolling
     if ((IsKeyPressed(KEY_UP) || GetMouseWheelMove() == 1) && rec_result[0].y < 200)
     {
         for (int i = 0; i < words.size(); ++i)
@@ -66,7 +92,7 @@ void DefPage::update()
             rec_result[i].y -= 40;
         }
     }
-    // drawing snow
+    // Initialize snow
     for (int i = 0; i < 100; i++)
     {
         snowflakes[i].y += 1.5; // Adjust the speed of falling snow
@@ -78,7 +104,14 @@ void DefPage::update()
     }
 }
 
-// Truncate the text and add ellipsis if it exceeds the specified width
+/**
+ * @brief Truncate the text and add ellipsis if it exceeds the specified width
+ * 
+ * @param text The text to truncate
+ * @param font The font to use
+ * @param maxWidth The maximum width of the text
+ * @return std::string The truncated text
+ */
 std::string DefPage::TextEllipsis(const std::string &text, const Font &font, float maxWidth)
 {
     std::string ellipsis      = "...";
@@ -104,6 +137,10 @@ std::string DefPage::TextEllipsis(const std::string &text, const Font &font, flo
     return truncatedText;
 }
 
+/**
+ * @brief Draw the Definition page
+ * 
+ */
 void DefPage::draw()
 {
     if (confirmResetBox)
@@ -115,6 +152,7 @@ void DefPage::draw()
     {
         addDef();
     }
+     // Prompting the user to start typing to search
     if (words.empty() && SearchInput[0] == '\0')
     {
         DrawTextEx(Resources::displayFontBold, "Start typing to search...", {715, 390}, TEXT_FONT_SIZE, 1,
@@ -126,32 +164,41 @@ void DefPage::draw()
     // Draws each word
     for (int i = 0; i < words.size(); ++i)
     {
-        DrawRectangleGradientV(rec_result[i].x, rec_result[i].y, rec_result[i].width, rec_result[i].height,
-                               BOX_COLOR_RGB, BOX_COLOR_RGB);
-
-        if (CheckCollisionPointRec(mousePos, rec_result[i]) && mousePos.y > 180 && !dropDownBox)
-            DrawRectangleGradientV(rec_result[i].x, rec_result[i].y, rec_result[i].width, rec_result[i].height,
-                                   GetColor(RESULT_COLOR_CONTAINER_HOVER), GetColor(RESULT_COLOR_CONTAINER_HOVER));
-
+        // Append the word type to the word if it exists
         std::string wordsTmp = words[i].getWord().getKey();
         if (!words[i].getWord().getType().empty())
             wordsTmp += " (" + words[i].getWord().getType() + ")";
 
+
+        // Draw the word container
+        DrawRectangleGradientV(rec_result[i].x, rec_result[i].y, rec_result[i].width, rec_result[i].height,
+                               BOX_COLOR_RGB, BOX_COLOR_RGB);
+
+        // Draw the word container on hover
+        if (CheckCollisionPointRec(mousePos, rec_result[i]) && mousePos.y > 180 && !dropDownBox)
+            DrawRectangleGradientV(rec_result[i].x, rec_result[i].y, rec_result[i].width, rec_result[i].height,
+                                   GetColor(RESULT_COLOR_CONTAINER_HOVER), GetColor(RESULT_COLOR_CONTAINER_HOVER));
+        
+        // Set the initial position for the word
         Vector2 textPosition = {rec_result[i].x + 10, rec_result[i].y + 10};
+
+        // Draw the word text
         DrawTextEx(Resources::wordFontBold, wordsTmp.c_str(), textPosition, WORD_FONT_SIZE, 2, TEXT_COLOR_RGB);
 
+        // Draw the word definitions
         for (int j = 0; j < std::min(2, int(words[i].getWord().getDefinitionCount())); j++)
         {
+            // Set the initial position for the definition
             Vector2 definitionPosition = {rec_result[i].x + 14, rec_result[i].y + 35 * j + 50};
 
             // Measure the text to determine if it fits within the rectangle
             Vector2 textSize = MeasureTextEx(Resources::displayFontRegular, words[i].getWord().getDefinition(j).c_str(),
                                              TEXT_FONT_SIZE, 1);
 
+            // Draw the text if it fits within the rectangle
             if (definitionPosition.x + textSize.x <= rec_result[i].x + rec_result[i].width &&
                 definitionPosition.y + textSize.y <= rec_result[i].y + rec_result[i].height)
             {
-                // Draw the text if it fits within the rectangle
                 DrawTextEx(Resources::displayFontRegular, words[i].getWord().getDefinition(j).c_str(),
                            definitionPosition, TEXT_FONT_SIZE, 1, TEXT_COLOR_RGB);
             }
@@ -171,7 +218,7 @@ void DefPage::draw()
         }
     }
 
-    // draw the background of textbox
+    // Draw the background of SearchBox container
     DrawRectangleRec({277, 100, 1280, 115}, BG_COLOR_RGB);
     DrawRectangleLinesEx({270, 0, 1280, 215}, 2, BLACK);
 
@@ -196,14 +243,17 @@ void DefPage::draw()
         }
     }
 
-    // draw the Search Box
+    // Draw the Search Box
     if (GuiTextBox(rec_search, SearchInput, 101, SearchEdit))
     {
         SearchEdit ^= 1;
     }
+
+    // Placeholder when the search box is empty
     if (SearchInput[0] == '\0')
         DrawTextEx(Resources::displayFontRegular, "Search...", {330, 155}, TEXT_FONT_SIZE, 0, GRAY);
 
+    // Draw the reset button
     if (GuiButton(rec_reset, "RESET"))
     {
         confirmResetBox = true;
@@ -238,39 +288,61 @@ void DefPage::draw()
                 break;            
         }
 
+        // Set the dictionary currently using for the random word generator
         r.setDictionary(CurrentState::currentDictObject);
         r.setPath();
-        
+
+        // Turn off the reset box
         confirmResetBox = false;
+        
+        // Clear the search input
         for (int i = 0; i < sizeof(SearchInput); ++i)
         {
             SearchInput[i] = '\0';
         }
+
+        // Clear the search results
         words.clear();
     }
 
+    // Draw the error message when there is no definition match the search.
     if (words.empty() && pressed)
     {
         DrawTextEx(Resources::displayFontBold, "No definition match this search !!!", {310, 240}, 25, 1, RED);
     }
 
+
+    /**
+     * The search function.
+     * 
+     * Searching through the definition can take a *very* long time.
+     * Given the fact that we're still inexperienced with programming, we thought of a very hacky way.
+     * We ask the user to just type what they want to search as normal, and it will display an ellipsis.
+     * Only when the user presses enter, the program will start searching and display the results.
+     * 
+     */
+
+    // Instruct the program to keep reading what the user is typing.
     if (GetKeyPressed())
     {
         pressed = false;
     }
 
+    // Draw the ellipsis when the user is typing.
     if (SearchInput[0] != '\0')
     {
         if (!pressed && words.empty())
             DrawTextEx(Resources::displayFontBold, "...", {310, 240}, 30, 1, BLACK);
     }
 
+    // Start searching when the user presses enter.
     if (IsKeyPressed(KEY_ENTER))
     {
         pressed = true;
         words.clear();
         words = r.searchDefinition(SearchInput, currentTrie);
     }
+
     // Draw snowflakes
     for (int i = 0; i < 100; i++)
     {
@@ -278,13 +350,22 @@ void DefPage::draw()
     }
 }
 
+/**
+ * @brief Reset the dictionary, clearing the custom data, history and favorites, and clear the search input,
+ * 
+ */
 void DefPage::resetBox()
 {
+    // Draw the reset box
     if (GuiWindowBox({300, 170, 600, 250}, ""))
         confirmResetBox = false;
+    
+    // Draw the text
     text = "Are you sure to reset ?";
     DrawTextEx(Resources::displayFontBold, text.c_str(),
                {600 - MeasureTextEx(Resources::displayFontBold, text.c_str(), 27, 1).x / 2, 220}, 27, 1, BLACK);
+
+    // Draw the buttons
     if (GuiButton({400, 330, 100, 50}, "YES"))
     {
         confirmResetBox = false;
@@ -304,6 +385,11 @@ void DefPage::resetBox()
     }
 }
 
+
+/**
+ * @brief Add a definition to the dictionary. It's actually not used right now.
+ * 
+ */
 void DefPage::addDef()
 {
     if (GuiWindowBox({300, 170, 600, 250}, ""))

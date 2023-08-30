@@ -1,4 +1,11 @@
-// main function currently used for testing. will be changed in the future
+/**
+ * @file main.cpp
+ * @author Group7 - CS163 - 2022-2023
+ * @brief The entrypoint to the program.
+ * @version 1.0
+ * 
+ */
+
 #include "dictionary/build.h"
 #include "dictionary/filePathHandler.h"
 #include "dictionary/history.h"
@@ -14,7 +21,7 @@
 
 int main(int argc, const char *argv[])
 {
-    // Supress all debug messages
+    // Supress all debug messages on release
     #ifndef NDEBUG
     SetTraceLogLevel(LOG_ALL);
     #else
@@ -35,6 +42,7 @@ int main(int argc, const char *argv[])
     loadResources();
     FrontendMain frontend;
 
+    // These are used to keep track of the global data of the dictionaries
     currentTrie = PrebuiltTriesList.at(*CurrentState::currentDict);
     currentDictHistory = new History(historyDirectories.at(*CurrentState::currentDict), 0);
     currentDictFavorites = new History(favoritesDirectories.at(*CurrentState::currentDict), 1);

@@ -1,14 +1,36 @@
+/**
+ * @file dictionary/random.cpp
+ * @author Group7 - CS163 - 2022-2023
+ * @brief Function definitions for the Random class.
+ * @version 1.0
+ *
+ */
 #include "dictionary/random.h"
 
+/**
+ * @brief Construct a new Random::Random object
+ *
+ * @param dict The Dictionary object to be used
+ */
 void Random::setDictionary(Dictionary *dict)
 {
     this->dictionary = dict;
 }
 
+/**
+ * @brief Get the current Dictionary object in use
+ *
+ * @return Dictionary*
+ */
 Dictionary *Random::getDictionary()
 {
     return this->dictionary;
 }
+
+/**
+ * @brief Set the path to the file containing the random words
+ *
+ */
 void Random::setPath()
 {
     int mode = dictionary->getDictionaryType();
@@ -32,10 +54,21 @@ void Random::setPath()
     }
 }
 
+/**
+ * @brief Get the path to the file containing the random words
+ *
+ * @return std::string
+ */
 std::string Random::getPath()
 {
     return this->path;
 }
+
+/**
+ * @brief Generate a random number from 1 to the total number of words in the dictionary.
+ *
+ * @return int The random number
+ */
 int Random::getRandomNumber()
 {
     int totalWords = 0;
@@ -64,6 +97,12 @@ int Random::getRandomNumber()
     return dis(gen);
 }
 
+/**
+ * @brief Get the first definition from a line of text
+ *
+ * @param line The line of text
+ * @return std::string The first definition
+ */
 std::string get1stDefinitionFromText(const std::string &line)
 {
     std::string definition;
@@ -73,6 +112,11 @@ std::string get1stDefinitionFromText(const std::string &line)
     return definition;
 }
 
+/**
+ * @brief Get the random word from the file
+ *
+ * @return Word The random word
+ */
 Word Random::viewRandomWord()
 {
     std::ifstream fin(getPath());
@@ -109,6 +153,11 @@ Word Random::viewRandomWord()
     return randomWord;
 }
 
+/**
+ * @brief Randomly generate index of the correct answer in the quiz
+ *
+ * @return int The index of the correct answer, from 1 to 4
+ */
 int Random::randomFourAnswer()
 {
     std::random_device rd;
@@ -117,20 +166,33 @@ int Random::randomFourAnswer()
     return dis(gen);
 }
 
+/**
+ * @brief Get the random quiz to guess the definition of a word
+ *
+ * @return std::vector<std::string> The vector of strings containing the quiz, in the following order:
+ * - The word to be guessed
+ * - The correct answer
+ * - The 3 incorrect answers
+ *
+ */
 std::vector<std::string> Random::guessDefinition()
 {
     std::vector<std::string> quiz;
+
     // Random the line that contains the correct keyword and definition
     int randomKeyWord = getRandomNumber();
     randomChoice      = randomFourAnswer();
+
     // Only get the definition of the wrong ans
     // While loop to make sure that 4 numbers are different from each other
     int ans1 = getRandomNumber();
     while (ans1 == randomKeyWord)
         ans1 = getRandomNumber();
+
     int ans2 = getRandomNumber();
     while (ans2 == randomKeyWord || ans2 == ans1)
         ans2 = getRandomNumber();
+
     int ans3 = getRandomNumber();
     while (ans3 == randomKeyWord || ans3 == ans1 || ans3 == ans2)
         ans3 = getRandomNumber();
@@ -204,6 +266,12 @@ std::vector<std::string> Random::guessDefinition()
     return quiz;
 }
 
+/**
+ * @brief Get the Keyword from a line of text
+ * 
+ * @param line The line of text
+ * @return std::string 
+ */
 std::string getKeyWordFromText(const std::string &line)
 {
     std::string keyWord;
@@ -212,6 +280,12 @@ std::string getKeyWordFromText(const std::string &line)
     keyWord   = line.substr(start, end - start + 1);
     return keyWord;
 }
+
+/**
+ * @brief Get the random quiz to guess the keyword of a definition
+ * 
+ * @return std::vector<std::string> The vector of strings containing the quiz, in the same order of `guessDefinition()`.
+ */
 std::vector<std::string> Random::guessKeyWord()
 {
     // Random the line that contains the correct keyword and definition
@@ -243,9 +317,9 @@ std::vector<std::string> Random::guessKeyWord()
             correctAns = getKeyWordFromText(line);
             if (getDictionary()->getDictionaryType() == 0) // for engeng dictionary
             {
-                int start  = line.find_first_of(':') + 2;
-                int end    = line.find('@', start + 1) - 3;
-                question = line.substr(start, end - start + 1);
+                int start = line.find_first_of(':') + 2;
+                int end   = line.find('@', start + 1) - 3;
+                question  = line.substr(start, end - start + 1);
             }
             else
                 question = get1stDefinitionFromText(line);
@@ -270,6 +344,11 @@ std::vector<std::string> Random::guessKeyWord()
     return quiz;
 }
 
+/**
+ * @brief Getter for the correct answer of the quiz
+ * 
+ * @return int 
+ */
 int Random::getChoice()
 {
     return randomChoice;

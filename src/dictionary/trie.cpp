@@ -1,24 +1,49 @@
+/**
+ * @file dictionary/trie.cpp
+ * @author Group7 - CS163 - 2022-2023
+ * @brief Function definitions for the Trie class.
+ * @version 1.0
+ */
 #include "dictionary/trie.h"
 #include <algorithm>
 #include <ctype.h>
 
+/**
+ * @brief Construct a new Trie::Trie object by calling init()
+ *
+ */
 Trie::Trie()
 {
     init();
 }
 
-void Trie::init() {
+/**
+ * @brief Initialize the Trie object by creating a new TrieNode object and set its endOfWord to false
+ *
+ */
+void Trie::init()
+{
     this->root      = new TrieNode;
     root->endOfWord = false;
     for (int i = 0; i < ALPHABET; ++i)
         root->children[i] = nullptr;
 }
 
+/**
+ * @brief Destroy the Trie::Trie object
+ * @note This function is not used in the program, because, upon exiting the program, all of the preloaded Tries will be
+ * destroyed. Adding another destructor for Trie will cause the program to cause a Segmentation Fault because it doesn't
+ * know what Trie to clear.
+ */
 Trie::~Trie()
 {
     /*      clear();*/
 }
-
+/**
+ * @brief Create a Node object
+ *
+ * @return TrieNode*
+ */
 TrieNode *Trie::createNode()
 {
     TrieNode *node  = new TrieNode;
@@ -28,7 +53,12 @@ TrieNode *Trie::createNode()
     return node;
 }
 
-// use for both insertion and modification (re-insert the modified Word object)
+/**
+ * @brief Insert a Word object into the Trie
+ *
+ * @param word  The Word object to be inserted
+ * @note If the key of the Word object already exists in the Trie, the Word object will be re-inserted into the Trie
+ */
 void Trie::insert(Word word)
 {
     TrieNode *cur = root;
@@ -43,6 +73,13 @@ void Trie::insert(Word word)
     cur->word      = word;
 }
 
+/**
+ * @brief Check if a TrieNode is empty
+ *
+ * @param node The TrieNode to be checked
+ * @return true
+ * @return false
+ */
 bool Trie::isEmptyNode(TrieNode *node)
 {
     for (int i = 0; i < ALPHABET; ++i)
@@ -51,6 +88,14 @@ bool Trie::isEmptyNode(TrieNode *node)
     return true;
 }
 
+/**
+ * @brief Remove a Word object from the Trie
+ *
+ * @param root The root of the Trie
+ * @param key The key of the Word object to be removed
+ * @param index The index of the key
+ * @return TrieNode* The root of the Trie that was modified.
+ */
 TrieNode *Trie::remove(TrieNode *root, std::string key, int index)
 {
     if (!root)
@@ -75,6 +120,11 @@ TrieNode *Trie::remove(TrieNode *root, std::string key, int index)
     return root;
 }
 
+/**
+ * @brief Clear the Trie
+ *
+ * @param root The root of the Trie
+ */
 void Trie::clear(TrieNode *root)
 {
     if (!root)
@@ -97,6 +147,14 @@ void Trie::clear(TrieNode *root)
 //     return true;
 // }
 
+/**
+ * @brief Search for a Word object in the Trie
+ *
+ * @param key The key of the Word object to be searched
+ * @param word The Word object to be returned
+ * @return true
+ * @return false
+ */
 bool Trie::search(std::string key, Word &word)
 {
     std::transform(key.begin(), key.end(), key.begin(), ::tolower); // convert the input to lowercase letters
@@ -119,14 +177,24 @@ bool Trie::search(std::string key, Word &word)
     return false;
 }
 
+/**
+ * @brief Convert the deleting key to lowercase letters and call the remove() function
+ *
+ * @param key The key of the Word object to be removed
+ */
 void Trie::remove(std::string key)
 {
     std::transform(key.begin(), key.end(), key.begin(), ::tolower);
     remove(root, key, 0);
 }
 
-// return vectors of possible words with given prefix
-// return empty vector of words if no word with given prefix found
+/**
+ * @brief Suggest words with a given prefix
+ *
+ * @param prefix The prefix to be searched
+ * @return std::vector<Word> A vector of Word objects that have the given prefix, or an empty vector if no Word object
+ * with the given prefix is found.
+ */
 std::vector<Word> Trie::wordSuggest(std::string prefix)
 {
     TrieNode *cur = root;
@@ -151,6 +219,13 @@ std::vector<Word> Trie::wordSuggest(std::string prefix)
     return wordlist;
 }
 
+/**
+ * @brief Suggest words with a given list of words
+ *
+ * @param wordlist The list of words to be searched
+ * @param limit The maximum number of words to be suggested
+ * @param q The queue of TrieNode objects to be searched
+ */
 void Trie::wordSuggest(std::vector<Word> &wordlist, int limit, std::queue<TrieNode *> &q)
 {
     while (!q.empty())
@@ -176,6 +251,13 @@ void Trie::wordSuggest(std::vector<Word> &wordlist, int limit, std::queue<TrieNo
     }
 }
 
+/**
+ * @brief Serialize the Trie into a file
+ *
+ * @param root Root of the Trie
+ * @param fout The file to be written to
+ * @param delimiter The delimiter to be used
+ */
 void Trie::serialize(TrieNode *root, std::ofstream &fout, char delimiter)
 {
     if (root->endOfWord)
@@ -195,6 +277,12 @@ void Trie::serialize(TrieNode *root, std::ofstream &fout, char delimiter)
     }
 }
 
+/**
+ * @brief Deserialize the Trie from an already built dataset file
+ *
+ * @param fin The file to be read from
+ * @param delimiter The delimiter to be used
+ */
 void Trie::deserialize(std::ifstream &fin, char delimiter)
 {
     int n;
@@ -226,11 +314,16 @@ void Trie::deserialize(std::ifstream &fin, char delimiter)
     }
 }
 
-// different dataset requires different unique character (character that does not exist in the dataset)
-// to be used as delimiter. the caller need to pass that delimiter manually into the function (the function)
-// does not automatically recognize which dataset is used)
-// eng-eng: '#
-// eng-vie & vie-eng: '#'
+/**
+ * @brief Caller to serialize() function
+ *
+ * @param path Path to the file to be written to
+ * @param delimiter The delimiter to be used
+ * @note Different dataset requires different unique character (character that does not exist in the dataset)
+ * to be used as delimiter. The caller need to pass that delimiter manually into the function, because the function
+ * does not automatically recognize which dataset is used. Delimeter for each dataset is defined in
+ * include/dictionary/build.h.
+ */
 void Trie::serialize(std::string path, char delimiter)
 {
     std::ofstream fout(path);
@@ -238,6 +331,12 @@ void Trie::serialize(std::string path, char delimiter)
     fout.close();
 }
 
+/**
+ * @brief Caller to deserialize() function
+ *
+ * @param path Path to the file to be read from
+ * @param delimiter The delimiter to be used
+ */
 void Trie::deserialize(std::string path, char delimiter)
 {
     std::ifstream fin(path);
@@ -245,6 +344,10 @@ void Trie::deserialize(std::string path, char delimiter)
     fin.close();
 }
 
+/**
+ * @brief Caller to clear() function
+ *
+ */
 void Trie::clear()
 {
     clear(this->root);

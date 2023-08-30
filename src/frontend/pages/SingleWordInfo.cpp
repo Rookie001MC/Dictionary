@@ -1,3 +1,9 @@
+/**
+ * @file frontend/pages/SingleWordInfo.cpp
+ * @author Group 07 - CS163 - 2022-2023
+ * @brief The page that shows the definition of a single word
+ * 
+ */
 #include "frontend/pages/SingleWordInfo.h"
 #include "frontend/pages/Word.h"
 #include "frontend/styles.h"
@@ -5,6 +11,16 @@
 #include "raygui.h"
 #include "raylib.h"
 
+/**
+ * Construct a new SingleWordInfo::SingleWordInfo object
+ * 
+ * This will: 
+ * - Initialize the isFullDef variable, to keep track of whether the definition of the word is fully shown or not
+ * - Initialize the defHeight array, to keep track of the height of each definition
+ * - Initialize the defBreakLines array, to keep track of whether the definition is broken into new lines or not
+ * - Initialize the snowflakes array.
+ * 
+ */
 SingleWordInfo::SingleWordInfo()
 {
     isFullDef = false;
@@ -14,7 +30,7 @@ SingleWordInfo::SingleWordInfo()
         defBreakLines[i] = false;
     }
 
-    // drawing snow
+    // Initialize snowflakes
     for (int i = 0; i < 100; i++)
     {
         snowflakes[i].x      = GetRandomValue(0, 720);
@@ -24,6 +40,15 @@ SingleWordInfo::SingleWordInfo()
     }
 }
 
+/**
+ * Setup and update the page:
+ * 
+ * - Setup the isUpdated variable, to keep track of whether the page is updated or not, especially when the user adds another definition to the word
+ * - Handle the logic to clear the page when the user exits out of the word
+ * - Fetch the definitions of the word, then push them into the eachDef vector for drawing 
+ * - Handle scrolling for the main page and the definition edit page
+ * - Initialize the snow
+ */
 void SingleWordInfo::update()
 {
     isUpdated        = true;
@@ -31,6 +56,7 @@ void SingleWordInfo::update()
     currentTrie      = PrebuiltTriesList[*CurrentState::currentDict];
     currentDictHistory   = new History(historyDirectories[*CurrentState::currentDict]);
 
+    // Clear the page when the user exits out of the word 
     if (isInfo)
     {
         eachDef.clear();
@@ -47,6 +73,7 @@ void SingleWordInfo::update()
         CurrentState::currentPage = static_cast<Page>(0);
     }
 
+    // Fetch the definitions of the word, then push them into the eachDef vector for drawing
     else if (!isFullDef)
     {
         std::string tmp;
@@ -60,7 +87,7 @@ void SingleWordInfo::update()
         }
     }
 
-    // for the main page of single word info
+    // Scrolling for the main page
     if ((IsKeyPressed(KEY_UP) || GetMouseWheelMove() == 1) && defHeight[0] < 230)
     {
         for (int i = 0; i < CurrentState::currentWord.getDefinitionCount(); ++i)
@@ -69,6 +96,7 @@ void SingleWordInfo::update()
         }
     }
 
+    // Scrolling for the definition edit page
     if ((IsKeyPressed(KEY_DOWN) || GetMouseWheelMove() == -1) &&
         defHeight[std::min(40, (int)eachDef.size()) - 1] >= 540)
     {
@@ -78,7 +106,7 @@ void SingleWordInfo::update()
         }
     }
 
-    // drawing snow
+    // Initialize the snow
     for (int i = 0; i < 100; i++)
     {
         snowflakes[i].y += 1.5; // Adjust the speed of falling snow
@@ -90,28 +118,43 @@ void SingleWordInfo::update()
     }
 }
 
+/**
+ * Draw each of the definition of the word 
+ * 
+ * Since each definition can be very long, we need to be able to break it into new lines.
+ */
 void SingleWordInfo::buildAnswer()
 {
-    // break the new lines
     isBreakNewLines = true;
+    // Go through each definition
     for (int i = 0; i < eachDef.size(); ++i)
     {
+        // If the definition is too long, we need to break it into new lines
         if (MeasureTextEx(Resources::displayFontBold, eachDef[i].c_str(), 25, 1).x > 1180)
         {
+            // Remember that this definition needs to be broken
             defBreakLines[i] = true;
-            float propotion  = float(MeasureTextEx(Resources::displayFontBold, eachDef[i].c_str(), 25, 1).x / 1180);
+            // We need to calculate how many lines we need to break this definition into
+            float proportion  = float(MeasureTextEx(Resources::displayFontBold, eachDef[i].c_str(), 25, 1).x / 1180);
+            // We need to remember the current position
             int pre          = 0;
-            int position     = eachDef[i].length() / (float)propotion;
+            // We need to find the position to break the line
+            int position     = eachDef[i].length() / (float)proportion;
+            // We need to break the line until we cannot break it anymore
             while (position < eachDef[i].length())
             {
+                // We need to find the last space before the position
                 while (
                     eachDef[i][position] != ' ' ||
                     MeasureTextEx(Resources::displayFontBold, eachDef[i].substr(pre, position - pre).c_str(), 25, 1).x >
                         1180)
                     position--;
+                // We need to break the line at the position
                 eachDef[i][position] = '\n';
+                // We need to remember the next position
                 pre                  = position + 1;
-                position += eachDef[i].length() / (float)propotion;
+                // We need to find the next position to break the line
+                position += eachDef[i].length() / (float)proportion;
             }
         }
     }
@@ -119,22 +162,29 @@ void SingleWordInfo::buildAnswer()
 
 void SingleWordInfo::draw()
 {
+    // If the page is not updated, update it
     if (!isUpdated)
         update();
+
+    // Switch to the edit page if the user clicks on the edit button 
     if (editButton)
     {
         editMenu();
         return;
     }
+
+    // Switch to deleting the definition if the user clicks on the delete button
     if (confirmDeleteBox)
     {
         deleteBox();
         return;
     }
 
+    // Break each of the definition into new lines 
     if (!isBreakNewLines)
         buildAnswer();
 
+    // Draw the definitions
     for (int i = 0; i < std::min(40, (int)eachDef.size()); ++i)
     {
         if (defBreakLines[i])
@@ -147,24 +197,30 @@ void SingleWordInfo::draw()
                    BLACK);
     }
 
-    // draw the line that divide the key and definition
+    // Draw the line that divide the key and definition
     DrawRectangleLinesEx({-5, 0, 1290, 200}, 2, BLACK);
     DrawRectangleV({0, 120}, {1280, 79}, GetColor(SECONDARY_COLOR));
 
+    // Button to exit out of the word into
     if (GuiButton({10, 130, 25, 25}, "#113#"))
     {
         isInfo = true;
     }
 
+    // Get the word and its type
     std::string selectedTmp = CurrentState::currentWord.getKey();
     std::string type        = CurrentState::currentWord.getType();
 
+    // Draw the word and its type
+
+    // If this is a long word, we need to draw the word and its type on different lines
     if (MeasureTextEx(Resources::displayFontBold, type.c_str(), 32, 2).x > 400)
     {
         type = "(" + type + ")";
         DrawTextEx(Resources::displayFontBold, type.c_str(), {100, 165}, 25, 1, GetColor(WRONG_ANS));
         DrawTextEx(Resources::displayFontBold, selectedTmp.c_str(), {100, 130}, 35, 2, GetColor(WRONG_ANS));
     }
+    // If this is a short word, append the type to the temp word so that we can draw the word and its type on the same line
     else
     {
         if (MeasureTextEx(Resources::displayFontBold, type.c_str(), 32, 2).x < 600)
@@ -177,13 +233,14 @@ void SingleWordInfo::draw()
         DrawTextEx(Resources::displayFontBold, selectedTmp.c_str(), {108, 140}, 35, 2, GetColor(WRONG_ANS));
     }
 
+    // Draw the edit definitions button
     if (GuiButton({700, 133, 135, 55}, "EDIT"))
     {
         editButton = true;
         return;
     }
 
-    // Find the word in the Favortite list first.
+    // Draw the Add Favorite button, depending on whether the word is already in the favorite list or not
     if (currentDictFavorites->find(CurrentState::currentWord.getKey()) == -1)
     {
         if (GuiButton({855, 133, 195, 55}, "ADD FAVORITE"))
@@ -200,34 +257,47 @@ void SingleWordInfo::draw()
             currentDictFavorites->save();
         }
     }
+
+    // Draw the Delete Word button
     if (GuiButton({1065, 133, 135, 55}, "DELETE"))
     {
         confirmDeleteBox = true;
     }
 
+    // Có tuyết == ít bug mà :D 
     drawSnow();
 }
 
+/**
+ * Draw the page that allows the user to add a new definition to the word
+ * 
+ */
 void SingleWordInfo::addDef()
 {
+    // Is this actually necessary??? ~ Thắng - Code Documenter
     for (int i = 0; i < 40; ++i)
     {
         defHeight[i]     = 240 + i * 60;
         defBreakLines[i] = false;
     }
+
+    // Draw the dialog and handle the exit button
     if (GuiWindowBox({250, 170, 650, 300}, ""))
         addDefButton = false;
 
+    // Draw the prompt
     text = "Please input new definition !";
     DrawTextEx(Resources::displayFontBold, text.c_str(),
                {580 - MeasureTextEx(Resources::displayFontBold, text.c_str(), 27, 1).x / 2, 220}, 27, 1, BLACK);
 
-    // draw the Search Box
+    // Draw the text box for the user to input the new definition
+    // @note Yes we actually reuse the search box edit check for this
     if (GuiTextBox({300, 290, 550, 50}, NewDef, 500, SearchEdit))
     {
         SearchEdit ^= 1;
     }
 
+    // Draw the ENTER button, and handle adding a new definition to the word
     if (GuiButton({390, 390, 100, 50}, "ENTER"))
     {
         addDefButton = false;
@@ -238,12 +308,17 @@ void SingleWordInfo::addDef()
         currentTrie.insert(CurrentState::currentWord);
     }
 
+    // Draw the BACK button, and handle going back to the main page
     if (GuiButton({690, 390, 100, 50}, "BACK"))
     {
         addDefButton = false;
     }
 }
 
+/**
+ * @brief oooooh snowy
+ * 
+ */
 void SingleWordInfo::drawSnow()
 {
     Color snowflakeColor = GetColor(SNOW);
@@ -255,14 +330,22 @@ void SingleWordInfo::drawSnow()
     }
 }
 
+/**
+ * @brief Prompt the user to confirm deleting the word
+ * 
+ */
 void SingleWordInfo::deleteBox()
 {
+    // Draw the dialog and handle the exit button
     if (GuiWindowBox({300, 170, 600, 250}, ""))
         confirmDeleteBox = false;
 
+    // Draw the prompt
     text = "Are you sure to delete ?";
     DrawTextEx(Resources::displayFontBold, text.c_str(),
                {600 - MeasureTextEx(Resources::displayFontBold, text.c_str(), 27, 1).x / 2, 220}, 27, 1, BLACK);
+
+    // Draw the YES and NO buttons, and handle the user's choice
     if (GuiButton({400, 330, 100, 50}, "YES"))
     {
         confirmDeleteBox = false;
@@ -306,7 +389,7 @@ void SingleWordInfo::editMenu()
 
     buildAnswer();
 
-    // for the edit menu
+    // Handling Scrolling for the Edit Menu
     if ((IsKeyPressed(KEY_UP) || GetMouseWheelMove() == 1) && edit_height[0] < 230)
     {
         for (int i = 0; i <= eachDef.size(); i++)
@@ -318,13 +401,19 @@ void SingleWordInfo::editMenu()
             edit_height[i] -= 40;
     }
 
+    // Setup the boxes of each definition
+    
+    // Height of the first definition
     edit_height.push_back(230);
+
+    // Height for each subsequent definition
     for (int i = 1; i <= eachDef.size(); i++)
     {
         edit_height.push_back(MeasureTextEx(Resources::displayFontRegular, eachDef[i - 1].c_str(), 25, 1).y +
                               edit_height[i - 1] + 35);
     }
 
+    // Draw the text of each Definition and their respective Edit buttons 
     for (int i = 0; i < eachDef.size(); i++)
     {
         DrawTextEx(Resources::displayFontRegular, eachDef[i].c_str(), {48, (float)edit_height[i] + 8}, 25, 1, BLACK);
@@ -338,7 +427,7 @@ void SingleWordInfo::editMenu()
         }
     }
 
-    // draw the line that divide the key and definition
+    // Draw the line that divide the key and definition
     DrawRectangleLinesEx({-5, 0, 1290, 200}, 2, BLACK);
     DrawRectangleV({0, 120}, {1280, 79}, GetColor(SECONDARY_COLOR));
 
@@ -347,6 +436,7 @@ void SingleWordInfo::editMenu()
         editButton = false;
     }
 
+    // Draw the extra function buttons
     DrawTextEx(Resources::displayFontBold, "EDIT MENU", {105, 135}, 47, 1, GetColor(WRONG_ANS));
     if (GuiButton({750, 133, 100, 50}, "SAVE"))
         confirmSaveBox = true;
@@ -364,8 +454,13 @@ void SingleWordInfo::editMenu()
     drawSnow();
 }
 
+/**
+ * @brief Handle editing a single definition for a word
+ * 
+ */
 void SingleWordInfo::editEachDef()
 {
+    // Disable drawing the other elements in the page
     for (int i = 0; i < 40; ++i)
     {
         defHeight[i]     = 240 + i * 60;
@@ -374,6 +469,7 @@ void SingleWordInfo::editEachDef()
 
     isBreakNewLines = false;
 
+    // Get the definition that the user wants to edit
     if (!isEdited)
     {
         isEdited = true;
@@ -384,6 +480,7 @@ void SingleWordInfo::editEachDef()
         }
     }
     
+    // Draw the edit window
     if (GuiWindowBox({250, 170, 650, 300}, ""))
     {
         editEachDefButton = false;
@@ -391,16 +488,18 @@ void SingleWordInfo::editEachDef()
         isEdited          = false;
     }
 
+    // Draw the Edit title
     text = "Edit Definition";
     DrawTextEx(Resources::displayFontBold, text.c_str(),
                {580 - MeasureTextEx(Resources::displayFontBold, text.c_str(), 27, 1).x / 2, 220}, 27, 1, BLACK);
 
-    // draw the Search Box
+    // Draw the Text box to edit the selected definition
     if (GuiTextBox({300, 290, 550, 50}, NewDef, 500, SearchEdit))
     {
         SearchEdit ^= 1;
     }
 
+    // Handle changing the selected definition
     if (GuiButton({390, 390, 100, 50}, "ENTER"))
     {
         isEdited          = false;
@@ -412,6 +511,7 @@ void SingleWordInfo::editEachDef()
         currentTrie.insert(CurrentState::currentWord);
     }
 
+    // Handle deleting the definition out of the word
     if (GuiButton({690, 390, 100, 50}, "DELETE"))
     {
         isEdited          = false;
