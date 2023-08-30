@@ -1,3 +1,11 @@
+/**
+ * @file frontend/pages/Word.cpp
+ * @author Group 07 - CS163 - 2022-2023
+ * @brief The Search Word page of the dictionary
+ * @version 1.0
+ * @note This will be the page that the user will see when they first launch the program
+ *
+ */
 #include "frontend/pages/Word.h"
 #include "dictionary/trie.h"
 #include "dictionary/word.h"
@@ -6,6 +14,17 @@
 #include "raygui.h"
 #include "raylib.h"
 
+/**
+ * Construct a new WordPage::WordPage object
+ * 
+ * This will do the following:
+ *
+ * - Initialize the rectangles for the function switcher
+ * - Initialize the rectangles for the search results
+ * - Initialize the snowflakes to be drawn
+ * 
+ * @note "Có tuyết sẽ ít bug hơn á :D" - Lương Nguyên Khoa, 2023
+ */
 WordPage::WordPage()
 {
     for (int i = 0; i < 5; i++)
@@ -17,7 +36,7 @@ WordPage::WordPage()
     for (int i = 0; i < 20; i++)
         rec_result[i] = {307, (float)225 + 130 * i, 921, 120};
 
-    // drawing snow
+    // Initialize the snowflakes
     for (int i = 0; i < 100; i++)
     {
         snowflakes[i].x      = GetRandomValue(0, 720);
@@ -27,6 +46,13 @@ WordPage::WordPage()
     }
 }
 
+/**
+ * Setup and update the data for the WordPage, including:
+ * 
+ * - Click events for each of the word results
+ * - Scrolling for the word results
+ * - Drawing the snow
+ */
 void WordPage::update()
 {
     if (IsMouseButtonPressed(0) && !dropDownBox && !confirmResetBox && !addWordButton)
@@ -77,7 +103,14 @@ void WordPage::update()
     }
 }
 
-// Truncate the text and add ellipsis if it exceeds the specified width
+/**
+ * Truncate the text and add ellipsis if it exceeds the specified width of a result box
+ * 
+ * @param text The text to be truncated
+ * @param font The font of the text
+ * @param maxWidth The maximum width of the text
+ * @return std::string The truncated text
+ */
 std::string WordPage::TextEllipsis(const std::string &text, const Font &font, float maxWidth)
 {
     std::string ellipsis      = "...";
@@ -103,6 +136,13 @@ std::string WordPage::TextEllipsis(const std::string &text, const Font &font, fl
     return truncatedText;
 }
 
+/**
+ * Check if any key is pressed.
+ * 
+ * This was to fix the search box unable to search single character words, i.e. "a", "b", "c", etc.
+ * 
+ * @return bool True if any key is pressed in range of KEY_NULL (0) and KEY_GRAVE (96), false otherwise
+ */
 bool IsAnyKeyPressed()
 {
     bool keyPressed = false;
@@ -113,56 +153,75 @@ bool IsAnyKeyPressed()
     return keyPressed;
 }
 
+/**
+ * @brief WordPage drawing logic.
+ * 
+ */
 void WordPage::draw()
 {
+    // Both of these will remove all the default elements of the GUI, instead will draw only the dialog box
+
+    // Draw the Reset confirmation dialog
     if (confirmResetBox)
     {
         resetBox();
         return;
     }
+
+    // Draw the Add Word dialog
     if (addWordButton)
     {
         addWord();
         return;
     }
 
+    // Draw the prompt for the user to search for a word
     if (words.empty() && SearchInput[0] == '\0')
     {
         DrawTextEx(Resources::displayFontBold, "Start typing to search...", {715, 390}, TEXT_FONT_SIZE, 1,
                    TEXT_COLOR_RGB);
     }
 
+    // Keep track of the mouse position
     Vector2 mousePos = GetMousePosition();
 
     // Draws each word
     for (int i = 0; i < words.size(); ++i)
     {
-        DrawRectangleGradientV(rec_result[i].x, rec_result[i].y, rec_result[i].width, rec_result[i].height,
-                               BOX_COLOR_RGB, BOX_COLOR_RGB);
-
-        if (CheckCollisionPointRec(mousePos, rec_result[i]) && mousePos.y > 180 && !dropDownBox)
-            DrawRectangleGradientV(rec_result[i].x, rec_result[i].y, rec_result[i].width, rec_result[i].height,
-                                   GetColor(RESULT_COLOR_CONTAINER_HOVER), GetColor(RESULT_COLOR_CONTAINER_HOVER));
-
+        // The actual word, with the type of the word appended to it
         std::string wordsTmp = words[i].getKey();
         if (!words[i].getType().empty())
             wordsTmp += " (" + words[i].getType() + ")";
 
+        // The background of each word
+        DrawRectangleGradientV(rec_result[i].x, rec_result[i].y, rec_result[i].width, rec_result[i].height,
+                               BOX_COLOR_RGB, BOX_COLOR_RGB);
+
+        // The background of each word when hovered
+        if (CheckCollisionPointRec(mousePos, rec_result[i]) && mousePos.y > 180 && !dropDownBox)
+            DrawRectangleGradientV(rec_result[i].x, rec_result[i].y, rec_result[i].width, rec_result[i].height,
+                                   GetColor(RESULT_COLOR_CONTAINER_HOVER), GetColor(RESULT_COLOR_CONTAINER_HOVER));
+
+
+        // The word itself
         Vector2 textPosition = {rec_result[i].x + 10, rec_result[i].y + 10};
         DrawTextEx(Resources::wordFontBold, wordsTmp.c_str(), textPosition, WORD_FONT_SIZE - 1, 2, TEXT_COLOR_RGB);
 
+        // The definition of the word
+        // Because some definitions are too long, we need to truncate them and add ellipsis
         for (int j = 0; j < std::min(2, int(words[i].getDefinitionCount())); j++)
         {
+            // The initial position of the definition
             Vector2 definitionPosition = {rec_result[i].x + 14, rec_result[i].y + 35 * j + 50};
 
             // Measure the text to determine if it fits within the rectangle
             Vector2 textSize =
                 MeasureTextEx(Resources::displayFontRegular, words[i].getDefinition(j).c_str(), TEXT_FONT_SIZE, 1);
 
+            // Draw the text if it fits within the rectangle
             if (definitionPosition.x + textSize.x <= rec_result[i].x + rec_result[i].width &&
                 definitionPosition.y + textSize.y <= rec_result[i].y + rec_result[i].height)
             {
-                // Draw the text if it fits within the rectangle
                 DrawTextEx(Resources::displayFontRegular, words[i].getDefinition(j).c_str(), definitionPosition,
                            TEXT_FONT_SIZE, 1, TEXT_COLOR_RGB);
             }
@@ -182,25 +241,51 @@ void WordPage::draw()
         }
     }
 
+    // Draw the Search Box container (Containing the Search Box, the Reset button, Random button and the Dict Picker)
     DrawRectangleRec({277, 100, 1280, 115}, BG_COLOR_RGB);
     DrawRectangleLinesEx({270, 0, 1280, 215}, 2, BLACK);
 
-    // draw the Search Box
+    // Draw the Search Box
     if (GuiTextBox(rec_search, SearchInput, 101, SearchEdit))
     {
         SearchEdit ^= 1;
     }
 
+    // The Search Box will display "Search..." if it's empty
     if (SearchInput[0] == '\0')
     {
         DrawTextEx(Resources::displayFontRegular, "Search...", {330, 155}, TEXT_FONT_SIZE, 0, GRAY);
         words.clear();
     }
 
-    // draw the reset button
+    // Handle the search logic
+    if (SearchEdit)
+    {
+        if (IsAnyKeyPressed())
+        {
+            words.clear();
+            words = currentTrie.wordSuggest(SearchInput);
+        }
+    }
+
+    // Draw the prompt for the user to add the word if there's no word matches the search
+    if (SearchInput[0] != '\0')
+    {
+        if (words.empty())
+        {
+            DrawTextEx(Resources::displayFontBold, "No word match this search !!!", {310, 240}, 25, 1, RED);
+            if (GuiLabelButton({310, 270, 80, 40}, "Add this word"))
+            {
+                addWordButton = true;
+            }
+        }
+    }
+
+    // Draw the Reset button
     if (GuiButton(rec_reset, "RESET"))
         confirmResetBox = true;
 
+    // Draw the Random button
     if (GuiButton(rec_random, "RANDOM"))
     {
         for (int i = 0; i < sizeof(SearchInput); ++i)
@@ -219,11 +304,11 @@ void WordPage::draw()
         words.push_back(randomWord);
     }
 
-    // Function switcher container
+    // Draw the function switcher container
     DrawRectangleV(Vector2{0, 0}, Vector2{277, 720}, GetColor(SECONDARY_COLOR));
     DrawRectangleLinesEx({0, 0, 277, 720}, 2, BLACK);
 
-    // Draws the function switcher
+    // Draws the button for each of the function
     for (int i = 0; i < dictPages.size(); i++)
     {
         if (i == selectedDictPage)
@@ -240,7 +325,7 @@ void WordPage::draw()
         }
     }
 
-    // Draw the Dict Picker
+    // Draw the Dict Picker, as well as handling the logic for it
     if (GuiDropdownBox(rec_dictionary,
                        (dictLanguages[0] + "\n" + dictLanguages[1] + "\n" + dictLanguages[2] + "\n" + dictLanguages[3] +
                         "\n" + dictLanguages[4])
@@ -248,6 +333,7 @@ void WordPage::draw()
                        CurrentState::currentDict, dropDownBox))
     {
         dropDownBox ^= 1;
+
         words.clear();
         confirmResetBox = false;
         for (int i = 0; i < sizeof(SearchInput); ++i)
@@ -280,27 +366,6 @@ void WordPage::draw()
         currentDictHistory = new History(historyDirectories[*CurrentState::currentDict]);
     }
 
-    if (SearchInput[0] != '\0')
-    {
-        if (words.empty())
-        {
-            DrawTextEx(Resources::displayFontBold, "No word match this search !!!", {310, 240}, 25, 1, RED);
-            if (GuiLabelButton({310, 270, 80, 40}, "Add this word"))
-            {
-                addWordButton = true;
-            }
-        }
-    }
-
-    if (SearchEdit)
-    {
-        if (IsAnyKeyPressed())
-        {
-            words.clear();
-            words = currentTrie.wordSuggest(SearchInput);
-        }
-    }
-
     // Draw snowflakes
     for (int i = 0; i < 100; i++)
     {
@@ -308,13 +373,22 @@ void WordPage::draw()
     }
 }
 
+/**
+ * Draw the Reset confirmation dialog to reset the dictionary to original state
+ * 
+ */
 void WordPage::resetBox()
 {
+    // Draw the actual dialog, also adding the logic the exit button
     if (GuiWindowBox({300, 170, 600, 250}, ""))
         confirmResetBox = false;
+
+    // Draw the question
     text = "Are you sure to reset ?";
     DrawTextEx(Resources::displayFontBold, text.c_str(),
                {600 - MeasureTextEx(Resources::displayFontBold, text.c_str(), 27, 1).x / 2, 220}, 27, 1, BLACK);
+    
+    // Draw the YES button, and handle the reset logic
     if (GuiButton({400, 330, 100, 50}, "YES"))
     {
         confirmResetBox = false;
@@ -328,49 +402,63 @@ void WordPage::resetBox()
         currentDictFavorites->clear();
         currentDictFavorites->save();
     }
+    
+    // Draw the NO button, and handle the exit logic
     if (GuiButton({700, 330, 100, 50}, "NO"))
     {
         confirmResetBox = false;
     }
 }
 
+/**
+ * Draw the Add Word dialog to add a new word to the dictionary
+ * 
+ */
 void WordPage::addWord()
 {
+    // Draw the actual dialog, also adding the logic the exit button
     if (GuiWindowBox({250, 170, 680, 400}, ""))
     {
         isEdited      = false;
         addWordButton = false;
     }
 
+    // Draw the question
     text = "Are you sure to add this word?";
     DrawTextEx(Resources::displayFontBold, text.c_str(),
                {600 - MeasureTextEx(Resources::displayFontBold, text.c_str(), 27, 1).x / 2, 220}, 27, 1, BLACK);
 
+    // Draw the text box for adding the word type
     std::string type = "Please input the type for this word !";
     DrawTextEx(Resources::displayFontRegular, type.c_str(),
                {600 - MeasureTextEx(Resources::displayFontBold, type.c_str(), 27, 1).x / 2, 260}, 27, 1, BLACK);
 
-    // draw the Search Box
     if (GuiTextBox({300, 300, 550, 50}, NewType, 500, TypeEdit))
     {
         TypeEdit ^= 1;
     }
 
+    // Draw the text box for adding the definition
     std::string def = "Please input the definition for this word !";
     DrawTextEx(Resources::displayFontRegular, def.c_str(),
                {600 - MeasureTextEx(Resources::displayFontBold, def.c_str(), 27, 1).x / 2, 370}, 27, 1, BLACK);
+
 
     if (GuiTextBox({300, 410, 550, 50}, NewDef, 500, DefEdit))
     {
         DefEdit ^= 1;
     }
 
+
+    // Clear the input boxes upon the add word dialog is opened
     if (!isEdited)
     {
         isEdited = true;
         memset(NewType, 0, sizeof(NewType));
     }
 
+    // Draw the ENTER button, and handle the add word logic
+    // Also clear the input boxes after the word is added, for memory safety
     if (GuiButton({390, 490, 100, 50}, "ENTER"))
     {
         isEdited      = false;
@@ -381,6 +469,8 @@ void WordPage::addWord()
         memset(NewDef, 0, sizeof(NewDef));
         memset(NewType, 0, sizeof(NewType));
     }
+
+    // Draw the CANCEL button, and handle the exit logic
     if (GuiButton({690, 490, 100, 50}, "CANCEL"))
     {
         isEdited      = false;

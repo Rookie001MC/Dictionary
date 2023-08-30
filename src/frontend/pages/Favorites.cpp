@@ -1,3 +1,11 @@
+/**
+ * @file frontend/pages/Favorites.cpp
+ * @author Group 07 - CS163 - 2022-2023
+ * @brief The Favorites page of the dictionary
+ * @version 1.0
+ * @note Both the History and Favorites pages are very similar, therefore they share the same code. Refer to the History page for more detailed comments.
+ *
+ */
 #include "frontend/pages/Favorites.h"
 #include "dictionary/word.h"
 #include "frontend/styles.h"
@@ -5,6 +13,10 @@
 #include "raygui.h"
 #include "raylib.h"
 
+/**
+ * @brief Construct a new FavoritesPage::FavoritesPage object
+ * 
+ */
 FavoritesPage::FavoritesPage()
 {
     for (int i = 0; i < 5; i++)
@@ -28,7 +40,14 @@ FavoritesPage::FavoritesPage()
     }
 }
 
-// Truncate the text and add ellipsis if it exceeds the specified width
+/**
+ * Truncate the text and add ellipsis if it exceeds the specified width
+ * 
+ * @param text The text to be truncated
+ * @param font The font of the text
+ * @param maxWidth The maximum width of the text
+ * @return std::string The truncated text
+ */
 std::string FavoritesPage::TextEllipsis(const std::string &text, const Font &font, float maxWidth)
 {
     std::string ellipsis      = "...";
@@ -54,6 +73,10 @@ std::string FavoritesPage::TextEllipsis(const std::string &text, const Font &fon
     return truncatedText;
 }
 
+/**
+ * Update the Favorites page
+ * 
+ */
 void FavoritesPage::update()
 {
     currentDictFavorites = new History(favoritesDirectories[*CurrentState::currentDict]);
@@ -105,6 +128,10 @@ void FavoritesPage::update()
     }
 }
 
+/**
+ * @brief Draw the Favorites page
+ * 
+ */
 void FavoritesPage::draw()
 {
 
@@ -294,6 +321,10 @@ void FavoritesPage::draw()
     }
 }
 
+/**
+ * @brief Delete a record from the favorites
+ * 
+ */
 void FavoritesPage::deleteRecord()
 {
     if (GuiWindowBox({300, 170, 600, 250}, ""))
@@ -350,6 +381,10 @@ void FavoritesPage::getFavorites(std::vector<std::string> wordStrings)
     }
 }
 
+/**
+ * @brief Delete all records from the favorites
+ * 
+ */
 void FavoritesPage::deleteAll()
 {
     if (GuiWindowBox({300, 170, 600, 250}, ""))

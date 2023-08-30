@@ -1,7 +1,19 @@
+/**
+ * @file StyleLoad.cpp
+ * @author Group07 - CS163 - 2022-2023
+ * @brief File to set all the RayGUI styles of the program
+ * @version 1.0
+ *
+ */
+
 #include "frontend/styles.h"
 #include "globalVars/globalVars.h"
 #include "raygui.h"
 
+/**
+ * @brief Set all the RayGUI styles of the program
+ * @note This is only called once at the start of the program.
+ */
 void setStyles()
 {
     GuiSetStyle(DEFAULT, TEXT_SIZE, TEXT_FONT_SIZE);

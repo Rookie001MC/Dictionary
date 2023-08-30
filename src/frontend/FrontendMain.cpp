@@ -1,15 +1,31 @@
+/**
+ * @file FrontendMain.cpp
+ * @author Group 07 - CS163 - 2022-2023
+ * @brief The main frontend class that handles the drawing and updating of the frontend.
+ * @version 1.0
+ */
+
 #include "globalVars/globalVars.h"
 #define RAYGUI_IMPLEMENTATION
 
 #include "frontend/FrontendMain.h"
 
+/**
+ * @brief Set the styles of the program
+ * 
+ */
 FrontendMain::FrontendMain()
 {
     setStyles();
 }
 
+/**
+ * @brief Start the frontend
+ * This will also draw some of the elements of the frontend, namely the header and the title
+ */
 void FrontendMain::start()
 {
+    // Logic to update the data for the current Page of the dictionary
     switch (CurrentState::currentPage)
     {
         case Page::DICT_WORD: {
@@ -39,6 +55,8 @@ void FrontendMain::start()
         default:
             break;
     }
+
+    // Logic to draw the current Page of the dictionary
     BeginDrawing();
     {
         ClearBackground(BG_COLOR_RGB);
@@ -77,4 +95,3 @@ void FrontendMain::start()
     }
     EndDrawing();
 }
-

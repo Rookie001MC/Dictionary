@@ -1,7 +1,20 @@
+/**
+ * @file dictionary/build.cpp
+ * @author Group7 - CS163 - 2022-2023
+ * @brief Defining the functions related to processing the Tries.
+ * @version 1.0
+ */
 #include "dictionary/build.h"
 
+// Define the next key to be added
 std::string nextKey;
 
+/**
+ * @brief Extract the data from the English-English dictionary file and insert it into the trie
+ * 
+ * @param dict The Dictionary object
+ * @param trie The Trie object
+ */
 void extractEngEng(Dictionary &dict, Trie &trie)
 {
     bool sign = false;
@@ -17,6 +30,12 @@ void extractEngEng(Dictionary &dict, Trie &trie)
     nextKey = "";
 }
 
+/**
+ * @brief Extract the data from the English-Vietnamese dictionary file and insert it into the trie
+ * 
+ * @param dict 
+ * @param trie 
+ */
 void extractEngVie(Dictionary &dict, Trie &trie)
 {
     bool start = true;
@@ -30,6 +49,12 @@ void extractEngVie(Dictionary &dict, Trie &trie)
     }
 }
 
+/**
+ * @brief Extract the data from the Vietnamese-English dictionary file and insert it into the trie
+ * 
+ * @param dict 
+ * @param trie 
+ */
 void extractVieEng(Dictionary &dict, Trie &trie)
 {
     while (!dict.eof())
@@ -56,6 +81,12 @@ void extractVieEng(Dictionary &dict, Trie &trie)
     }
 }
 
+/**
+ * @brief Extract the data from the Emoji dictionary file and insert it into the trie
+ * 
+ * @param dict 
+ * @param trie 
+ */
 void extractEmoji(Dictionary &dict, Trie &trie)
 {
     while (!dict.eof())
@@ -65,6 +96,12 @@ void extractEmoji(Dictionary &dict, Trie &trie)
     }
 }
 
+/**
+ * @brief Extract the data from the Slang dictionary file and insert it into the trie
+ * 
+ * @param dict 
+ * @param trie 
+ */
 void extractSlang(Dictionary &dict, Trie &trie)
 {
     while (!dict.eof())
@@ -81,6 +118,12 @@ void extractSlang(Dictionary &dict, Trie &trie)
     }
 }
 
+/**
+ * @brief Build the trie from the dictionary file
+ * 
+ * @param dict The Dictionary object to be built
+ * @param trie The Trie object to be built into
+ */
 void build(Dictionary &dict, Trie &trie)
 {
     std::string path;
@@ -146,6 +189,12 @@ void build(Dictionary &dict, Trie &trie)
     }
 }
 
+/**
+ * @brief Save the current state of the trie into the dictionary file
+ * 
+ * @param dict The Dictionary object
+ * @param trie The Trie object
+ */
 void save(Dictionary &dict, Trie &trie)
 {
     std::string path;
@@ -175,6 +224,12 @@ void save(Dictionary &dict, Trie &trie)
     trie.serialize(path + "data.dict", delimiter);
 }
 
+/**
+ * @brief Reset the dictionary to its initial state by deleting the data file and rebuilding the trie
+ * 
+ * @param dict 
+ * @param trie 
+ */
 void reset(Dictionary &dict, Trie &trie)
 {
     std::string path;
@@ -231,6 +286,10 @@ void reset(Dictionary &dict, Trie &trie)
     trie.serialize(path + "data.dict", delimiter);
 }
 
+/**
+ * @brief Prebuild the tries for the first time the program is run 
+ * 
+ */
 void prebuildDictionaries()
 {
     std::cout << "\033[1;32mPrebuilding dictionaries...\033[0m\n";
@@ -266,6 +325,10 @@ void prebuildDictionaries()
               << "ms\033[0m\n";
 }
 
+/**
+ * @brief Save the current state of the tries into the dictionary files when the program is closed
+ * 
+ */
 void savePrebuiltTries()
 {
     std::cout << "\033[1;31mSaving current state of the tries...\033[0m\n";
@@ -276,6 +339,10 @@ void savePrebuiltTries()
     save(slang, PrebuiltTriesList[4]);
 }
 
+/**
+ * @brief Clear the tries from memory when the program is closed
+ * 
+ */
 void clearPrebuiltTries()
 {
     std::cout << "\033[1;31mClearing prebuilt tries...\033[0m\n";

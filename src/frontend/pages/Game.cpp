@@ -1,9 +1,21 @@
+/**
+ * @file frontend/pages/Game.cpp
+ * @author Group 07 - CS163 - 2022-2023
+ * @brief The History page of the dictionary
+ * @version 1.0
+ * @note Both the History and Favorites pages are very similar, therefore they share the same code.
+ *
+ */
 #include "frontend/pages/Game.h"
 #include "frontend/styles.h"
 #include "globalVars/globalVars.h"
 #include "raygui.h"
 #include "raylib.h"
 
+/**
+ * @brief Construct a new GamePage::GamePage object. Also set the default values for the Randomizer.
+ * 
+ */
 GamePage::GamePage()
 {
     for (int i = 0; i < 5; i++)
@@ -24,6 +36,10 @@ GamePage::GamePage()
     r.setPath();
 }
 
+/**
+ * @brief Setup and update the GamePage. 
+ * @note Yes, there is just only the snow.
+ */
 void GamePage::update()
 {
     // drawing snow
@@ -38,8 +54,13 @@ void GamePage::update()
     }
 }
 
+/**
+ * @brief Draw the GamePage.
+ * 
+ */
 void GamePage::draw()
 {
+    // Draw the actual game.
     if (gameQuiz)
     {
         playGame();
@@ -95,15 +116,17 @@ void GamePage::draw()
                 break;            
         }
 
-
+        // Update the dictionary
         r.setDictionary(CurrentState::currentDictObject);
         r.setPath();
     }
 
+    // Draw the prompt to choose the quiz mode
     DrawTextEx(Resources::displayFontBold, "CHOOSE THE QUIZ MODE", {573, 253}, 43, 1, BLACK);
 
     GuiSetStyle(BUTTON, BASE_COLOR_NORMAL, PRIMARY_COLOR_CONTAINER);
 
+    // Draw the buttons then switch to their respective modes
     if (GuiButton({450, 390, 220, 67}, "GUESS WORD"))
     {
         quiz     = r.guessKeyWord();
@@ -125,6 +148,10 @@ void GamePage::draw()
     }
 }
 
+/**
+ * @brief Handles logic to draw the question.
+ * 
+ */
 void GamePage::drawQuestion()
 {
     // Define the rectangle
@@ -181,6 +208,10 @@ void GamePage::drawQuestion()
     }
 }
 
+/**
+ * @brief Handles logic to draw the answer.
+ * 
+ */
 void GamePage::buildAnswer()
 {
     // break the new lines
@@ -207,6 +238,11 @@ void GamePage::buildAnswer()
     }
 }
 
+/**
+ * @brief Draw the countdown timer.
+ * 
+ * @param timeLeft The time left.
+ */
 void GamePage::drawCountDown(int timeLeft)
 {
     char timerText[20];
@@ -214,6 +250,10 @@ void GamePage::drawCountDown(int timeLeft)
     DrawTextEx(Resources::displayFontBold, timerText, {10, 230}, 27, 1, DARKGRAY);
 }
 
+/**
+ * @brief Keep track of the time left of the current question.
+ * 
+ */
 void GamePage::drawTimer()
 {
     currentTime      = GetTime();
@@ -228,17 +268,26 @@ void GamePage::drawTimer()
     drawCountDown(cnt);
 }
 
+/**
+ * @brief Handles logic of the game
+ * 
+ */
 void GamePage::playGame()
 {
+    // Draw the question
     drawQuestion();
 
-    // get the answer
+    // Get the correct answer
     choice = r.getChoice();
 
+    // Draw the answer
     if (!isBreakNewLines)
         buildAnswer();
+
+    // Draw the timer if the answer is not chosen or the time is not up
     if (cnt > 0 && !choosen)
         drawTimer();
+    // 
     else if (cnt > 0 && choosen)
     {
         drawCountDown(cnt);
@@ -247,7 +296,8 @@ void GamePage::playGame()
     {
         DrawTextEx(Resources::displayFontBold, "Time left: 0", {10, 230}, 27, 1, DARKGRAY);
     }
-
+    
+    // Get the next question.
     if (GuiButton({1090, 222, 90, 45}, "Next"))
     {
         isBreakNewLines = false;
@@ -268,6 +318,7 @@ void GamePage::playGame()
         pressed = false;
     }
 
+    // Exit out of the game.
     if (GuiButton({10, 130, 25, 25}, "#113#"))
     {
         isBreakNewLines = false;
@@ -280,8 +331,10 @@ void GamePage::playGame()
         mode = 0;
     }
 
+    // Call the checkAns function to check the answer.
     checkAns();
 
+    // Depending on the answer, change the color of the answers.
     for (int i = 1; i <= 4; ++i)
     {
         if (i == choice)
@@ -294,18 +347,22 @@ void GamePage::playGame()
         }
     }
 
+    // If the answer is chosen, draw the answer.
     if (pressed)
     {
+        // Time out
         if (check == 5)
         {
             DrawTextEx(Resources::displayFontBold, ans.c_str(), {590, 230}, 30, 1, PURPLE);
         }
+        // Correct or wrong answer
         else
         {
             DrawTextEx(Resources::displayFontBold, ans.c_str(), {550, 230}, 30, 1,
                        correctAns ? GetColor(CORRECT_ANS) : RED);
         }
 
+        // Keep the wrong answer on the screen
         if (check != choice)
         {
             switch (choice)
@@ -336,6 +393,7 @@ void GamePage::playGame()
             }
         }
 
+        // Draw the correct answer
         switch (check)
         {
             case 1: {
@@ -363,9 +421,9 @@ void GamePage::playGame()
             }
         }
     }
+    // If the answer is not chosen, draw the answers.
     else
     {
-        // Draw 4 answer
         DrawRectangleV({1, 269}, {637, 223}, RED);
         if (CheckCollisionPointRec(GetMousePosition(), {1, 269, 637, 223}))
         {
@@ -402,8 +460,13 @@ void GamePage::playGame()
     }
 }
 
+/**
+ * @brief Check if the selected answer of the player is correct or not.
+ * 
+ */
 void GamePage::checkAns()
 {
+    // Time out
     if (cnt <= 0)
     {
         pressed    = true;
@@ -411,6 +474,8 @@ void GamePage::checkAns()
         ans        = "TIME OUT";
         check      = 5;
     }
+
+    // On click of an answer
     if (IsMouseButtonPressed(0) && !choosen)
     {
         choosen = true;
@@ -435,6 +500,7 @@ void GamePage::checkAns()
             check   = 4;
         }
 
+        // Check if the answer is correct or not
         if (check == choice)
         {
             ans        = "YOU ARE CORRECT";
